@@ -1,118 +1,50 @@
 @extends('layouts.app')
-	
-
-	@section('CustomCss')
-
-		<style>
-			.kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
-			    margin: 0;
-			    padding: 0;
-			    border: none;
-			    box-shadow: none;
-			    text-align: center;
-			}
-			.kv-avatar {
-			    display: inline-block;
-			}
-			.kv-avatar .file-input {
-			    display: table-cell;
-			    width: 213px;
-			}
-			.kv-reqd {
-			    color: red;
-			    font-family: monospace;
-			    font-weight: normal;
-			}
-		</style>
-
-
-	@endsection
 
 
 	@section('content')
-	     <!-- Page Wrapper -->
-		  <div id="wrapper">
+	     <!-- Content Wrapper START -->
+		 <div class="main-content">
+			<div class="container-fluid" id="cuadro1">
+				<div class="page-title">
+					<h4>Gestion de Roles</h4>
+				</div>
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-block">
+								<div class="table-overflow">
+									<button onclick="nuevo()" id="btn-new" class="btn btn-primary" style="float: right;">
+										<i class="ei-addthis"></i>
+										<span>Nuevo</span>
+									</button>
+									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+											<th>Acciones</th>
+											<th>Nombre</th>
+											<th>Descripcion</th>
+											<th>Fecha de Registro</th>
+											<th>Registrado por</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		    @include('layouts.sidebar')
+			@include('perfiles.Roles.store')
+			@include('perfiles.Roles.view')
+			@include('perfiles.Roles.edit')
 
-		    <!-- Content Wrapper -->
-		    <div id="content-wrapper" class="d-flex flex-column">
-
-		      <!-- Main Content -->
-		      <div id="content">
-
-				@include('layouts.topBar') 
-		       
-
-		        <!-- Begin Page Content -->
-			        <div class="container-fluid">
-
-			          <!-- Page Heading -->
-			          <h1 class="h3 mb-2 text-gray-800">Roles</h1>
-
-			          <div id="alertas"></div>
-			          <input type="hidden" class="id_user">
-			          <input type="hidden" class="token">
-
-			          <!-- DataTales Example -->
-			          <div class="card shadow mb-4" id="cuadro1">
-			            <div class="card-header py-3">
-			              <h6 class="m-0 font-weight-bold text-primary">Gestion de roles</h6>
-
-			              <button onclick="nuevo()" class="btn btn-primary btn-icon-split" style="float: right;">
-		                    <span class="icon text-white-50">
-		                      <i class="fas fa-plus"></i>
-		                    </span>
-		                    <span class="text">Nuevo registro</span>
-		                  </button>
-			            </div>
-			            <div class="card-body">
-			              <div class="table-responsive">
-			                <table class="table table-bordered" id="table" width="100%" cellspacing="0">
-			                  <thead>
-			                    <tr>
-								  <th>Acciones</th>
-			                      <th>Nombre</th>
-			                      <th>Descripcion</th>
-			                      <th>Fecha de Registro</th>
-			                      <th>Registrado por</th>
-			                    </tr>
-			                  </thead>
-			                  <tbody>
-			                    
-			                  </tbody>
-			                </table>
-			              </div>
-			            </div>
-			          </div>
-
-
-			          @include('perfiles.Roles.store')
-					  @include('perfiles.Roles.view')
-					  @include('perfiles.Roles.edit')
-
-
-			        </div>
-			        <!-- /.container-fluid -->
-
-		      </div>
-		      <!-- End of Main Content -->
-
-		      <!-- Footer -->
-		      <footer class="sticky-footer bg-white">
-		        <div class="container my-auto">
-		          <div class="copyright text-center my-auto">
-		            <span>Copyright &copy; Your Website 2019</span>
-		          </div>
-		        </div>
-		      </footer>
-		      <!-- End of Footer -->
-
-		    </div>
-		    <!-- End of Content Wrapper -->
-
-		  </div>
-		  <input type="hidden" id="ruta" value="<?= url('/') ?>">
+		</div>
+                <!-- Content Wrapper END -->
 	@endsection
 
 
@@ -163,15 +95,15 @@
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)
-									botones += "<span class='consultar btn btn-xs btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='fa fa-eye' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
 								if(actualizar == 1)
-									botones += "<span class='editar btn btn-xs btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='fas fa-edit' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
 								if(data.status == 1 && actualizar == 1)
-									botones += "<span class='desactivar btn btn-xs btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='desactivar btn btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
 								else if(data.status == 2 && actualizar == 1)
-									botones += "<span class='activar btn btn-xs btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='activar btn btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
 								if(borrar == 1)
-									botones += "<span class='eliminar btn btn-xs btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='fas fa-trash-alt' style='margin-bottom:5px'></i></span>";
+									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
 								return botones;
 							}
 						},
@@ -353,10 +285,10 @@
 		            	var lista_vista = [];
 		            	var id = $(this).find(".id_lista_vista").val();
 		            	if (id != undefined){
-			            	lista_vista.push(id);
+							lista_vista.push(id);
+							lista_vista.push(verificarCheckbox('registrar' + id));
 			            	lista_vista.push(verificarCheckbox('general' + id));
 			            	lista_vista.push(verificarCheckbox('detallada' + id));
-			            	lista_vista.push(verificarCheckbox('registrar' + id));
 			            	lista_vista.push(verificarCheckbox('actualizar' + id));
 			            	lista_vista.push(verificarCheckbox('eliminar' + id));
 							objeto.push(lista_vista);
@@ -378,19 +310,19 @@
 		                },
 		                cache:false,
 		                beforeSend: function(){
-		                    mensajes('info', '<span>Guardando datos, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+		                    showNoty('info', "topLeft", '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
 		                },
 		                error: function (repuesta) {
 		                    $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
 		                    var errores=repuesta.responseText;
 		                    if(errores!="")
-		                        mensajes('danger', errores);
-		                    else
-		                        mensajes('danger', "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>");        
+								showNoty('error', "topRight", errores, 3000);
+							else
+								showNoty('error', "topRight", "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000);       
 		                },
 		                success: function(respuesta){
 		                    $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-		                    mensajes('success', respuesta.mensagge);
+		                    showNoty('success', "topRight", respuesta.mensagge, 3000);
 		                    list('#cuadro2');
 		                }
 		            });
@@ -417,10 +349,10 @@
 		            	var lista_vista = [];
 		            	var id = $(this).find(".id_lista_vista").val();
 		            	if (id != undefined){
-			            	lista_vista.push(id);
+							lista_vista.push(id);
+							lista_vista.push(verificarCheckbox('registrar' + id));
 			            	lista_vista.push(verificarCheckbox('general' + id));
 			            	lista_vista.push(verificarCheckbox('detallada' + id));
-			            	lista_vista.push(verificarCheckbox('registrar' + id));
 			            	lista_vista.push(verificarCheckbox('actualizar' + id));
 			            	lista_vista.push(verificarCheckbox('eliminar' + id));
 							objeto.push(lista_vista);
@@ -445,19 +377,19 @@
 		                },
 		                cache:false,
 		                beforeSend: function(){
-		                    mensajes('info', '<span>Guardando datos, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+		                    showNoty('info', "topLeft", '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
 		                },
 		                error: function (repuesta) {
 		                    $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
 		                    var errores=repuesta.responseText;
 		                    if(errores!="")
-		                        mensajes('danger', errores);
+		                        showNoty('error', "topRight", errores, 3000);
 		                    else
-		                        mensajes('danger', "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>");        
+		                        showNoty('error', "topRight", "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000);   
 		                },
 		                success: function(respuesta){
 		                    $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-		                    mensajes('success', respuesta.mensagge);
+							showNoty('success', "topRight", respuesta.mensagge, 3000);
 		                    list('#cuadro4');
 		                }
 		            });
@@ -475,8 +407,6 @@
 				var modulo   = 0;
 
 				$.each(data, function (i, item) { 
-					console.log(item)	
-
 					if (modulo != item.id_modulo) {
 	            		modulo = item.id_modulo;
 	            		validado = false;
@@ -551,7 +481,7 @@
 					Funcion que valida true o false de las operaciones que hacen por lista vista.
 				*/
 				function validarPermisoListaVista(operacion){
-					var check = '<i class="fas fa-check col-green" aria-hidden="true"></i>';
+					var check = '<i class="ei-checked col-green" aria-hidden="true"></i>';
 					var close = '<i class="fa fa-times col-red" aria-hidden="true"></i>';
 					if(operacion == 1)
 						return check;

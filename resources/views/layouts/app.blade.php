@@ -22,6 +22,15 @@
     <link rel="stylesheet" href="vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
     <link rel="stylesheet" href="vendors/nvd3/build/nv.d3.min.css" />
 
+    <!-- page plugins css -->
+    <link rel="stylesheet" href="vendors/datatables/media/css/jquery.dataTables.css" />
+
+
+    <link href="vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+
+    <link href="vendors/sweetalert/sweetalert.css" rel="stylesheet">
+
 
     <!-- core css -->
     <link href="css/ei-icon.css" rel="stylesheet">
@@ -97,31 +106,6 @@
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
  
 
-
-
-
-   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">¿Preparado para irme?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" id="logout" href="logout">Cerrar Sesion</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
 <!-- build:js assets/js/vendor.js -->
     <!-- plugins js -->
     
@@ -142,6 +126,25 @@
       <script src="vendors/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
       <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
 
+          <!-- page plugins js -->
+    <script src="vendors/datatables/media/js/jquery.dataTables.js"></script>
+
+
+    
+    
+    <script src="vendors/bootstrap-fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+
+    <script src="vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
+    <script src="vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
+
+
+<!-- page js -->
 
     <!-- build:js   js/app.min.js -->
     <!-- core js -->
@@ -151,8 +154,9 @@
 
     <!-- page js -->
     <script src="js/dashboard/dashboard.js"></script>
-  <script src="js/funciones.js"></script>
-  
+    <script src="js/funciones.js"></script>
+
+    <script src="js/table/data-table.js"></script>
 
   <script>
     var user_id = localStorage.getItem('user_id');

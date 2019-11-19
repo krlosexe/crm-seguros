@@ -75,23 +75,23 @@ var name_rol   = 0;
                 contentType:false,
                 processData:false,
                 beforeSend: function(){
-                    mensajes('info', '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+                   showNoty('info', "topLeft",'<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
                 },
                 error: function (repuesta) {
                     $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
                     var errores=repuesta.responseText;
                     if(errores!="")
-                        showNoty("error", "topRight",errores)
+                        showNoty("error", "topRight", errores, 3000)
                     else
-                        showNoty("error", "topRight","<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>")
+                        showNoty("error", "topRight","<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000)
                 },
                  success: function(respuesta){
                     if (respuesta.success == false) {
-                         mensajes('danger', respuesta.message);
+                         showNoty('error', "topRight", respuesta.message, 3000);
                          $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
                     }else{
                         $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-                        mensajes('success', respuesta.mensagge);
+                        showNoty('success', "topRight", respuesta.mensagge, 3000);
 
                         if (auth) {
                            localStorage.setItem('token', respuesta.token);  
@@ -136,23 +136,23 @@ var name_rol   = 0;
                 contentType:false,
                 processData:false,
             beforeSend: function(){
-                mensajes('info', '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+                showNoty('info', "topLeft", '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
             },
             error: function (repuesta) {
                 $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
                 var errores=repuesta.responseText;
                 if(errores!="")
-                    mensajes('danger', errores);
+                    showNoty('error', "topRight", errores, 3000);
                 else
-                    mensajes('danger', "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>");        
+                    showNoty('error', "topRight", "<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000);        
             },
              success: function(respuesta){
                 if (respuesta.success == false) {
-                     mensajes('danger', respuesta.message);
+                     showNoty('error', "topRight", respuesta.message, 3000);
                      $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
                 }else{
                     $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-                    mensajes('success', respuesta.mensagge);
+                    showNoty('success', "topRight", respuesta.mensagge, 3000);
 
                     if (auth) {
                        localStorage.setItem('token', respuesta.token);  
@@ -160,7 +160,6 @@ var name_rol   = 0;
                        localStorage.setItem('user_id', respuesta.user_id);  
                        window.location.href = url+"/dashboard";
                     }else{
-
                         list(cuadro);
                     }
                    
@@ -208,14 +207,14 @@ var name_rol   = 0;
                 dataType: 'JSON',
                 data: data,
                 beforeSend: function(){
-                    mensajes('info', '<span>Guardando cambios, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+                  showNoty('info', "topLeft", '<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
                 },
                 error: function (repuesta) {
                     var errores=repuesta.responseText;
-                    mensajes('danger', errores);
+                    showNoty('error', "topRight", errores, 3000);
                 },
                 success: function(respuesta){
-                  mensajes('success', respuesta.mensagge);
+                  showNoty('success', "topRight", respuesta.mensagge, 3000);
                   list();
                 }
             });
@@ -321,12 +320,11 @@ var name_rol   = 0;
               html +=		'<i class="ti-home"></i>'
             html += '</span>'
             html += '<span class="title">Inicio</span>'
-           
           html += '</a>'
         html += '</li>'
       $.each(modulos_disponibles, function(i, item){
 
-        html += '<li class="nav-item dropdown">'
+        html += '<li class="nav-item dropdown" id="nav_li_'+item.nombre+'">'
           html += '<a data-toggle="collapse" href="#collapse_'+item.nombre+'" role="button" aria-expanded="false" aria-controls="collapseExample" href="javascript:void(0);">'
             html += '<span class="icon-holder">'
               html +=		'<i class="'+item.icon+'"></i>'
@@ -341,7 +339,7 @@ var name_rol   = 0;
 
               $.each(funciones, function(i2, item2){
                   if(item.id_modulo == item2.id_modulo)
-                    html += '<li><a class="collapse-item" id="nav_'+item2.route+'" href="'+item2.route+'">'+item2.nombre+'</a></li>'
+                    html += '<li  id="nav_'+item2.route+'"><a class="collapse-item" href="'+item2.route+'">'+item2.nombre+'</a></li>'
 
                   if (uri == item2.route) {
                     accede = true;
@@ -515,9 +513,9 @@ $("#send_usuario").click(function() {
 
     
     if(checked == 0)
-      return "<label class='container-check'><input type='checkbox' name='" + campo + "' class='checkitem chk-col-blue' id='" + campo + id + "' value='0'><span class='checkmark'></span><label for='" + campo + id + "'></label></label>";
+      return  "<div class='checkbox'><input type='checkbox' name='" + campo + "' id='" + campo + id + "' value='0'><label for='" + campo + id + "'></label></div>";
     else if (checked == 1)
-      return "<label class='container-check'><input type='checkbox' name='" + campo + "' class='checkitem chk-col-blue' id='" + campo + id + "' value='0' checked><span class='checkmark'></span><label for='" + campo + id + "'></label></label>";
+      return "<div class='checkbox'><input type='checkbox' name='" + campo + "' id='" + campo + id + "' value='0' checked><label for='" + campo + id + "'></label></div>";
   }
 
 
@@ -649,12 +647,12 @@ $("#send_usuario").click(function() {
 }
 
 
-function showNoty(type, position, msg){
+function showNoty(type, position, msg, time){
     noty({
       theme: 'app-noty',
       text: msg,
       type: type,
-      timeout: 3000,
+      timeout: time,
       layout: position,
       closeWith: ['button', 'click'],
       animation: {

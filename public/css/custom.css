@@ -118,3 +118,19 @@ z-index: 99999;
   -ms-transition: all 0.15s ease-out;
   color: #888da8;
 }
+
+.collapse .active{
+  color: #212529 !important;
+}
+
+
+.col-green {
+  color: #4CAF50 !important;
+}
+
+
+.col-red {
+  color: #F44336 !important;
+}
+
+

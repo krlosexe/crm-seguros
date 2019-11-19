@@ -30,92 +30,54 @@
 
 
 	@section('content')
-	     <!-- Page Wrapper -->
-		  <div id="wrapper">
+	    
+		 <!-- Content Wrapper START -->
+		 <div class="main-content">
+			<div class="container-fluid" id="cuadro1">
+				<div class="page-title">
+					<h4>Gestion de Usuarios</h4>
+				</div>
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-block">
+								<div class="table-overflow">
+									<button onclick="nuevo()" id="btn-new" class="btn btn-primary" style="float: right;">
+										<i class="ei-addthis"></i>
+										<span>Nuevo</span>
+									</button>
+									<table class="table table-lg table-hover" id="table" width="100%" cellspacing="0">
+										<thead>
+											<tr>
+												<th>Acciones</th>
+												<th>Nombres</th>
+												<th>Apellidos</th>
+												<th>Email</th>
+												<th>Telefono</th>
+												<th>Rol</th>
+												<th>Fecha de Registro</th>
+												<th>Registrado por</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+					
 
-		    @include('layouts.sidebar')
+			@include('perfiles.Users.store')
+			@include('perfiles.Users.view')
+			@include('perfiles.Users.edit')
 
-		    <!-- Content Wrapper -->
-		    <div id="content-wrapper" class="d-flex flex-column">
-
-		      <!-- Main Content -->
-		      <div id="content">
-
-				@include('layouts.topBar') 
-		       
-
-		        <!-- Begin Page Content -->
-			        <div class="container-fluid">
-
-			          <!-- Page Heading -->
-			          <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
-
-			          <div id="alertas"></div>
-			          <input type="hidden" class="id_user">
-			          <input type="hidden" class="token">
-
-			          <!-- DataTales Example -->
-			          <div class="card shadow mb-4" id="cuadro1">
-			            <div class="card-header py-3">
-			              <h6 class="m-0 font-weight-bold text-primary">Gestion de usuarios</h6>
-
-			              <button onclick="nuevo()" id="btn-new" class="btn btn-primary btn-icon-split" style="float: right;">
-		                    <span class="icon text-white-50">
-		                      <i class="fas fa-plus"></i>
-		                    </span>
-		                    <span class="text">Nuevo registro</span>
-		                  </button>
-			            </div>
-			            <div class="card-body">
-			              <div class="table-responsive">
-			                <table class="table table-bordered" id="table" width="100%" cellspacing="0">
-			                  <thead>
-			                    <tr>
-								  <th>Acciones</th>
-			                      <th>Nombres</th>
-			                      <th>Apellidos</th>
-			                      <th>Email</th>
-			                      <th>Telefono</th>
-								  <th>Rol</th>
-								  <th>Fecha de Registro</th>
-								  <th>Registrado por</th>
-			                    </tr>
-			                  </thead>
-			                  <tbody>
-			                    
-			                  </tbody>
-			                </table>
-			              </div>
-			            </div>
-			          </div>
-
-
-			          @include('perfiles.Users.store')
-					  @include('perfiles.Users.view')
-					  @include('perfiles.Users.edit')
-
-
-			        </div>
-			        <!-- /.container-fluid -->
-
-		      </div>
-		      <!-- End of Main Content -->
-
-		      <!-- Footer -->
-		      <footer class="sticky-footer bg-white">
-		        <div class="container my-auto">
-		          <div class="copyright text-center my-auto">
-		            <span>Copyright &copy; Your Website 2019</span>
-		          </div>
-		        </div>
-		      </footer>
-		      <!-- End of Footer -->
-
-		    </div>
-		    <!-- End of Content Wrapper -->
-
-		  </div>
-		  <input type="hidden" id="ruta" value="<?= url('/') ?>">
+		</div>
+                <!-- Content Wrapper END -->
 	@endsection
 
 
@@ -129,9 +91,11 @@
 				store();
 				update();
 				list();
+				
 				verifyPersmisos(id_user, tokens, "users");
 				
 				$("#collapse_Perfiles").addClass("show");
+				$("#nav_li_Perfiles").addClass("open");
 				$("#nav_users, #modulo_Perfiles").addClass("active");
 			});
 
@@ -145,7 +109,7 @@
 
 
 			function list(cuadro) {
-
+			
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,
@@ -174,15 +138,15 @@
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)
-									botones += "<span class='consultar btn btn-xs btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='fa fa-eye' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
 								if(actualizar == 1)
-									botones += "<span class='editar btn btn-xs btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='fas fa-edit' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
 								if(data.status == 1 && actualizar == 1)
-									botones += "<span class='desactivar btn btn-xs btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='desactivar btn btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
 								else if(data.status == 2 && actualizar == 1)
-									botones += "<span class='activar btn btn-xs btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='activar btn btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
 								if(borrar == 1)
-									botones += "<span class='eliminar btn btn-xs btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='fas fa-trash-alt' style='margin-bottom:5px'></i></span>";
+									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
 								return botones;
 							}
 						},
@@ -236,7 +200,7 @@
 					browseLabel: '',
 					removeLabel: '',
 					browseIcon: '<i class="fa fa-folder-open"></i>',
-					removeIcon: '<i class="fas fa-trash-alt"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
 					previewFileIcon: '<i class="fas fa-file"></i>',
 					removeTitle: 'Cancel or reset changes',
 					elErrorContainer: '#kv-avatar-errors-1',

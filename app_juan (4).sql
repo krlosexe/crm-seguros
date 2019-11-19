@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2019 a las 21:18:46
+-- Tiempo de generación: 19-11-2019 a las 22:17:54
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -91,7 +91,7 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (44, 'funciones', 8, 1, NULL, 1, '2019-10-07 14:53:57', NULL, NULL),
 (45, 'funciones', 9, 1, NULL, 1, '2019-10-07 14:54:21', NULL, NULL),
 (46, 'funciones', 10, 1, NULL, 1, '2019-10-07 14:54:42', NULL, NULL),
-(47, 'modulos', 42, 1, NULL, 1, '2019-10-23 15:40:31', NULL, NULL),
+(47, 'modulos', 42, 0, NULL, 1, '2019-11-19 21:16:11', NULL, '2019-11-19'),
 (48, 'funciones', 12, 0, NULL, 1, '2019-10-24 16:14:56', NULL, '2019-10-24'),
 (49, 'roles', 6, 1, NULL, 1, '2019-10-26 13:20:00', NULL, NULL),
 (50, 'funciones', 13, 0, NULL, 1, '2019-10-24 16:14:53', NULL, '2019-10-24'),
@@ -109,7 +109,7 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (62, 'users', 57, 0, NULL, 1, '2019-10-22 20:25:24', 1, '2019-10-22'),
 (63, 'users', 58, 0, NULL, 1, '2019-10-22 20:25:16', 1, '2019-10-22'),
 (64, 'users', 59, 0, NULL, 1, '2019-10-22 20:28:26', 1, '2019-10-22'),
-(65, 'users', 60, 1, NULL, 1, '2019-10-22 20:36:15', NULL, NULL),
+(65, 'users', 60, 1, NULL, 1, '2019-11-19 21:14:23', NULL, NULL),
 (66, 'roles', 9, 0, NULL, 60, '2019-11-10 20:03:16', NULL, '2019-11-10'),
 (67, 'users', 61, 1, NULL, 60, '2019-10-22 20:37:44', NULL, NULL),
 (68, 'modulos', 43, 0, NULL, 60, '2019-10-23 15:40:35', NULL, '2019-10-23'),
@@ -181,7 +181,7 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (134, 'queries', 3, 1, NULL, 60, '2019-11-02 16:00:00', NULL, NULL),
 (135, 'queries', 4, 1, NULL, 60, '2019-11-02 16:00:33', NULL, NULL),
 (136, 'queries', 5, 1, NULL, 60, '2019-11-02 16:20:16', NULL, NULL),
-(137, 'funciones', 25, 1, NULL, 60, '2019-11-10 20:07:24', NULL, NULL),
+(137, 'funciones', 25, 0, NULL, 60, '2019-11-19 21:15:45', NULL, '2019-11-19'),
 (138, 'category', 2, 1, NULL, 60, '2019-11-10 20:31:02', NULL, NULL),
 (139, 'category', 3, 1, NULL, 60, '2019-11-10 20:41:42', NULL, NULL),
 (140, 'category', 4, 1, NULL, 60, '2019-11-10 20:41:55', NULL, NULL),
@@ -190,25 +190,25 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (143, 'category', 7, 1, NULL, 60, '2019-11-10 20:47:14', NULL, NULL),
 (144, 'category', 8, 0, NULL, 60, '2019-11-10 20:47:25', 60, '2019-11-10'),
 (145, 'category', 9, 0, NULL, 60, '2019-11-10 20:47:45', 60, '2019-11-10'),
-(146, 'funciones', 26, 1, NULL, 60, '2019-11-10 20:52:49', NULL, NULL),
+(146, 'funciones', 26, 0, NULL, 60, '2019-11-19 21:15:40', NULL, '2019-11-19'),
 (147, 'benefits', 1, 1, NULL, 60, '2019-11-10 23:14:44', NULL, NULL),
 (148, 'benefits', 2, 1, NULL, 60, '2019-11-10 23:15:47', NULL, NULL),
 (149, 'benefits', 3, 1, NULL, 60, '2019-11-10 23:19:01', NULL, NULL),
 (150, 'benefits', 4, 0, NULL, 60, '2019-11-10 23:19:15', 60, '2019-11-10'),
-(151, 'funciones', 27, 1, NULL, 60, '2019-11-11 00:04:27', NULL, NULL),
+(151, 'funciones', 27, 0, NULL, 60, '2019-11-19 21:15:39', NULL, '2019-11-19'),
 (152, 'customer_support', 1, 1, NULL, 60, '2019-11-11 00:49:19', NULL, NULL),
 (153, 'customer_support', 2, 1, NULL, 60, '2019-11-11 00:51:18', NULL, NULL),
 (154, 'customer_support', 3, 1, NULL, 60, '2019-11-11 00:57:45', NULL, NULL),
 (155, 'customer_support', 4, 1, NULL, 60, '2019-11-11 04:57:43', NULL, NULL),
 (156, 'customer_support', 5, 0, NULL, 60, '2019-11-11 00:58:01', 60, '2019-11-11'),
-(157, 'funciones', 28, 1, NULL, 60, '2019-11-11 04:58:58', NULL, NULL),
+(157, 'funciones', 28, 0, NULL, 60, '2019-11-19 21:15:34', NULL, '2019-11-19'),
 (158, 'way_to_pay', 1, 1, NULL, 60, '2019-11-11 05:29:13', NULL, NULL),
 (159, 'way_to_pay', 2, 1, NULL, 60, '2019-11-11 05:32:18', NULL, NULL),
 (160, 'way_to_pay', 3, 1, NULL, 60, '2019-11-11 05:32:37', NULL, NULL),
 (161, 'way_to_pay', 4, 1, NULL, 60, '2019-11-11 05:35:33', NULL, NULL),
 (162, 'way_to_pay', 5, 1, NULL, 60, '2019-11-11 05:35:37', NULL, NULL),
 (163, 'way_to_pay', 6, 0, NULL, 60, '2019-11-11 05:35:49', 60, '2019-11-11'),
-(164, 'funciones', 29, 1, NULL, 60, '2019-11-11 05:37:20', NULL, NULL),
+(164, 'funciones', 29, 0, NULL, 60, '2019-11-19 21:15:32', NULL, '2019-11-19'),
 (165, 'countries', 1, 1, NULL, 60, '2019-11-11 05:53:47', NULL, NULL),
 (166, 'countries', 2, 1, NULL, 60, '2019-11-11 05:53:54', NULL, NULL),
 (167, 'countries', 3, 1, NULL, 60, '2019-11-11 05:54:00', NULL, NULL),
@@ -216,7 +216,7 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (169, 'countries', 5, 1, NULL, 60, '2019-11-11 05:54:10', NULL, NULL),
 (170, 'countries', 6, 0, NULL, 60, '2019-11-11 05:57:11', 60, '2019-11-11'),
 (171, 'countries', 7, 0, NULL, 60, '2019-11-11 05:57:05', 60, '2019-11-11'),
-(172, 'funciones', 30, 1, NULL, 60, '2019-11-11 07:37:02', NULL, NULL),
+(172, 'funciones', 30, 0, NULL, 60, '2019-11-19 21:16:52', NULL, '2019-11-19'),
 (173, 'hosting', 2, 1, NULL, 60, '2019-11-11 21:45:30', NULL, NULL),
 (174, 'hosting', 3, 1, NULL, 60, '2019-11-11 21:59:58', NULL, NULL),
 (175, 'hosting', 4, 1, NULL, 60, '2019-11-12 00:57:54', NULL, NULL),
@@ -226,7 +226,7 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (179, 'hosting', 8, 1, NULL, 60, '2019-11-12 20:10:37', NULL, NULL),
 (180, 'hosting', 9, 1, NULL, 60, '2019-11-12 21:09:54', NULL, NULL),
 (181, 'hosting', 10, 1, NULL, 60, '2019-11-12 21:11:38', NULL, NULL),
-(182, 'hosting', 11, 1, NULL, 60, '2019-11-12 22:23:30', NULL, NULL),
+(182, 'hosting', 11, 2, NULL, 60, '2019-11-16 15:26:16', NULL, NULL),
 (183, 'countries', 8, 0, NULL, 60, '2019-11-13 21:03:35', 60, '2019-11-13'),
 (184, 'hosting', 12, 1, NULL, 60, '2019-11-14 21:38:07', NULL, NULL),
 (185, 'hosting', 13, 1, NULL, 60, '2019-11-14 21:39:42', NULL, NULL),
@@ -234,7 +234,15 @@ INSERT INTO `auditoria` (`id_auditoria`, `tabla`, `cod_reg`, `status`, `fec_stat
 (187, 'hosting', 15, 1, NULL, 60, '2019-11-14 21:43:16', NULL, NULL),
 (188, 'hosting', 16, 1, NULL, 60, '2019-11-14 21:44:47', NULL, NULL),
 (189, 'hosting', 17, 0, NULL, 60, '2019-11-14 22:08:22', 60, '2019-11-14'),
-(190, 'hosting', 18, 1, NULL, 60, '2019-11-15 19:29:24', NULL, NULL);
+(190, 'hosting', 18, 0, NULL, 60, '2019-11-16 14:54:45', 60, '2019-11-16'),
+(191, 'users', 66, 0, NULL, 60, '2019-11-19 20:18:47', 60, '2019-11-19'),
+(192, 'modulos', 48, 0, NULL, 60, '2019-11-19 20:25:03', NULL, '2019-11-19'),
+(193, 'modulos', 49, 0, NULL, 60, '2019-11-19 20:26:17', NULL, '2019-11-19'),
+(194, 'funciones', 31, 0, NULL, 60, '2019-11-19 20:29:32', NULL, '2019-11-19'),
+(195, 'funciones', 32, 0, NULL, 60, '2019-11-19 20:32:38', NULL, '2019-11-19'),
+(196, 'roles', 15, 0, NULL, 60, '2019-11-19 21:14:39', NULL, '2019-11-19'),
+(197, 'modulos', 50, 0, NULL, 60, '2019-11-19 20:46:32', NULL, '2019-11-19'),
+(198, 'roles', 16, 0, NULL, 60, '2019-11-19 20:48:10', NULL, '2019-11-19');
 
 -- --------------------------------------------------------
 
@@ -248,13 +256,6 @@ CREATE TABLE `auth_users` (
   `token` varchar(500) NOT NULL,
   `date_auth` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `auth_users`
---
-
-INSERT INTO `auth_users` (`id`, `id_user`, `token`, `date_auth`) VALUES
-(104, 60, '8de9c7243a9dc87ee5e806a7a90f898d0da36dcabbe0d25e707c84393252555725dac8843e34e51d41b0e1162ab2f31f9b40cbee9e2d59c3d059e1f16af59a5b', '2019-11-14 19:39:34');
 
 -- --------------------------------------------------------
 
@@ -463,7 +464,8 @@ CREATE TABLE `datos_personales` (
 
 INSERT INTO `datos_personales` (`id_datos_personales`, `id_usuario`, `nombres`, `apellido_p`, `apellido_m`, `n_cedula`, `fecha_nacimiento`, `telefono`, `direccion`) VALUES
 (19, 57, 'Javer', 'Laborum Tempor id q', 'ttttttttttttt', '241421421414', '1989-08-22', '41242144', 'hhhhhhhhhhhhhhh'),
-(22, 60, 'Carlos', 'Cardenas', 'Albarran', '23559081', '1994-03-03', '3152077862', 'calle 47A, #6AB-30, Bosque Verde');
+(22, 60, 'Carlos', 'Cardenas', 'Albarran', '23559081', '1994-03-03', '3152077862', 'calle 47A, #6AB-30, Bosque Verde'),
+(28, 66, 'Ipsa laboriosam ul', 'Consequuntur velit', 'Totam ipsa unde dol', 'Ullam maxime nisi si', '1973-11-24', 'Enim alias ad autem', 'Amet dolor animi a');
 
 -- --------------------------------------------------------
 
@@ -503,14 +505,14 @@ CREATE TABLE `funciones` (
 INSERT INTO `funciones` (`id_funciones`, `id_modulo`, `nombre`, `descripcion`, `posicion`, `route`, `visibilidad`) VALUES
 (7, 41, 'Usuarios', 'Usuariosssss', 1, 'users', 1),
 (8, 41, 'Modulos', 'Modulos', 2, 'modules', 1),
-(9, 41, 'Funciones', 'Gestion de Vistas', 3, 'funciones', 1),
-(10, 41, 'Roles', 'Roles', 5, 'rol', 1),
+(9, 41, 'Funciones', 'Gestion de Vistas', 4, 'funciones', 1),
+(10, 41, 'Roles', 'Roles', 6, 'rol', 1),
 (12, 42, 'Deleniti nulla magna', 'Qui nobis ipsum har', 12, 'Voluptatem reprehen', 1),
 (13, 42, 'Nisi dolor optio de', 'Aute eveniet quas s', 10, 'Proident ipsa qui', 1),
 (14, 42, 'bbbbbbbbbb', 'bbbbbbbbbbbbb', 9, 'bbbbbbbbbbb', 1),
 (17, 42, 'ttttttttttttt', 'Sint nisi sit temp', 11, 'Et vero suscipit Nam', 1),
-(18, 41, 'Provident ut ut ips', 'Eaque et id odit qui', 4, 'Odio dolorem lorem d', 1),
-(19, 45, 'Pacientes', 'Registro de pacientes y Clientes', 2, 'clients', 1),
+(18, 41, 'Provident ut ut ips', 'Eaque et id odit qui', 5, 'Odio dolorem lorem d', 1),
+(19, 45, 'Pacientes', 'Registro de pacientes y Clientes', 3, 'clients', 1),
 (20, 42, 'Ciudades', 'Ciudades', 7, 'citys', 1),
 (21, 42, 'Clinicas', 'Gestion de Clinicas', 6, 'clinics', 1),
 (22, 47, 'Revisión', 'Gestion de las citas de Revision del paciente', 2, 'revision-appointment', 1),
@@ -521,7 +523,9 @@ INSERT INTO `funciones` (`id_funciones`, `id_modulo`, `nombre`, `descripcion`, `
 (27, 42, 'Atencion al Cliente', 'Gestion Atencion al Cliente', 3, 'customer-support', 1),
 (28, 42, 'Formas de Pago', 'Gestion de Formas de Pago', 4, 'way-to-pay', 1),
 (29, 42, 'Paises', 'Gestion de Paises', 5, 'countries', 1),
-(30, 45, 'Hosting', 'Gestion de Hosting', 1, 'hosting', 1);
+(30, 45, 'Hosting', 'Gestion de Hosting', 1, 'hosting', 1),
+(31, 41, 'Repellendus Non in', 'Aperiam vel animi a', 3, 'Cupidatat ad dolorum', 1),
+(32, 45, 'Eius quidem officiis', 'Cum quo veniam expe', 2, 'Mollitia voluptates', 1);
 
 -- --------------------------------------------------------
 
@@ -600,13 +604,16 @@ CREATE TABLE `modulos` (
 --
 
 INSERT INTO `modulos` (`id_modulo`, `nombre`, `descripcion`, `icon`, `posicion`) VALUES
-(41, 'Perfiles', 'Admistracion de Usuarios, Roles y Modulos', 'fas fa-users', 3),
-(42, 'Configuracion', 'Configuraciones', 'fas fa-cog', 5),
-(43, 'Quos velit consequat', 'Doloremque quis cupi', '', 6),
-(44, 'Fugit molestiae con', 'Nostrud ut ipsa ill', '', 7),
-(45, 'Catálogos', 'Catálogos', 'fas fa-book', 1),
-(46, 'Sit repudiandae dol', 'Nulla libero tempora', 'Non voluptatibus vit', 3),
-(47, 'Citas', 'Gestion de Citas', 'fas fa-calendar-alt', 2);
+(41, 'Perfiles', 'Admistracion de Usuarios, Roles y Modulos', 'ei-users', 6),
+(42, 'Configuracion', 'Configuraciones', 'ei-tools', 8),
+(43, 'Quos velit consequat', 'Doloremque quis cupi', '', 9),
+(44, 'Fugit molestiae con', 'Nostrud ut ipsa ill', '', 10),
+(45, 'Catálogos', 'Catálogos', 'ei-wallet', 1),
+(46, 'Sit repudiandae dol', 'Nulla libero tempora', 'Non voluptatibus vit', 6),
+(47, 'Citas', 'Gestion de Citas', 'fas fa-calendar-alt', 4),
+(48, 'Sit et id reprehend', 'Excepteur eveniet n', 'Dolor aperiam quia d', 3),
+(49, 'Qui sequi hic maiore', 'Sint magna aute dolo', 'In sint et do animi', 5),
+(50, 'Eveniet occaecat sa', 'Velit iste quidem an', 'Omnis temporibus lab', 2);
 
 -- --------------------------------------------------------
 
@@ -646,7 +653,9 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`, `descripcion_rol`, `editable_rol`) 
 (11, 'Asperiores saepe qua', 'Consequuntur irure i', 1),
 (12, 'Excepteur iure ad cu', 'Minima temporibus si', 1),
 (13, 'Amet sed iure repre', 'Adipisci explicabo', 1),
-(14, 'Nulla beatae rerum o', 'Minim rem voluptatem', 1);
+(14, 'Nulla beatae rerum o', 'Minim rem voluptatem', 1),
+(15, 'ttttttttttttttt', 'bhbb', 1),
+(16, 'Libero quibusdam sed', 'Aut velit cillum cup', 1);
 
 -- --------------------------------------------------------
 
@@ -680,16 +689,12 @@ INSERT INTO `rol_operaciones` (`id_rol_operaciones`, `id_rol`, `id_funciones`, `
 (106, 9, 19, 0, 1, 1, 1, 1, 1),
 (107, 9, 20, 0, 1, 1, 1, 1, 1),
 (108, 9, 24, 0, 1, 1, 1, 1, 1),
-(148, 6, 29, 0, 1, 1, 1, 1, 1),
-(149, 6, 27, 0, 1, 1, 1, 1, 1),
-(150, 6, 25, 0, 1, 1, 1, 1, 1),
-(151, 6, 26, 0, 1, 1, 1, 1, 1),
-(152, 6, 28, 0, 1, 1, 1, 1, 1),
-(153, 6, 7, 0, 1, 1, 1, 1, 1),
-(154, 6, 8, 0, 1, 1, 1, 1, 1),
-(155, 6, 9, 0, 1, 1, 1, 1, 1),
-(156, 6, 10, 0, 1, 1, 1, 1, 1),
-(157, 6, 30, 0, 1, 1, 1, 1, 1);
+(161, 16, 30, 0, 1, 1, 1, 1, 1),
+(202, 15, 30, 0, 0, 0, 0, 0, 1),
+(208, 6, 10, 0, 1, 1, 1, 1, 1),
+(209, 6, 9, 0, 1, 1, 1, 1, 1),
+(210, 6, 8, 0, 1, 1, 1, 1, 1),
+(211, 6, 7, 0, 0, 0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -727,7 +732,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `im
 (62, NULL, 'kiluso@mailinator.net', NULL, 'f3ed11bbdb94fd9ebdefbaf646ab94d3', 'default (1).png', NULL, 9, '2019-10-30 21:32:13', '2019-10-30 21:32:13'),
 (63, NULL, 'xiroguva@mailinator.com', NULL, 'f3ed11bbdb94fd9ebdefbaf646ab94d3', 'default (1).png', NULL, 9, '2019-10-31 02:02:19', '2019-10-31 02:02:50'),
 (64, NULL, 'sebemycuh@mailinator.net', NULL, 'f3ed11bbdb94fd9ebdefbaf646ab94d3', 'default (1).png', NULL, 9, '2019-10-31 02:02:29', '2019-10-31 02:02:29'),
-(65, NULL, 'muvic@mailinator.com', NULL, '202cb962ac59075b964b07152d234b70', 'default (1).png', NULL, 9, '2019-10-31 02:02:45', '2019-10-31 02:02:45');
+(65, NULL, 'muvic@mailinator.com', NULL, '202cb962ac59075b964b07152d234b70', 'default (1).png', NULL, 9, '2019-10-31 02:02:45', '2019-10-31 02:02:45'),
+(66, NULL, 'sula@mailinator.com', NULL, '202cb962ac59075b964b07152d234b70', 'eeee-04.png', NULL, 6, '2019-11-20 01:05:02', '2019-11-20 01:05:27');
 
 -- --------------------------------------------------------
 
@@ -963,13 +969,13 @@ ALTER TABLE `way_to_pay_hosting`
 -- AUTO_INCREMENT de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  MODIFY `id_auditoria` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id_auditoria` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT de la tabla `auth_users`
 --
 ALTER TABLE `auth_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT de la tabla `benefits`
@@ -1011,7 +1017,7 @@ ALTER TABLE `customer_support_hosting`
 -- AUTO_INCREMENT de la tabla `datos_personales`
 --
 ALTER TABLE `datos_personales`
-  MODIFY `id_datos_personales` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_datos_personales` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -1023,7 +1029,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `funciones`
 --
 ALTER TABLE `funciones`
-  MODIFY `id_funciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_funciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `hosting`
@@ -1041,25 +1047,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `rol_operaciones`
 --
 ALTER TABLE `rol_operaciones`
-  MODIFY `id_rol_operaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id_rol_operaciones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `way_to_pay`

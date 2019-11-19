@@ -101,7 +101,7 @@
           </ul>
           <ul class="nav-right">
               <li class="user-profile dropdown">
-                  <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" id="userDropdown">
                       <img class="profile-img img-fluid" src="assets/images/user.jpg" alt="">
                       <div class="user-info">
                           <span class="name pdd-right-5">Nate Leong</span>
@@ -129,7 +129,7 @@
                       </li>
                       <li role="separator" class="divider"></li>
                       <li>
-                          <a href="">
+                          <a href="" id="logout">
                               <i class="ti-power-off pdd-right-10"></i>
                               <span>Logout</span>
                           </a>

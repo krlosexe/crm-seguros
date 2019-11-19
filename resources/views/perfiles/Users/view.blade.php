@@ -29,7 +29,7 @@
 					                    <input id="avatar-view" name="img-profile" type="file" required>
 					                </div>
 					            </div>
-					            <div class="kv-avatar-hintss">
+					            <div class="kv-avatar-hint">
 					                <small>Seleccione una foto</small>
 					            </div>
 					        </div>
