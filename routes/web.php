@@ -50,34 +50,15 @@ Route::get('funciones', function () {
     return view('perfiles.Funciones.gestion');
 });
 
-Route::get('category', function () {
-    return view('configuracion.category.gestion');
+
+
+
+
+Route::get('people', function () {
+    return view('clients.people.gestion');
 });
 
 
-Route::get('benefits', function () {
-    return view('configuracion.benefits.gestion');
-});
-
-
-Route::get('customer-support', function () {
-    return view('configuracion.customer_support.gestion');
-});
-
-
-Route::get('way-to-pay', function () {
-    return view('configuracion.way-to-pay.gestion');
-});
-
-
-Route::get('countries', function () {
-    return view('configuracion.countries.gestion');
-});
-
-
-Route::get('hosting', function () {
-    return view('catalogos.hosting.gestion');
-});
 
 
 
