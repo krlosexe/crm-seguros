@@ -91,7 +91,7 @@
 												</div>
 												<div class="checkbox font-size-12">
 													<input id="agreement" name="agreement" type="checkbox">
-													<label for="agreement">Mantener Sesion</label>
+													<label for="agreement">Mantener Sesión</label>
 												</div>
 												<input type="hidden" id="ruta" value="<?= url('/') ?>">
 												<button type="submit" class="btn btn-info">Login</button>
