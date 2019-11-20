@@ -60,7 +60,8 @@
 				update();
 
 				$("#collapse_Perfiles").addClass("show");
-				$("#nav_modules, #modulo_Perfiles").addClass("active");
+				$("#nav_li_Perfiles").addClass("open");
+				$("#nav_users, #modulo_Perfiles").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "modules");
 			});
