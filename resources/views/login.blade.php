@@ -79,8 +79,8 @@
 								<div class="vertical-align full-height pdd-horizon-70">
 									<div class="table-cell">
 										<div class="pdd-horizon-15">
-											<h2>Login</h2>
-											<p class="mrg-btm-15 font-size-13">Please enter your user name and password to login</p>
+											<h2>Iniciar sesión</h2>
+											<p class="mrg-btm-15 font-size-13">Por favor, ingrese su nombre de usuario y contraseña para iniciar sesión</p>
 											<form class="user" id="login" method="post" action="">
 												@csrf
 												<div class="form-group">
