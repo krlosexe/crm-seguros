@@ -35,7 +35,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestion de Usuarios</h4>
+					<h4>Gestión de Usuarios</h4>
 				</div>
 				<div class="row">
 					
@@ -50,14 +50,14 @@
 									<table class="table table-lg table-hover" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-												<th>Acciones</th>
 												<th>Nombres</th>
 												<th>Apellidos</th>
 												<th>Email</th>
-												<th>Telefono</th>
+												<th>Teléfono</th>
 												<th>Rol</th>
 												<th>Fecha de Registro</th>
 												<th>Registrado por</th>
+												<th>Acciones</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -134,6 +134,14 @@
 						"dataSrc":""
 					},
 					"columns":[
+						
+						{"data":"nombres"},
+						{"data":"apellido_p"},
+						{"data":"email"},
+						{"data":"telefono"},
+						{"data":"nombre_rol"},
+						{"data":"fec_regins"},
+						{"data":"user_registro"},
 						{"data": null,
 							render : function(data, type, row) {
 								var botones = "";
@@ -150,13 +158,6 @@
 								return botones;
 							}
 						},
-						{"data":"nombres"},
-						{"data":"apellido_p"},
-						{"data":"email"},
-						{"data":"telefono"},
-						{"data":"nombre_rol"},
-						{"data":"fec_regins"},
-						{"data":"user_registro"}
 						
 					],
 					"language": idioma_espanol,

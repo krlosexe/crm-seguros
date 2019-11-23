@@ -30,7 +30,7 @@
     <link href="vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
 
     <link href="vendors/sweetalert/sweetalert.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="vendors/selectize/dist/css/selectize.default.css" />
 
     <!-- core css -->
     <link href="css/ei-icon.css" rel="stylesheet">
@@ -81,10 +81,9 @@
          <footer class="content-footer">
               <div class="footer">
                   <div class="copyright">
-                      <span>Copyright © 2017 <b class="text-dark">Theme_Nate</b>. All rights reserved.</span>
+                      <span>Con la tecnología de <b class="text-dark"></b>SkySeguros.</span>
                       <span class="go-right">
-            <a href="" class="text-gray mrg-right-15">Term &amp; Conditions</a>
-            <a href="" class="text-gray">Privacy &amp; Policy</a>
+          
           </span>
                   </div>
               </div>
@@ -142,7 +141,7 @@
 
     <script src="vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
     <script src="vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
-
+    <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
 
 <!-- page js -->
 

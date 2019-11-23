@@ -1,4 +1,4 @@
-<!-- Header START -->
+<div class="app header-dark side-nav-dark"><!-- Header START -->
 <div class="header navbar">
       <div class="header-container">
           <ul class="nav-left">
@@ -674,5 +674,6 @@
               </div>
           </div>
       </div>
+  </div>
   </div>
   <!-- theme configurator END -->

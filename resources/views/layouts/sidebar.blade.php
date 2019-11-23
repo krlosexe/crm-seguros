@@ -1,6 +1,6 @@
 
-
-
+<div class="app header-dark side-nav-dark">
+<div class="layout">
 <div class="side-nav">
   <div class="side-nav-inner">
       <div class="side-nav-logo">
@@ -20,4 +20,6 @@
       <ul class="side-nav-menu scrollable" id="options">
       </ul>
   </div>
+</div>
+</div>
 </div>

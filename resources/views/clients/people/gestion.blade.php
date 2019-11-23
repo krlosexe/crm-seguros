@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestion de Clientes - Personas</h4>
+					<h4>Gestión de Clientes - Personas</h4>
 				</div>
 				<div class="row">
 					
@@ -21,11 +21,12 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-											<th>Acciones</th>
+											
 											<th>Nombre</th>
-											<th>Descripcion</th>
-											<th>Posicion</th>
+											<th>Descripción</th>
+											<th>Posición</th>
 											<th>Fecha de registro</th>
+											<th>Acciones</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -81,7 +82,6 @@
 
 
 			function list(cuadro) {
-				contarModulos("#posicion_modulo_vista_registrar");
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,
@@ -105,6 +105,11 @@
 						"dataSrc":""
 					},
 					"columns":[
+						
+						{"data":"nombre"},
+						{"data":"descripcion"},
+						{"data":"posicion"},
+						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
 								var botones = "";
@@ -120,11 +125,7 @@
 									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
 								return botones;
 							}
-						},
-						{"data":"nombre"},
-						{"data":"descripcion"},
-						{"data":"posicion"},
-						{"data": "fec_regins"}
+						}
 						
 					],
 					"language": idioma_espanol,
@@ -150,8 +151,21 @@
 			function nuevo() {
 				$("#alertas").css("display", "none");
 				$("#store")[0].reset();
+
+
+				showCasa("#own_house", "#number_house")
+
+				showHijos("#children", ".container-datos-adicionales-hijo")
+				AddChildren("#add-children", "#dato-extra-hijo-container")
+
+				showVehicle("#vehicle", ".container-datos-adicionales-vehicle")
+				AddVehicle("#add-vehicle", "#dato-extra-vehicle-container")
+
 				cuadros("#cuadro1", "#cuadro2");
 			}
+
+
+			
 
 			/* ------------------------------------------------------------------------------- */
 			/* 
@@ -200,13 +214,114 @@
 
 					$("#id_edit").val(data.id_modulo)
 
+					
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
 
 
-
+			function showCasa(check, input){
+				$(check).change(function (e) { 
+					if ($(check).is(':checked')){
+						$(input).removeAttr("disabled");
+					}else{
+						$(input).attr("disabled", "disabled");
+					}
 					
+				});
+			}
+
+
+
+			function showHijos(check, table){
+
+				$(table).css("display", "none");
+
+				$(check).change(function (e) { 
+					if ($(check).is(':checked')){
+						$(table).css("display", "block");
+					}else{
+						$(table).css("display", "none");
+					}
+					
+				});
+			}
+	
+			var count_children = 0
+			function AddChildren(btn, table){
+				$(btn).click(function (e) { 
+					e.preventDefault();
+					var input_name      = "<input type='text' name=name_children[]   class='form-control' placeholder='Nombres'>"
+					var input_phone     = "<input type='text' name=phone_children[]  class='form-control' placeholder='Telefono'>"
+					var input_birthdate = "<input type='date' name=phone_birthdate[] class='form-control' placeholder='Birthdate'>"
+					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					
+					var html = ""
+					html += "<tr id='tr_childred_"+count_children+"'>"
+						html +="<td>"+input_name+"</td>"
+						html +="<td>"+input_phone+"</td>"
+						html +="<td>"+input_birthdate+"</td>"
+						html +="<td>"+btn_delete+"</td>"
+					html += "</tr>"
+
+					$(table).append(html)
+				});
+			}
+
+
+			
+
+
+
+
+			function showVehicle(check, table){
+				$(table).css("display", "none");
+
+				$(check).change(function (e) { 
+					if ($(check).is(':checked')){
+						$(table).css("display", "block");
+					}else{
+						$(table).css("display", "none");
+					}
+					
+				});
+			}
+
+			
+			var count_vehicle = 0
+			function AddVehicle(btn, table){
+				$(btn).click(function (e) { 
+					e.preventDefault();
+					var input_placa     = "<input type='text' name=placa_vehicle[]  class='form-control' placeholder='Placa'>"
+					var date_soat       = "<input type='date' name=date_soat[]      class='form-control' placeholder='Fecha vencimiento SOAT'>"
+					var date_impuestos  = "<input type='date' name=date_taxes[]     class='form-control' placeholder='Fecha pago de impuestos'>"
+					var date_tecno      = "<input type='date' name=date_tecno[]     class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
+					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle" + count_vehicle +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					
+					var html = ""
+					html += "<tr id='tr_vehicle"+count_vehicle+"'>"
+						html +="<td>"+input_placa+"</td>"
+						html +="<td>"+date_soat+"</td>"
+						html +="<td>"+date_impuestos+"</td>"
+						html +="<td>"+date_tecno+"</td>"
+						html +="<td>"+btn_delete+"</td>"
+					html += "</tr>"
+
+					$(table).append(html)
+				});
+			}
+
+
+
+			$("#birthdate").change(function (e) { 
+			  $("#age").val(calcularEdad($(this).val()))
+		  });
+
+
+
+
+
+
 		/* ------------------------------------------------------------------------------- */
 			/*
 				Funcion que capta y envia los datos a desactivar
@@ -214,7 +329,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+2,"¿Esta seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -226,7 +341,7 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+1,"¿Esta seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -239,46 +354,6 @@
 					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
-
-
-
-
-		/* ------------------------------------------------------------------------------- */
-		  /*
-		    Funcion que hace un count de los modulos registrados y el resultado se 
-		    despliega en un select para la seleccion de la posicion del modulo.
-		  */
-		  function contarModulos(select){
-		    $(select).find('option').remove().end().append('<option value="">Seleccione</option>');
-		    $.ajax({
-		          url: ''+document.getElementById('ruta').value+'/api/modulos',
-		          type:'GET',
-		          data: {
-		          	"id_user": id_user,
-					"token"  : tokens,
-				  },
-				  dataType:'JSON',
-				  async: false,
-		          error: function() {
-		       //contarModulos();
-		          },
-		          success: function(respuesta){
-		              var selectRegistrar = Object.keys(respuesta).length +1;
-		              var selectActualizar = Object.keys(respuesta).length;
-		              for(var i = 1; i <= selectRegistrar; i++){
-		              	console.log(selectRegistrar);
-		                agregarOptions(select, i, i);
-		              }
-		              
-		          }
-		      });
-		  }
-
-
-
-					
-
-
 		</script>
 		
 

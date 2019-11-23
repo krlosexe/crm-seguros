@@ -31,7 +31,7 @@
 
 
           <div class="col-md-3">
-            <label for=""><b>Posicion</b></label>
+            <label for=""><b>Posición</b></label>
            <select id="posicion-view" required class="form-control form-group" name="posicion">
             <option value="">Seleccione</option>
           </select>

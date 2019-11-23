@@ -18,7 +18,7 @@
 
            
           <div class="col-md-3">
-              <label for=""><b>Descripcion</b></label>
+              <label for=""><b>Descripción</b></label>
             <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion-edit" placeholder="Descripcion" required>
           </div>
 
@@ -31,7 +31,7 @@
 
 
           <div class="col-md-3">
-            <label for=""><b>Posicion</b></label>
+            <label for=""><b>Posición</b></label>
            <select id="posicion-edit" required class="form-control form-group" name="posicion">
             <option value="">Seleccione</option>
           </select>
