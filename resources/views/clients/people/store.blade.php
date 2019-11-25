@@ -99,7 +99,7 @@
                     <div class="row">
                       <div class="col-sm-4">
                         <label for=""><b>Estrato</b></label>
-                        <input type="text" name="birthdate" class="form-control form-control-user" id="birthdate">
+                        <input type="text" name="stratum" class="form-control form-control-user" id="stratum">
                       </div>
 
 
@@ -107,8 +107,8 @@
                       <div class="col-md-4">
                         <label for=""><br><b>Autoriza tratamiento de datos*</b></label>
                         <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                              <input type="checkbox" name="toggle3" id="toggle3" checked="">
-                              <label for="toggle3"></label>
+                              <input type="checkbox" name="data_treatment" id="data_treatment" checked="">
+                              <label for="data_treatment"></label>
                           </div>
                       </div>
 
@@ -163,11 +163,11 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="address1" name="address[]" placeholder="Direccion 1" require>
+                                <input type="text" class="form-control" id="address1" name="address1" placeholder="Direccion 1" require>
                             </div>
 
                             <div class="col-md-4">
-                              <select name="type_address[]" class="form-control selectize-input items has-options full has-items" id="type_address1">
+                              <select name="type_address1" class="form-control selectize-input items has-options full has-items" id="type_address1">
                                 <option value="Residencial">Residencial</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Otro">Otro</option>
@@ -184,11 +184,11 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Dirección 2</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="address2" name="address[]" placeholder="Direccion 2">
+                                <input type="text" class="form-control" id="address2" name="address2" placeholder="Direccion 2">
                             </div>
 
                             <div class="col-md-4">
-                              <select name="type_address[]" class="form-control selectize-input items has-options full has-items" id="type_address2">
+                              <select name="type_address2" class="form-control selectize-input items has-options full has-items" id="type_address2">
                                 <option value="Residencial">Residencial</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Otro">Otro</option>
@@ -211,11 +211,12 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone1" name="phone[]" placeholder="Telefono 1" require>
+                                <input type="text" class="form-control" id="phone1" name="phone1" placeholder="Telefono 1" require>
                             </div>
 
                             <div class="col-md-4">
-                              <select name="type_phone[]" class="form-control selectize-input items has-options full has-items" id="type_phone1">
+                              <select name="type_phone1" class="form-control selectize-input items has-options full has-items" id="type_phone1">
+                                <option value="Personal">Personal</option>
                                 <option value="Residencial">Residencial</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Otro">Otro</option>
@@ -233,11 +234,12 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Telefono 2</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone2" name="phone[]" placeholder="Telefono 2">
+                                <input type="text" class="form-control" id="phone2" name="phone2" placeholder="Telefono 2">
                             </div>
 
                             <div class="col-md-4">
-                              <select name="type_phone[]" class="form-control selectize-input items has-options full has-items" id="type_phone2">
+                              <select name="type_phone2" class="form-control selectize-input items has-options full has-items" id="type_phone2">
+                                <option value="Personal">Personal</option>
                                 <option value="Residencial">Residencial</option>
                                 <option value="Oficina">Oficina</option>
                                 <option value="Otro">Otro</option>
@@ -560,12 +562,47 @@
                     </div>
                     <br>
 
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
 
 
 
 
+
+            <div class="row">
+            
+              <div class="col-md-12">
+                
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Información laboral</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+                        <label for=""><b>Ocupación *</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation" >
+                          </div>
+                      </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for=""><b>Empresa *</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="company" class="form-control form-control-user" id="company" >
+                          </div>
+                      </div>
+                    </div>
+                    <br>
 
                   </div>
                 </div>
@@ -573,6 +610,8 @@
             </div>
 
           </div>
+
+          
           
         </div>
 

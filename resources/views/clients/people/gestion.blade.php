@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestión de Clientes - Personas</h4>
+					<h4>Gestión de Clientes - Personas.</h4>
 				</div>
 				<div class="row">
 					
@@ -70,12 +70,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/modulos', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/people', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/modulos', '#cuadro2');
+				enviarFormulario("#store", 'api/people', '#cuadro2');
 			}
 
 
@@ -251,9 +251,9 @@
 			function AddChildren(btn, table){
 				$(btn).click(function (e) { 
 					e.preventDefault();
-					var input_name      = "<input type='text' name=name_children[]   class='form-control' placeholder='Nombres'>"
-					var input_phone     = "<input type='text' name=phone_children[]  class='form-control' placeholder='Telefono'>"
-					var input_birthdate = "<input type='date' name=phone_birthdate[] class='form-control' placeholder='Birthdate'>"
+					var input_name      = "<input type='text' name=name_children[]   class='form-control' required placeholder='Nombres'>"
+					var input_phone     = "<input type='text' name=phone_children[]  class='form-control' required placeholder='Telefono'>"
+					var input_birthdate = "<input type='date' name=birthdate_children[] class='form-control' required placeholder='Birthdate'>"
 					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
 					
 					var html = ""
@@ -344,10 +344,7 @@
 					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
-		/* ------------------------------------------------------------------------------- */
-
-
-
+	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
@@ -355,10 +352,6 @@
 				});
 			}
 		</script>
-		
-
-
-
 	@endsection
 
 

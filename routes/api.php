@@ -42,27 +42,12 @@ Route::resource('roles', 'RolesController');
 Route::post('status-rol/{id}/{status}', 'RolesController@status');
 
 
-Route::resource('category', 'CategoryController');
-Route::post('status-category/{id}/{status}', 'CategoryController@status');
 
-
-Route::resource('benefits', 'BenefitsController');
-Route::post('status-benefits/{id}/{status}', 'BenefitsController@status');
-
-Route::resource('customer-support', 'CustomerSupportController');
-Route::post('status-customer-support/{id}/{status}', 'CustomerSupportController@status');
-
-Route::resource('way-to-pay', 'WayYoPayController');
-Route::post('status-way-to-pay/{id}/{status}', 'WayYoPayController@status');
-
-
-Route::resource('countries', 'CountriesController');
-Route::post('status-countries/{id}/{status}', 'CountriesController@status');
+Route::resource('people', 'ClientsPeopleController');
+Route::post('status-people/{id}/{status}', 'ClientsPeopleController@status');
 
 
 
-Route::resource('hosting', 'HostingController');
-Route::post('status-hosting/{id}/{status}', 'HostingController@status');
 
 
 
