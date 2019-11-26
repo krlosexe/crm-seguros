@@ -22,9 +22,10 @@
 										<thead>
 											<tr>
 											
-											<th>Nombre</th>
-											<th>Descripción</th>
-											<th>Posición</th>
+											<th>Nombres</th>
+											<th>Apellidos</th>
+											<th>Tipo de Documento</th>
+											<th>Numero de Documento</th>
 											<th>Fecha de registro</th>
 											<th>Acciones</th>
 											</tr>
@@ -97,7 +98,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/modulos',
+						 "url":''+url+'/api/people',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -106,9 +107,10 @@
 					},
 					"columns":[
 						
-						{"data":"nombre"},
-						{"data":"descripcion"},
-						{"data":"posicion"},
+						{"data":"names"},
+						{"data":"last_names"},
+						{"data":"type_document"},
+						{"data":"number_document"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -176,14 +178,72 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
-					contarModulos("#posicion-view");
+					$("#names_view").val(data.names).attr("disabled", "disabled")
+					$("#last_names_view").val(data.last_names).attr("disabled", "disabled")
+					$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
+					$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
+					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
+					$("#gender_view").val(data.gender).attr("disabled", "disabled")
+					$("#birthdate_view").val(data.birthdate).attr("disabled", "disabled")
+					$("#stratum_view").val(data.stratum).attr("disabled", "disabled")
 
-					$("#nombre-view").val(data.nombre).attr("disabled", "disabled")
-					$("#descripcion-view").val(data.descripcion).attr("disabled", "disabled")
-					$("#icono-view").val(data.icon).attr("disabled", "disabled")
-					$("#posicion-view").val(data.posicion).attr("disabled", "disabled")
-					
-					
+					$("#age_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
+
+					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
+					$("#observations_view").val(data.observations).attr("disabled", "disabled")
+
+
+					$("#department_view").val(data.department).attr("disabled", "disabled")
+					$("#city_view").val(data.city).attr("disabled", "disabled")
+
+					$("#address1_view").val(data.address1).attr("disabled", "disabled")
+					$("#type_address1_view").val(data.type_address1).attr("disabled", "disabled")
+					$("#address2_view").val(data.address2).attr("disabled", "disabled")
+					$("#type_address2_view").val(data.type_address2).attr("disabled", "disabled")
+
+					$("#phone1_view").val(data.phone1).attr("disabled", "disabled")
+					$("#type_phone1_view").val(data.type_phone1).attr("disabled", "disabled")
+					$("#phone2_view").val(data.phone2).attr("disabled", "disabled")
+					$("#type_phone2_view").val(data.type_phone2).attr("disabled", "disabled")
+
+					$("#email_view").val(data.email).attr("disabled", "disabled")
+
+					$("#marital_status_view").val(data.marital_status).attr("disabled", "disabled")
+					$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
+					$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
+
+					data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
+					$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
+
+					if(data.childrens.length > 0){
+						$("#children_view").prop("checked", true)
+						$(".container-datos-adicionales-hijo-view").css("display", "block");
+						ShowChildren("#dato-extra-hijo-container-view", data.childrens, "view")
+					}else{
+						$(".container-datos-adicionales-hijo-view").css("display", "none");
+						$("#children_view").prop("checked", false)
+					}
+
+					if(data.vehicle.length > 0){
+						$("#vehicle_view").prop("checked", true)
+						$(".container-datos-adicionales-vehicle-view").css("display", "block");
+						ShowVehicle("#dato-extra-vehicle-container-view", data.vehicle, "view")
+					}else{
+						$(".container-datos-adicionales-vehicle-view").css("display", "none");
+						$("#vehicle_view").prop("checked", false)
+					}
+
+
+
+					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_view").prop("checked", true)  : $("#send_policies_for_expire_email_view").prop("checked", false) 
+					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_view").prop("checked", true) : $("#send_portfolio_for_expire_email_view").prop("checked", false) 
+					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
+					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
+					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
+
+					$("#occupation_view").val(data.occupation).attr("disabled", "disabled")
+					$("#company_view").val(data.company).attr("disabled", "disabled")
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 			}
@@ -267,6 +327,63 @@
 					$(table).append(html)
 				});
 			}
+
+
+			function ShowChildren(table, data, option){
+				var html = ""
+				$.each(data, function (key, item) { 
+					var input_name      = "<input type='text' name=name_children[] value='"+item.name+"'  class='form-control' required placeholder='Nombres'>"
+					var input_phone     = "<input type='text' name=phone_children[] value='"+item.phone+"'  class='form-control' required placeholder='Telefono'>"
+					var input_birthdate = "<input type='date' name=birthdate_children[] class='form-control' value='"+item.birthdate+"' required placeholder='Birthdate'>"
+					var btn_delete = "" 
+					if(option != "view"){
+						btn_delete = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					}
+					
+					
+					
+					html += "<tr id='tr_childred_"+count_children+"'>"
+						html +="<td>"+input_name+"</td>"
+						html +="<td>"+input_phone+"</td>"
+						html +="<td>"+input_birthdate+"</td>"
+						html +="<td>"+btn_delete+"</td>"
+					html += "</tr>"
+				});	
+					
+
+				$(table).html(html)
+			}
+
+
+
+			function ShowVehicle(table, data, option){
+				var html = ""
+				$.each(data, function (key, item) { 
+
+					var input_placa     = "<input type='text' name=placa_vehicle[] value='"+item.placa+"' class='form-control' placeholder='Placa'>"
+					var date_soat       = "<input type='date' name=date_soat[]     value='"+item.date_soat+"' class='form-control' placeholder='Fecha vencimiento SOAT'>"
+					var date_impuestos  = "<input type='date' name=date_taxes[]    value='"+item.date_taxes+"' class='form-control' placeholder='Fecha pago de impuestos'>"
+					var date_tecno      = "<input type='date' name=date_tecno[]    value='"+item.date_tecno+"' class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
+					var btn_delete = "" 
+
+					if(option != "view"){
+						var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle" + count_vehicle +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					}
+					
+					html += "<tr id='tr_childred_"+count_children+"'>"
+						html +="<td>"+input_placa+"</td>"
+						html +="<td>"+date_soat+"</td>"
+						html +="<td>"+date_impuestos+"</td>"
+						html +="<td>"+date_tecno+"</td>"
+						html +="<td>"+btn_delete+"</td>"
+					html += "</tr>"
+				});	
+					
+
+				$(table).html(html)
+			}
+
+
 
 
 			

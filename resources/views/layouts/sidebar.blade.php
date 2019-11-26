@@ -5,8 +5,8 @@
   <div class="side-nav-inner">
       <div class="side-nav-logo">
           <a href="index.html">
-              <div class="logo logo-dark" style="background-image: url('images/logo/logo.png')"></div>
-              <div class="logo logo-white" style="background-image: url('images/logo/logo-white.png')"></div>
+              <div class="logo logo-dark" style="background-image: url('images/logo/logo.svg')"></div>
+              <div class="logo logo-white" style="background-image: url('images/logo/logo.svg'); padding: 10px !important;"></div>
           </a>
           <div class="mobile-toggle side-nav-toggle">
               <a href="">

@@ -21,7 +21,24 @@ class ClientsPeopleController extends Controller
      */
     public function index()
     {
-        //
+        $modulos = ClientsPeople::select("clients_people.*", "clients_people_contact.*", "clients_people_info_crm.*", "clients_notifications.*", "clients_people_working_information.*","auditoria.*", "user_registro.email as email_regis")
+                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people")
+                                ->join("clients_people_info_crm", "clients_people_info_crm.id_clients_people", "=", "clients_people.id_clients_people")
+                                ->join("clients_notifications", "clients_notifications.id_clients", "=", "clients_people.id_clients_people")
+                                ->join("clients_people_working_information", "clients_people_working_information.id_clients_people", "=", "clients_people.id_clients_people")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "clients_people.id_clients_people")
+                                ->where("auditoria.tabla", "clients_people")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("childrens")
+                                ->with("vehicle")                               
+                                
+                                ->where("auditoria.status", "!=", "0")
+                                ->orderBy("clients_people.id_clients_people", "DESC")
+                                ->get();
+           
+        return response()->json($modulos)->setStatusCode(200);
     }
 
     /**
@@ -78,7 +95,8 @@ class ClientsPeopleController extends Controller
             $auditoria->usr_regins  = $request["id_user"];
             $auditoria->save();
 
-            echo "STRING";
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
 
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
