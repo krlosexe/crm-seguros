@@ -153,6 +153,7 @@
 			function nuevo() {
 				$("#alertas").css("display", "none");
 				$("#store")[0].reset();
+				$(".container-datos-adicionales-hijo").css("display", "none");
 
 
 				showCasa("#own_house", "#number_house")
@@ -261,20 +262,84 @@
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
-
-					contarModulos("#posicion-edit");
-
-					$("#nombre-edit").val(data.nombre)
-					$("#descripcion-edit").val(data.descripcion)
-					$("#icono-edit").val(data.icon)
-					$("#posicion-edit").val(data.posicion)
-					$('#inicial').val(data.posicion)
 					
-					cuadros('#cuadro1', '#cuadro4');
+					$("#names_edit").val(data.names)
+					$("#last_names_edit").val(data.last_names)
+					$("#type_document_edit").val(data.type_document)
+					$("#number_document_edit").val(data.number_document)
+					$("#expedition_date_edit").val(data.expedition_date)
+					$("#gender_edit").val(data.gender)
+					$("#birthdate_edit").val(data.birthdate)
+					$("#stratum_edit").val(data.stratum)
 
-					$("#id_edit").val(data.id_modulo)
+					$("#age_edit").val(calcularEdad(data.birthdate))
 
-					
+					data.data_treatment == 1 ? $("#data_treatment_edit").prop("checked", true) : $("#data_treatment_edit").prop("checked", false) 
+					$("#observations_edit").val(data.observations)
+
+
+					$("#department_edit").val(data.department)
+					$("#city_edit").val(data.city)
+
+					$("#address1_edit").val(data.address1)
+					$("#type_address1_edit").val(data.type_address1)
+					$("#address2_edit").val(data.address2)
+					$("#type_address2_edit").val(data.type_address2)
+
+					$("#phone1_edit").val(data.phone1)
+					$("#type_phone1_edit").val(data.type_phone1)
+					$("#phone2_edit").val(data.phone2)
+					$("#type_phone2_edit").val(data.type_phone2)
+
+					$("#email_edit").val(data.email)
+
+					$("#marital_status_edit").val(data.marital_status)
+					$("#monthly_income_edit").val(data.monthly_income)
+					$("#heritage_edit").val(data.heritage)
+
+					data.own_house == 1 ? $("#own_house_edit").prop("checked", true) : $("#own_house_edit").prop("checked", false) 
+					$("#number_house_edit").val(data.number_house)
+
+					if(data.childrens.length > 0){
+						$("#children_edit").prop("checked", true)
+						$(".container-datos-adicionales-hijo-edit").css("display", "block");
+						ShowChildren("#dato-extra-hijo-container-edit", data.childrens, "edit")
+					}else{
+						$(".container-datos-adicionales-hijo-edit").css("display", "none");
+						$("#children_edit").prop("checked", false)
+					}
+
+					if(data.vehicle.length > 0){
+						$("#vehicle_edit").prop("checked", true)
+						$(".container-datos-adicionales-vehicle-edit").css("display", "block");
+						ShowVehicle("#dato-extra-vehicle-container-edit", data.vehicle, "edit")
+					}else{
+						$(".container-datos-adicionales-vehicle-edit").css("display", "none");
+						$("#vehicle_edit").prop("checked", false)
+					}
+
+
+
+					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
+					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
+					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
+					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
+					data.send_birthday_card              == 1 ? $("#send_birthday_card_edit").prop("checked", true)              : $("#send_birthday_card_edit").prop("checked", false) 
+
+					$("#occupation_edit").val(data.occupation)
+					$("#company_edit").val(data.company)
+
+					$("#id_edit").val(data.id_clients_people)
+
+					showCasa("#own_house_edit", "#number_house_edit")
+					showHijos("#children_edit", ".container-datos-adicionales-hijo-edit")
+
+					AddChildren("#add-children-edit", "#dato-extra-hijo-container-edit")
+
+
+
+
+
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
@@ -283,9 +348,9 @@
 			function showCasa(check, input){
 				$(check).change(function (e) { 
 					if ($(check).is(':checked')){
-						$(input).removeAttr("disabled");
+						$(input).val("").removeAttr("disabled").focus();
 					}else{
-						$(input).attr("disabled", "disabled");
+						$(input).val(0).attr("disabled", "disabled");
 					}
 					
 				});
@@ -294,14 +359,14 @@
 
 
 			function showHijos(check, table){
-
-				$(table).css("display", "none");
-
+				
 				$(check).change(function (e) { 
+					console.log(table)
 					if ($(check).is(':checked')){
 						$(table).css("display", "block");
 					}else{
 						$(table).css("display", "none");
+						$(table+" table tbody tr").remove()
 					}
 					
 				});
@@ -323,7 +388,7 @@
 						html +="<td>"+input_birthdate+"</td>"
 						html +="<td>"+btn_delete+"</td>"
 					html += "</tr>"
-
+					count_children++
 					$(table).append(html)
 				});
 			}
@@ -331,27 +396,34 @@
 
 			function ShowChildren(table, data, option){
 				var html = ""
+
+				var count = 0
+
+				
 				$.each(data, function (key, item) { 
 					var input_name      = "<input type='text' name=name_children[] value='"+item.name+"'  class='form-control' required placeholder='Nombres'>"
 					var input_phone     = "<input type='text' name=phone_children[] value='"+item.phone+"'  class='form-control' required placeholder='Telefono'>"
 					var input_birthdate = "<input type='date' name=birthdate_children[] class='form-control' value='"+item.birthdate+"' required placeholder='Birthdate'>"
 					var btn_delete = "" 
 					if(option != "view"){
-						btn_delete = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+						btn_delete = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_edit_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
 					}
 					
 					
 					
-					html += "<tr id='tr_childred_"+count_children+"'>"
+					html += "<tr id='tr_childred_edit_"+count+"'>"
 						html +="<td>"+input_name+"</td>"
 						html +="<td>"+input_phone+"</td>"
 						html +="<td>"+input_birthdate+"</td>"
 						html +="<td>"+btn_delete+"</td>"
 					html += "</tr>"
+
+
+					count++
 				});	
 					
-
 				$(table).html(html)
+				
 			}
 
 
@@ -432,7 +504,14 @@
 
 			$("#birthdate").change(function (e) { 
 			  $("#age").val(calcularEdad($(this).val()))
-		  });
+		  	});
+
+
+			  $("#birthdate_edit").change(function (e) { 
+				$("#age_edit").val(calcularEdad($(this).val()))
+				});
+
+
 
 
 
