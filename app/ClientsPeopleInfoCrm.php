@@ -12,5 +12,5 @@ class ClientsPeopleInfoCrm extends Model
 
     protected $table         = 'clients_people_info_crm';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_people_info_crm';
+    protected $primaryKey    = 'id_clients_people';
 }

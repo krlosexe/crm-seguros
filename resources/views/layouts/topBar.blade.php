@@ -112,32 +112,32 @@
                       <li>
                           <a href="">
                               <i class="ti-settings pdd-right-10"></i>
-                              <span>Setting</span>
+                              <span>Configuración</span>
                           </a>
                       </li>
                       <li>
                           <a href="">
                               <i class="ti-user pdd-right-10"></i>
-                              <span>Profile</span>
+                              <span>Perfil</span>
                           </a>
                       </li>
                       <li>
                           <a href="">
                               <i class="ti-email pdd-right-10"></i>
-                              <span>Inbox</span>
+                              <span>Mensajes</span>
                           </a>
                       </li>
                       <li role="separator" class="divider"></li>
                       <li>
                           <a href="" id="logout">
                               <i class="ti-power-off pdd-right-10"></i>
-                              <span>Logout</span>
+                              <span>Salir</span>
                           </a>
                       </li>
                   </ul>
               </li>
               <li class="notifications dropdown">
-                  <span class="counter">2</span>
+                  <span class="counter">1</span>
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="ti-bell"></i>
                   </a>
@@ -145,7 +145,7 @@
                   <ul class="dropdown-menu ">
                       <li class="notice-header">
                           <i class="ti-bell pdd-right-10"></i>
-                          <span>Notifications</span>
+                          <span>Novedades</span>
                       </li>
                       <li>
                           <ul class="list-info overflow-y-auto relative scrollable">
@@ -154,72 +154,20 @@
                                       <img class="thumb-img" src="assets/images/avatars/thumb-5.jpg" alt="">
                                       <div class="info">
                                           <span class="title">
-                <span class="font-size-14 text-semibold">Jennifer Watkins</span>
-                                          <span class="text-gray">commented on your <span class="text-dark">post</span></span>
+                <span class="font-size-14 text-semibold">Hebert Noreña</span>
+                                          <span class="text-gray">Solicitud de póliza <span class="text-dark">Cancelación</span></span>
                                           </span>
-                                          <span class="sub-title">5 mins ago</span>
+                                          <span class="sub-title">Hace 5 minutos</span>
                                       </div>
                                   </a>
                               </li>
-                              <li>
-                                  <a href="">
-                                      <img class="thumb-img" src="assets/images/avatars/thumb-4.jpg" alt="">
-                                      <div class="info">
-                                          <span class="title">
-                <span class="font-size-14 text-semibold">Samuel Field</span>
-                                          <span class="text-gray">likes your <span class="text-dark">photo</span></span>
-                                          </span>
-                                          <span class="sub-title">8 hours ago</span>
-                                      </div>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="">
-                                      <span class="thumb-img bg-primary">
-                <span class="text-white">M</span>
-                                      </span>
-                                      <div class="info">
-                                          <span class="title">
-                <span class="font-size-14 text-semibold">Michael Birch</span>
-                                          <span class="text-gray">likes your <span class="text-dark">photo</span></span>
-                                          </span>
-                                          <span class="sub-title">5 hours ago</span>
-                                      </div>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="">
-                                      <span class="thumb-img bg-success">
-              <span class="text-white"><i class="fa fa-paper-plane-o"></i></span>
-                                      </span>
-                                      <div class="info">
-                                          <span class="title">
-                <span class="font-size-14 text-semibold">Message sent</span>
-                                          </span>
-                                          <span class="sub-title">8 hours ago</span>
-                                      </div>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="">
-                                      <span class="thumb-img bg-info">
-              <span class="text-white"><i class="ti-user"></i></span>
-                                      </span>
-                                      <div class="info">
-                                          <span class="title">
-                <span class="font-size-14 text-semibold">Admin</span>
-                                          <span class="text-gray">Welcome on board</span>
-                                          </span>
-                                          <span class="sub-title">8 hours ago</span>
-                                      </div>
-                                  </a>
-                              </li>
+                             
                           </ul>
                       </li>
 
                       <li class="notice-footer">
                           <span>
-                              <a href="" class="text-gray">Check all notifications <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
+                              <a href="" class="text-gray">Ver todas las novedades <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
       </span>
                       </li>
                   </ul>

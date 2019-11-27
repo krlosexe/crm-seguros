@@ -212,7 +212,7 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone1_edit" name="phone1_edit" placeholder="Telefono 1" require>
+                                <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1" require>
                             </div>
 
                             <div class="col-md-4">
@@ -342,7 +342,7 @@
                             <div class="form-group row" style="margin-bottom: 0px !important">
                                 <label for="form-1-1" class="col-md-5 control-label">Casa propia</label>
                                 <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="own_house_edit" id="own_house_edit">
+                                <input type="checkbox" name="own_house" id="own_house_edit">
                                 <label for="own_house_edit"></label>
                               </div>
                             </div>
@@ -372,7 +372,7 @@
                             <div class="form-group row" style="margin-bottom: 0px !important">
                                 <label for="form-1-1" class="col-md-5 control-label">Hijos</label>
                                 <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="children_edit" id="children_edit">
+                                <input type="checkbox" name="children" id="children_edit">
                                 <label for="children_edit"></label>
                               </div>
                             </div>
@@ -435,10 +435,10 @@
                                           <th>Fecha vencimiento tecnomecánica</th>
                                           <th>
                                               
-                                          <!-- <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle">
+                                          <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle-edit">
                                               <i class="fa fa-plus"  aria-hidden="true"></i>
                                           </button>
-                                               -->
+                                              
                                           </th>
                                       </tr>
                                   </thead>
@@ -631,7 +631,7 @@
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro4')">
                 Cancelar
             </button>
-            <button id="send_usuario" class="btn btn-primary btn-user">
+            <button id="send_usuario" class="btn btn-success btn-user">
                 Guardar
             </button>
 

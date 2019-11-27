@@ -14,8 +14,8 @@
 						<div class="card">
 							<div class="card-block">
 								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-primary" style="float: right;">
-										<i class="ei-addthis"></i>
+									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+										<i class="ti-user"></i>
 										<span>Nuevo</span>
 									</button>
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
@@ -132,6 +132,7 @@
 					],
 					"language": idioma_espanol,
 					"dom": 'Bfrtip',
+					"ordering": false,
 					"responsive": true,
 					"buttons":[
 						'copy', 'csv', 'excel', 'pdf', 'print'
@@ -154,7 +155,7 @@
 				$("#alertas").css("display", "none");
 				$("#store")[0].reset();
 				$(".container-datos-adicionales-hijo").css("display", "none");
-
+				$(".container-datos-adicionales-vehicle").css("display", "none");
 
 				showCasa("#own_house", "#number_house")
 
@@ -336,8 +337,10 @@
 
 					showCasa("#own_house_edit", "#number_house_edit")
 					showHijos("#children_edit", ".container-datos-adicionales-hijo-edit")
+					showVehicle("#vehicle_edit", ".container-datos-adicionales-vehicle-edit")
 
 					AddChildren("#add-children-edit", "#dato-extra-hijo-container-edit")
+					AddVehicle("#add-vehicle-edit", "#dato-extra-vehicle-container-edit")
 
 
 
@@ -352,8 +355,10 @@
 				$(check).change(function (e) { 
 					if ($(check).is(':checked')){
 						$(input).val("").removeAttr("disabled").focus();
+						$(input).attr("required", "required");
 					}else{
 						$(input).val(0).attr("disabled", "disabled");
+						$(input).removeAttr("required");
 					}
 					
 				});
@@ -433,7 +438,7 @@
 
 
 			function ShowVehicle(table, data, option){
-				var count_children = 0;
+				var count_vehicle_edit = 0;
 				var html = ""
 				$.each(data, function (key, item) { 
 
@@ -444,16 +449,18 @@
 					var btn_delete = "" 
 
 					if(option != "view"){
-						var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle" + count_vehicle +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+						var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle_edit" + count_vehicle_edit +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
 					}
 					
-					html += "<tr id='tr_childred_"+count_children+"'>"
+					html += "<tr id='tr_vehicle_edit"+count_vehicle_edit+"'>"
 						html +="<td>"+input_placa+"</td>"
 						html +="<td>"+date_soat+"</td>"
 						html +="<td>"+date_impuestos+"</td>"
 						html +="<td>"+date_tecno+"</td>"
 						html +="<td>"+btn_delete+"</td>"
 					html += "</tr>"
+
+					count_vehicle_edit++
 				});	
 					
 
@@ -469,13 +476,12 @@
 
 
 			function showVehicle(check, table){
-				$(table).css("display", "none");
-
 				$(check).change(function (e) { 
 					if ($(check).is(':checked')){
 						$(table).css("display", "block");
 					}else{
 						$(table).css("display", "none");
+						$(table+" table tbody tr").remove()
 					}
 					
 				});
@@ -484,12 +490,12 @@
 			
 			var count_vehicle = 0
 			function AddVehicle(btn, table){
-				$(btn).click(function (e) { 
+				$(btn).unbind().click(function (e) { 
 					e.preventDefault();
-					var input_placa     = "<input type='text' name=placa_vehicle[]  class='form-control' placeholder='Placa'>"
-					var date_soat       = "<input type='date' name=date_soat[]      class='form-control' placeholder='Fecha vencimiento SOAT'>"
-					var date_impuestos  = "<input type='date' name=date_taxes[]     class='form-control' placeholder='Fecha pago de impuestos'>"
-					var date_tecno      = "<input type='date' name=date_tecno[]     class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
+					var input_placa     = "<input type='text' name=placa_vehicle[]  required class='form-control' placeholder='Placa'>"
+					var date_soat       = "<input type='date' name=date_soat[]      required class='form-control' placeholder='Fecha vencimiento SOAT'>"
+					var date_impuestos  = "<input type='date' name=date_taxes[]     required class='form-control' placeholder='Fecha pago de impuestos'>"
+					var date_tecno      = "<input type='date' name=date_tecno[]     required class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
 					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle" + count_vehicle +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
 					
 					var html = ""
@@ -500,6 +506,8 @@
 						html +="<td>"+date_tecno+"</td>"
 						html +="<td>"+btn_delete+"</td>"
 					html += "</tr>"
+
+					count_vehicle++
 
 					$(table).append(html)
 				});
@@ -530,7 +538,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -542,14 +550,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-modulo/'+data.id_modulo+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 		</script>

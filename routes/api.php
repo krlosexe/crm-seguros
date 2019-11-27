@@ -44,7 +44,7 @@ Route::post('status-rol/{id}/{status}', 'RolesController@status');
 
 
 Route::resource('people', 'ClientsPeopleController');
-Route::post('status-people/{id}/{status}', 'ClientsPeopleController@status');
+Route::get('status-people/{id}/{status}', 'ClientsPeopleController@status');
 
 
 

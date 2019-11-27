@@ -12,5 +12,5 @@ class ClientsNotifications extends Model
 
     protected $table         = 'clients_notifications';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_notifications';
+    protected $primaryKey    = 'id_clients';
 }

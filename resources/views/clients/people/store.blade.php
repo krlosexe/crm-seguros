@@ -120,7 +120,7 @@
 
                     <div class="row">
                       <div class="col-md-12">
-                        <label for=""><b>Observaciones*</b></label>
+                        <label for=""><b>Observaciones</b></label>
                         <textarea class="form-control" name="observations" id="observations" cols="30" rows="10"></textarea>
                       </div>
                     </div>
@@ -163,7 +163,7 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="address1" name="address1" placeholder="Direccion 1" require>
+                                <input type="text" class="form-control" id="address1" name="address1" placeholder="Direccion 1" required>
                             </div>
 
                             <div class="col-md-4">
@@ -211,7 +211,7 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone1" name="phone1" placeholder="Telefono 1" require>
+                                <input type="number" class="form-control" id="phone1" name="phone1" placeholder="Telefono 1" required="">
                             </div>
 
                             <div class="col-md-4">
@@ -234,7 +234,7 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Telefono 2</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone2" name="phone2" placeholder="Telefono 2">
+                                <input type="number" class="form-control" id="phone2" name="phone2" placeholder="Telefono 2">
                             </div>
 
                             <div class="col-md-4">
@@ -259,7 +259,7 @@
                           <div class="row">
                             <label for="address1" class="col-md-2 control-label">Email*</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email" require>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                             </div>
                           </div>
                       </div>
@@ -588,7 +588,7 @@
                       <div class="col-md-12">
                         <label for=""><b>Ocupación *</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation" >
+                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation" required>
                           </div>
                       </div>
 
@@ -596,7 +596,7 @@
                     <br>
                     <div class="row">
                       <div class="col-md-12">
-                        <label for=""><b>Empresa *</b></label>
+                        <label for=""><b>Empresa</b></label>
                           <div class="form-group valid-required">
                             <input type="text" name="company" class="form-control form-control-user" id="company" >
                           </div>
@@ -627,7 +627,7 @@
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro2')">
                 Cancelar
             </button>
-            <button id="send_usuario" class="btn btn-primary btn-user">
+            <button id="send_usuario" type="submit" class="btn btn-success btn-user">
                 Registrar
             </button>
 

@@ -12,5 +12,5 @@ class ClientsWorkingInformation extends Model
 
     protected $table         = 'clients_people_working_information';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_people_working_information';
+    protected $primaryKey    = 'id_clients_people';
 }

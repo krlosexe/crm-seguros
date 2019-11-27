@@ -15,7 +15,7 @@ class Login extends Controller
     {	
 
     	$messages = [
-		    'required' => 'El Campo :attribute es requirdo.',
+		    'required' => 'El Campo :El campo es requerido.',
 		];
 
 
@@ -57,12 +57,12 @@ class Login extends Controller
 	    		$data = array('user_id'  => $users[0]->id,
 	    			          'email'    => $users[0]->email,
 	    					  'token'    => $token,
-	    					  'mensagge' => "Ha iniciado sesion exitosamente"
+	    					  'mensagge' => "Ha iniciado sesión exitosamente"
 	    		);
 
 	    		return response()->json($data)->setStatusCode(200);
 	    	}else{
-	    		return response()->json("Usuario o contrasena invalida")->setStatusCode(400);
+	    		return response()->json("Usuario o contraseña inválida")->setStatusCode(400);
 	    	}
         }
 

@@ -168,10 +168,69 @@ class ClientsPeopleController extends Controller
      * @param  \App\ClientsPeople  $clientsPeople
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClientsPeople $clientsPeople)
+    public function update(Request $request, $clientsPeople)
     {
-        //
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+
+            isset($request["data_treatment"]) ? $request["data_treatment"]  = 1 : $request["data_treatment"] = 0;
+            isset($request["own_house"])      ? $request["own_house"]       = 1 : $request["own_house"]      = 0;
+
+            isset($request["send_policies_for_expire_email"])   ? $request["send_policies_for_expire_email"]   = 1 : $request["send_policies_for_expire_email"]  = 0;
+            isset($request["send_portfolio_for_expire_email"])  ? $request["send_portfolio_for_expire_email"]  = 1 : $request["send_portfolio_for_expire_email"] = 0;
+            isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
+            isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
+            isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
+
+
+            $update = ClientsPeople::find($clientsPeople)->update($request->all());
+               ClientsPeopleContact::find($clientsPeople)->update($request->all());
+               ClientsPeopleInfoCrm::find($clientsPeople)->update($request->all());
+               ClientsNotifications::find($clientsPeople)->update($request->all());
+               ClientsWorkingInformation::find($clientsPeople)->update($request->all());
+
+
+               ClientsPeopleChildrens::where('id_clients_people', $clientsPeople)->delete();
+               $this->StoreChildren($request->all(), $clientsPeople);
+
+               ClientsPeopleVehicle::where('id_clients_people', $clientsPeople)->delete();
+               $this->StoreVehicle($request->all(), $clientsPeople);
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
     }
+
+
+
+    public function status($id, $status, Request $request)
+    {
+       
+        $auditoria =  Auditoria::where("cod_reg", $id)
+                                    ->where("tabla", "clients_people")->first();
+
+        $auditoria->status = $status;
+
+        if($status == 0){
+            $auditoria->usr_regmod = $request["id_user"];
+            $auditoria->fec_regmod = date("Y-m-d");
+        }
+        $auditoria->save();
+
+        $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+        return response()->json($data)->setStatusCode(200);
+        
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.

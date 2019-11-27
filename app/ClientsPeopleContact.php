@@ -12,7 +12,7 @@ class ClientsPeopleContact extends Model
 
     protected $table         = 'clients_people_contact';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_people_contact';
+    protected $primaryKey    = 'id_clients_people';
 
 
 }
