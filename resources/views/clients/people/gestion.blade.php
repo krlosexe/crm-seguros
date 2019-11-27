@@ -159,7 +159,10 @@
 				showCasa("#own_house", "#number_house")
 
 				showHijos("#children", ".container-datos-adicionales-hijo")
+				
+
 				AddChildren("#add-children", "#dato-extra-hijo-container")
+				$("#dato-extra-hijo-container").html("")
 
 				showVehicle("#vehicle", ".container-datos-adicionales-vehicle")
 				AddVehicle("#add-vehicle", "#dato-extra-vehicle-container")
@@ -361,7 +364,6 @@
 			function showHijos(check, table){
 				
 				$(check).change(function (e) { 
-					console.log(table)
 					if ($(check).is(':checked')){
 						$(table).css("display", "block");
 					}else{
@@ -372,9 +374,11 @@
 				});
 			}
 	
-			var count_children = 0
+			
 			function AddChildren(btn, table){
-				$(btn).click(function (e) { 
+				var count_children = 0
+				
+				$(btn).unbind().click(function (e) { 
 					e.preventDefault();
 					var input_name      = "<input type='text' name=name_children[]   class='form-control' required placeholder='Nombres'>"
 					var input_phone     = "<input type='text' name=phone_children[]  class='form-control' required placeholder='Telefono'>"
@@ -429,6 +433,7 @@
 
 
 			function ShowVehicle(table, data, option){
+				var count_children = 0;
 				var html = ""
 				$.each(data, function (key, item) { 
 
