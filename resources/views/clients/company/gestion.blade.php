@@ -22,10 +22,8 @@
 										<thead>
 											<tr>
 											
-											<th>Nombres</th>
-											<th>Apellidos</th>
-											<th>Tipo de Documento</th>
-											<th>Numero de Documento</th>
+											<th>Razon Social</th>
+											<th>NIT</th>
 											<th>Fecha de registro</th>
 											<th>Acciones</th>
 											</tr>
@@ -71,12 +69,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/people', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/company', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/people', '#cuadro2');
+				enviarFormulario("#store", 'api/company', '#cuadro2');
 			}
 
 
@@ -98,7 +96,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/people',
+						 "url":''+url+'/api/company',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -107,10 +105,8 @@
 					},
 					"columns":[
 						
-						{"data":"names"},
-						{"data":"last_names"},
-						{"data":"type_document"},
-						{"data":"number_document"},
+						{"data":"business_name"},
+						{"data":"nit"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -183,16 +179,11 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
-					$("#names_view").val(data.names).attr("disabled", "disabled")
-					$("#last_names_view").val(data.last_names).attr("disabled", "disabled")
-					$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
-					$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
+					$("#business_name_view").val(data.business_name).attr("disabled", "disabled")
+					$("#nit_view").val(data.nit).attr("disabled", "disabled")
 					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
-					$("#gender_view").val(data.gender).attr("disabled", "disabled")
-					$("#birthdate_view").val(data.birthdate).attr("disabled", "disabled")
-					$("#stratum_view").val(data.stratum).attr("disabled", "disabled")
-
-					$("#age_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
+					$("#constitution_date_view").val(data.constitution_date).attr("disabled", "disabled")
+					
 
 					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
 					$("#observations_view").val(data.observations).attr("disabled", "disabled")
@@ -217,27 +208,6 @@
 					$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
 					$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
 
-					data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
-					$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
-
-					if(data.childrens.length > 0){
-						$("#children_view").prop("checked", true)
-						$(".container-datos-adicionales-hijo-view").css("display", "block");
-						ShowChildren("#dato-extra-hijo-container-view", data.childrens, "view")
-					}else{
-						$(".container-datos-adicionales-hijo-view").css("display", "none");
-						$("#children_view").prop("checked", false)
-					}
-
-					if(data.vehicle.length > 0){
-						$("#vehicle_view").prop("checked", true)
-						$(".container-datos-adicionales-vehicle-view").css("display", "block");
-						ShowVehicle("#dato-extra-vehicle-container-view", data.vehicle, "view")
-					}else{
-						$(".container-datos-adicionales-vehicle-view").css("display", "none");
-						$("#vehicle_view").prop("checked", false)
-					}
-
 
 
 					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_view").prop("checked", true)  : $("#send_policies_for_expire_email_view").prop("checked", false) 
@@ -245,10 +215,6 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
-
-					$("#occupation_view").val(data.occupation).attr("disabled", "disabled")
-					$("#company_view").val(data.company).attr("disabled", "disabled")
-
 					cuadros('#cuadro1', '#cuadro3');
 				});
 			}
@@ -267,16 +233,11 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#names_edit").val(data.names)
-					$("#last_names_edit").val(data.last_names)
-					$("#type_document_edit").val(data.type_document)
-					$("#number_document_edit").val(data.number_document)
+					$("#business_name_edit").val(data.business_name)
+					$("#nit_edit").val(data.nit)
 					$("#expedition_date_edit").val(data.expedition_date)
-					$("#gender_edit").val(data.gender)
-					$("#birthdate_edit").val(data.birthdate)
-					$("#stratum_edit").val(data.stratum)
-
-					$("#age_edit").val(calcularEdad(data.birthdate))
+					$("#constitution_date_edit").val(data.constitution_date)
+					
 
 					data.data_treatment == 1 ? $("#data_treatment_edit").prop("checked", true) : $("#data_treatment_edit").prop("checked", false) 
 					$("#observations_edit").val(data.observations)
@@ -301,27 +262,6 @@
 					$("#monthly_income_edit").val(data.monthly_income)
 					$("#heritage_edit").val(data.heritage)
 
-					data.own_house == 1 ? $("#own_house_edit").prop("checked", true) : $("#own_house_edit").prop("checked", false) 
-					$("#number_house_edit").val(data.number_house)
-
-					if(data.childrens.length > 0){
-						$("#children_edit").prop("checked", true)
-						$(".container-datos-adicionales-hijo-edit").css("display", "block");
-						ShowChildren("#dato-extra-hijo-container-edit", data.childrens, "edit")
-					}else{
-						$(".container-datos-adicionales-hijo-edit").css("display", "none");
-						$("#children_edit").prop("checked", false)
-					}
-
-					if(data.vehicle.length > 0){
-						$("#vehicle_edit").prop("checked", true)
-						$(".container-datos-adicionales-vehicle-edit").css("display", "block");
-						ShowVehicle("#dato-extra-vehicle-container-edit", data.vehicle, "edit")
-					}else{
-						$(".container-datos-adicionales-vehicle-edit").css("display", "none");
-						$("#vehicle_edit").prop("checked", false)
-					}
-
 
 
 					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
@@ -329,23 +269,8 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
 					data.send_birthday_card              == 1 ? $("#send_birthday_card_edit").prop("checked", true)              : $("#send_birthday_card_edit").prop("checked", false) 
-
-					$("#occupation_edit").val(data.occupation)
-					$("#company_edit").val(data.company)
-
-					$("#id_edit").val(data.id_clients_people)
-
-					showCasa("#own_house_edit", "#number_house_edit")
-					showHijos("#children_edit", ".container-datos-adicionales-hijo-edit")
-					showVehicle("#vehicle_edit", ".container-datos-adicionales-vehicle-edit")
-
-					AddChildren("#add-children-edit", "#dato-extra-hijo-container-edit")
-					AddVehicle("#add-vehicle-edit", "#dato-extra-vehicle-container-edit")
-
-
-
-
-
+					
+					$("#id_edit").val(data.id_clients_company)
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
@@ -538,7 +463,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -550,14 +475,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 		</script>

@@ -48,6 +48,13 @@ Route::get('status-people/{id}/{status}', 'ClientsPeopleController@status');
 
 
 
+Route::resource('company', 'ClientsCompanyController');
+Route::get('status-company/{id}/{status}', 'ClientsCompanyController@status');
+
+
+
+
+
 
 
 

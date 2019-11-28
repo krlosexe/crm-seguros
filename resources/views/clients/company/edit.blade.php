@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Editar de Clientes - Personas</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Editar de Clientes - Empresas</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
@@ -23,18 +23,20 @@
                   </div>
                   <div class="card-body">
 
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for=""><b>Nombres*</b></label>
+                  <div class="row">
+                    
+
+                    <div class="col-md-6">
+                        <label for=""><b>Razón social *</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="names" class="form-control form-control-user" id="names_edit" placeholder="Nombre" required>
+                            <input type="text" name="business_name" class="form-control form-control-user" id="business_name_edit" placeholder="Razón social" required>
                           </div>
                       </div>
 
                       <div class="col-md-6">
-                        <label for=""><b>Apellidos*</b></label>
+                        <label for=""><b>NIT*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="last_names" class="form-control form-control-user" id="last_names_edit" placeholder="Apellidos" required>
+                            <input type="text" name="nit" class="form-control form-control-user" id="nit_edit" placeholder="NIT" required>
                           </div>
                       </div>
                     </div>
@@ -42,69 +44,21 @@
 
                     <div class="row">
                     
-                      <div class="col-sm-4">
-                          <label for=""><b>Tipo de documento*</b></label>
-                          <select name="type_document" class="form-control selectized" id="type_document_edit" required>
-                            <option value="">Seleccione</option>
-                            <option value="Cedula">Cedula</option>
-                            <option value="Cedula de Extrangeria">Cedula de Extrangeria</option>
-                            <option value="RUC">RUC</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                            <option value="NUIP">NUIP</option>
-                            <option value="Tarjeta de indentidad">Tarjeta de indentidad</option>
-                          </select>
-                        </div>
-
-
-                        <div class="col-sm-4">
-                          <label for=""><b>Numero documento*</b></label>
-                          <input type="text" name="number_document" class="form-control form-control-user" id="number_document_edit" required>
-                        </div>
-
-
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                           <label for=""><b>Fecha expedicion</b></label>
                           <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
                         </div>
+
+                        <div class="col-sm-6">
+                          <label for=""><b>Fecha Constitucion</b></label>
+                          <input type="date" name="constitution_date" class="form-control form-control-user" id="constitution_date_edit">
+                        </div>
+
                     </div>
-
-                    <br>
-                      
-
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <label for=""><b>Genero*</b></label>
-                        <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender_edit" required>
-                          <option value="">Seleccione</option>
-                          <option value="Masculino">Masculino</option>
-                          <option value="Femenino">Femenino</option>
-                        </select>
-                      </div>
-
-
-                      <div class="col-sm-4">
-                        <label for=""><b>Fecha nacimiento*</b></label>
-                        <input type="date" name="birthdate" class="form-control form-control-user" id="birthdate_edit"  required>
-                      </div>
-
-
-                      <div class="col-sm-2">
-                        <label for=""><b>Edad</b></label>
-                        <input type="text" name="age" class="form-control form-control-user" id="age_edit"  disabled>
-                      </div>
-                    </div>
-
 
                     <br>
 
                     <div class="row">
-                      <div class="col-sm-4">
-                        <label for=""><b>Estrato</b></label>
-                        <input type="text" name="stratum" class="form-control form-control-user" id="stratum_edit">
-                      </div>
-
-
-
                       <div class="col-md-4">
                         <label for=""><br><b>Autoriza tratamiento de datos*</b></label>
                         <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
@@ -121,7 +75,7 @@
 
                     <div class="row">
                       <div class="col-md-12">
-                        <label for=""><b>Observaciones*</b></label>
+                        <label for=""><b>Observaciones</b></label>
                         <textarea class="form-control" name="observations" id="observations_edit" cols="30" rows="10"></textarea>
                       </div>
                     </div>
@@ -201,12 +155,6 @@
                     <br>
 
 
-
-
-
-
-
-
                     <div class="row">
                       <div class="form-group col-md-12">
                           <div class="row">
@@ -279,183 +227,6 @@
 
 
           <div class="col-md-6">
-
-            <div class="row">
-
-              <div class="col-md-12">
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Informacion CRM</h6>
-                  </div>
-                  <div class="card-body">
-
-
-                    <div class="row">
-
-                      <div class="col-md-12">
-                        <label for=""><b>Estado civil</b></label>
-                          <select name="marital_status" class="form-control selectize-input items has-options full has-items" id="marital_status_edit">
-                            <option value="">Seleccione</option>
-                            <option value="Soltero">Soltero</option>ss
-                            <option value="Casado">Casado</option>
-                            <option value="Divorciado">Divorciado</option>
-                            <option value="Unión Libre">Unión Libre</option>
-                            <option value="Seperado">Seperado</option>
-                            <option value="Viudo">Viudo</option>
-                        </select>
-                      </div>
-
-                    </div>
-
-
-                    <br>
-
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for=""><b>Ingreso mensual</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="monthly_income" class="form-control form-control-user" id="monthly_income_edit" >
-                          </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <label for=""><b>Patrimonio</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="heritage" class="form-control form-control-user" id="heritage_edit" >
-                          </div>
-                      </div>
-                      
-                    </div>
-
-
-                    <br>
-
-                    <div class="row">
-
-
-                    <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Casa propia</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="own_house" id="own_house_edit">
-                                <label for="own_house_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-6 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-4 control-label">No. Casas</label>
-                                <div class="col-md-6">
-                                    <input type="number" class="form-control" id="number_house_edit" name="number_house" disabled>
-                                </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-
-
-
-
-
-                      <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Hijos</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="children" id="children_edit">
-                                <label for="children_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="container-datos-adicionales-hijo-edit col-sm-12" style="display: none;">
-                              <table class="table table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Nombre</th>
-                                          <th>Teléfono</th>
-                                          <th>Fecha nacimiento</th>
-                                          <th>
-                                              
-                                           <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-children-edit">
-                                                <i class="fa fa-plus"  aria-hidden="true"></i>
-                                            </button>
-                                              
-                                          </th>
-                                      </tr>
-                                  </thead>
-                                  <tbody id="dato-extra-hijo-container-edit"></tbody>
-                              </table>
-                          </div>
-
-                        </div>
-                      </div>
-
-
-
-
-
-
-
-
-
-
-
-                      <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Vehículo</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="vehicle_edit" id="vehicle_edit">
-                                <label for="vehicle_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="container-datos-adicionales-vehicle-edit col-sm-12" style="display: none;">
-                              <table class="table table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Placa</th>
-                                          <th>Fecha vencimiento SOAT</th>
-                                          <th>Fecha pago de impuestos</th>
-                                          <th>Fecha vencimiento tecnomecánica</th>
-                                          <th>
-                                              
-                                          <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle-edit">
-                                              <i class="fa fa-plus"  aria-hidden="true"></i>
-                                          </button>
-                                              
-                                          </th>
-                                      </tr>
-                                  </thead>
-                                  <tbody id="dato-extra-vehicle-container-edit"></tbody>
-                              </table>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
 
             <div class="row">
             
@@ -569,53 +340,9 @@
             </div>
 
 
-
-
-
-
-
-            <div class="row">
-            
-              <div class="col-md-12">
-                
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Información laboral</h6>
-                  </div>
-                  <div class="card-body">
-
-                    <div class="row">
-
-                      <div class="col-md-12">
-                        <label for=""><b>Ocupación *</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation_edit" >
-                          </div>
-                      </div>
-
-                    </div>
-                    <br>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label for=""><b>Empresa *</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="company" class="form-control form-control-user" id="company_edit" >
-                          </div>
-                      </div>
-                    </div>
-                    <br>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
-
-          
           
         </div>
-
 
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">

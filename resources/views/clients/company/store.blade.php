@@ -23,6 +23,7 @@
                   <div class="card-body">
 
                     <div class="row">
+                    
 
                     <div class="col-md-6">
                         <label for=""><b>Razón social *</b></label>
