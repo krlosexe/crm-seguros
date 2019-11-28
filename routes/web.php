@@ -51,11 +51,13 @@ Route::get('funciones', function () {
 });
 
 
-
-
-
 Route::get('people', function () {
     return view('clients.people.gestion');
+});
+
+
+Route::get('company', function () {
+    return view('clients.company.gestion');
 });
 
 
