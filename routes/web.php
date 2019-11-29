@@ -62,6 +62,11 @@ Route::get('company', function () {
 
 
 
+Route::get('consortium', function () {
+    return view('clients.consortium.gestion');
+});
+
+
 
 
 
