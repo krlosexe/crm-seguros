@@ -142,7 +142,7 @@
     <script src="vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
     <script src="vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
     <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
-
+    <!-- <script src="js/forms/form-elements.js"></script> -->
 <!-- page js -->
 
     <!-- build:js   js/app.min.js -->

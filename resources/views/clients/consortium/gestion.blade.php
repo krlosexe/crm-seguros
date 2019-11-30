@@ -69,12 +69,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/company', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/consortium', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/company', '#cuadro2');
+				enviarFormulario("#store", 'api/consortium', '#cuadro2');
 			}
 
 
@@ -96,7 +96,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/company',
+						 "url":''+url+'/api/consortium',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -105,8 +105,8 @@
 					},
 					"columns":[
 						
-						{"data":"business_name"},
-						{"data":"nit"},
+						{"data":"name"},
+						{"data":"identification"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -169,42 +169,11 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
-					$("#business_name_view").val(data.business_name).attr("disabled", "disabled")
-					$("#nit_view").val(data.nit).attr("disabled", "disabled")
-					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
-					$("#constitution_date_view").val(data.constitution_date).attr("disabled", "disabled")
+					$("#name_consortium_view").val(data.name).attr("disabled", "disabled")
+					$("#identification_consortium_view").val(data.identification).attr("disabled", "disabled")
 					
 
-					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
-					$("#observations_view").val(data.observations).attr("disabled", "disabled")
-
-
-					$("#department_view").val(data.department).attr("disabled", "disabled")
-					$("#city_view").val(data.city).attr("disabled", "disabled")
-
-					$("#address1_view").val(data.address1).attr("disabled", "disabled")
-					$("#type_address1_view").val(data.type_address1).attr("disabled", "disabled")
-					$("#address2_view").val(data.address2).attr("disabled", "disabled")
-					$("#type_address2_view").val(data.type_address2).attr("disabled", "disabled")
-
-					$("#phone1_view").val(data.phone1).attr("disabled", "disabled")
-					$("#type_phone1_view").val(data.type_phone1).attr("disabled", "disabled")
-					$("#phone2_view").val(data.phone2).attr("disabled", "disabled")
-					$("#type_phone2_view").val(data.type_phone2).attr("disabled", "disabled")
-
-					$("#email_view").val(data.email).attr("disabled", "disabled")
-
-					$("#marital_status_view").val(data.marital_status).attr("disabled", "disabled")
-					$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
-					$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
-
-
-
-					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_view").prop("checked", true)  : $("#send_policies_for_expire_email_view").prop("checked", false) 
-					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_view").prop("checked", true) : $("#send_portfolio_for_expire_email_view").prop("checked", false) 
-					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
-					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
-					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
+					ShowPartners("#table-partner-view", data.partners_people, data.partners_company, "view")
 					cuadros('#cuadro1', '#cuadro3');
 				});
 			}
@@ -223,44 +192,18 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#business_name_edit").val(data.business_name)
-					$("#nit_edit").val(data.nit)
-					$("#expedition_date_edit").val(data.expedition_date)
-					$("#constitution_date_edit").val(data.constitution_date)
-					
-
-					data.data_treatment == 1 ? $("#data_treatment_edit").prop("checked", true) : $("#data_treatment_edit").prop("checked", false) 
-					$("#observations_edit").val(data.observations)
+					$("#name_consortium_edit").val(data.name)
+					$("#identification_consortium_edit").val(data.identification)
 
 
-					$("#department_edit").val(data.department)
-					$("#city_edit").val(data.city)
-
-					$("#address1_edit").val(data.address1)
-					$("#type_address1_edit").val(data.type_address1)
-					$("#address2_edit").val(data.address2)
-					$("#type_address2_edit").val(data.type_address2)
-
-					$("#phone1_edit").val(data.phone1)
-					$("#type_phone1_edit").val(data.type_phone1)
-					$("#phone2_edit").val(data.phone2)
-					$("#type_phone2_edit").val(data.type_phone2)
-
-					$("#email_edit").val(data.email)
-
-					$("#marital_status_edit").val(data.marital_status)
-					$("#monthly_income_edit").val(data.monthly_income)
-					$("#heritage_edit").val(data.heritage)
+					GetClients("#clients-store-edit");
+					AddPartner("#add-partner-edit", "#table-partner-edit", "#clients-store-edit")
 
 
 
-					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
-					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
-					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
-					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
-					data.send_birthday_card              == 1 ? $("#send_birthday_card_edit").prop("checked", true)              : $("#send_birthday_card_edit").prop("checked", false) 
-					
-					$("#id_edit").val(data.id_clients_company)
+					ShowPartners("#table-partner-edit", data.partners_people, data.partners_company, "edit")
+
+					$("#id_edit").val(data.id_clients_consortium)
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
@@ -273,20 +216,110 @@
 				$(btn).unbind().click(function (e) { 
 					e.preventDefault();
 
-					var name_client = $(select+" option:selected").text()
 
-					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_partner_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+
+					var name_client  = $(select+" option:selected").text()
+					var value_select = $(select).val()
+					var array_select = value_select.split("|") 
+					var type_client  = array_select[1]
+
+					var valid_data = true
+
+					$(table+" tr").each(function (index, element) {
+						var id_client = $(this).find(".id_client").val()
+						var type      = $(this).find(".type_client").val()
+
+						if((id_client == array_select[0]) && (type_client == type)){
+							valid_data =  false;
+						}
+						
+					});
+
+					if(value_select != "null"){
+						if(valid_data){
+							var input_client = "<input type='hidden' name='id_client[]'   class='id_client' value='"+array_select[0]+"'>"
+							var input_type   = "<input type='hidden' name='type_client[]' class='type_client' value='"+type_client+"'>"
+
+							var btn_delete   = "<button type='button' onclick='DeleteTr(\"" + "#tr_partner_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+							
+							var html = ""
+							html += "<tr id='tr_partner_"+count_children+"'>"
+								html +="<td>"+name_client+input_client+input_type+"</td>"
+								html +="<td>"+btn_delete+"</td>"
+							html += "</tr>"
+							count_children++
+							$(table).append(html)
+						}else{
+							warning("El cliente ya fue agredado")
+						}
+					}else{
+						warning("Debe seleccionar un cliente")
+					}
 					
-					var html = ""
-					html += "<tr id='tr_partner_"+count_children+"'>"
-						html +="<td>"+name_client+"</td>"
-						html +="<td>"+btn_delete+"</td>"
-					html += "</tr>"
-					count_children++
-					$(table).append(html)
+					
 				});
 			}
 
+
+
+
+			function ShowPartners(table, peopels, company, mode){
+
+				$(table+" tr").remove()
+				
+				var count  = 0;
+				$.each(peopels, function (key, item) { 
+					var html = "";
+
+					var input_client = ""
+					var input_type   = ""
+					var btn_delete   = ""
+
+					if(mode == "edit"){
+						var input_client = "<input type='hidden' name='id_client[]'   class='id_client' value='"+item.id_client_people+"'>"
+						var input_type   = "<input type='hidden' name='type_client[]' class='type_client' value='0'>"
+
+						var btn_delete   = "<button type='button' onclick='DeleteTr(\"" + "#tr_partner_people_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					}
+
+
+					html += "<tr id='tr_partner_people_"+count+"'>"
+						html += "<td>"+item.names+" "+item.last_names+input_client+input_type+"</td>"
+						html += "<td>"+btn_delete+"</td>"
+					html += "</tr>"
+
+					$(table).append(html);
+					count++;
+				});
+
+
+				$.each(company, function (key, item) { 
+					count++;
+					var html = "";
+
+
+					var input_client = ""
+					var input_type   = ""
+					var btn_delete   = ""
+
+					if(mode == "edit"){
+						var input_client = "<input type='hidden' name='id_client[]'   class='id_client' value='"+item.id_client_company+"'>"
+						var input_type   = "<input type='hidden' name='type_client[]' class='type_client' value='1'>"
+
+						var btn_delete   = "<button type='button' onclick='DeleteTr(\"" + "#tr_partner_company_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+					}
+
+
+
+					html += "<tr id='tr_partner_company_"+count+"'>"
+						html += "<td>"+item.business_name+input_client+input_type+"</td>"
+						html += "<td>"+btn_delete+"</td>"
+					html += "</tr>"
+
+					$(table).append(html);
+				});
+
+			}
 
 
 		/* ------------------------------------------------------------------------------- */

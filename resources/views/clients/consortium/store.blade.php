@@ -26,14 +26,14 @@
                       <div class="col-md-12">
                         <label for=""><b>Nombre del consorcio *</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="name_consortium" class="form-control form-control-user" id="name_consortium" placeholder="Nombre del consorcio" required>
+                            <input type="text" name="name" class="form-control form-control-user" id="name_consortium" placeholder="Nombre del consorcio" required>
                           </div>
                       </div>
 
                         <div class="col-md-12">
                           <label for=""><b>Identificación del consorcio*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="identification_consortium" class="form-control form-control-user" id="identification_consortium" placeholder="Identificación del consorcio" required>
+                            <input type="text" name="identification" class="form-control form-control-user" id="identification_consortium" placeholder="Identificación del consorcio" required>
                           </div>
                       </div>
                     </div>
@@ -68,11 +68,9 @@
 
                       <div class="col-md-8">
                         <label for=""><b>Cliente *</b></label>
-                          <div class="form-group valid-required">
-                            <select id="clients-store" class="form-control">
-                              <option value="">Seleccione</option>
-                            </select>
-                          </div>
+                          <select id="clients-store">
+                              <option value="" disabled selected>Select a person...</option>
+                          </select>
                       </div>
 
 
