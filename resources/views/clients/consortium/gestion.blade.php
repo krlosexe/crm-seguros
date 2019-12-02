@@ -329,7 +329,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-consortium/'+data.id_clients_consortium+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -341,14 +341,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-consortium/'+data.id_clients_consortium+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-company/'+data.id_clients_company+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-consortium/'+data.id_clients_consortium+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 		</script>

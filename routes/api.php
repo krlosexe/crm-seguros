@@ -58,6 +58,14 @@ Route::get('clients', 'ClientsController@GetClients');
 
 
 
+Route::resource('insurers', 'InsurersController');
+Route::get('status-insurers/{id}/{status}', 'InsurersController@status');
+
+
+
+Route::resource('branchs', 'BranchsController');
+Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
+
 
 
 

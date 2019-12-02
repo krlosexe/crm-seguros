@@ -114,10 +114,66 @@ class ClientsConsortiumController extends Controller
      * @param  \App\ClientsConsortium  $clientsConsortium
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClientsConsortium $clientsConsortium)
+    public function update(Request $request, $clientsConsortium)
     {
-        //
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+            $update = ClientsConsortium::find($clientsConsortium)->update($request->all());
+            ConsortiumPartners::where('id_clients_consortium', $clientsConsortium)->delete();
+
+
+            foreach($request["id_client"] as $key => $value){
+                $request["id_client_people"]  = null;
+                $request["id_client_company"] = null;
+                
+                if($request["type_client"][$key] == 0){
+                    $request["id_client_people"] = $value;
+                }else{
+                    $request["id_client_company"] = $value;
+                }
+                $request["id_clients_consortium"] = $clientsConsortium;
+                ConsortiumPartners::create($request->all());
+            }
+
+
+
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
     }
+
+
+
+
+    public function status($id, $status, Request $request)
+    {
+       
+        $auditoria =  Auditoria::where("cod_reg", $id)
+                                    ->where("tabla", "consortium")->first();
+
+        $auditoria->status = $status;
+
+        if($status == 0){
+            $auditoria->usr_regmod = $request["id_user"];
+            $auditoria->fec_regmod = date("Y-m-d");
+        }
+        $auditoria->save();
+
+        $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+        return response()->json($data)->setStatusCode(200);
+        
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.
