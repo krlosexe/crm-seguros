@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Insurers;
+use App\InsurersBranchs;
 use App\Auditoria;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,9 @@ class InsurersController extends Controller
                                 ->join("auditoria", "auditoria.cod_reg", "=", "insurers.id_insurers")
                                 ->where("auditoria.tabla", "insurers")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("Branchs")
+
                                 ->where("auditoria.status", "!=", "0")
                                 ->orderBy("insurers.id_insurers", "DESC")
                                 ->get();
@@ -45,8 +49,22 @@ class InsurersController extends Controller
     public function store(Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-          
-            $store = Insurers::create($request->all());
+            
+
+            $store                   = Insurers::create($request->all());
+            $request["id_insurers"]  = $store->id_insurers;
+
+           if(isset($request["id_branch"])){
+                foreach($request["id_branch"] as $key => $value){
+
+                    $request["id_branch"]             = $value;
+                    $request["commission_percentage"] = $request["commission_percentages"][$key];
+                    $request["vat_percentage"]        = $request["vat_percentages"][$key];
+
+                    InsurersBranchs::create($request->all());
+                }
+           }        
+            
 
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "insurers";
@@ -102,6 +120,22 @@ class InsurersController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
             $update = Insurers::find($insurers)->update($request->all());
+
+            InsurersBranchs::where('id_insurers', $insurers)->delete();
+
+            $request["id_insurers"]  = $insurers;
+            if(isset($request["id_branch"])){
+                foreach($request["id_branch"] as $key => $value){
+
+                    $request["id_branch"]             = $value;
+                    $request["commission_percentage"] = $request["commission_percentages"][$key];
+                    $request["vat_percentage"]        = $request["vat_percentages"][$key];
+
+                    InsurersBranchs::create($request->all());
+                }
+           }
+
+
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    

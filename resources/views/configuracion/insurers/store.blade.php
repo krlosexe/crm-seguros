@@ -8,10 +8,9 @@
       
         @csrf
 
-
         <div class="row">
           
-          <div class="col-md-12">
+          <div class="col-md-6">
 
             <div class="row">
 
@@ -57,13 +56,17 @@
                           </div>
                       </div>
 
-                      <div class="col-md-6">
 
-                        <label for=""><b>Direccion </b></label>
+                      <div class="col-md-6">
+                        <label for=""><b>Telefono </b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="address" class="form-control form-control-user" id="address" placeholder="Direccion">
+                            <input type="text" name="phone" class="form-control form-control-user" id="phone" placeholder="Telefono">
                           </div>
                       </div>
+
+
+
+                      
 
                        <br>
                    </div>
@@ -72,15 +75,7 @@
 
                     <div class="row">
 
-                      <div class="col-md-6">
-
-                        <label for=""><b>Telefono </b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="phone" class="form-control form-control-user" id="phone" placeholder="Telefono">
-                          </div>
-                      </div>
-
-                      <div class="col-md-6">
+                      <div class="col-md-12">
 
                         <label for=""><b>Cuenta Bancaria </b></label>
                           <div class="form-group valid-required">
@@ -88,31 +83,20 @@
                           </div>
                       </div>
 
-
-
-
-
-                      <div class="col-md-4">
-                          <label for=""><b>Aseguradora*</b></label>
-                            <div class="form-group valid-required">
-                            <select id="selectize-tags-1" name="person" multiple class="item-info">
-                              <option value="" disabled selected>Select a person...</option>
-                              <option value="1">Adam</option>
-                              <option value="2" selected>Amalie</option>
-                              <option value="3">Estefanía</option>
-                              <option value="4">Adrian</option>
-                              <option value="5">Wladimir</option>
-                              <option value="6">Samantha</option>
-                              <option value="7">Nicole</option>
-                              <option value="8" selected>Michael</option>
-                          </select>
-                            </div>
-                        </div>
-
-                        
                       <br>
+
+
+                      <div class="col-md-12">
+                        <label for=""><b>Direccion </b></label>
+                          <div class="form-group valid-required">
+                            <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
+                          </div>
+                      </div>
+
+
                    </div>
 
+                  </div>
                 </div>
               </div>
             </div>
@@ -121,8 +105,67 @@
 
 
 
-          
-          
+
+          <div class="col-md-6">
+
+
+            <div class="row">
+            
+              <div class="col-md-12">
+                
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Ramos</h6>
+                  </div>
+                  <div class="card-body">
+                    
+
+                    <div class="row">
+
+                      <div class="col-md-8">
+                        <label for=""><b>Ramos *</b></label>
+                          <select id="branchs">
+                              <option value="" disabled selected>Select a person...</option>
+                          </select>
+                      </div>
+
+
+                      <div class="col-md-4">
+                        <label for=""><b><br></b></label>
+                          <div class="form-group valid-required">
+                          <button type="button"  class="btn btn-primary btn-user" id="add-branch">
+                              Agregar <i class="ei-addthis"></i>
+                          </button>
+                          </div>
+                      </div>
+
+
+                      <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Porcentaje de Comisión</th>
+                                    <th>Porcentaje de IVA</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-branch"></tbody>
+                        </table>
+                      </div>
+
+
+                    
+                    </div>
+                    <br>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         <!---END ROW-->
@@ -131,7 +174,6 @@
         <input type="hidden" name="token" class="token">
           <br>
           <br>
-        </div>
           <center>
 
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro2')">

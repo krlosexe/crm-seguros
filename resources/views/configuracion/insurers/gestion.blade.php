@@ -165,6 +165,10 @@
 			function nuevo() {
 				$("#alertas").css("display", "none");
 				$("#store")[0].reset();
+
+				GetRamos("#branchs")
+
+				AddBranch( "#add-branch", "#table-branch","#branchs")
 				cuadros("#cuadro1", "#cuadro2");
 			}
 
@@ -186,6 +190,8 @@
 					$("#address_view").val(data.address).attr("disabled", "disabled")
 					$("#phone_view").val(data.phone).attr("disabled", "disabled")
 					$("#bank_account_view").val(data.bank_account).attr("disabled", "disabled")
+
+					ShowDataBranchs("#table-branch-view", data.branchs, "view")
 
 					
 					cuadros('#cuadro1', '#cuadro3');
@@ -213,11 +219,93 @@
 					$("#phone_edit").val(data.phone)
 					$("#bank_account_edit").val(data.bank_account)
 
-
+					GetRamos("#branchs-edit")
+					ShowDataBranchs("#table-branch-edit", data.branchs, "edit")
+					AddBranch( "#add-branch-edit", "#table-branch-edit","#branchs-edit")
+					
 					$("#id_edit").val(data.id_insurers)
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
+
+
+
+
+
+
+
+			function AddBranch(btn, table, select){
+				var count = 0
+				
+				$(btn).unbind().click(function (e) { 
+					e.preventDefault();
+
+					var name_branch  = $(select+" option:selected").text()
+					var value_select = $(select).val()
+					var valid_data = true
+
+					$(table+" tr").each(function (index, element) {
+						var id_branch = $(this).find(".id_branch").val()
+						if((id_branch == value_select)){
+							valid_data =  false;
+						}
+						
+					});
+
+					if(value_select != "null"){
+						if(valid_data){
+							var input_client = "<input type='hidden' name='id_branch[]'   class='id_branch' value='"+value_select+"'>"
+							var btn_delete   = "<button type='button' onclick='DeleteTr(\"" + "#tr_branch_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+							
+							var html = ""
+							html += "<tr id='tr_branch_"+count+"'>"
+								html +="<td>"+name_branch+input_client+"</td>"
+								html +="<td><input type='text' class='form-control' name='commission_percentages[]' required></td>"
+								html +="<td><input type='text' class='form-control' name='vat_percentages[] required'></td>"
+								html +="<td>"+btn_delete+"</td>"
+							html += "</tr>"
+							count++
+							$(table).append(html)
+						}else{
+							warning("El ramo ya fue agredado")
+						}
+					}else{
+						warning("Debe seleccionar un ramo")
+					}
+					
+					
+				});
+			}
+
+
+
+
+
+			function ShowDataBranchs(table, data, option) { 
+
+				var html  = ""
+				var count = ""
+
+				$.each(data, function (key, item) { 
+
+					var input_client = "<input type='hidden' name='id_branch[]'   class='id_branch' value='"+item.id_branch+"'>"
+					var btn_delete   = "<button type='button' onclick='DeleteTr(\"" + "#tr_branch_edit_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+							
+					html += "<tr id='tr_branch_edit_"+count+"'>"
+						html +="<td>"+item.name+input_client+"</td>"
+						html +="<td><input type='text' class='form-control' name='commission_percentages[]' value='"+item.commission_percentage+"' required></td>"
+						html +="<td><input type='text' class='form-control' name='vat_percentages[]' value='"+item.vat_percentage+"' required></td>"
+						if(option == "edit"){
+							html +="<td>"+btn_delete+"</td>"
+						}
+						
+					html += "</tr>"
+
+				});
+
+				$(table).html(html)
+			}
+
 
 
 
