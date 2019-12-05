@@ -159,13 +159,14 @@
 
 				GetInsurers("#insurers")
 
+				GetBranchByInsurers("#insurers", "#branch")
+				GetClients("#clients");
+
+				ChangeSelectBranch("#branch")
+
+
 				cuadros("#cuadro1", "#cuadro2");
 			}
-
-			$("#insurers").change(function (e) { 
-				alert($(this).val())
-			});
-			
 
 			/* ------------------------------------------------------------------------------- */
 			/* 
@@ -344,189 +345,106 @@
 			}
 
 
-			function showCasa(check, input){
-				$(check).change(function (e) { 
-					if ($(check).is(':checked')){
-						$(input).val("").removeAttr("disabled").focus();
-						$(input).attr("required", "required");
-					}else{
-						$(input).val(0).attr("disabled", "disabled");
-						$(input).removeAttr("required");
-					}
-					
-				});
-			}
-
-
-
-			function showHijos(check, table){
-				
-				$(check).change(function (e) { 
-					if ($(check).is(':checked')){
-						$(table).css("display", "block");
-					}else{
-						$(table).css("display", "none");
-						$(table+" table tbody tr").remove()
-					}
-					
-				});
-			}
-	
-			
-			function AddChildren(btn, table){
-				var count_children = 0
-				
-				$(btn).unbind().click(function (e) { 
-					e.preventDefault();
-					var input_name      = "<input type='text' name=name_children[]   class='form-control' required placeholder='Nombres'>"
-					var input_phone     = "<input type='text' name=phone_children[]  class='form-control' required placeholder='Telefono'>"
-					var input_birthdate = "<input type='date' name=birthdate_children[] class='form-control' required placeholder='Birthdate'>"
-					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_" + count_children +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
-					
-					var html = ""
-					html += "<tr id='tr_childred_"+count_children+"'>"
-						html +="<td>"+input_name+"</td>"
-						html +="<td>"+input_phone+"</td>"
-						html +="<td>"+input_birthdate+"</td>"
-						html +="<td>"+btn_delete+"</td>"
-					html += "</tr>"
-					count_children++
-					$(table).append(html)
-				});
-			}
-
-
-			function ShowChildren(table, data, option){
-				var html = ""
-
-				var count = 0
-
-				
-				$.each(data, function (key, item) { 
-					var input_name      = "<input type='text' name=name_children[] value='"+item.name+"'  class='form-control' required placeholder='Nombres'>"
-					var input_phone     = "<input type='text' name=phone_children[] value='"+item.phone+"'  class='form-control' required placeholder='Telefono'>"
-					var input_birthdate = "<input type='date' name=birthdate_children[] class='form-control' value='"+item.birthdate+"' required placeholder='Birthdate'>"
-					var btn_delete = "" 
-					if(option != "view"){
-						btn_delete = "<button type='button' onclick='DeleteTr(\"" + "#tr_childred_edit_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
-					}
-					
-					
-					
-					html += "<tr id='tr_childred_edit_"+count+"'>"
-						html +="<td>"+input_name+"</td>"
-						html +="<td>"+input_phone+"</td>"
-						html +="<td>"+input_birthdate+"</td>"
-						html +="<td>"+btn_delete+"</td>"
-					html += "</tr>"
-
-
-					count++
-				});	
-					
-				$(table).html(html)
-				
-			}
-
-
-
-			function ShowVehicle(table, data, option){
-				var count_vehicle_edit = 0;
-				var html = ""
-				$.each(data, function (key, item) { 
-
-					var input_placa     = "<input type='text' name=placa_vehicle[] value='"+item.placa+"' class='form-control' placeholder='Placa'>"
-					var date_soat       = "<input type='date' name=date_soat[]     value='"+item.date_soat+"' class='form-control' placeholder='Fecha vencimiento SOAT'>"
-					var date_impuestos  = "<input type='date' name=date_taxes[]    value='"+item.date_taxes+"' class='form-control' placeholder='Fecha pago de impuestos'>"
-					var date_tecno      = "<input type='date' name=date_tecno[]    value='"+item.date_tecno+"' class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
-					var btn_delete = "" 
-
-					if(option != "view"){
-						var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle_edit" + count_vehicle_edit +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
-					}
-					
-					html += "<tr id='tr_vehicle_edit"+count_vehicle_edit+"'>"
-						html +="<td>"+input_placa+"</td>"
-						html +="<td>"+date_soat+"</td>"
-						html +="<td>"+date_impuestos+"</td>"
-						html +="<td>"+date_tecno+"</td>"
-						html +="<td>"+btn_delete+"</td>"
-					html += "</tr>"
-
-					count_vehicle_edit++
-				});	
-					
-
-				$(table).html(html)
-			}
-
-
-
-
 			
 
+			function GetBranchByInsurers(select_insurers, select_branch){
 
+				$(select_branch).selectize({
+					sortField: 'text'
+				});
 
+				$(select_insurers).change(function (e) { 
+				
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/insurers/'+$(this).val(),
+						type:'GET',
+						data: {
+							"id_user": id_user,
+							"token"  : tokens,
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							$(select_branch)[0].selectize.destroy()
+							$(select_branch+" option").remove();
+							$(select_branch).append($('<option>',
+							{
+								value: "null",
+								text : "Seleccione"
+							}));
+							
+							$.each(data.branchs, function (key, item) { 
+								$(select_branch).append($('<option>',
+								{
+									value: item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage,
+									text : item.name
+								}));
+							});
 
-			function showVehicle(check, table){
-				$(check).change(function (e) { 
-					if ($(check).is(':checked')){
-						$(table).css("display", "block");
-					}else{
-						$(table).css("display", "none");
-						$(table+" table tbody tr").remove()
-					}
-					
+							
+							$(select_branch).selectize({
+								//sortField: 'text'
+							});
+						}
+					});
 				});
 			}
 
-			
-			var count_vehicle = 0
-			function AddVehicle(btn, table){
-				$(btn).unbind().click(function (e) { 
-					e.preventDefault();
-					var input_placa     = "<input type='text' name=placa_vehicle[]  required class='form-control' placeholder='Placa'>"
-					var date_soat       = "<input type='date' name=date_soat[]      required class='form-control' placeholder='Fecha vencimiento SOAT'>"
-					var date_impuestos  = "<input type='date' name=date_taxes[]     required class='form-control' placeholder='Fecha pago de impuestos'>"
-					var date_tecno      = "<input type='date' name=date_tecno[]     required class='form-control' placeholder='Fecha vencimiento tecnomecánica'>"
-					var btn_delete      = "<button type='button' onclick='DeleteTr(\"" + "#tr_vehicle" + count_vehicle +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+
+
+			function ChangeSelectBranch(select){
+				$(select).change(function (e) { 
+					var array = $(this).val().split("|")
+
+					var percentage_vat_cousin = array[1]
+					var commission_percentage = array[2]
+
+					$("#percentage_vat_cousin").val(percentage_vat_cousin)
+					$("#commission_percentage").val(commission_percentage)
 					
-					var html = ""
-					html += "<tr id='tr_vehicle"+count_vehicle+"'>"
-						html +="<td>"+input_placa+"</td>"
-						html +="<td>"+date_soat+"</td>"
-						html +="<td>"+date_impuestos+"</td>"
-						html +="<td>"+date_tecno+"</td>"
-						html +="<td>"+btn_delete+"</td>"
-					html += "</tr>"
+					calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission")
 
-					count_vehicle++
-
-					$(table).append(html)
 				});
 			}
 
 
-
-			$("#birthdate").change(function (e) { 
-			  $("#age").val(calcularEdad($(this).val()))
-		  	});
-
-
-			  $("#birthdate_edit").change(function (e) { 
-				$("#age_edit").val(calcularEdad($(this).val()))
-				});
+			$("#cousin, #xpenses").keyup(function (e) { 
+				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission")
+			});
 
 
+			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission){
+				
+				var value_cousin                      = parseFloat($(input_cousin).val())
+				var value_xpenses                     = parseFloat($(input_xpenses).val())
+				var value_percentage_vat_cousin       = parseFloat($(input_percentage_vat_cousin).val())
+				var value_input_commission_percentage = parseFloat($(input_commission_percentage).val())
 
 
+				var result_percentage_vat_cousin = parseFloat(((value_cousin + value_xpenses)/100) * value_percentage_vat_cousin)
+				var result_commission_percentage = parseFloat((value_cousin/100) * value_input_commission_percentage)
+				
+
+				var total = result_percentage_vat_cousin + value_cousin + value_xpenses
+
+				$(input_vat).val(result_percentage_vat_cousin)
+				$(agency_commission).val(result_commission_percentage)
+				$(input_total).val(total)
+			}
 
 
 
 
 		/* ------------------------------------------------------------------------------- */
 			/*
-				Funcion que capta y envia los datos a desactivar
+				Funcion que capta y envia los datos a desactivarsssssss
 			*/
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){

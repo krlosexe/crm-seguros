@@ -92,9 +92,21 @@ class InsurersController extends Controller
      * @param  \App\Insurers  $insurers
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurers $insurers)
+    public function show($insurers)
     {
-        //
+        $modulos = Insurers::select("insurers.*", "auditoria.*", "user_registro.email as email_regis")
+                                ->join("auditoria", "auditoria.cod_reg", "=", "insurers.id_insurers")
+                                ->where("auditoria.tabla", "insurers")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("Branchs")
+
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("insurers.id_insurers", $insurers)
+                                ->orderBy("insurers.id_insurers", "DESC")
+                                ->get();
+           
+        return response()->json($modulos[0])->setStatusCode(200);
     }
 
     /**

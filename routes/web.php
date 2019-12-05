@@ -69,7 +69,7 @@ Route::get('individual-policies', function () {
     return view('policies.individual.gestion');
 });
 
-
+/////
 
 
 
