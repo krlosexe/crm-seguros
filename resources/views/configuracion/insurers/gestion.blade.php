@@ -267,10 +267,10 @@
 							count++
 							$(table).append(html)
 						}else{
-							warning("El ramo ya fue agredado")
+							warning("El ramo ya fue agredado.")
 						}
 					}else{
-						warning("Debe seleccionar un ramo")
+						warning("Debe seleccionar un ramo.")
 					}
 					
 					
@@ -309,9 +309,9 @@
 
 
 
-		/* ------------------------------------------------------------------------------- */
+		/* -------------------------------------------------------------------------------------------------------- */
 			/*
-				Funcion que capta y envia los datos a desactivar
+				Funcion que capta y envia los datos a desactivar............
 			*/
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
@@ -321,7 +321,7 @@
 			}
 		/* ------------------------------------------------------------------------------- */
 
-		/* ------------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------------------- */
 			/*
 				Funcion que capta y envia los datos a desactivar
 			*/
