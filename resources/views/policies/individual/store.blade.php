@@ -117,7 +117,7 @@
                       <div class="col-md-12">
                         <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="number_policies" class="form-control form-control-user" id="number_policies" placeholder="Codigo Objeto Asegurado" required>
+                            <input type="text" name="risk" class="form-control form-control-user" id="risk" placeholder="Codigo Objeto Asegurado" required>
                           </div>
                       </div>
                     </div>
@@ -128,10 +128,13 @@
                       <div class="col-md-12">
                           <label for=""><b>Cliente *</b></label>
                             <div class="form-group valid-required">
-                              <select name="clients" class="selectized" id="clients" required>
+                              <select class="selectized" id="clients_select" required>
                                 <option value="">Seleccione</option>
                               </select>
                             </div>
+
+                            <input type="hidden" name="type_clients" id="type_clients">
+                            <input type="hidden" name="clients" id="clients">
                         </div>
                     </div>
 
@@ -156,14 +159,14 @@
                       <div class="col-md-6">
                         <label for=""><b>Nombre Tomador*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="name_taker" class="form-control form-control-user" id="name_taker" placeholder="Departamento" required>
+                            <input type="text" name="name_taker" class="form-control form-control-user" id="name_taker" placeholder="Nombre Tomador" required>
                           </div>
                       </div>
 
                       <div class="col-md-6">
                         <label for=""><b>Documento del Tomador*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="identification_taker" class="form-control form-control-user" id="identification_taker" placeholder="Ciudad" required>
+                            <input type="text" name="identification_taker" class="form-control form-control-user" id="identification_taker" placeholder="Docuemnento Tomador" required>
                           </div>
                       </div>
                     </div>
@@ -175,16 +178,16 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                          <label for=""><b>Nombre Tomador*</b></label>
+                          <label for=""><b>Nombre Asegurado*</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="name_taker" class="form-control form-control-user" id="name_taker" placeholder="Nombre Tomador" required>
+                              <input type="text" name="name_insured" class="form-control form-control-user" id="name_insured" placeholder="Nombre Asegurado" required>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                          <label for=""><b>Documento del Tomador*</b></label>
+                          <label for=""><b>Documento del Asegurado*</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="identification_taker" class="form-control form-control-user" id="identification_taker" placeholder="Documento del Tomador" required>
+                              <input type="text" name="identification_insured" class="form-control form-control-user" id="identification_insured" placeholder="Documento del Asegurado" required>
                             </div>
                         </div>
                     </div>
@@ -311,14 +314,14 @@
                         <div class="col-md-6">
                           <label for=""><b>Prima *</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="cousin" class="form-control form-control-user" id="cousin" required value="0">
+                              <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin" required value="0" style="text-align: right">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                           <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="xpenses" class="form-control form-control-user" id="xpenses" value="0">
+                              <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses" value="0" style="text-align: right">
                             </div>
                         </div>
                     </div>
@@ -329,14 +332,14 @@
                         <div class="col-md-6">
                           <label for=""><b>IVA</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="vat" class="form-control form-control-user" id="vat" disabled value="0">
+                              <input type="text" name="vat" class="form-control form-control-user" id="vat" readonly value="0" style="text-align: right">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                           <label for=""><b>% IVA Prima*</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin" disabled>
+                              <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin" readonly>
                             </div>
                         </div>
                     </div>
@@ -347,14 +350,14 @@
                         <div class="col-md-6">
                           <label for=""><b>Porcentaje Comisión</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage" disabled>
+                              <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage" readonly style="text-align: right">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                           <label for=""><b>Participación</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="Participation" class="form-control form-control-user" id="Participation" disabled>
+                              <input type="text" name="participation" class="form-control form-control-user" id="participation" value="100">
                             </div>
                         </div>
                     </div>
@@ -366,14 +369,14 @@
                         <div class="col-md-6">
                           <label for=""><b>Comisión agencia</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission" disabled value="0">
+                              <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission" readonly value="0" style="text-align: right">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                           <label for=""><b>Total</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="total" class="form-control form-control-user" id="total" disabled value="0">
+                              <input type="text" name="total" class="form-control form-control-user" id="total" readonly value="0" style="text-align: right">
                             </div>
                         </div>
                     </div>
@@ -472,26 +475,6 @@
                     </div>
                     <br>
 
-
-
-
-
-                    <div class="row">
-
-                      <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                      
-                        <div class="form-group row" style="margin-bottom: 0px !important">
-                            <label for="send_birthday_card" class="col-md-6 control-label">Enviar tarjeta de compleaños</label>
-                            <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                            <input type="checkbox" name="send_birthday_card" id="send_birthday_card">
-                            <label for="send_birthday_card"></label>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <br>
-
                   </div>
                 </div>
               </div>
@@ -509,28 +492,49 @@
                 
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Información laboral</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información pagos</h6>
                   </div>
                   <div class="card-body">
 
                     <div class="row">
 
-                      <div class="col-md-12">
-                        <label for=""><b>Ocupación *</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation" required>
-                          </div>
-                      </div>
+                      <div class="col-md-4">
+                          <label for=""><b>Forma Pago</b></label>
+                            <div class="form-group valid-required">
+                              <select name="payment_method" class="form-control selectized" id="payment_method" required>
+                                <option value="">Seleccione</option>
+                                <option value="Contado">Contado</option>
+                                <option value="Financiado">Financiado</option>
+                                <option value="Fraccionado">Fraccionado</option>
+                              </select>
+                            </div>
+                        </div>
 
-                    </div>
-                    <br>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label for=""><b>Empresa</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="company" class="form-control form-control-user" id="company" >
-                          </div>
-                      </div>
+
+
+                        <div class="col-md-4">
+                          <label for=""><b>Medio Pago</b></label>
+                            <div class="form-group valid-required">
+                              <select name="half_payment" class="form-control selectized" id="half_payment" required>
+                                <option value="">Seleccione</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                                <option value="Deposito">Deposito</option>
+                                <option value="Debito">Debito</option>
+                              </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <label for=""><b>Banco</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="bank" class="form-control form-control-user" id="bank">
+                            </div>
+                        </div>
+
+
+
                     </div>
                     <br>
 

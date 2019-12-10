@@ -109,6 +109,7 @@
       <script src="vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
       <script src="vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
       <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
+      <script src="vendors/numeral/min/numeral.min.js"></script>
       <script src=" js/app.js"></script>
       <script src="js/dashboard/dashboard.js"></script>
       <script src="js/funciones.js"></script>

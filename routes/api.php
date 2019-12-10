@@ -68,6 +68,8 @@ Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
 
 
 
+Route::resource('policies', 'PoliciesController');
+Route::get('status-policies/{id}/{status}', 'PoliciesController@status');
 
 
 

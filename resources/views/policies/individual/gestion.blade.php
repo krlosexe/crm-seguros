@@ -71,12 +71,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/people', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/policies', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/people', '#cuadro2');
+				enviarFormulario("#store", 'api/policies', '#cuadro2');
 			}
 
 
@@ -98,7 +98,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/people',
+						 "url":''+url+'/api/policies',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -160,7 +160,7 @@
 				GetInsurers("#insurers")
 
 				GetBranchByInsurers("#insurers", "#branch")
-				GetClients("#clients");
+				GetClients("#clients_select");
 
 				ChangeSelectBranch("#branch")
 
@@ -327,7 +327,7 @@
 					$("#occupation_edit").val(data.occupation)
 					$("#company_edit").val(data.company)
 
-					$("#id_edit").val(data.id_clients_people)
+					$("#id_edit").val(data.id_clients_policies)
 
 					showCasa("#own_house_edit", "#number_house_edit")
 					showHijos("#children_edit", ".container-datos-adicionales-hijo-edit")
@@ -415,31 +415,37 @@
 			}
 
 
-			$("#cousin, #xpenses").keyup(function (e) { 
-				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission")
+			$("#cousin, #xpenses, #participation").keyup(function (e) { 
+				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
 			});
 
 
-			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission){
+			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission, participation){
 				
-				var value_cousin                      = parseFloat($(input_cousin).val())
-				var value_xpenses                     = parseFloat($(input_xpenses).val())
-				var value_percentage_vat_cousin       = parseFloat($(input_percentage_vat_cousin).val())
-				var value_input_commission_percentage = parseFloat($(input_commission_percentage).val())
+				var value_cousin                      = inNum($(input_cousin).val())
+				var value_xpenses                     = inNum($(input_xpenses).val())
+				var value_percentage_vat_cousin       = inNum($(input_percentage_vat_cousin).val())
+				var value_input_commission_percentage = inNum($(input_commission_percentage).val())
+				var participation                     = inNum($(participation).val())
 
-
-				var result_percentage_vat_cousin = parseFloat(((value_cousin + value_xpenses)/100) * value_percentage_vat_cousin)
-				var result_commission_percentage = parseFloat((value_cousin/100) * value_input_commission_percentage)
+				var result_percentage_vat_cousin = inNum(((value_cousin + value_xpenses)/100) * value_percentage_vat_cousin)
+				var result_commission_percentage = inNum((value_cousin/100) * value_input_commission_percentage)
 				
+				var comission_total =  inNum(((result_commission_percentage / 100) * participation))
 
 				var total = result_percentage_vat_cousin + value_cousin + value_xpenses
 
-				$(input_vat).val(result_percentage_vat_cousin)
-				$(agency_commission).val(result_commission_percentage)
-				$(input_total).val(total)
+				$(input_vat).val(number_format(result_percentage_vat_cousin, 2))
+				$(agency_commission).val(number_format(comission_total ,2))
+				$(input_total).val(number_format(total, 2))
 			}
 
 
+			$("#clients_select").change(function (e) { 
+				var arrayClient = $(this).val().split("|")
+				$("#clients").val(arrayClient[0])
+				$("#type_clients").val(arrayClient[1])
+			});
 
 
 		/* ------------------------------------------------------------------------------- */
@@ -449,7 +455,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -461,14 +467,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 		</script>
