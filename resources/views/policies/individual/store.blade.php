@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro2">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Registro de Polizas - Individual</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Registro de Polizas</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
@@ -21,6 +21,21 @@
                     <h6 class="m-0 font-weight-bold text-primary">Información principal de la póliza</h6>
                   </div>
                   <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-4">
+                        <label for=""><b>Tipo de póliza*</b></label>
+                          <div class="form-group valid-required">
+                            <select name="type_poliza" class="form-control selectized" id="type_poliza" required>
+                                <option value="">Seleccione</option>
+                                <option value="individual">Individual</option>
+                                <option value="Collective">Colectiva</option>
+                              </select>
+                          </div>
+                      </div>
+
+                    </div>
 
                     <div class="row">
                       <div class="col-md-4">
@@ -113,11 +128,11 @@
 
                       <br>
 
-                    <div class="row">
+                    <div class="row remove">
                       <div class="col-md-12">
                         <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="risk" class="form-control form-control-user" id="risk" placeholder="Codigo Objeto Asegurado" required>
+                            <input type="text" name="risk" class="form-control form-control-user" id="risk" placeholder="Codigo Objeto Asegurado">
                           </div>
                       </div>
                     </div>
@@ -176,73 +191,76 @@
 
 
 
-                    <div class="row">
-                        <div class="col-md-6">
-                          <label for=""><b>Nombre Asegurado*</b></label>
-                            <div class="form-group valid-required">
-                              <input type="text" name="name_insured" class="form-control form-control-user" id="name_insured" placeholder="Nombre Asegurado" required>
-                            </div>
-                        </div>
+                    <div class="remove">
+                      <div class="row">
+                          <div class="col-md-6">
+                            <label for=""><b>Nombre Asegurado*</b></label>
+                              <div class="form-group valid-required">
+                                <input type="text" name="name_insured" class="form-control form-control-user" id="name_insured" placeholder="Nombre Asegurado" >
+                              </div>
+                          </div>
 
-                        <div class="col-md-6">
-                          <label for=""><b>Documento del Asegurado*</b></label>
-                            <div class="form-group valid-required">
-                              <input type="text" name="identification_insured" class="form-control form-control-user" id="identification_insured" placeholder="Documento del Asegurado" required>
-                            </div>
-                        </div>
+                          <div class="col-md-6">
+                            <label for=""><b>Documento del Asegurado*</b></label>
+                              <div class="form-group valid-required">
+                                <input type="text" name="identification_insured" class="form-control form-control-user" id="identification_insured" placeholder="Documento del Asegurado">
+                              </div>
+                          </div>
+                      </div>
                     </div>
 
                     <br>
 
 
                     
-                    <div class="row">
-                      <div class="col-md-12">
-                        <h6 class="m-0 font-weight-bold text-primary">Beneficiarios</h6>
-                      </div> <br> <br>
-                      <div class="col-md-6">
-                        <label for="beneficiary_remission"><b>¿Beneficiarios en la remisión?</b><br></label><br>
-                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                              <input type="checkbox" name="beneficiary_remission" id="beneficiary_remission" checked="checked">
-                              <label for="beneficiary_remission"></label>
+                    <div class="remove">
+                      <div class="row">
+
+                          <div class="col-md-12">
+                            <h6 class="m-0 font-weight-bold text-primary">Beneficiarios</h6>
+                          </div> <br> <br>
+                          <div class="col-md-6">
+                            <label for="beneficiary_remission"><b>¿Beneficiarios en la remisión?</b><br></label><br>
+                            <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
+                                  <input type="checkbox" name="beneficiary_remission" id="beneficiary_remission" checked="checked">
+                                  <label for="beneficiary_remission"></label>
+                            </div>
+                          </div>
+
+
+                          <div class="col-md-6">
+                            <label for="beneficairy_onerous"><b>Beneficiario Oneroso</b><br></label><br>
+                            <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
+                                  <input type="checkbox" name="beneficairy_onerous" id="beneficairy_onerous" checked="checked">
+                                  <label for="beneficairy_onerous"></label>
+                            </div>
+                          </div>
+
+
+
+                          <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Documento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                          <input type="text" name="beneficairy_name" class="form-control" id="beneficairy_name" placeholder="Nombre del Beneficiario">
+                                        </td>
+
+                                        <td>
+                                          <input type="text" name="beneficairy_identification" class="form-control" id="beneficairy_identification" placeholder="Documento del Beneficiario">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+
                         </div>
-                      </div>
-
-
-                      <div class="col-md-6">
-                        <label for="beneficairy_onerous"><b>Beneficiario Oneroso</b><br></label><br>
-                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                              <input type="checkbox" name="beneficairy_onerous" id="beneficairy_onerous" checked="checked">
-                              <label for="beneficairy_onerous"></label>
-                        </div>
-                      </div>
-
-
-
-                      <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Documento</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                      <input type="text" name="beneficairy_name" class="form-control" id="beneficairy_name" placeholder="Nombre del Beneficiario">
-                                    </td>
-
-                                    <td>
-                                      <input type="text" name="beneficairy_identification" class="form-control" id="beneficairy_identification" placeholder="Documento del Beneficiario">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                      
-
-
                     </div>
 
                     <br>
@@ -270,7 +288,7 @@
 
                     <div class="row">
 
-                      <div class="col-md-6">
+                      <div class="col-md-6 remove">
                         <label for=""><b>Observaciones Internas</b></label>
                           <div class="form-group valid-required">
                             <textarea name="internal_observations" class="form-control" id="internal_observations" cols="30" rows="10"></textarea>
@@ -301,7 +319,7 @@
 
           <div class="col-md-6">
 
-            <div class="row">
+            <div class="row remove">
 
               <div class="col-md-12">
                 <div class="card shadow mb-4">
@@ -389,7 +407,7 @@
             </div>
 
 
-            <div class="row">
+            <div class="row remove">
             
               <div class="col-md-12">
                 
@@ -485,6 +503,48 @@
 
 
 
+            <div class="row remove-pay">
+            
+              <div class="col-md-12">
+                
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Vinculaciones</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+                        <button type="button" data-toggle="modal" data-target="#modal-lg" id="btn-bind-policies" class="btn btn-success" style="float: left;">
+                          <i class="ti-user"></i>
+                          <span>Incluir</span>
+                        </button>
+                      </div>
+
+                      <div class="col-md-12">
+                          <table class="table table-bordered" id="table-bind">
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
 
             <div class="row">
             
@@ -496,7 +556,24 @@
                   </div>
                   <div class="card-body">
 
-                    <div class="row">
+                  <div class="row remove-pay">
+
+                    <div class="col-md-4">
+                      <label for=""><b>Periodicidad del pago</b></label>
+                        <div class="form-group valid-required">
+                          <select name="payment_period" class="form-control selectized" id="payment_period">
+                            <option value="">Seleccione</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Trimestral">Trimestral</option>
+                            <option value="Semestral">Semestral</option>
+                            <option value="Anual">Anual</option>
+                          </select>
+                        </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
 
                       <div class="col-md-4">
                           <label for=""><b>Forma Pago</b></label>
@@ -544,8 +621,6 @@
             </div>
 
           </div>
-
-          
           
         </div>
 

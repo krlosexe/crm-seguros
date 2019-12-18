@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Editar de Clientes - Personas</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Editar Polizas</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
@@ -19,111 +19,124 @@
 
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Datos Principales</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información principal de la póliza</h6>
                   </div>
                   <div class="card-body">
 
                     <div class="row">
-                      <div class="col-md-6">
-                        <label for=""><b>Nombres*</b></label>
+                      <div class="col-md-4">
+                        <label for=""><b>Numero de póliza*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="names" class="form-control form-control-user" id="names_edit" placeholder="Nombre" required>
+                            <input type="text" name="number_policies" class="form-control form-control-user" id="number_policies_edit" placeholder="Numero de póliza" required>
                           </div>
                       </div>
 
-                      <div class="col-md-6">
-                        <label for=""><b>Apellidos*</b></label>
+                      <div class="col-md-4">
+                        <label for=""><b>Estado Póliza*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="last_names" class="form-control form-control-user" id="last_names_edit" placeholder="Apellidos" required>
+                            <select name="state_policies" class="form-control selectized" id="state_policies_edit" required>
+                              <option value="">Seleccione</option>
+                              <option value="Vigente">Vigente</option>
+                              <option value="Vencida">Vencida</option>
+                              <option value="No renovada">No renovada</option>
+                              <option value="Expedición">Expedición</option>
+                              <option value="Devengada">Devengada</option>
+                              <option value="Cotización">Cotización</option>
+                              <option value="Cancelada">Cancelada</option>
+                            </select>
                           </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <label for="is_renewable_edit"><b>Es renovable?</b><br></label><br>
+                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
+                              <input type="checkbox" name="is_renewable" id="is_renewable_edit" checked="checked">
+                              <label for="is_renewable_edit"></label>
+                        </div>
                       </div>
                     </div>
 
 
                     <div class="row">
                     
-                      <div class="col-sm-4">
-                          <label for=""><b>Tipo de documento*</b></label>
-                          <select name="type_document" class="form-control selectized" id="type_document_edit" required>
-                            <option value="">Seleccione</option>
-                            <option value="Cedula">Cedula</option>
-                            <option value="Cedula de Extrangeria">Cedula de Extrangeria</option>
-                            <option value="RUC">RUC</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                            <option value="NUIP">NUIP</option>
-                            <option value="Tarjeta de indentidad">Tarjeta de indentidad</option>
-                          </select>
+                        <div class="col-md-6">
+                          <label for=""><b>Aseguradora*</b></label>
+                            <div class="form-group valid-required">
+                              <select name="insurers"  id="insurers_edit" required>
+                                <option value="">Seleccione</option>
+                              </select>
+                            </div>
                         </div>
 
 
-                        <div class="col-sm-4">
-                          <label for=""><b>Numero documento*</b></label>
-                          <input type="text" name="number_document" class="form-control form-control-user" id="number_document_edit" required>
+                        <div class="col-md-6">
+                          <label for=""><b>Ramo*</b></label>
+                            <div class="form-group valid-required">
+                              <select name="branch"  id="branch_edit" required>
+                                <option value="">Seleccione</option>
+                              </select>
+                            </div>
                         </div>
 
+                    </div>
 
-                        <div class="col-sm-4">
+
+                    <div class="row">
+                        <div class="col-sm-6">
                           <label for=""><b>Fecha expedicion</b></label>
                           <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
                         </div>
+
+
+                        <div class="col-sm-6">
+                          <label for=""><b>Fecha Recepcion</b></label>
+                          <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date_edit">
+                        </div>
+
+                        
                     </div>
-
-                    <br>
-                      
-
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <label for=""><b>Genero*</b></label>
-                        <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender_edit" required>
-                          <option value="">Seleccione</option>
-                          <option value="Masculino">Masculino</option>
-                          <option value="Femenino">Femenino</option>
-                        </select>
-                      </div>
-
-
-                      <div class="col-sm-4">
-                        <label for=""><b>Fecha nacimiento*</b></label>
-                        <input type="date" name="birthdate" class="form-control form-control-user" id="birthdate_edit"  required>
-                      </div>
-
-
-                      <div class="col-sm-2">
-                        <label for=""><b>Edad</b></label>
-                        <input type="text" name="age" class="form-control form-control-user" id="age_edit"  disabled>
-                      </div>
-                    </div>
-
-
                     <br>
 
                     <div class="row">
-                      <div class="col-sm-4">
-                        <label for=""><b>Estrato</b></label>
-                        <input type="text" name="stratum" class="form-control form-control-user" id="stratum_edit">
-                      </div>
+                        <div class="col-sm-6">
+                          <label for=""><b>Fecha inicio *</b></label>
+                          <input type="date" name="start_date" class="form-control form-control-user" id="start_date_edit" required>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label for=""><b>Fecha Fin *</b></label>
+                          <input type="date" name="end_date" class="form-control form-control-user" id="end_date_edit" required>
+                        </div>
+                        
+                        
+                    </div>
 
 
+                      <br>
 
-                      <div class="col-md-4">
-                        <label for=""><br><b>Autoriza tratamiento de datos*</b></label>
-                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                              <input type="checkbox" name="data_treatment" id="data_treatment_edit" checked="">
-                              <label for="data_treatment_edit"></label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="risk" class="form-control form-control-user" id="risk_edit" placeholder="Codigo Objeto Asegurado" required>
                           </div>
                       </div>
-
-
                     </div>
-
 
                     <br>
 
                     <div class="row">
                       <div class="col-md-12">
-                        <label for=""><b>Observaciones*</b></label>
-                        <textarea class="form-control" name="observations" id="observations_edit" cols="30" rows="10"></textarea>
-                      </div>
+                          <label for=""><b>Cliente *</b></label>
+                            <div class="form-group valid-required">
+                              <select class="selectized" id="clients_select_edit" required>
+                                <option value="">Seleccione</option>
+                              </select>
+                            </div>
+
+                            <input type="hidden" name="type_clients" id="type_clients_edit">
+                            <input type="hidden" name="clients" id="clients_edit">
+                        </div>
                     </div>
 
 
@@ -134,142 +147,151 @@
 
 
             <div class="row">
+
               <div class="col-md-12">
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Datos de contacto</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información de Tomador/Asegurado/Beneficiario</h6>
                   </div>
                   <div class="card-body">
 
                     <div class="row">
-                      <div class="col-md-6">
-                        <label for=""><b>Departamento*</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="department" class="form-control form-control-user" id="department_edit" placeholder="Departamento" required>
-                          </div>
-                      </div>
 
                       <div class="col-md-6">
-                        <label for=""><b>Ciudad*</b></label>
+                        <label for=""><b>Nombre Tomador*</b></label>
                           <div class="form-group valid-required">
-                            <input type="text" name="city" class="form-control form-control-user" id="city_edit" placeholder="Ciudad" required>
+                            <input type="text" name="name_taker" class="form-control form-control-user" id="name_taker_edit" placeholder="Nombre Tomador" required>
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>Documento del Tomador*</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="identification_taker" class="form-control form-control-user" id="identification_taker_edit" placeholder="Docuemnento Tomador" required>
                           </div>
                       </div>
                     </div>
 
                     <br>
-
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                          <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="address1_edit" name="address1" placeholder="Direccion 1" require>
-                            </div>
-
-                            <div class="col-md-4">
-                              <select name="type_address1" class="form-control selectize-input items has-options full has-items" id="type_address1_edit">
-                                <option value="Residencial">Residencial</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Otro">Otro</option>
-                              </select>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                    <br>
-
-
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                          <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Dirección 2</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="address2_edit" name="address2" placeholder="Direccion 2">
-                            </div>
-
-                            <div class="col-md-4">
-                              <select name="type_address2" class="form-control selectize-input items has-options full has-items" id="type_address2_edit">
-                                <option value="Residencial">Residencial</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Otro">Otro</option>
-                              </select>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                    <br>
-
-
-
-
 
 
 
 
                     <div class="row">
-                      <div class="form-group col-md-12">
-                          <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1" require>
+                        <div class="col-md-6">
+                          <label for=""><b>Nombre Asegurado*</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="name_insured" class="form-control form-control-user" id="name_insured_edit" placeholder="Nombre Asegurado" required>
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
-                              <select name="type_phone1" class="form-control selectize-input items has-options full has-items" id="type_phone1_edit">
-                                <option value="Personal">Personal</option>
-                                <option value="Residencial">Residencial</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Otro">Otro</option>
-                              </select>
+                        <div class="col-md-6">
+                          <label for=""><b>Documento del Asegurado*</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="identification_insured" class="form-control form-control-user" id="identification_insured_edit" placeholder="Documento del Asegurado" required>
                             </div>
-                          </div>
-                      </div>
+                        </div>
                     </div>
+
                     <br>
 
 
-
+                    
                     <div class="row">
-                      <div class="form-group col-md-12">
-                          <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Telefono 2</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="phone2_edit" name="phone2" placeholder="Telefono 2">
-                            </div>
-
-                            <div class="col-md-4">
-                              <select name="type_phone2" class="form-control selectize-input items has-options full has-items" id="type_phone2_edit">
-                                <option value="Personal">Personal</option>
-                                <option value="Residencial">Residencial</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Otro">Otro</option>
-                              </select>
-                            </div>
-                          </div>
+                      <div class="col-md-12">
+                        <h6 class="m-0 font-weight-bold text-primary">Beneficiarios</h6>
+                      </div> <br> <br>
+                      <div class="col-md-6">
+                        <label for="beneficiary_remission_edit"><b>¿Beneficiarios en la remisión?</b><br></label><br>
+                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
+                              <input type="checkbox" name="beneficiary_remission" id="beneficiary_remission_edit" checked="checked">
+                              <label for="beneficiary_remission_edit"></label>
+                        </div>
                       </div>
+
+
+                      <div class="col-md-6">
+                        <label for="beneficairy_onerous_edit"><b>Beneficiario Oneroso</b><br></label><br>
+                        <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
+                              <input type="checkbox" name="beneficairy_onerous" id="beneficairy_onerous_edit" checked="checked">
+                              <label for="beneficairy_onerous_edit"></label>
+                        </div>
+                      </div>
+
+
+
+                      <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                      <input type="text" name="beneficairy_name" class="form-control" id="beneficairy_name_edit" placeholder="Nombre del Beneficiario">
+                                    </td>
+
+                                    <td>
+                                      <input type="text" name="beneficairy_identification" class="form-control" id="beneficairy_identification_edit" placeholder="Documento del Beneficiario">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                      
+
+
                     </div>
+
                     <br>
 
-
-
-
-
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                          <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Email*</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" id="email_edit" name="email" placeholder="Email" require>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                    <br>
                   </div>
                 </div>
               </div>
 
+            </div>
+
+
+
+
+
+
+
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Observaciones y relación de contenido</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <label for=""><b>Observaciones Internas</b></label>
+                          <div class="form-group valid-required">
+                            <textarea name="internal_observations" class="form-control" id="internal_observations_edit" cols="30" rows="10"></textarea>
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>Observaciones</b></label>
+                          <div class="form-group valid-required">
+                            <textarea name="observations" id="observations_edit" class="form-control" cols="30" rows="10"></textarea>
+                          </div>
+                      </div>
+                    </div>
+
+                    <br>
+
+                  </div>
+                </div>
+              </div>
+              
             </div>
 
 
@@ -285,171 +307,82 @@
               <div class="col-md-12">
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Informacion CRM</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información prima y comisiones</h6>
                   </div>
                   <div class="card-body">
 
+                    <div class="row">
+                        <div class="col-md-6">
+                          <label for=""><b>Prima *</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin_edit" required value="0" style="text-align: right">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses_edit" value="0" style="text-align: right">
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <br>
 
                     <div class="row">
+                        <div class="col-md-6">
+                          <label for=""><b>IVA</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="vat" class="form-control form-control-user" id="vat_edit" readonly value="0" style="text-align: right">
+                            </div>
+                        </div>
 
-                      <div class="col-md-12">
-                        <label for=""><b>Estado civil</b></label>
-                          <select name="marital_status" class="form-control selectize-input items has-options full has-items" id="marital_status_edit">
-                            <option value="">Seleccione</option>
-                            <option value="Soltero">Soltero</option>ss
-                            <option value="Casado">Casado</option>
-                            <option value="Divorciado">Divorciado</option>
-                            <option value="Unión Libre">Unión Libre</option>
-                            <option value="Seperado">Seperado</option>
-                            <option value="Viudo">Viudo</option>
-                        </select>
-                      </div>
-
+                        <div class="col-md-6">
+                          <label for=""><b>% IVA Prima*</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin_edit" readonly>
+                            </div>
+                        </div>
                     </div>
+                  
+                    <br>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                          <label for=""><b>Porcentaje Comisión</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage_edit" readonly style="text-align: right">
+                            </div>
+                        </div>
 
+                        <div class="col-md-6">
+                          <label for=""><b>Participación</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="participation" class="form-control form-control-user" id="participation_edit">
+                            </div>
+                        </div>
+                    </div>
+                  
                     <br>
 
 
                     <div class="row">
-                      <div class="col-md-6">
-                        <label for=""><b>Ingreso mensual</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="monthly_income" class="form-control form-control-user" id="monthly_income_edit" >
-                          </div>
-                      </div>
+                        <div class="col-md-6">
+                          <label for=""><b>Comisión agencia</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission_edit" readonly value="0" style="text-align: right">
+                            </div>
+                        </div>
 
-                      <div class="col-md-6">
-                        <label for=""><b>Patrimonio</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="heritage" class="form-control form-control-user" id="heritage_edit" >
-                          </div>
-                      </div>
-                      
+                        <div class="col-md-6">
+                          <label for=""><b>Total</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="total" class="form-control form-control-user" id="total_edit" readonly value="0" style="text-align: right">
+                            </div>
+                        </div>
                     </div>
-
-
+                  
                     <br>
-
-                    <div class="row">
-
-
-                    <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Casa propia</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="own_house" id="own_house_edit">
-                                <label for="own_house_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-md-6 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-4 control-label">No. Casas</label>
-                                <div class="col-md-6">
-                                    <input type="number" class="form-control" id="number_house_edit" name="number_house" disabled>
-                                </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-
-
-
-
-
-                      <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Hijos</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="children" id="children_edit">
-                                <label for="children_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="container-datos-adicionales-hijo-edit col-sm-12" style="display: none;">
-                              <table class="table table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Nombre</th>
-                                          <th>Teléfono</th>
-                                          <th>Fecha nacimiento</th>
-                                          <th>
-                                              
-                                           <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-children-edit">
-                                                <i class="fa fa-plus"  aria-hidden="true"></i>
-                                            </button>
-                                              
-                                          </th>
-                                      </tr>
-                                  </thead>
-                                  <tbody id="dato-extra-hijo-container-edit"></tbody>
-                              </table>
-                          </div>
-
-                        </div>
-                      </div>
-
-
-
-
-
-
-
-
-
-
-
-                      <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                        <div class="row">
-
-                          <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="form-1-1" class="col-md-5 control-label">Vehículo</label>
-                                <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="vehicle_edit" id="vehicle_edit">
-                                <label for="vehicle_edit"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="container-datos-adicionales-vehicle-edit col-sm-12" style="display: none;">
-                              <table class="table table-bordered">
-                                  <thead>
-                                      <tr>
-                                          <th>Placa</th>
-                                          <th>Fecha vencimiento SOAT</th>
-                                          <th>Fecha pago de impuestos</th>
-                                          <th>Fecha vencimiento tecnomecánica</th>
-                                          <th>
-                                              
-                                          <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle-edit">
-                                              <i class="fa fa-plus"  aria-hidden="true"></i>
-                                          </button>
-                                              
-                                          </th>
-                                      </tr>
-                                  </thead>
-                                  <tbody id="dato-extra-vehicle-container-edit"></tbody>
-                              </table>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
 
                   </div>
                 </div>
@@ -543,33 +476,10 @@
                     </div>
                     <br>
 
-
-
-
-
-                    <div class="row">
-
-                      <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                      
-                        <div class="form-group row" style="margin-bottom: 0px !important">
-                            <label for="send_birthday_card" class="col-md-6 control-label">Enviar tarjeta de compleaños</label>
-                            <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                            <input type="checkbox" name="send_birthday_card" id="send_birthday_card_edit">
-                            <label for="send_birthday_card_edit"></label>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <br>
-
                   </div>
                 </div>
               </div>
             </div>
-
-
-
 
 
 
@@ -580,28 +490,49 @@
                 
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Información laboral</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información pagos</h6>
                   </div>
                   <div class="card-body">
 
                     <div class="row">
 
-                      <div class="col-md-12">
-                        <label for=""><b>Ocupación *</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="occupation" class="form-control form-control-user" id="occupation_edit" >
-                          </div>
-                      </div>
+                      <div class="col-md-4">
+                          <label for=""><b>Forma Pago</b></label>
+                            <div class="form-group valid-required">
+                              <select name="payment_method" class="form-control selectized" id="payment_method_edit" required>
+                                <option value="">Seleccione</option>
+                                <option value="Contado">Contado</option>
+                                <option value="Financiado">Financiado</option>
+                                <option value="Fraccionado">Fraccionado</option>
+                              </select>
+                            </div>
+                        </div>
 
-                    </div>
-                    <br>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label for=""><b>Empresa *</b></label>
-                          <div class="form-group valid-required">
-                            <input type="text" name="company" class="form-control form-control-user" id="company_edit" >
-                          </div>
-                      </div>
+
+
+                        <div class="col-md-4">
+                          <label for=""><b>Medio Pago</b></label>
+                            <div class="form-group valid-required">
+                              <select name="half_payment" class="form-control selectized" id="half_payment_edit" required>
+                                <option value="">Seleccione</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                                <option value="Deposito">Deposito</option>
+                                <option value="Debito">Debito</option>
+                              </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <label for=""><b>Banco</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="bank" class="form-control form-control-user" id="bank_edit">
+                            </div>
+                        </div>
+
+
+
                     </div>
                     <br>
 
@@ -611,10 +542,10 @@
             </div>
 
           </div>
-
-          
           
         </div>
+
+        <!---END ROW-->
 
 
         <input type="hidden" name="id_user" class="id_user">

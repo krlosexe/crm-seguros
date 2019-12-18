@@ -12,5 +12,5 @@ class PoliciesObservations extends Model
 
     protected $table         = 'policies_observations';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_policies_observations';
+    protected $primaryKey    = 'id_policies';
 }

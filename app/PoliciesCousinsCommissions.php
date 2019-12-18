@@ -12,5 +12,5 @@ class PoliciesCousinsCommissions extends Model
 
     protected $table         = 'policies_cousins_commissions';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_policies_cousins_commissions';
+    protected $primaryKey    = 'id_policies';
 }

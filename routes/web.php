@@ -65,9 +65,12 @@ Route::get('branch', function () {
 });
 
 
-Route::get('individual-policies', function () {
+Route::get('policies', function () {
     return view('policies.individual.gestion');
 });
+
+
+
 
 /////
 
