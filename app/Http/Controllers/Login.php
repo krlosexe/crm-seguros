@@ -95,7 +95,6 @@ class Login extends Controller
                                 
                                 ->where("id", $request["user_id"])
                                 ->where("auditoria.tabla", "roles")
-                                ->where("funciones.visibilidad", 1)
 
                                 ->where(function($q) {
                                   $q->orWhere('rol_operaciones.general', 1)

@@ -71,8 +71,19 @@ Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
 Route::resource('policies', 'PoliciesController');
 Route::get('status-policies/{id}/{status}', 'PoliciesController@status');
 
+Route::get('policies-binds/{id}', 'PoliciesController@Binds');
+Route::post('policies-binds', 'PoliciesController@StoreBinds');
+
+Route::put('policies-binds/{id}', 'PoliciesController@UpdateBinds');
 
 
+Route::get('status-policies-bind/{id}/{status}', 'PoliciesController@StatusBinds');
+
+
+
+Route::resource('policies-grouped', 'PoliciesGroupedController');
+Route::get('status-policies-grouped/{id}/{status}', 'PoliciesGroupedController@status');
+Route::post('policies-childs', 'PoliciesGroupedController@StoreChilds');
 
 
 

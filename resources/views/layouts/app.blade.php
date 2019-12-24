@@ -12,24 +12,24 @@
   <title>App</title>
 
   <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="vendors/PACE/themes/blue/pace-theme-minimal.css" />
-    <link rel="stylesheet" href="vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
-    <link rel="stylesheet" href="vendors/selectize/dist/css/selectize.default.css" />
-    <link rel="stylesheet" href="vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
-    <link rel="stylesheet" href="vendors/nvd3/build/nv.d3.min.css" />
-    <link rel="stylesheet" href="vendors/datatables/media/css/jquery.dataTables.css" />
-    <link href="vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="vendors/sweetalert/sweetalert.css" rel="stylesheet">
-    <link rel="stylesheet" href="vendors/selectize/dist/css/selectize.default.css" />
-    <link href="css/ei-icon.css" rel="stylesheet">
-    <link href="css/themify-icons.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
-    <link href="css/app.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-    <script src=" vendors/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/datatables/media/css/jquery.dataTables.css" />
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/sweetalert/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
+    <link href="<?= url('/') ?>/css/ei-icon.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/themify-icons.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/animate.min.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/app.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
+    <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
 
    @yield('CustomCss')
   
@@ -77,43 +77,39 @@
 
 
       </div>
-      
-      
-      
-
     </div>
     <!-- End of Content Wrapper -->
 
   </div>
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
-      <script src=" vendors/popper.js/dist/umd/popper.min.js"></script>
-      <script src=" vendors/bootstrap/dist/js/bootstrap.js"></script>
-      <script src=" vendors/PACE/pace.min.js"></script>
-      <script src=" vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-      <script src="vendors/bower-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-      <script src="js/maps/jquery-jvectormap-us-aea.js"></script>
-      <script src="vendors/d3/d3.min.js"></script>
-      <script src="vendors/nvd3/build/nv.d3.min.js"></script>
-      <script src="vendors/jquery.sparkline/index.js"></script>
-      <script src="vendors/chart.js/dist/Chart.min.js"></script>
-      <script src="vendors/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
-      <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
-      <script src="vendors/datatables/media/js/jquery.dataTables.js"></script>
-      <script src="vendors/bootstrap-fileinput/js/plugins/piexif.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
-      <script src="vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
-      <script src="vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
-      <script src="vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
-      <script src="vendors/selectize/dist/js/standalone/selectize.min.js"></script>
-      <script src="vendors/numeral/min/numeral.min.js"></script>
-      <script src=" js/app.js"></script>
-      <script src="js/dashboard/dashboard.js"></script>
-      <script src="js/funciones.js"></script>
-      <script src="js/table/data-table.js"></script>
+      <script src="<?= url('/') ?>/vendors/popper.js/dist/umd/popper.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap/dist/js/bootstrap.js"></script>
+      <script src="<?= url('/') ?>/vendors/PACE/pace.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+      <script src="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+      <script src="<?= url('/') ?>/js/maps/jquery-jvectormap-us-aea.js"></script>
+      <script src="<?= url('/') ?>/vendors/d3/d3.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/jquery.sparkline/index.js"></script>
+      <script src="<?= url('/') ?>/vendors/chart.js/dist/Chart.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/datatables/media/js/jquery.dataTables.js"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/numeral/min/numeral.min.js"></script>
+      <script src="<?= url('/') ?>/js/app.js"></script>
+      <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
+      <script src="<?= url('/') ?>/js/funciones.js"></script>
+      <script src="<?= url('/') ?>/js/table/data-table.js"></script>
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)

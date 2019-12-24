@@ -69,8 +69,20 @@ Route::get('policies', function () {
     return view('policies.individual.gestion');
 });
 
+Route::get('binds/{id_policies}/{management}', function ($id_policies, $management) {
+    return view('policies.individual.binds.gestion', ["id_policies" => $id_policies, "management" => $management]);
+});
 
 
+Route::get('policies-childs/{id_policies}/{management}', function ($id_policies, $management) {
+    return view('policies.grouped.childs.gestion', ["id_policies" => $id_policies, "management" => $management]);
+});
+
+
+
+Route::get('policies-grouped', function () {
+    return view('policies.grouped.gestion');
+});
 
 /////
 

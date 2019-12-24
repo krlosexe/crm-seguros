@@ -49,6 +49,15 @@ class PoliciesController extends Controller
         return response()->json($modulos)->setStatusCode(200);
     }
 
+
+
+
+   
+
+
+
+
+
     /**
      * Show the form for creating a new resource............
      *
@@ -133,7 +142,14 @@ class PoliciesController extends Controller
                     $data["beneficairy_identification"] = $request["beneficairy_identification_bind"][$key];
                     $data["id_policie"]                 = $store->id_policies;
 
-                    PoliciesBind::create($data);
+                    $bind = PoliciesBind::create($data);
+
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "binds";
+                    $auditoria->cod_reg     = $bind->id_policies_bind;
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
                     
                 }
            }
@@ -219,9 +235,14 @@ class PoliciesController extends Controller
             $update = Policies::find($policies)->update($request->all());
             PoliciesInfoTakerInsuredBeneficiary::find($policies)->update($request->all());
             PoliciesObservations::find($policies)->update($request->all());
-            PoliciesCousinsCommissions::find($policies)->update($request->all());
-            PoliciesNotifications::find($policies)->update($request->all());
             PoliciesInfoPayments::find($policies)->update($request->all());
+
+            if($request["type_poliza"] != "Collective"){
+                PoliciesCousinsCommissions::find($policies)->update($request->all());
+                PoliciesNotifications::find($policies)->update($request->all());
+            }
+
+            
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
@@ -233,6 +254,142 @@ class PoliciesController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+
+
+
+
+
+
+
+
+
+    public function Binds($id_policie, Request $request){
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $modulos = PoliciesBind::select("policies_bind.*","auditoria.*", "user_registro.email as email_regis")
+
+                                    ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
+                                    ->where("auditoria.tabla", "binds")
+                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                    ->where("auditoria.status", "!=", "0")
+
+                                    ->where("policies_bind.id_policie", $id_policie)
+                                    ->orderBy("policies_bind.id_policies_bind", "DESC")
+                                    ->get();
+
+            return response()->json($modulos)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+    public function StoreBinds(Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+            
+            $request["cousin"]          = str_replace(',', '', $request["cousin"]);
+            $request["percentage_vat"]  = str_replace(',', '', $request["percentage_vat"]);
+            $request["expenses"]        = str_replace(',', '', $request["expenses"]);
+            $request["vat"]             = str_replace(',', '', $request["vat"]);
+            $request["total"]           = str_replace(',', '', $request["total"]);
+
+            $store                  = PoliciesBind::create($request->all());
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "binds";
+            $auditoria->cod_reg     = $store->id_policies_bind;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            if ($store) {
+                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+            
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+    public function UpdateBinds(Request $request, $bind)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $request["cousin"]          = str_replace(',', '', $request["cousin"]);
+            $request["percentage_vat"]  = str_replace(',', '', $request["percentage_vat"]);
+            $request["expenses"]        = str_replace(',', '', $request["expenses"]);
+            $request["vat"]             = str_replace(',', '', $request["vat"]);
+            $request["total"]           = str_replace(',', '', $request["total"]);
+
+            $update = PoliciesBind::find($bind)->update($request->all());
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+    
+
+
+    public function StatusBinds($id, $status, Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "binds")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+
+    public function status($id, $status, Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "policies")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+
 
     /**
      * Remove the specified resource from storage.

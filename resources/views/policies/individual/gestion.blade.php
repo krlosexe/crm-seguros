@@ -25,6 +25,7 @@
 												<th>Cliente</th>
 												<th>Aseguradora</th>
 												<th>Ramo</th>
+												<th>Tipo</th>
 												<th>Estatus</th>
 												<th>Fecha de registro</th>
 												<th>Acciones</th>
@@ -48,6 +49,7 @@
 
 
 			<div class="modal fade" id="modal-lg" aria-hidden="true" style="display: none;">
+			
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -330,8 +332,6 @@
 										</button>
 									</div>
 
-
-
 								</div>
 
 							</form>
@@ -358,9 +358,9 @@
 				list();
 				update();
 
-				$("#collapse_Polizas").addClass("show");
-				$("#nav_li_Polizas").addClass("open");
-				$("#nav_users, #modulo_Polizas").addClass("active");
+				$("#collapse_Pólizas").addClass("show");
+				$("#nav_li_Pólizas").addClass("open");
+				$("#nav_users, #modulo_Pólizas").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "modules");
 			});
@@ -417,6 +417,7 @@
 						},
 						{"data":"name_insurers"},
 						{"data":"name_branchs"},
+						{"data":"type_poliza"},
 						{"data":"state_policies"},
 						{"data": "fec_regins"},
 						{"data": null,
@@ -493,7 +494,7 @@
 					$("#clients_select_view").attr("disabled", "disabled")
 					GetInsurers("#insurers_view", data.insurers)
 
-					GetBranchByInsurers("#insurers_view", "#branch_view", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage)
+					GetBranchByInsurers("#insurers_view", "#branch_view", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage, data.branch, data.type_poliza)
 					GetClients("#clients_select_view", data.clients+"|"+data.type_clients);
 
 					ChangeSelectBranch("#branch_view")
@@ -502,7 +503,10 @@
 						$(".remove").css("display", "none")
 						$(".remove-pay").css("display", "block")
 
-						ShowBinds(data.policies_bind, "#table-bind-view", "view")
+
+						var url = "binds/"+data.id_policies+"/0"
+						$('#iframeVinculadosView').attr('src', url);
+
 					}else{
 						$(".remove").css("display", "block")
 						$(".remove-pay").css("display", "none")
@@ -574,12 +578,13 @@
 					
 					GetInsurers("#insurers_edit", data.insurers)
 
-					GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage)
+					GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza)
 					GetClients("#clients_select_edit", data.clients+"|"+data.type_clients);
 
 					ChangeSelectBranch("#branch_edit", "_edit")
 
-
+					$("#clients_edit").val(data.clients)
+					$("#type_poliza_edit").val(data.type_poliza).attr("readonly", "readonly")
 					$("#number_policies_edit").val(data.number_policies)
 					$("#state_policies_edit").val(data.state_policies)
 					$("#expedition_date_edit").val(data.expedition_date)
@@ -587,6 +592,21 @@
 					$("#start_date_edit").val(data.start_date)
 					$("#end_date_edit").val(data.end_date)
 					$("#risk_edit").val(data.risk)
+
+					if(data.type_poliza == "Collective"){
+						$(".remove").css("display", "none")
+						$(".remove-pay").css("display", "block")
+
+
+						var url = "binds/"+data.id_policies+"/1"
+						$('#iframeVinculadosEdit').attr('src', url);
+
+					}else{
+						$(".remove").css("display", "block")
+						$(".remove-pay").css("display", "none")
+					}
+
+
 
 					$("#name_taker_edit").val(data.name_taker)
 					$("#identification_taker_edit").val(data.identification_taker)
@@ -608,6 +628,7 @@
 					$("#agency_commission_edit").val(number_format(data.agency_commission, 2))
 					$("#total_edit").val(number_format(data.total, 2))
 
+					$("#payment_period_edit").val(data.payment_period)
 					$("#payment_method_edit").val(data.payment_method)
 					$("#half_payment_edit").val(data.half_payment)
 					$("#bank_edit").val(data.bank)
@@ -630,7 +651,7 @@
 			}
 			
 
-			function GetBranchByInsurers(select_insurers, select_branch, value_default = false){
+			function GetBranchByInsurers(select_insurers, select_branch, value_default = false, branch = false, type_poliza = false){
 
 				$(select_branch).selectize({
 					sortField: 'text'
@@ -662,8 +683,21 @@
 								value: "null",
 								text : "Seleccione"
 							}));
-							
-							$.each(data.branchs, function (key, item) { 
+
+							if(type_poliza == "Collective"){
+
+								$.each(data.branchs, function (key, item) { 
+								
+								$(select_branch).append($('<option>',
+								{
+									value: item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage,
+									text : item.name,
+									selected: branch == item.id_branch ? true : false
+								}));
+								});
+
+							}else{
+								$.each(data.branchs, function (key, item) { 
 								
 								$(select_branch).append($('<option>',
 								{
@@ -672,6 +706,9 @@
 									selected: value_default == item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage ? true : false
 								}));
 							});
+							}
+							
+							
 
 							$(select_branch).selectize({
 								//sortField: 'text'
@@ -774,7 +811,6 @@
 
 
 			function ShowBind(input){
-				console.log($.parseJSON($(input).attr("data")))
 				$("#modal-lg").modal("show")
 			}
 
@@ -914,7 +950,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -926,14 +962,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_clients_policies+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 
