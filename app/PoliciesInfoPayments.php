@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PoliciesInfoPayments extends Model
 {
     protected $fillable = [
-        'id_policies', 'payment_period', 'payment_method', 'half_payment', 'bank'
+        'id_policies', 'payment_period', 'payment_method', 'payment_terms'
     ];
 
     protected $table         = 'policies_info_payments';

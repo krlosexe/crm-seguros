@@ -524,69 +524,90 @@
                         <h6 class="m-0 font-weight-bold text-primary">Información pagos</h6>
                       </div>
                       <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for=""><b>Forma Pago</b></label>
+                              <div class="form-group valid-required">
+                                <select name="payment_method" class="form-control start_simulation selectized" id="payment_method_edit" required>
+                                  <option value="">Seleccione</option>
+                                  <option value="Contado">Contado</option>
+                                  <option value="Financiado">Financiado</option>
+                                  <!-- <option value="Fraccionado">Fraccionado</option> -->
+                                </select>
+                              </div>
+                          </div>
+                    
 
-
-                        <div class="row remove-pay">
                           <div class="col-md-4">
                             <label for=""><b>Periodicidad del pago</b></label>
                               <div class="form-group valid-required">
-                                <select name="payment_period" class="form-control selectized" id="payment_period_edit">
+                                <select name="payment_period" class="form-control start_simulation selectized" id="payment_period_edit" required disabled>
                                   <option value="">Seleccione</option>
                                   <option value="Mensual">Mensual</option>
+                                  <option value="Bimensual">Bimensual</option>
                                   <option value="Trimestral">Trimestral</option>
                                   <option value="Semestral">Semestral</option>
                                   <option value="Anual">Anual</option>
                                 </select>
                               </div>
                           </div>
-                        </div>
 
-                        <div class="row">
 
                           <div class="col-md-4">
-                              <label for=""><b>Forma Pago</b></label>
-                                <div class="form-group valid-required">
-                                  <select name="payment_method" class="form-control selectized" id="payment_method_edit" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="Contado">Contado</option>
-                                    <option value="Financiado">Financiado</option>
-                                    <option value="Fraccionado">Fraccionado</option>
-                                  </select>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-md-4">
-                              <label for=""><b>Medio Pago</b></label>
-                                <div class="form-group valid-required">
-                                  <select name="half_payment" class="form-control selectized" id="half_payment_edit" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="Efectivo">Efectivo</option>
-                                    <option value="Tarjeta de Credito">Tarjeta de Credito</option>
-                                    <option value="Deposito">Deposito</option>
-                                    <option value="Debito">Debito</option>
-                                  </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4">
-                              <label for=""><b>Banco</b></label>
-                                <div class="form-group valid-required">
-                                  <input type="text" name="bank" class="form-control form-control-user" id="bank_edit">
-                                </div>
-                            </div>
-
-
-
+                            <label for=""><b>Plazos del pago</b></label>
+                              <div class="form-group valid-required">
+                                <input type="number" name="payment_terms" class="form-control start_simulation" id="payment_terms_edit" required disabled>
+                              </div>
+                          </div>
                         </div>
-                        <br>
 
                       </div>
                     </div>
                   </div>
                 </div>
+
+
+
+                <div class="row">
+              
+                    <div class="col-md-12">
+                      
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Simulacion de pagos</h6>
+                        </div>
+                        <div class="card-body">
+
+                          <div class="row">
+
+                          <div class="col-md-12">
+
+                          <table class="table table-bordered" id="table-simulation-edit" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Numero de Cuota</th>
+                                <th>Fecha de Pago</th>
+                                <th>Monto</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                          </table>
+
+                          </div>
+
+
+                          </div>
+
+                      </div>
+                  </div>
+
+                </div>
+              </div> 
+
+
+
 
               </div>
               

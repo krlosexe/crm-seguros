@@ -190,6 +190,8 @@
 					$("#name_taker_view").val(data.name_taker).attr("disabled", "disabled")
 					$("#identification_taker_view").val(data.identification_taker).attr("disabled", "disabled")
 					
+					var url = "policies-childs/"+data.id_policies_grouped+"/0"
+					$('#iframeView').attr('src', url);
 					
 					$("#insurers_view").trigger("change");
 
@@ -228,7 +230,7 @@
 
 
 					var url = "policies-childs/"+data.id_policies_grouped+"/1"
-						$('#iframeEdit').attr('src', url);
+					$('#iframeEdit').attr('src', url);
 
 
 
@@ -327,7 +329,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-policies-grouped/'+data.id_policies_grouped+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -339,14 +341,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-policies-grouped/'+data.id_policies_grouped+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-policies-grouped/'+data.id_policies_grouped+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 

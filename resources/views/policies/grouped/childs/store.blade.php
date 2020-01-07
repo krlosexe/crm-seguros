@@ -28,9 +28,7 @@
                         <label for=""><b>Tipo de póliza*</b></label>
                           <div class="form-group valid-required">
                             <select name="type_poliza" class="form-control selectized" id="type_poliza" required>
-                                <option value="">Seleccione</option>
-                                <option value="individual">Individual</option>
-                                <option value="Collective">Colectiva</option>
+                                <option value="individual" selected>Individual</option>
                               </select>
                           </div>
                       </div>
@@ -499,53 +497,6 @@
             </div>
 
 
-
-
-
-
-            <div class="row remove-pay">
-            
-              <div class="col-md-12">
-                
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Vinculaciones</h6>
-                  </div>
-                  <div class="card-body">
-
-                    <div class="row">
-
-                      <div class="col-md-12">
-                        <button type="button" data-toggle="modal" data-target="#modal-lg" id="btn-bind-policies" class="btn btn-success" style="float: left;">
-                          <i class="ti-user"></i>
-                          <span>Incluir</span>
-                        </button>
-                      </div>
-
-                      <div class="col-md-12">
-                          <table class="table table-bordered" id="table-bind">
-                            <thead>
-                              <tr>
-                                <th>Nombre</th>
-                                <th>Documento</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                          </table>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-
             <div class="row">
             
               <div class="col-md-12">
@@ -556,38 +507,18 @@
                   </div>
                   <div class="card-body">
 
-                  <div class="row remove-pay">
-
-                    <div class="col-md-4">
-                      <label for=""><b>Periodicidad del pago</b></label>
-                        <div class="form-group valid-required">
-                          <select name="payment_period" class="form-control selectized" id="payment_period">
-                            <option value="">Seleccione</option>
-                            <option value="Mensual">Mensual</option>
-                            <option value="Trimestral">Trimestral</option>
-                            <option value="Semestral">Semestral</option>
-                            <option value="Anual">Anual</option>
-                          </select>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label for=""><b>Forma Pago</b></label>
+                              <div class="form-group valid-required">
+                                <select name="payment_method" class="form-control selectized" id="payment_method" required>
+                                  <option value="">Seleccione</option>
+                                  <option value="Contado">Contado</option>
+                                  <option value="Financiado">Financiado</option>
+                                  <option value="Fraccionado">Fraccionado</option>
+                                </select>
+                              </div>
                         </div>
-                    </div>
-                  </div>
-
-
-                  <div class="row">
-
-                      <div class="col-md-4">
-                          <label for=""><b>Forma Pago</b></label>
-                            <div class="form-group valid-required">
-                              <select name="payment_method" class="form-control selectized" id="payment_method" required>
-                                <option value="">Seleccione</option>
-                                <option value="Contado">Contado</option>
-                                <option value="Financiado">Financiado</option>
-                                <option value="Fraccionado">Fraccionado</option>
-                              </select>
-                            </div>
-                        </div>
-
-
 
                         <div class="col-md-4">
                           <label for=""><b>Medio Pago</b></label>
@@ -609,12 +540,8 @@
                               <input type="text" name="bank" class="form-control form-control-user" id="bank">
                             </div>
                         </div>
-
-
-
                     </div>
                     <br>
-
                   </div>
                 </div>
               </div>
@@ -624,7 +551,7 @@
           
         </div>
         <!---END ROW-->
-        <input type="hidden" name="id_policie" value="{{$id_policies}}">
+        <input type="hidden" name="id_policies_grouped" value="{{$id_policies}}">
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
           <br>

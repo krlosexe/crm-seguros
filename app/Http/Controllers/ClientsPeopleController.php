@@ -48,7 +48,7 @@ class ClientsPeopleController extends Controller
      */
     public function create()
     {
-        //ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+        //
     }
 
     /**

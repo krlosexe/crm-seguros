@@ -84,7 +84,21 @@ Route::get('policies-grouped', function () {
     return view('policies.grouped.gestion');
 });
 
-/////
+
+
+Route::get('tasks', function () {
+    return view('tasks.gestion');
+});
+
+
+Route::get('sinister', function () {
+    return view('policies.sinister.gestion');
+});
+
+
+
+
+///////
 
 
 

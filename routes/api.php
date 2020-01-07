@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assigned the "api" middleware group. Enjoy building your API!!!!!!
 |
 */
 
@@ -70,6 +70,7 @@ Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
 
 Route::resource('policies', 'PoliciesController');
 Route::get('status-policies/{id}/{status}', 'PoliciesController@status');
+Route::post('policies/simulation/pay', 'PoliciesController@SimulationPay');
 
 Route::get('policies-binds/{id}', 'PoliciesController@Binds');
 Route::post('policies-binds', 'PoliciesController@StoreBinds');
@@ -84,6 +85,11 @@ Route::get('status-policies-bind/{id}/{status}', 'PoliciesController@StatusBinds
 Route::resource('policies-grouped', 'PoliciesGroupedController');
 Route::get('status-policies-grouped/{id}/{status}', 'PoliciesGroupedController@status');
 Route::post('policies-childs', 'PoliciesGroupedController@StoreChilds');
+Route::get('policies-childs/{id}', 'PoliciesGroupedController@Childs');
+Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 
 
+
+Route::resource('sinister', 'SinistersController');
+Route::get('status-sinister/{id}/{status}', 'SinistersController@status');

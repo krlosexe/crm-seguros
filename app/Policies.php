@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Policies extends Model
 {
     protected $fillable = [
-        'number_policies', 'state_policies', 'is_renewable', 'insurers', 'branch', 'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 'type_poliza'
+        'number_policies', 'state_policies', 'is_renewable', 'insurers', 'branch', 'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 'type_poliza', 'id_policies_grouped'
     ];
 
     protected $table         = 'policies';
@@ -23,3 +23,4 @@ class Policies extends Model
     }
 
 }
+///////

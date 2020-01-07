@@ -10,25 +10,23 @@ use Illuminate\Support\Facades\Validator;
 class BenefitsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of thesdsd resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-       // if ($this->VerifyLogin($request["id_user"],$request["token"])){
-            $modulos = Benefits::select("benefits.*", "auditoria.*", "user_registro.email as email_regis")
-                                ->join("auditoria", "auditoria.cod_reg", "=", "benefits.id_benefits")
-                                ->where("auditoria.tabla", "benefits")
-                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
-                                ->where("auditoria.status", "!=", "0")
-                                ->orderBy("benefits.id_benefits", "DESC")
-                                ->get();
-           
-            return response()->json($modulos)->setStatusCode(200);
-       // }else{
-          //  return response()->json("No esta autorizado")->setStatusCode(400);
-       // }
+       
+        $modulos = Benefits::select("benefits.*", "auditoria.*", "user_registro.email as email_regis")
+                            ->join("auditoria", "auditoria.cod_reg", "=", "benefits.id_benefits")
+                            ->where("auditoria.tabla", "benefits")
+                            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                            ->where("auditoria.status", "!=", "0")
+                            ->orderBy("benefits.id_benefits", "DESC")
+                            ->get();
+        
+        return response()->json($modulos)->setStatusCode(200);
+      
     }
 
     /**

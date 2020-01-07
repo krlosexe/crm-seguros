@@ -77,12 +77,14 @@
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Numero de Anexo</th>
-													<th>Numero de Afiliado</th>
-													<th>Nombre</th>
-													<th>Documento</th>
-													<th>Fecha de registro</th>
-													<th>Acciones</th>
+												<th>Numero de Poliza</th>
+												<th>Cliente</th>
+												<th>Aseguradora</th>
+												<th>Ramo</th>
+												<th>Tipo</th>
+												<th>Estatus</th>
+												<th>Fecha de registro</th>
+												<th>Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -158,7 +160,7 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/policies-binds', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/policies', '#cuadro4', false, "#avatar-edit");
 			}
 
 
@@ -187,7 +189,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/policies-binds/'+{{$id_policies}},
+						 "url":''+url+'/api/policies-childs/'+{{$id_policies}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -196,10 +198,21 @@
 					},
 					"columns":[
 						
-						{"data":"number_annexed"},
-						{"data":"number_affiliate"},
-						{"data":"name_affiliate"},
-						{"data":"document_affiliate"},
+						{"data":"number_policies"},
+						{"data":null,
+							render : function(data, type, row) {
+								if(row.type_clients == 0){
+									return row.names+" "+row.last_names
+								}else{
+									return row.business_name
+								}
+									
+							}
+						},
+						{"data":"name_insurers"},
+						{"data":"name_branchs"},
+						{"data":"type_poliza"},
+						{"data":"state_policies"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -272,38 +285,74 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
+					$("#insurers_view").attr("disabled", "disabled")
+					$("#branch_view").attr("disabled", "disabled")
+					$("#clients_select_view").attr("disabled", "disabled")
+					GetInsurers("#insurers_view", data.insurers)
+
+					GetBranchByInsurers("#insurers_view", "#branch_view", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage, data.branch, data.type_poliza)
+					GetClients("#clients_select_view", data.clients+"|"+data.type_clients);
+
+					ChangeSelectBranch("#branch_view")
+
+					if(data.type_poliza == "Collective"){
+						$(".remove").css("display", "none")
+						$(".remove-pay").css("display", "block")
+
+
+						var url = "binds/"+data.id_policies+"/0"
+						$('#iframeVinculadosView').attr('src', url);
+
+					}else{
+						$(".remove").css("display", "block")
+						$(".remove-pay").css("display", "none")
+					}
+
+
+					$("#type_poliza_view").val(data.type_poliza).attr("disabled", "disabled")
+					$("#number_policies_view").val(data.number_policies).attr("disabled", "disabled")
+					$("#state_policies_view").val(data.state_policies).attr("disabled", "disabled")
+					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
+					$("#reception_date_view").val(data.reception_date).attr("disabled", "disabled")
+					$("#start_date_view").val(data.start_date).attr("disabled", "disabled")
+					$("#end_date_view").val(data.end_date).attr("disabled", "disabled")
+					$("#risk_view").val(data.risk).attr("disabled", "disabled")
+
+					$("#name_taker_view").val(data.name_taker).attr("disabled", "disabled")
+					$("#identification_taker_view").val(data.identification_taker).attr("disabled", "disabled")
+					$("#name_insured_view").val(data.name_insured).attr("disabled", "disabled")
+					$("#identification_insured_view").val(data.identification_insured).attr("disabled", "disabled")
+					$("#beneficairy_name_view").val(data.beneficairy_name).attr("disabled", "disabled")
+					$("#beneficairy_identification_view").val(data.beneficairy_identification).attr("disabled", "disabled")
+
+					$("#internal_observations_view").val(data.internal_observations).attr("disabled", "disabled")
+					$("#observations_view").val(data.observations).attr("disabled", "disabled")
+
+
+					$("#cousin_view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
+					$("#xpenses_view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
+					$("#vat_view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
+					$("#percentage_vat_cousin_view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
+					$("#commission_percentage_view").val(data.commission_percentage).attr("disabled", "disabled")
+					$("#participation_view").val(data.participation).attr("disabled", "disabled")
+					$("#agency_commission_view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
+					$("#total_view").val(number_format(data.total, 2)).attr("disabled", "disabled")
+
+					$("#payment_period_view").val(data.payment_period).attr("disabled", "disabled")
+					$("#payment_method_view").val(data.payment_method).attr("disabled", "disabled")
+					$("#half_payment_view").val(data.half_payment).attr("disabled", "disabled")
+					$("#bank_view").val(data.bank).attr("disabled", "disabled")
+
 					
-					$("#number_anexo_bind_view").val(data.number_annexed).attr("disabled", "disabled")
-					$("#number_affiliate_bind_view").val(data.number_affiliate).attr("disabled", "disabled")
-					$("#date_init_bind_view").val(data.date_init).attr("disabled", "disabled")
-					$("#insured_object_bind_view").val(data.insured_object).attr("disabled", "disabled")
-					$("#cousin_bind_view").val(data.cousin).attr("disabled", "disabled")
-					$("#name_affiliate_bind_view").val(data.name_affiliate).attr("disabled", "disabled")
-					$("#document_affiliate_bind_view").val(data.document_affiliate).attr("disabled", "disabled")
-					$("#relationship_bind_view").val(data.relationship).attr("disabled", "disabled")
-					$("#birthdate_bind_view").val(data.birthdate).attr("disabled", "disabled")
-					$("#age_bind_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
-					$("#gender_bind_view").val(data.gender).attr("disabled", "disabled")
-					$("#phone_bind_view").val(data.phone).attr("disabled", "disabled")
-					$("#email_bind_view").val(data.email).attr("disabled", "disabled")
-					$("#address_bind_view").val(data.address).attr("disabled", "disabled")
-					$("#plan_bind_view").val(data.plan).attr("disabled", "disabled")
-					$("#type_rate_bind_view").val(data.type_rate).attr("disabled", "disabled")
-					$("#type_membership_bind_view").val(data.type_membership).attr("disabled", "disabled")
+					$("#insurers_view").trigger("change");
+					data.is_renewable == 1 ? $("#is_renewable_view").prop("checked", true) : $("#is_renewable_view").prop("checked", false) 
+					data.beneficiary_remission == 1 ? $("#beneficiary_remission_view").prop("checked", true) : $("#beneficiary_remission_view").prop("checked", false)
+					data.beneficairy_onerous == 1 ? $("#beneficairy_onerous_view").prop("checked", true) : $("#beneficairy_onerous_view").prop("checked", false)
 
-					$("#percentage_vat_bind_view").val(number_format(data.percentage_vat, 2)).attr("disabled", "disabled")
-					$("#expenses_bind_view").val(number_format(data.expenses, 2)).attr("disabled", "disabled")
-					$("#vat_bind_view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
-					$("#total_bind_view").val(number_format(data.total, 2)).attr("disabled", "disabled")
-					$("#company_bind_view").val(data.company).attr("disabled", "disabled")
-					$("#employee_bind_view").val(data.employee).attr("disabled", "disabled")
-					$("#internal_observations_bind_view").val(data.internal_observations).attr("disabled", "disabled")
-					$("#observations_bind_view").val(data.observations).attr("disabled", "disabled")
-
-					$("#beneficairy_name_bind_view").val(data.beneficairy_name).attr("disabled", "disabled")
-					$("#beneficairy_identification_bind_view").val(data.beneficairy_identification).attr("disabled", "disabled")
-				
-					data.beneficairy_onerous   == 1 ? $("#beneficairy_onerous_bind_view").prop("checked", true)   : $("#beneficairy_onerous_bind_view").prop("checked", false) 
+					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_view").prop("checked", true)  : $("#send_policies_for_expire_email_view").prop("checked", false) 
+					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_view").prop("checked", true) : $("#send_portfolio_for_expire_email_view").prop("checked", false) 
+					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
+					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					
 
 					cuadros('#cuadro1', '#cuadro3');
@@ -322,40 +371,76 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#number_anexo_bind_edit").val(data.number_annexed)
-					$("#number_affiliate_bind_edit").val(data.number_affiliate)
-					$("#date_init_bind_edit").val(data.date_init)
-					$("#insured_object_bind_edit").val(data.insured_object)
-					$("#cousin_bind_edit").val(data.cousin)
-					$("#name_affiliate_bind_edit").val(data.name_affiliate)
-					$("#document_affiliate_bind_edit").val(data.document_affiliate)
-					$("#relationship_bind_edit").val(data.relationship)
-					$("#birthdate_bind_edit").val(data.birthdate)
 					
-					$("#age_bind_edit").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
-					$("#gender_bind_edit").val(data.gender)
-					$("#phone_bind_edit").val(data.phone)
-					$("#email_bind_edit").val(data.email)
-					$("#address_bind_edit").val(data.address)
-					$("#plan_bind_edit").val(data.plan)
-					$("#type_rate_bind_edit").val(data.type_rate)
-					$("#type_membership_bind_edit").val(data.type_membership)
+					GetInsurers("#insurers_edit", data.insurers)
 
-					$("#percentage_vat_bind_edit").val(number_format(data.percentage_vat, 2))
-					$("#expenses_bind_edit").val(number_format(data.expenses, 2))
-					$("#vat_bind_edit").val(number_format(data.vat, 2))
-					$("#total_bind_edit").val(number_format(data.total, 2))
-					$("#company_bind_edit").val(data.company)
-					$("#employee_bind_edit").val(data.employee)
-					$("#internal_observations_bind_edit").val(data.internal_observations)
-					$("#observations_bind_edit").val(data.observations)
+					GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza)
+					GetClients("#clients_select_edit", data.clients+"|"+data.type_clients);
 
-					$("#beneficairy_name_bind_edit").val(data.beneficairy_name)
-					$("#beneficairy_identification_bind_edit").val(data.beneficairy_identification)
-				
-					data.beneficairy_onerous   == 1 ? $("#beneficairy_onerous_bind_edit").prop("checked", true)   : $("#beneficairy_onerous_bind_edit").prop("checked", false) 
+					ChangeSelectBranch("#branch_edit", "_edit")
+
+					$("#clients_edit").val(data.clients)
+					$("#type_poliza_edit").val(data.type_poliza).attr("readonly", "readonly")
+					$("#number_policies_edit").val(data.number_policies)
+					$("#state_policies_edit").val(data.state_policies)
+					$("#expedition_date_edit").val(data.expedition_date)
+					$("#reception_date_edit").val(data.reception_date)
+					$("#start_date_edit").val(data.start_date)
+					$("#end_date_edit").val(data.end_date)
+					$("#risk_edit").val(data.risk)
+
+					if(data.type_poliza == "Collective"){
+						$(".remove").css("display", "none")
+						$(".remove-pay").css("display", "block")
+
+
+						var url = "binds/"+data.id_policies+"/1"
+						$('#iframeVinculadosEdit').attr('src', url);
+
+					}else{
+						$(".remove").css("display", "block")
+						$(".remove-pay").css("display", "none")
+					}
+
+
+
+					$("#name_taker_edit").val(data.name_taker)
+					$("#identification_taker_edit").val(data.identification_taker)
+					$("#name_insured_edit").val(data.name_insured)
+					$("#identification_insured_edit").val(data.identification_insured)
+					$("#beneficairy_name_edit").val(data.beneficairy_name)
+					$("#beneficairy_identification_edit").val(data.beneficairy_identification)
+
+					$("#internal_observations_edit").val(data.internal_observations)
+					$("#observations_edit").val(data.observations)
+
+
+					$("#cousin_edit").val(number_format(data.cousin, 2))
+					$("#xpenses_edit").val(number_format(data.xpenses, 2))
+					$("#vat_edit").val(number_format(data.vat, 2))
+					$("#percentage_vat_cousin_edit").val(data.percentage_vat_cousin)
+					$("#commission_percentage_edit").val(data.commission_percentage)
+					$("#participation_edit").val(data.participation)
+					$("#agency_commission_edit").val(number_format(data.agency_commission, 2))
+					$("#total_edit").val(number_format(data.total, 2))
+
+					$("#payment_period_edit").val(data.payment_period)
+					$("#payment_method_edit").val(data.payment_method)
+					$("#half_payment_edit").val(data.half_payment)
+					$("#bank_edit").val(data.bank)
 					
-					$("#id_edit").val(data.id_policies_bind)
+					$("#insurers_edit").trigger("change");
+
+					data.is_renewable          == 1 ? $("#is_renewable_edit").prop("checked", true)          : $("#is_renewable_edit").prop("checked", false) 
+					data.beneficiary_remission == 1 ? $("#beneficiary_remission_edit").prop("checked", true) : $("#beneficiary_remission_edit").prop("checked", false)
+					data.beneficairy_onerous   == 1 ? $("#beneficairy_onerous_edit").prop("checked", true)   : $("#beneficairy_onerous_edit").prop("checked", false)
+
+					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
+					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
+					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
+					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
+					
+					$("#id_edit").val(data.id_policies)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
@@ -656,7 +741,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies-bind/'+data.id_policies_bind+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -668,14 +753,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies-bind/'+data.id_policies_bind+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-policies-bind/'+data.id_policies_bind+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/status-policies/'+data.id_policies+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 

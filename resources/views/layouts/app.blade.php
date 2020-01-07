@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/datatables/media/css/jquery.dataTables.css" />
+
+    <!-- page plugins css -->
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/dragula-master/dist/dragula.min.css" />
+
     <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="<?= url('/') ?>/vendors/sweetalert/sweetalert.css" rel="stylesheet">
@@ -110,6 +114,13 @@
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
+
+      <!-- page plugins js -->
+    <script src="<?= url('/') ?>/vendors/dragula-master/dist/dragula.js"></script>
+
+
+      <!-- page js -->
+      <script src="<?= url('/') ?>/js/apps/task.js"></script>
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)

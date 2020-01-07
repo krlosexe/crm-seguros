@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro3">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Consulta de Polizas.</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Consulta de Polizas Agrupadas.</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-view" enctype="multipart/form-data">
@@ -114,7 +114,7 @@
 
                 <div class="embed-responsive embed-responsive-16by9">
 
-                  <iframe class="embed-responsive-item " id="iframeVinculadosView" allowfullscreen>
+                  <iframe class="embed-responsive-item " id="iframeView" allowfullscreen>
 
                   </iframe>
 

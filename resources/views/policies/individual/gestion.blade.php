@@ -384,6 +384,8 @@
 					"id_user": id_user,
 					"token"  : tokens,
 				};
+
+
 				$('#table tbody').off('click');
 				var url=document.getElementById('ruta').value; 
 				cuadros(cuadro, "#cuadro1");
@@ -473,6 +475,12 @@
 
 				ChangeSelectBranch("#branch")
 
+				methodsPays("#payment_method", "#payment_period", "#payment_terms", "#payment_date")
+
+				StartSimulation(".start_simulation", "#payment_method", "#payment_period", "#payment_terms","#payment_date", "#total", "#table-simulation")
+
+
+
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
 
@@ -544,8 +552,7 @@
 
 					$("#payment_period_view").val(data.payment_period).attr("disabled", "disabled")
 					$("#payment_method_view").val(data.payment_method).attr("disabled", "disabled")
-					$("#half_payment_view").val(data.half_payment).attr("disabled", "disabled")
-					$("#bank_view").val(data.bank).attr("disabled", "disabled")
+					$("#payment_terms_view").val(data.payment_terms).attr("disabled", "disabled")
 
 					
 					$("#insurers_view").trigger("change");
@@ -558,7 +565,7 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					
-
+					showPays(data.id_policies, "#table-simulation-view")
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -630,8 +637,7 @@
 
 					$("#payment_period_edit").val(data.payment_period)
 					$("#payment_method_edit").val(data.payment_method)
-					$("#half_payment_edit").val(data.half_payment)
-					$("#bank_edit").val(data.bank)
+					$("#payment_terms_edit").val(data.payment_terms)
 					
 					$("#insurers_edit").trigger("change");
 
@@ -644,11 +650,129 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
 					
+
+					showPays(data.id_policies, "#table-simulation-edit")
+
+
+
 					$("#id_edit").val(data.id_policies)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
+
+
+
+			function StartSimulation(start_simulation, payment_method, payment_period, payment_terms, payment_date, amount, table){
+
+				$(start_simulation).change(function (e) { 
+
+					if((($(payment_method).val() == "Contado") && $(payment_date).val() != "") || (($(payment_period).val() != "") && ($(payment_terms).val() != "") && ($(payment_date).val() != ""))){
+
+
+						$(table+' tbody').off('click');
+						var url=document.getElementById('ruta').value; 
+						
+						$(table).DataTable({
+							"destroy":true,
+							"searching": false,
+							"stateSave": true,
+							"serverSide":false,
+							"ajax":{
+								"method":"POST",
+								"url":''+url+'/api/policies/simulation/pay',
+								"data": {
+									"id_user"        : id_user,
+									"token"          : tokens,
+									"payment_method" : $(payment_method).val(),
+									"payment_period" : $(payment_period).val(),
+									"payment_terms"  : $(payment_terms).val(),
+									"payment_date"   : $(payment_date).val(),
+									"amount"         : $(amount).val()
+								},
+								"dataSrc":""
+							},
+							"columns":[
+								
+								{"data":"monthly_fee"},
+								{"data":"payment_date"},
+								{"data":"amount", 
+									render:  function(data, type, row){
+										return number_format(data, 2)
+									}
+								},
+								
+							],
+							"language": idioma_espanol,
+							"dom": 'Bfrtip',
+							"ordering": false,
+							"responsive": true,
+							"buttons":[
+								'copy', 'csv', 'excel', 'pdf', 'print'
+							]
+						});
+					}
+				});
+			}
+
+
+
+
+			function showPays(id_policie, table){
+
+				$(table+' tbody').off('click');
+				var url=document.getElementById('ruta').value; 
+				
+				$(table).DataTable({
+					"destroy":true,
+					"searching": false,
+					"stateSave": true,
+					"serverSide":false,
+					"ajax":{
+						"method":"GET",
+						"url":''+url+'/api/policies/simulation/pay/'+id_policie,
+						"data": {
+							"id_user"        : id_user,
+							"token"          : tokens,
+						},
+						"dataSrc":""
+					},
+					"columns":[
+						
+						{"data":"monthly_fee"},
+						{"data":"payment_date"},
+						{"data":"amount", 
+							render:  function(data, type, row){
+								return number_format(data, 2)
+							}
+						},
+						
+					],
+					"language": idioma_espanol,
+					"dom": 'Bfrtip',
+					"ordering": false,
+					"responsive": true,
+					"buttons":[
+						'copy', 'csv', 'excel', 'pdf', 'print'
+					]
+				});
+			}
+
+
+			function methodsPays(method_payment, payment_period, payment_terms, payment_date){
+				
+				$(method_payment).change(function (e) { 
+					
+					if($(this).val() == "Contado"){
+						$(payment_period).attr("disabled", "disabled")
+						$(payment_terms).attr("disabled", "disabled")
+					}else{
+						$(payment_period).removeAttr("disabled")
+						$(payment_terms).removeAttr("disabled")
+					}
+				});
+			}
+
 			
 
 			function GetBranchByInsurers(select_insurers, select_branch, value_default = false, branch = false, type_poliza = false){
