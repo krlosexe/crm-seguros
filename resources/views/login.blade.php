@@ -33,9 +33,9 @@
 <body>
   <div class="form-body without-side">
         <div class="website-logo">
-            <a href="index.html">
+            <a href="https://chseguros.com.co/">
                 <div class="logo">
-                    <img class="logo-size" src="../images/logo/logo.svg" alt="">
+                    <img class="logo-size" src="https://chseguros.com.co/wp-content/uploads/2020/01/logoch2020.svg" alt="logo ch">
                 </div>
             </a>
         </div>
@@ -62,11 +62,13 @@
                         </form>
                         <div class="other-links">
                             <div class="text">O ingresa sesión con: </div>
-                            <a href="#"><i class="fa fa-facebook"></i>Facebook</a><a href="#"><i class="fa fa-twitter"></i>Google</a><a href="#"><i class="fa fa-linkedin"></i>Linkedin</a>
+                            <a href="#"><i class="fa fa-facebook"></i>Facebook</a><a href="#"><i class="fa fa-google"></i>Google</a>
                         </div>
+                        <!---
                         <div class="page-links">
                             <a href="register22.html">Registrarme</a>
                         </div>
+                        --->
                     </div>
                 </div>
             </div>

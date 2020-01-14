@@ -619,25 +619,21 @@
                     <div class="card-body">
 
                       <div class="row">
+                        <div class="col-md-12">
+                          <table class="table table-bordered" id="table-simulation" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Numero de Cuota</th>
+                                <th>Fecha de Pago</th>
+                                <th>Monto</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                          </table>
 
-                      <div class="col-md-12">
-
-                      <table class="table table-bordered" id="table-simulation" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Numero de Cuota</th>
-                            <th>Fecha de Pago</th>
-                            <th>Monto</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                      </table>
-
-                      </div>
-
-
+                        </div>
                       </div>
 
                   </div>

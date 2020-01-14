@@ -62,7 +62,7 @@
 				$("#collapse_Clientes").addClass("show");
 				$("#nav_li_Clientes").addClass("open");
 				$("#nav_users, #modulo_Clientes").addClass("active");
-
+				$("#nav_consortium").addClass("active");
 				verifyPersmisos(id_user, tokens, "modules");
 			});
 

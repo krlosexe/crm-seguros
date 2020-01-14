@@ -86,6 +86,7 @@
 
   </div>
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
+<script src="<?= url('/') ?>/js/app.js"></script>
       <script src="<?= url('/') ?>/vendors/popper.js/dist/umd/popper.min.js"></script>
       <script src="<?= url('/') ?>/vendors/bootstrap/dist/js/bootstrap.js"></script>
       <script src="<?= url('/') ?>/vendors/PACE/pace.min.js"></script>
@@ -110,7 +111,7 @@
       <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
       <script src="<?= url('/') ?>/vendors/numeral/min/numeral.min.js"></script>
-      <script src="<?= url('/') ?>/js/app.js"></script>
+     
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
@@ -121,6 +122,8 @@
 
       <!-- page js -->
       <script src="<?= url('/') ?>/js/apps/task.js"></script>
+
+      
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)

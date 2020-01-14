@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!!!!!!
-|
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -93,3 +93,14 @@ Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 Route::resource('sinister', 'SinistersController');
 Route::get('status-sinister/{id}/{status}', 'SinistersController@status');
+
+Route::get('payment', 'PaymentController@get');
+Route::post('payment', 'PaymentController@GetByPolicie');
+Route::post('payment/fee/pending', 'PaymentController@FeePending');
+Route::post('payment/fee', 'PaymentController@PaymentFee');
+
+Route::get('payments/receivable', 'PaymentController@paymentsReceivable');
+Route::get('payments/beaten', 'PaymentController@paymentsBeaten');
+
+Route::get('payments/collected', 'PaymentController@paymentsCollected');
+

@@ -12,8 +12,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-
-
     public function VerifyLogin($id_user, $token)
     {
 
@@ -31,4 +29,3 @@ class Controller extends BaseController
     	return $arrayName = array(1,2,3);
     }
 }
-/////

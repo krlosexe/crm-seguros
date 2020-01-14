@@ -528,7 +528,7 @@
                           <div class="col-md-4">
                             <label for=""><b>Forma Pago</b></label>
                               <div class="form-group valid-required">
-                                <select name="payment_method" class="form-control start_simulation selectized" id="payment_method_edit" required>
+                                <select name="payment_method" class="form-control start_simulation selectized" id="payment_method_edit" required disabled>
                                   <option value="">Seleccione</option>
                                   <option value="Contado">Contado</option>
                                   <option value="Financiado">Financiado</option>

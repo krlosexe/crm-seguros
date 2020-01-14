@@ -14,13 +14,10 @@ class Policies extends Model
     public    $timestamps    = false;
     protected $primaryKey    = 'id_policies';
 
-
-
-
     public function policies_bind()
     {
       return $this->hasMany('App\PoliciesBind', 'id_policie');
     }
 
 }
-///////
+/////

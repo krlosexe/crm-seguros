@@ -96,8 +96,24 @@ Route::get('sinister', function () {
 });
 
 
+Route::get('payment', function () {
+    return view('administracion.payment.gestion');
+});
 
 
+
+Route::get('payments-receivable', function () {
+    return view('administracion.payment-receivable.gestion');
+});
+
+Route::get('payments-beaten', function () {
+    return view('administracion.payments-beaten.gestion');
+});
+
+
+Route::get('payments-collected', function () {
+    return view('administracion.payments-collected.gestion');
+});
 ///////
 
 

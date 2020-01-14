@@ -62,7 +62,7 @@
 				$("#collapse_Perfiles").addClass("show");
 				$("#nav_li_Perfiles").addClass("open");
 				$("#nav_users, #modulo_Perfiles").addClass("active");
-
+				$("#nav_modules").addClass("active");
 				verifyPersmisos(id_user, tokens, "modules");
 			});
 

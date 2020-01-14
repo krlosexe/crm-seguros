@@ -63,7 +63,7 @@
 				$("#collapse_Pólizas").addClass("show");
 				$("#nav_li_Pólizas").addClass("open");
 				$("#nav_users, #modulo_Pólizas").addClass("active");
-
+				$("#nav_sinister").addClass("active");
 				verifyPersmisos(id_user, tokens, "modules");
 			});
 

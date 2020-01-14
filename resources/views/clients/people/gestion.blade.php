@@ -63,6 +63,8 @@
 
 				$("#collapse_Clientes").addClass("show");
 				$("#nav_li_Clientes").addClass("open");
+				$("#nav_people").addClass("active");
+
 				$("#nav_users, #modulo_Clientes").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "modules");
