@@ -145,9 +145,28 @@ class ClientsPeopleController extends Controller
      * @param  \App\ClientsPeople  $clientsPeople
      * @return \Illuminate\Http\Response
      */
-    public function show(ClientsPeople $clientsPeople)
+    public function show($clientsPeople)
     {
-        //
+        
+        $modulos = ClientsPeople::select("clients_people.*", "clients_people_contact.*", "clients_people_info_crm.*", "clients_notifications.*", "clients_people_working_information.*","auditoria.*", "user_registro.email as email_regis")
+                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people")
+                                ->join("clients_people_info_crm", "clients_people_info_crm.id_clients_people", "=", "clients_people.id_clients_people")
+                                ->join("clients_notifications", "clients_notifications.id_clients", "=", "clients_people.id_clients_people")
+                                ->join("clients_people_working_information", "clients_people_working_information.id_clients_people", "=", "clients_people.id_clients_people")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "clients_people.id_clients_people")
+                                ->where("auditoria.tabla", "clients_people")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("childrens")
+                                ->with("vehicle")                               
+                                
+                                ->where("clients_people.id_clients_people", $clientsPeople)
+                                ->where("auditoria.status", "!=", "0")
+                                ->orderBy("clients_people.id_clients_people", "DESC")
+                                ->get();
+           
+        return response()->json($modulos[0])->setStatusCode(200);
     }
 
     /**

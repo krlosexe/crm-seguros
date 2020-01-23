@@ -47,7 +47,7 @@
                           <select name="type_document" class="form-control selectized" id="type_document_edit" required>
                             <option value="">Seleccione</option>
                             <option value="Cedula">Cedula</option>
-                            <option value="Cedula de Extrangeria">Cedula de Extrangeria</option>
+                            <option value="Cedula de Extrangeria">Cedula de Extranjería</option>
                             <option value="RUC">RUC</option>
                             <option value="Pasaporte">Pasaporte</option>
                             <option value="NUIP">NUIP</option>
@@ -73,7 +73,7 @@
 
                     <div class="row">
                       <div class="col-sm-4">
-                        <label for=""><b>Genero*</b></label>
+                        <label for=""><b>Género*</b></label>
                         <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender_edit" required>
                           <option value="">Seleccione</option>
                           <option value="Masculino">Masculino</option>
@@ -210,7 +210,7 @@
                     <div class="row">
                       <div class="form-group col-md-12">
                           <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
+                            <label for="address1" class="col-md-2 control-label">Teléfono 1*</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1" require>
                             </div>
@@ -233,7 +233,7 @@
                     <div class="row">
                       <div class="form-group col-md-12">
                           <div class="row">
-                            <label for="address1" class="col-md-2 control-label">Telefono 2</label>
+                            <label for="address1" class="col-md-2 control-label">Teléfono 2</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" id="phone2_edit" name="phone2" placeholder="Telefono 2">
                             </div>
@@ -285,7 +285,7 @@
               <div class="col-md-12">
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Informacion CRM</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Información CRM</h6>
                   </div>
                   <div class="card-body">
 

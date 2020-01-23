@@ -11,12 +11,13 @@ use App\PoliciesNotifications;
 use App\PoliciesInfoPayments;
 use App\PoliciesBind;
 use App\RecibosCobranza;
+use App\PoliciesAnnexes;
 use Illuminate\Http\Request;
 
 class PoliciesController extends Controller
 {
     /**
-     * Display a listing of the resource........
+     * Display a listing of the resource
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,7 +52,6 @@ class PoliciesController extends Controller
         return response()->json($modulos)->setStatusCode(200);
     }
 
-
     /**
      * Show the form for creating a new resource
      *
@@ -82,10 +82,6 @@ class PoliciesController extends Controller
             isset($request["send_portfolio_for_expire_email"])  ? $request["send_portfolio_for_expire_email"]  = 1 : $request["send_portfolio_for_expire_email"] = 0;
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
-            
-
-
-            
 
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
@@ -106,52 +102,7 @@ class PoliciesController extends Controller
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
                 PoliciesNotifications::create($request->all());
-            }else{
-                
-                // foreach($request["number_annexed_bind"] as $key => $value){
-                
-                //     $data["number_annexed"]             = $request["number_annexed_bind"][$key];
-                //     $data["number_affiliate"]           = $request["number_affiliate_bind"][$key];
-                //     $data["date_init"]                  = $request["date_init_bind"][$key];
-                //     $data["insured_object"]             = $request["insured_object_bind"][$key];
-                //     $data["cousin"]                     = str_replace(',', '', $request["cousin_bind"])[$key];
-                //     $data["name_affiliate"]             = $request["name_affiliate_bind"][$key];
-                //     $data["document_affiliate"]         = $request["document_affiliate_bind"][$key];
-                //     $data["relationship"]               = $request["relationship_bind"][$key];
-                //     $data["birthdate"]                  = $request["birthdate_bind"][$key];
-                //     $data["gender"]                     = $request["gender_bind"][$key];
-                //     $data["phone"]                      = $request["phone_bind"][$key];
-                //     $data["email"]                      = $request["email_bind"][$key];
-                //     $data["address"]                    = $request["address_bind"][$key];
-                //     $data["plan"]                       = $request["plan_bind"][$key];
-                //     $data["type_rate"]                  = $request["type_rate_bind"][$key];
-                //     $data["type_membership"]            = $request["type_membership_bind"][$key];
-                //     $data["percentage_vat"]             = str_replace(',', '', $request["percentage_vat_bind"])[$key];
-                //     $data["expenses"]                   = str_replace(',', '', $request["expenses_bind"])[$key];
-                //     $data["vat"]                        = str_replace(',', '', $request["vat_bind"])[$key];
-                //     $data["total"]                      = str_replace(',', '', $request["total_bind"])[$key];
-                //     $data["company"]                    = $request["company_bind"][$key];
-                //     $data["employee"]                   = $request["employee_bind"][$key];
-                //     $data["internal_observations"]      = $request["internal_observations_bind"][$key];
-                //     $data["observations"]               = $request["observations_bind"][$key];
-                //     $data["beneficairy_onerous"]        = $request["beneficairy_onerous_bind"][$key];
-                //     $data["beneficairy_name"]           = $request["beneficairy_name_bind"][$key];
-                //     $data["beneficairy_identification"] = $request["beneficairy_identification_bind"][$key];
-                //     $data["id_policie"]                 = $store->id_policies;
-
-                //     $bind = PoliciesBind::create($data);
-
-                //     $auditoria              = new Auditoria;
-                //     $auditoria->tabla       = "binds";
-                //     $auditoria->cod_reg     = $bind->id_policies_bind;
-                //     $auditoria->status      = 1;
-                //     $auditoria->usr_regins  = $request["id_user"];
-                //     $auditoria->save();
-                    
-                // }
-           }
-
-
+            }
 
            $request["amount"] = $request["total"];
            $plan_pay = $this->SimulationPay($request);
@@ -198,7 +149,7 @@ class PoliciesController extends Controller
      */
     public function show($policies)
     {
-        $modulos = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
+        $policie = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
                                     "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
                                     "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
                                     "auditoria.*", "user_registro.email as email_regis")
@@ -226,9 +177,8 @@ class PoliciesController extends Controller
                                 ->orderBy("policies.id_policies", "DESC")
                                 ->get();
            
-        return response()->json($modulos[0])->setStatusCode(200);
+        return response()->json($policie[0])->setStatusCode(200);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -239,7 +189,6 @@ class PoliciesController extends Controller
     {
         
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -300,14 +249,6 @@ class PoliciesController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
     public function Binds($id_policie, Request $request){
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
@@ -360,7 +301,6 @@ class PoliciesController extends Controller
         }
     }
 
-
     public function UpdateBinds(Request $request, $bind)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
@@ -383,8 +323,6 @@ class PoliciesController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
-    
-
 
     public function StatusBinds($id, $status, Request $request)
     {
@@ -408,8 +346,6 @@ class PoliciesController extends Controller
     }
 
 
-
-
     public function status($id, $status, Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
@@ -431,12 +367,8 @@ class PoliciesController extends Controller
         }
     }
 
-
-
     public function SimulationPay(Request $request)
     {
-
-            
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
             if($request["payment_method"] == "Contado"){
@@ -504,17 +436,13 @@ class PoliciesController extends Controller
     
                         $inicio_pago     = $year."-".$mes."-".$dia_inicio;
 
-
                     }
-
 
                     $data = array(
                         "monthly_fee"  => $i,
                         "payment_date" => $fecha_recorrido,
                         "amount"       => (str_replace(',', '', $request["amount"]) /  $num_cuotas)
                     );
-
-
 
                     $simulation[] = $data;
                 }
@@ -527,22 +455,135 @@ class PoliciesController extends Controller
         }
     }
 
-
-
     function GetPays($id_policie){
 
         $data = RecibosCobranza::where("id_policie", $id_policie)->get();
         return response()->json($data)->setStatusCode(200);
     }
 
+
+    public function StoreAnnexes(request $request){
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+
+            isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
+
+            $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
+            $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
+            $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
+            $request["percentage_vat_cousin"] = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
+            $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
+            $request["total"]                 = (float) str_replace(',', '', $request["total"]);
+            
+            $store                  = PoliciesAnnexes::create($request->all());
+            $request["id_policies_annexes"] = $store->id_policies_annexes;
+ 
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "policies_annexes";
+            $auditoria->cod_reg     = $store->id_policies_annexes;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            if ($store) {
+                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+            
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }   
+
+
+
+    public function UpdateAnnexes(Request $request, $annexe)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
+
+            $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
+            $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
+            $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
+            $request["percentage_vat_cousin"] = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
+            $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
+            $request["total"]                 = (float) str_replace(',', '', $request["total"]);
+
+            $update = PoliciesAnnexes::find($annexe)->update($request->all());
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+
+
+
+
+    public function GetAnnexes($policies)
+    {
+        $policie = PoliciesAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
+
+                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
+                                            ->where("auditoria.tabla", "policies_annexes")
+                                            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                            ->where("policies_annexes.id_policie", $policies)
+
+                                            ->where("auditoria.status", "!=", "0")
+                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->get();
+           
+        return response()->json($policie)->setStatusCode(200);
+    }
+
+
+
+
+    public function StatusAnnexes($id, $status, Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "policies_annexes")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
-     *
      * @param  \App\Policies  $policies
      * @return \Illuminate\Http\Response
      */
     public function destroy(Policies $policies)
     {
-        //
+        
     }
 }

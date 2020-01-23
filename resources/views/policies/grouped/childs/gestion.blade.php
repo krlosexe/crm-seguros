@@ -442,6 +442,11 @@
 					
 					$("#id_edit").val(data.id_policies)
 
+
+					var url = "/policies/grouped/annexes/"+data.id_policies+"/1"
+					$('#iframeAnnexesEdit').attr('src', url);
+
+
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}

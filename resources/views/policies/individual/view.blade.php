@@ -14,6 +14,13 @@
             <li class="nav-item remove-pay">
                 <a href="#default-tab-2" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Vinculados</a>
             </li>
+
+
+            <li class="nav-item">
+                <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
+            </li>
+
+
         </ul>
 
 
@@ -615,6 +622,20 @@
               </div>
 
           </div>
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-view">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeAnnexesView" allowfullscreen>
+
+              </iframe>
+
+            </div>
+          </div>
+
+
+
         </div>
 
 

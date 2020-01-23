@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!!!!!!
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -60,11 +60,23 @@ Route::get('clients', 'ClientsController@GetClients');
 
 Route::resource('insurers', 'InsurersController');
 Route::get('status-insurers/{id}/{status}', 'InsurersController@status');
+Route::post('insurers/sub/company', 'InsurersController@StoreSubCompany');
+Route::get('insurers/sub/company/{id_insurers}', 'InsurersController@GetSubCompany');
+Route::put('insurers/sub/company/{id_insurers}', 'InsurersController@updateSubCompany');
+Route::get('insurers/sub/company/status/{id_insurers}/{status}', 'InsurersController@statusSubCompany');
 
-
+Route::post('insurers/oficce/', 'InsurersController@StoreOficce');
+Route::get('insurers/oficce/{id_insurers}', 'InsurersController@getOficce');
+Route::put('insurers/oficce/{id_insurers}', 'InsurersController@StoreOficce');
+Route::get('insurers/oficce/status/{id_insurers}/{status}', 'InsurersController@statusOficce');
 
 Route::resource('branchs', 'BranchsController');
 Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
+
+
+Route::resource('sub/company', 'TypeSubCompanyController');
+Route::get('status/sub/company/{id}/{status}', 'TypeSubCompanyController@status');
+
 
 
 
@@ -77,6 +89,10 @@ Route::post('policies-binds', 'PoliciesController@StoreBinds');
 
 Route::put('policies-binds/{id}', 'PoliciesController@UpdateBinds');
 
+Route::post('policies/annexes', 'PoliciesController@StoreAnnexes');
+Route::get('policies/annexes/{id}', 'PoliciesController@GetAnnexes');
+Route::put('policies/annexes/{id}', 'PoliciesController@UpdateAnnexes');
+Route::get('policies/annexes/status/{id}/{status}', 'PoliciesController@StatusAnnexes');
 
 Route::get('status-policies-bind/{id}/{status}', 'PoliciesController@StatusBinds');
 
@@ -86,6 +102,11 @@ Route::resource('policies-grouped', 'PoliciesGroupedController');
 Route::get('status-policies-grouped/{id}/{status}', 'PoliciesGroupedController@status');
 Route::post('policies-childs', 'PoliciesGroupedController@StoreChilds');
 Route::get('policies-childs/{id}', 'PoliciesGroupedController@Childs');
+
+Route::post('policies/grouped/annexes', 'PoliciesGroupedController@StoreAnnexes');
+
+
+
 Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 

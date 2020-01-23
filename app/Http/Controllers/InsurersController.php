@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Insurers;
-use App\InsurersBranchs;
 use App\Auditoria;
+use App\InsurersOficce;
+use App\InsurersBranchs;
+use App\InsurersSubCompany;
 use Illuminate\Http\Request;
 
 class InsurersController extends Controller
@@ -14,9 +16,11 @@ class InsurersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
-        $modulos = Insurers::select("insurers.*", "auditoria.*", "user_registro.email as email_regis")
+        $data = Insurers::select("insurers.*", "auditoria.*", "user_registro.email as email_regis")
                                 ->join("auditoria", "auditoria.cod_reg", "=", "insurers.id_insurers")
                                 ->where("auditoria.tabla", "insurers")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
@@ -27,7 +31,7 @@ class InsurersController extends Controller
                                 ->orderBy("insurers.id_insurers", "DESC")
                                 ->get();
            
-        return response()->json($modulos)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
     /**
@@ -37,7 +41,7 @@ class InsurersController extends Controller
      */
     public function create()
     {
-        //
+      
     }
 
     /**
@@ -58,6 +62,7 @@ class InsurersController extends Controller
                 foreach($request["id_branch"] as $key => $value){
 
                     $request["id_branch"]             = $value;
+                    $request["code"]                  = $request["codes"][$key];
                     $request["commission_percentage"] = $request["commission_percentages"][$key];
                     $request["vat_percentage"]        = $request["vat_percentages"][$key];
 
@@ -129,6 +134,7 @@ class InsurersController extends Controller
      */
     public function update(Request $request,  $insurers)
     {
+
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
             $update = Insurers::find($insurers)->update($request->all());
@@ -136,10 +142,12 @@ class InsurersController extends Controller
             InsurersBranchs::where('id_insurers', $insurers)->delete();
 
             $request["id_insurers"]  = $insurers;
+
             if(isset($request["id_branch"])){
                 foreach($request["id_branch"] as $key => $value){
 
                     $request["id_branch"]             = $value;
+                    $request["code"]                  = $request["codes"][$key];
                     $request["commission_percentage"] = $request["commission_percentages"][$key];
                     $request["vat_percentage"]        = $request["vat_percentages"][$key];
 
@@ -184,6 +192,207 @@ class InsurersController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+
+
+
+    public function StoreSubCompany(request $request){
+
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+            isset($request["turn_check"])         ? $request["turn_check"] = 1        : $request["turn_check"]        = 0;
+            isset($request["court_of_accounts"])  ? $request["court_of_accounts"] = 1 : $request["court_of_accounts"] = 0;
+            isset($request["ica"])                ? $request["ica"] = 1               : $request["ica"]               = 0;
+
+            $store                  = InsurersSubCompany::create($request->all());
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "insurers_sub_company";
+            $auditoria->cod_reg     = $store->id_insurers_sub_company;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            if ($store) {
+                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+            
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+
+    }
+
+    public function GetSubCompany(request $request, $insurers){
+
+        $data = InsurersSubCompany::select("insurers_sub_company.*", "auditoria.*", "user_registro.email as email_regis")
+                                    ->join("auditoria", "auditoria.cod_reg", "=", "insurers_sub_company.id_insurers_sub_company")
+                                    ->where("auditoria.tabla", "insurers_sub_company")
+                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                    ->where("insurers_sub_company.id_surgerie", $insurers)
+
+                                    ->where("auditoria.status", "!=", "0")
+                                    ->orderBy("insurers_sub_company.id_insurers_sub_company", "DESC")
+                                    ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+
+    }
+
+
+
+    public function updateSubCompany(Request $request,  $id)
+    {   
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            isset($request["turn_check"])         ? $request["turn_check"] = 1        : $request["turn_check"]        = 0;
+            isset($request["court_of_accounts"])  ? $request["court_of_accounts"] = 1 : $request["court_of_accounts"] = 0;
+            isset($request["ica"])                ? $request["ica"] = 1               : $request["ica"]               = 0;
+
+            $update = InsurersSubCompany::find($id)->update($request->all());
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+    function statusSubCompany($id, $status, Request $request){
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "insurers_sub_company")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+    public function StoreOficce(request $request){
+
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+            isset($request["headquarters_default"]) ? $request["headquarters_default"] = 1  : $request["headquarters_default"] = 0;
+
+            $store                  = InsurersOficce::create($request->all());
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "insurers_oficce";
+            $auditoria->cod_reg     = $store->id_insurers_oficce;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            if ($store) {
+                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+            
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+
+
+    }
+
+    
+
+    public function getOficce(request $request, $insurers){
+
+        $data = InsurersOficce::select("insurers_oficce.*", "auditoria.*", "user_registro.email as email_regis")
+                                    ->join("auditoria", "auditoria.cod_reg", "=", "insurers_oficce.id_insurers_oficce")
+                                    ->where("auditoria.tabla", "insurers_oficce")
+                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                    ->where("insurers_oficce.id_surgerie", $insurers)
+
+                                    ->where("auditoria.status", "!=", "0")
+                                    ->orderBy("insurers_oficce.id_insurers_oficce", "DESC")
+                                    ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+
+    }
+
+
+
+
+    public function updateOficce(Request $request,  $id)
+    {   
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            isset($request["headquarters_default"]) ? $request["headquarters_default"] = 1  : $request["headquarters_default"] = 0;
+
+            $update = InsurersOficce::find($id)->update($request->all());
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+    function statusOficce($id, $status, Request $request){
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "insurers_oficce")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+    
+
 
     /**
      * Remove the specified resource from storage.

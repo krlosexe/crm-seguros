@@ -20,4 +20,3 @@ class Policies extends Model
     }
 
 }
-/////

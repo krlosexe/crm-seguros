@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestión de pagos vencidos.</h4>
+					<h4>Gestión de pagos recaudados.</h4>
 				</div>
 				<div class="row">
 					
@@ -83,11 +83,19 @@
 					},
 					"columns":[
 						
-						{"data":"number_policies"},
-						{"data":"names"},
+						{"data":"number_policies",
+							render : function(data, type, row){
+								return "<a href='policies/"+row.id_policie+"' target='_blank' class=''>"+data+"</a>"
+							}
+						},
+						{"data":"names",
+							render : function(data, type, row){
+								return "<a href='people/"+row.clients+"' target='_blank' class=''>"+data+"</a>"
+							}
+						},
 						{"data":"monthly_fee"},
 						{"data":"payment_date"},
-						{"data":"balance",
+						{"data":"payment",
 							render : function(data, row, type){
 								return number_format(data, 2)
 							}

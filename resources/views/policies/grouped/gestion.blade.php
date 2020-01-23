@@ -238,6 +238,10 @@
 					
 					$("#id_edit").val(data.id_policies_grouped)
 
+
+					
+
+
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}

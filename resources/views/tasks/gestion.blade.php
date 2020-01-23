@@ -3,267 +3,156 @@
 	@section('content')
 			
 		 <!-- Content Wrapper START -->
-		 <div class="main-content">
-			<div class="container-fluid" id="cuadro1">
-				<div class="page-title">
-					<h4>Gestión de Tareas.</h4>
-				</div>
-				<div class="row">
-					
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-block">
-								<div class="row">
-									<div class="col-sm-3">
-                                
-										<div class="card">
-											<div class="card-body">
-												<h4 class="card-title">
-													<span>Urgente</span>
-												</h4>
-												<div id='board1'>
-													<div class="card padding-15 draggable-item">
-														<ul class="list-label mrg-btm-10">
-															<li class="bg-info"></li>
-															<li class="bg-danger"></li>
-														</ul>
-														<p class="font-size-15">
-															<b>Phase 1 - Preparation</b>
-														</p>
-														<div class="mrg-top-20">
-															<ul class="list-inline d-inline-block mrg-top-10">
-																<li class="d-inline-block mrg-right-10">
-																	<i class="ti-clip mrg-right-5"></i>
-																	<span>8</span>
-																</li>
-																<li class="d-inline-block">
-																	<i class="ti-calendar mrg-right-5"></i>
-																	<span>10/29</span>
-																</li>
-															</ul>
-															<ul class="list-members list-inline float-right">
-																<li>
-																	<a href="">
-																		<img src="C:/Users/Usuario/Desktop/Espire%20-%20Bootstrap%204%20Admin%20Template/html/demo/app/assets/images/avatars/thumb-4.jpg" alt="">
-																	</a>
-																</li>
-																<li>
-																	<a href="">
-																		<img src="C:/Users/Usuario/Desktop/Espire%20-%20Bootstrap%204%20Admin%20Template/html/demo/app/assets/images/avatars/thumb-4.jpg" alt="">
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="card padding-15 draggable-item">
-														<ul class="list-label mrg-btm-10">
-															<li class="bg-info"></li>
-														</ul>
-														<p class="font-size-15">
-															<b>Phase 2 - Gather Material</b>
-														</p>
-														<div class="mrg-top-20">
-															<ul class="list-inline d-inline-block mrg-top-10">
-																<li class="d-inline-block mrg-right-10">
-																	<i class="ti-comment mrg-right-5"></i>
-																	<span>3</span>
-																</li>
-															</ul>
-															<ul class="list-members list-inline float-right">
-																<li>
-																	<a href="">
-																		<img src="assets/images/avatars/thumb-9.jpg" alt="">
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-
-									<div class="col-sm-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                            <span>Prioritario</span>
-                                        </h4>
-                                        <div id='board2'>
-                                            <div class="card padding-15 draggable-item">
-                                                <ul class="list-label mrg-btm-10">
-                                                    <li class="bg-info"></li>
-                                                    <li class="bg-danger"></li>
-                                                </ul>
-                                                <p class="font-size-15">
-                                                    <b>Setup Database</b>
-                                                </p>
-                                                <div class="mrg-top-20">
-                                                    <ul class="list-inline d-inline-block mrg-top-10">
-                                                        <li class="d-inline-block mrg-right-10">
-                                                            <i class="ti-clip mrg-right-5"></i>
-                                                            <span>8</span>
-                                                        </li>
-                                                        <li class="d-inline-block">
-                                                            <i class="ti-calendar mrg-right-5"></i>
-                                                            <span>10/29</span>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="list-members list-inline float-right">
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-3.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-5.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="card padding-15 draggable-item">
-                                                <ul class="list-label mrg-btm-10">
-                                                    <li class="bg-info"></li>
-                                                    <li class="bg-danger"></li>
-                                                    <li class="bg-warning"></li>
-                                                </ul>
-                                                <p class="font-size-15">
-                                                    <b>Setup Server</b>
-                                                </p>
-                                                <div class="mrg-top-20">
-                                                    <ul class="list-inline d-inline-block mrg-top-10">
-                                                        <li class="d-inline-block mrg-right-10">
-                                                            <i class="ti-comment mrg-right-5"></i>
-                                                            <span>3</span>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="list-members list-inline float-right">
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-11.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="card padding-15 draggable-item">
-                                                <ul class="list-label mrg-btm-10">
-                                                    <li class="bg-success"></li>
-                                                </ul>
-                                                <p class="font-size-15">
-                                                    <b>Setup Workspace</b>
-                                                </p>
-                                                <div class="mrg-top-20">
-                                                    <ul class="list-inline d-inline-block mrg-top-10">
-                                                        <li class="d-inline-block mrg-right-10">
-                                                            <i class="ti-clip mrg-right-5"></i>
-                                                            <span>8</span>
-                                                        </li>
-                                                        <li class="d-inline-block">
-                                                            <i class="ti-calendar mrg-right-5"></i>
-                                                            <span>10/29</span>
-                                                        </li>    
-                                                    </ul>
-                                                    <ul class="list-members list-inline float-right">
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-5.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-7.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+		<div class="main-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card calendar-event">
+                                    <div class="card-block overlay-dark bg" style="background-image: url('assets/images/others/img-8.jpg')">
+                                        <div class="text-center">
+                                            <h1 class="font-size-65 text-light mrg-btm-5 lh-1">28<span class="font-size-18">th</span></h1>
+                                            <h2 class="no-mrg-top">Sunday</h2>
                                         </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <button type="button" class="add-event btn-warning" data-toggle="modal" data-target="#calendar-edit">
+                                            <i class="ti-plus"></i>
+                                        </button>
+                                        <ul class="event-list">
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet success"></span>
+                                                    <span class="event-name"> All Day Event</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 01 - </span>
+                                                        <i>Meetings</i>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet success"></span>
+                                                    <span class="event-name"> Long Event</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 21 - Aug 24</span>
+                                                        <i>Hangouts</i>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet warning"></span>
+                                                    <span class="event-name">Repeating Event</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 23 -</span>
+                                                        <i>Product Checkup</i>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:void(0);" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet danger"></span>
+                                                    <span class="event-name">Repeating Event</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 30 -</span>
+                                                        <i>Conference</i>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet"></span>
+                                                    <span class="event-name">Birthday Party</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 27 -</span>
+                                                        <i>Gathering</i>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                            <li class="event-items">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                                    <span class="bullet success"></span>
+                                                    <span class="event-name">Click for google</span>
+                                                    <div class="event-detail">
+                                                        <span>Aug 28 - Aug 29</span>
+                                                        <i>Google</i>
+                                                    </div>
+                                                </a>
+                                                <a href="" class="remove">
+                                                    <i class="ti-trash"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                            <span>General</span>
-                                        </h4>
-                                        <div id='board3'>
-                                            <div class="card padding-15 draggable-item">
-                                                <ul class="list-label mrg-btm-10">
-                                                    <li class="bg-warning"></li>
-                                                    <li class="bg-danger"></li>
-                                                </ul>
-                                                <p class="font-size-15">
-                                                    <b>Onboarding</b>
-                                                </p>
-                                                <div class="mrg-top-20">
-                                                    <ul class="list-inline d-inline-block mrg-top-10">
-                                                        <li class="d-inline-block mrg-right-10">
-                                                            <i class="ti-clip mrg-right-5"></i>
-                                                            <span>8</span>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="list-members list-inline float-right">
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-4.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-8.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-10.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                            <div class="col-md-8">
+                                <div id='full-calendar'></div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal fade" id="calendar-edit">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="border btm padding-15">
+                                        <h4 class="no-mrg">Edit Event</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" id="form-store">
+                                            <div class="form-group">
+                                                <label>Responsable</label>
+                                                <select class="selectized" id="responsable" required>
+                                                    <option value="">Seleccione</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Asunto</label>
+                                                <input class="form-control" required>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Fecha de Entrega</label>
+                                                    <div class="timepicker-input input-icon form-group">
+                                                        <i class="ti-calendar"></i>
+                                                        <input type="text" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="card padding-15 draggable-item">
-                                                <ul class="list-label mrg-btm-10">
-                                                    <li class="bg-info"></li>
-                                                </ul>
-                                                <p class="font-size-15">
-                                                    <b>Dashboard error</b>
-                                                </p>
-                                                <div class="mrg-top-20">
-                                                    <ul class="list-inline d-inline-block mrg-top-10">
-                                                        <li class="d-inline-block mrg-right-10">
-                                                            <i class="ti-comment mrg-right-5"></i>
-                                                            <span>3</span>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="list-members list-inline float-right">
-                                                        <li>
-                                                            <a href="">
-                                                                <img src="assets/images/avatars/thumb-6.jpg" alt="">
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            <div class="form-group">
+                                                <label>Descripcion</label>
+                                                <textarea class="form-control"></textarea>
                                             </div>
-                                        </div>
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-success">Guardar</button>
+                                                
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-							</div>
-							
-
-							
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 			@include('configuracion.branch.store')
 			@include('configuracion.branch.view')
@@ -279,28 +168,31 @@
 
 	@section('CustomJs')
 
+
 		<script>
+            
 			$(document).ready(function(){
 				store();
-				list();
+			//	list();
 				update();
 
 				$("#collapse_Configuraciones").addClass("show");
 				$("#nav_li_Configuraciones").addClass("open");
-				$("#nav_users, #modulo_Configuraciones").addClass("active");
+                $("#nav_users, #modulo_Configuraciones").addClass("active");
+                
+               
 
-				verifyPersmisos(id_user, tokens, "modules");
+                verifyPersmisos(id_user, tokens, "modules");
+                GetUsers("#responsable")
 			});
-
 
 
 			function update(){
 				enviarFormularioPut("#form-update", 'api/branchs', '#cuadro4', false, "#avatar-edit");
 			}
 
-
 			function store(){
-				enviarFormulario("#store", 'api/branchs', '#cuadro2');
+				enviarFormulario("#form-store", 'api/tasks', '#cuadro2');
 			}
 
 
@@ -394,59 +286,7 @@
 					cuadros('#cuadro1', '#cuadro3');
 				});
 			}
-
-
-
-
-
-
-			/* ------------------------------------------------------------------------------- */
-			/* 
-				Funcion que muestra el cuadro3 para la consulta del banco.
-			*/
-			function edit(tbody, table){
-				$(tbody).on("click", "span.editar", function(){
-					$("#alertas").css("display", "none");
-					var data = table.row( $(this).parents("tr") ).data();
-					
-					$("#name_edit").val(data.name)
-
-					$("#id_edit").val(data.id_branchs)
-					cuadros('#cuadro1', '#cuadro4');
-				});
-			}
-
-
-
-		/* ------------------------------------------------------------------------------- */
-			/*
-				Funcion que capta y envia los datos a desactivar
-			*/
-			function desactivar(tbody, table){
-				$(tbody).on("click", "span.desactivar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-branchs/'+data.id_branchs+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
-				});
-			}
-		/* ------------------------------------------------------------------------------- */
-
-		/* ------------------------------------------------------------------------------- */
-			/*
-				Funcion que capta y envia los datos a desactivar
-			*/
-			function activar(tbody, table){
-				$(tbody).on("click", "span.activar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-branchs/'+data.id_branchs+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
-				});
-			}
-	
-			function eliminar(tbody, table){
-				$(tbody).on("click", "span.eliminar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-branchs/'+data.id_branchs+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
-				});
-			}
+		
 		</script>
 	@endsection
 

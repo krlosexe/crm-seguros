@@ -10,6 +10,7 @@ use App\PoliciesObservations;
 use App\PoliciesNotifications;
 use App\PoliciesCousinsCommissions;
 use App\PoliciesInfoTakerInsuredBeneficiary;
+use App\PoliciesGroupedAnnexes;
 
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class PoliciesGroupedController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -106,7 +107,7 @@ class PoliciesGroupedController extends Controller
         //
     }
 
-    /**
+    /*
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -240,6 +241,128 @@ class PoliciesGroupedController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+
+
+
+
+
+    public function StoreAnnexes(request $request){
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            
+            
+            echo "STRING";
+            return false;
+
+            isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
+
+            $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
+            $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
+            $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
+            $request["percentage_vat_cousin"] = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
+            $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
+            $request["total"]                 = (float) str_replace(',', '', $request["total"]);
+            
+            $store                  = PoliciesGroupedAnnexes::create($request->all());
+            $request["id_policies_annexes"] = $store->id_policies_annexes;
+ 
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "policies_annexes";
+            $auditoria->cod_reg     = $store->id_policies_annexes;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            if ($store) {
+                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+            
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }   
+
+
+
+    public function UpdateAnnexes(Request $request, $annexe)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
+
+            $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
+            $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
+            $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
+            $request["percentage_vat_cousin"] = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
+            $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
+            $request["total"]                 = (float) str_replace(',', '', $request["total"]);
+
+            $update = PoliciesGroupedAnnexes::find($annexe)->update($request->all());
+
+            if ($update) {
+                $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("A ocurrido un error")->setStatusCode(400);
+            }
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
+
+
+
+
+
+    public function GetAnnexes($policies)
+    {
+        $policie = PoliciesGroupedAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
+
+                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
+                                            ->where("auditoria.tabla", "policies_annexes")
+                                            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                            ->where("policies_annexes.id_policie", $policies)
+
+                                            ->where("auditoria.status", "!=", "0")
+                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->get();
+           
+        return response()->json($policie)->setStatusCode(200);
+    }
+
+
+
+
+    public function StatusAnnexes($id, $status, Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $auditoria =  Auditoria::where("cod_reg", $id)
+                                     ->where("tabla", "policies_annexes")->first();
+
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
 
     
 

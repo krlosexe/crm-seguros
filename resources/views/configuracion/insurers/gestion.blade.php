@@ -21,10 +21,10 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-											
+											<th>Código</th>
 											<th>Nombre</th>
 											<th>NIT</th>
-											<th>Telefono</th>
+											<th>Teléfono</th>
 											<th>Fecha de registro</th>
 											<th>Acciones</th>
 											</tr>
@@ -118,7 +118,7 @@
 						"dataSrc":""
 					},
 					"columns":[
-						
+						{"data":"code"},
 						{"data":"name"},
 						{"data":"nit"},
 						{"data":"phone"},
@@ -183,15 +183,25 @@
 				$(tbody).on("click", "span.consultar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
-
+				
+					$("#code_view").val(data.code).attr("disabled", "disabled")
 					$("#name_view").val(data.name).attr("disabled", "disabled")
 					$("#nit_view").val(data.nit).attr("disabled", "disabled")
 					$("#email_view").val(data.email).attr("disabled", "disabled")
 					$("#address_view").val(data.address).attr("disabled", "disabled")
 					$("#phone_view").val(data.phone).attr("disabled", "disabled")
 					$("#bank_account_view").val(data.bank_account).attr("disabled", "disabled")
+					$("#code_adviser_view").val(data.code_adviser).attr("disabled", "disabled")
 
 					ShowDataBranchs("#table-branch-view", data.branchs, "view")
+
+					var url = "sub-company/"+data.id_insurers+"/0"
+					$('#iframeView').attr('src', url);
+
+
+					var urlOficce = "insurers/oficce/"+data.id_insurers+"/0"
+					$('#iframeOficinasView').attr('src', urlOficce);
+
 
 					
 					cuadros('#cuadro1', '#cuadro3');
@@ -212,17 +222,26 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
+					$("#code_edit").val(data.code)
 					$("#name_edit").val(data.name)
 					$("#nit_edit").val(data.nit)
 					$("#email_edit").val(data.email)
 					$("#address_edit").val(data.address)
 					$("#phone_edit").val(data.phone)
 					$("#bank_account_edit").val(data.bank_account)
-
+					$("#code_adviser_edit").val(data.code_adviser)
 					GetRamos("#branchs-edit")
 					ShowDataBranchs("#table-branch-edit", data.branchs, "edit")
 					AddBranch( "#add-branch-edit", "#table-branch-edit","#branchs-edit")
 					
+
+
+					var url = "sub-company/"+data.id_insurers+"/1"
+					$('#iframeEdit').attr('src', url);
+
+					var urlOficce = "insurers/oficce/"+data.id_insurers+"/1"
+					$('#iframeOficinasEdit').attr('src', urlOficce);
+
 					$("#id_edit").val(data.id_insurers)
 					cuadros('#cuadro1', '#cuadro4');
 				});
@@ -260,6 +279,7 @@
 							var html = ""
 							html += "<tr id='tr_branch_"+count+"'>"
 								html +="<td>"+name_branch+input_client+"</td>"
+								html +="<td><input type='text' class='form-control' name='codes[]' required></td>"
 								html +="<td><input type='text' class='form-control' name='commission_percentages[]' required></td>"
 								html +="<td><input type='text' class='form-control' name='vat_percentages[] required'></td>"
 								html +="<td>"+btn_delete+"</td>"
@@ -293,6 +313,7 @@
 							
 					html += "<tr id='tr_branch_edit_"+count+"'>"
 						html +="<td>"+item.name+input_client+"</td>"
+						html +="<td><input type='text' class='form-control' name='codes[]' value='"+item.code+"' required></td>"
 						html +="<td><input type='text' class='form-control' name='commission_percentages[]' value='"+item.commission_percentage+"' required></td>"
 						html +="<td><input type='text' class='form-control' name='vat_percentages[]' value='"+item.vat_percentage+"' required></td>"
 						if(option == "edit"){

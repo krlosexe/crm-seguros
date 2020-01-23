@@ -83,8 +83,16 @@
 					},
 					"columns":[
 						
-						{"data":"number_policies"},
-						{"data":"names"},
+						{"data":"number_policies",
+							render : function(data, type, row){
+								return "<a href='policies/"+row.id_policie+"' target='_blank' class=''>"+data+"</a>"
+							}
+						},
+						{"data":"names",
+							render : function(data, type, row){
+								return "<a href='people/"+row.clients+"' target='_blank' class=''>"+data+"</a>"
+							}
+						},
 						{"data":"monthly_fee"},
 						{"data":"payment_date"},
 						{"data":"balance",

@@ -7,7 +7,25 @@
       
         @csrf
 
-        <input type="hidden" name="_method" value="put">
+
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
+            </li>
+        </ul>
+
+
+
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-edit">
+
+            <input type="hidden" name="_method" value="put">
         
             <div class="row">
               
@@ -576,6 +594,27 @@
               
             </div>
         <!---END ROW-->
+
+          </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-edit">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeAnnexesEdit" allowfullscreen>
+
+              </iframe>
+
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+        
 
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">

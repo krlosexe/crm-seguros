@@ -566,6 +566,12 @@
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					
 					showPays(data.id_policies, "#table-simulation-view")
+
+
+					var url = "policies/annexes/"+data.id_policies+"/0"
+					$('#iframeAnnexesView').attr('src', url);
+
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -603,7 +609,6 @@
 					if(data.type_poliza == "Collective"){
 						$(".remove").css("display", "none")
 						$(".remove-pay").css("display", "block")
-
 
 						var url = "binds/"+data.id_policies+"/1"
 						$('#iframeVinculadosEdit').attr('src', url);
@@ -652,6 +657,12 @@
 					
 
 					showPays(data.id_policies, "#table-simulation-edit")
+
+
+
+					var url = "policies/annexes/"+data.id_policies+"/1"
+					$('#iframeAnnexesEdit').attr('src', url);
+
 
 
 

@@ -67,6 +67,26 @@ class PaymentController extends Controller
 
     }
 
+    function paymentsCollected(Request $request){
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $data = RecibosCobranza::join("policies", "policies.id_policies", "=", "recibos_cobranza.id_policie")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients")
+
+                                    ->where("recibos_cobranza.type_operation", "A")
+                                    ->orderBy("recibos_cobranza.id_policie", "desc")
+                                    ->orderBy("recibos_cobranza.monthly_fee", "asc")
+                                    ->get();
+
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+
+    }
+
+    
 
     function GetByPolicie(Request $request){
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Insurers extends Model
 {
     protected $fillable = [
-        'name', 'nit', 'email', 'address', 'phone', 'bank_account'
+        'code','name', 'nit', 'email', 'address', 'phone', 'bank_account', 'code_adviser'
     ];
 
     protected $table         = 'insurers';

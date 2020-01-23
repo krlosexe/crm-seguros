@@ -47,6 +47,14 @@ Route::get('people', function () {
     return view('clients.people.gestion');
 });
 
+
+
+Route::get('people/{id_client}', function ($id_client) {
+    return view('clients.show.gestion', ["id_client" => $id_client]);
+});
+
+
+
 Route::get('company', function () {
     return view('clients.company.gestion');
 });
@@ -60,14 +68,40 @@ Route::get('insurers', function () {
 });
 
 
+Route::get('sub-company', function () {
+    return view('configuracion.sub_company.gestion');
+});
+
+Route::get('sub-company/{id_surgerie}/{management}',function ($id_surgerie, $management) {
+    return view('configuracion.insurers.sub_companies.gestion', ["id_surgerie" => $id_surgerie, "management" => $management]);
+});
+
+
+Route::get('insurers/oficce/{id_surgerie}/{management}',function ($id_surgerie, $management) {
+    return view('configuracion.insurers.oficce.gestion', ["id_surgerie" => $id_surgerie, "management" => $management]);
+});
+
+
 Route::get('branch', function () {
     return view('configuracion.branch.gestion');
 });
 
 
+
+
 Route::get('policies', function () {
     return view('policies.individual.gestion');
 });
+
+Route::get('policies/{number_policie}', function ($number_policie) {
+    return view('policies.show.gestion', ["number_policie" => $number_policie]);
+});
+
+
+Route::get('policies/annexes/{id_policies}/{management}', function ($id_policies, $management) {
+    return view('policies.individual.annexes.gestion', ["id_policies" => $id_policies, "management" => $management]);
+});
+
 
 Route::get('binds/{id_policies}/{management}', function ($id_policies, $management) {
     return view('policies.individual.binds.gestion', ["id_policies" => $id_policies, "management" => $management]);
@@ -82,6 +116,11 @@ Route::get('policies-childs/{id_policies}/{management}', function ($id_policies,
 
 Route::get('policies-grouped', function () {
     return view('policies.grouped.gestion');
+});
+
+
+Route::get('policies/grouped/annexes/{id_policies}/{management}', function ($id_policies, $management) {
+    return view('policies.grouped.annexes.gestion', ["id_policies" => $id_policies, "management" => $management]);
 });
 
 
