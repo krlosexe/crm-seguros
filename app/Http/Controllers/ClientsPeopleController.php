@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Auditoria;
+use App\Files;
 use App\ClientsPeople;
 use App\ClientsPeopleContact;
 use App\ClientsPeopleInfoCrm;
@@ -72,6 +73,8 @@ class ClientsPeopleController extends Controller
             isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
 
 
+            
+            
 
             $store = ClientsPeople::create($request->all());
 
@@ -88,6 +91,32 @@ class ClientsPeopleController extends Controller
             $this->StoreChildren($request->all(), $store["id_clients_people"]);
             $this->StoreVehicle($request->all(), $store["id_clients_people"]);
 
+
+
+            $destinationPath        = 'img/clients/peopple';
+            $request["tabla"]       = "clients_people";
+            $request["id_register"] = $store["id_clients_people"];
+
+            if($request->file('file')){
+                foreach($request->file('file') as $key => $value){
+                    $value->move($destinationPath,$value->getClientOriginalName());
+    
+                    $request["name"] = $value->getClientOriginalName();
+    
+                    $request["title"]       = $request["titles"][$key];
+                    $request["descripcion"] = $request["descriptions"][$key];
+    
+                    $store_file = Files::create($request->all());
+    
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "files";
+                    $auditoria->cod_reg     = $store_file["id_files"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
+                }
+            }
+               
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "clients_people";
             $auditoria->cod_reg     = $store["id_clients_people"];
@@ -249,7 +278,22 @@ class ClientsPeopleController extends Controller
     }
 
 
+    public function GetFiles(Request $request,  $id_client){
+        
+        $files = Files::select("files.*","auditoria.*", "user_registro.email as email_regis")
 
+                        ->join("auditoria", "auditoria.cod_reg", "=", "files.id_files")
+                        ->where("auditoria.tabla", "files")
+                        ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                        
+                        ->where("files.id_register", $id_client)
+                        ->where("files.tabla", "clients_people")
+                        ->where("auditoria.status", "!=", "0")
+                        ->orderBy("files.id_files", "DESC")
+                        ->get();
+           
+        return response()->json($files)->setStatusCode(200);
+    }
 
     /**
      * Remove the specified resource from storage.

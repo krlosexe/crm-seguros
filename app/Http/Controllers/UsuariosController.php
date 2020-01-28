@@ -213,8 +213,6 @@ class UsuariosController extends Controller
 
                $file = $request->file('img-profile');
               
-               
-               
                 $User = User::find($id);
 
                 $User->email  = $request["email"];

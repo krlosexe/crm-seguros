@@ -250,10 +250,6 @@ class PoliciesGroupedController extends Controller
     public function StoreAnnexes(request $request){
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
-            
-            echo "STRING";
-            return false;
-
             isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
@@ -265,12 +261,12 @@ class PoliciesGroupedController extends Controller
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
             
             $store                  = PoliciesGroupedAnnexes::create($request->all());
-            $request["id_policies_annexes"] = $store->id_policies_annexes;
+            $request["id_policies_grouped_annexes"] = $store->id_policies_grouped_annexes;
  
 
             $auditoria              = new Auditoria;
-            $auditoria->tabla       = "policies_annexes";
-            $auditoria->cod_reg     = $store->id_policies_annexes;
+            $auditoria->tabla       = "policies_grouped_annexes";
+            $auditoria->cod_reg     = $store->id_policies_grouped_annexes;
             $auditoria->status      = 1;
             $auditoria->usr_regins  = $request["id_user"];
             $auditoria->save();
@@ -324,29 +320,27 @@ class PoliciesGroupedController extends Controller
 
     public function GetAnnexes($policies)
     {
-        $policie = PoliciesGroupedAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
+        $policie = PoliciesGroupedAnnexes::select("policies_grouped_annexes.*", "auditoria.*", "user_registro.email as email_regis")
 
-                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
-                                            ->where("auditoria.tabla", "policies_annexes")
+                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_grouped_annexes.id_policies_grouped_annexes")
+                                            ->where("auditoria.tabla", "policies_grouped_annexes")
                                             ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
-                                            ->where("policies_annexes.id_policie", $policies)
+                                            ->where("policies_grouped_annexes.id_policies", $policies)
 
                                             ->where("auditoria.status", "!=", "0")
-                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->orderBy("policies_grouped_annexes.id_policies_grouped_annexes", "DESC")
                                             ->get();
            
         return response()->json($policie)->setStatusCode(200);
     }
 
 
-
-
     public function StatusAnnexes($id, $status, Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             $auditoria =  Auditoria::where("cod_reg", $id)
-                                     ->where("tabla", "policies_annexes")->first();
+                                     ->where("tabla", "policies_grouped_annexes")->first();
 
             $auditoria->status = $status;
 
@@ -364,17 +358,15 @@ class PoliciesGroupedController extends Controller
     }
 
 
-    
-
-
-    /**
+    /*
      * Remove the specified resource from storage.
-     *
      * @param  \App\PoliciesGrouped  $policiesGrouped
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy(PoliciesGrouped $policiesGrouped)
     {
-        //
+        
     }
 }

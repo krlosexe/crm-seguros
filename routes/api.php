@@ -42,11 +42,13 @@ Route::resource('roles', 'RolesController');
 Route::post('status-rol/{id}/{status}', 'RolesController@status');
 
 
-
 Route::resource('people', 'ClientsPeopleController');
 Route::get('status-people/{id}/{status}', 'ClientsPeopleController@status');
 
-
+Route::get('files/{tabla}/{id_client}', 'FilesController@GetFiles');
+Route::post('files', 'FilesController@store');
+Route::put('files/{id_file}', 'FilesController@update');
+Route::get('files/status/{id}/{status}', 'FilesController@status');
 
 Route::resource('company', 'ClientsCompanyController');
 Route::get('status-company/{id}/{status}', 'ClientsCompanyController@status');
@@ -97,16 +99,15 @@ Route::get('policies/annexes/status/{id}/{status}', 'PoliciesController@StatusAn
 Route::get('status-policies-bind/{id}/{status}', 'PoliciesController@StatusBinds');
 
 
-
 Route::resource('policies-grouped', 'PoliciesGroupedController');
 Route::get('status-policies-grouped/{id}/{status}', 'PoliciesGroupedController@status');
 Route::post('policies-childs', 'PoliciesGroupedController@StoreChilds');
 Route::get('policies-childs/{id}', 'PoliciesGroupedController@Childs');
 
 Route::post('policies/grouped/annexes', 'PoliciesGroupedController@StoreAnnexes');
-
-
-
+Route::get('policies/grouped/annexes/{id}', 'PoliciesGroupedController@GetAnnexes');
+Route::put('policies/grouped/annexes/{id}', 'PoliciesGroupedController@UpdateAnnexes');
+Route::get('policies/grouped/annexes/status/{id}/{status}', 'PoliciesGroupedController@StatusAnnexes');
 Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 
@@ -124,4 +125,7 @@ Route::get('payments/receivable', 'PaymentController@paymentsReceivable');
 Route::get('payments/beaten', 'PaymentController@paymentsBeaten');
 
 Route::get('payments/collected', 'PaymentController@paymentsCollected');
+
+Route::resource('tasks', 'TasksController');
+Route::post('tasks/status/{id}/{status}', 'TasksController@status');
 

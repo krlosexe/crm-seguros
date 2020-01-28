@@ -48,6 +48,17 @@ Route::get('people', function () {
 });
 
 
+Route::get('clients/people/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('clients.people.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+Route::get('clients/company/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('clients.company.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+Route::get('clients/consortium/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('clients.consortium.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
 
 Route::get('people/{id_client}', function ($id_client) {
     return view('clients.show.gestion', ["id_client" => $id_client]);

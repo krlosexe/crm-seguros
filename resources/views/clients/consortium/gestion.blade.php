@@ -205,6 +205,12 @@
 
 					$("#id_edit").val(data.id_clients_consortium)
 					cuadros('#cuadro1', '#cuadro4');
+
+
+					var url = "clients/consortium/files/"+data.id_clients_company+"/1"
+					$('#iframeEdit').attr('src', url);
+
+
 				});
 			}
 

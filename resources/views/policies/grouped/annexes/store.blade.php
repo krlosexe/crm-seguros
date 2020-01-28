@@ -190,7 +190,7 @@
 
         <!---END ROW-->
 
-        <input type="hidden" name="id_policie" value="{{$id_policies}}">
+        <input type="hidden" name="id_policies" value="{{$id_policies}}">
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
           <br>

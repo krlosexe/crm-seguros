@@ -8,7 +8,7 @@ class Funciones extends Model
 {
    protected $fillable = [
         'nombre', 'descripcion', 'posicion', 'id_modulo', 'route', 'visibilidad'
-    ];
+   ];
 
      public $timestamps = false;
 

@@ -216,6 +216,11 @@
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
 					cuadros('#cuadro1', '#cuadro3');
+
+					var url = "clients/company/files/"+data.id_clients_company+"/0"
+					$('#iframeView').attr('src', url);
+
+
 				});
 			}
 
@@ -272,6 +277,14 @@
 					
 					$("#id_edit").val(data.id_clients_company)
 					cuadros('#cuadro1', '#cuadro4');
+
+
+
+					var url = "clients/company/files/"+data.id_clients_company+"/1"
+					$('#iframeEdit').attr('src', url);
+
+
+
 				});
 			}
 
