@@ -1,12 +1,26 @@
 <div class="card shadow mb-4 hidden" id="cuadro3">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Consulta de Polizas.</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Consulta de Siniestros.</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-view" enctype="multipart/form-data">
       
         @csrf
+    <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a href="#default-tab-1-view" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+            </li>
+            <li class="nav-item">
+                <a href="#default-tab-2-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+        </ul>
 
+        <br><br>
+
+
+        <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-view">
         <div class="row">
           
           <div class="col-md-7">
@@ -273,24 +287,21 @@
             </div>
 
 
-            <div class="row remove">
-            
-              <div class="col-md-12">
-                
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Archivos</h6>
-                  </div>
-                  <div class="card-body">
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
           
         </div>
+  </div>
+
+          <div role="tabpanel" class="tab-pane fade in " id="default-tab-2-view">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item " id="iframeView" allowfullscreen>
+
+                      </iframe>
+                    </div>
+                  </div>
+          </div>
+
+
 
         <!---END ROW-->
    
@@ -309,4 +320,5 @@
       </form>
       
     </div>
+
 

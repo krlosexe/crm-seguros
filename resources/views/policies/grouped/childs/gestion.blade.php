@@ -354,6 +354,12 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					
+					var url = "/policies/grouped/annexes/"+data.id_policies+"/0"
+					$('#iframeAnnexesView').attr('src', url);
+
+					var url = "/policies/grouped/childs/files/"+data.id_policies_grouped+"/0"
+					$('#iframeDigitalesView').attr('src', url);
+
 
 					cuadros('#cuadro1', '#cuadro3');
 				});
@@ -445,6 +451,11 @@
 
 					var url = "/policies/grouped/annexes/"+data.id_policies+"/1"
 					$('#iframeAnnexesEdit').attr('src', url);
+
+
+
+					var url = "/policies/grouped/childs/files/"+data.id_policies_grouped+"/1"
+					$('#iframeDigitalesEdit').attr('src', url);
 
 
 					cuadros('#cuadro1', '#cuadro4');

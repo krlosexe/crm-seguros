@@ -15,8 +15,8 @@
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="inline-block">
-                                            <h1 class="no-mrg-vertical">$168.90</h1>
-                                            <p>This Month</p>
+                                            <h1 class="no-mrg-vertical">$968.900</h1>
+                                            <p>Ganancias del mes</p>
                                         </div>
                                         <div class="pdd-top-25 inline-block pull-right">
                                             <span class="label label-success label-lg mrg-left-5">+18%</span>
@@ -28,24 +28,24 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-block">
-                                        <p class="mrg-btm-5">This Quarter</p>
-                                        <h1 class="no-mrg-vertical font-size-35">$3,936<b class="font-size-16">.80</b></h1>
-                                        <p class="text-semibold">Total Revenue</p>
+                                        <p class="mrg-btm-5">Estadisticas de pólizas</p>
+                                        <h1 class="no-mrg-vertical font-size-35">1200<b class="font-size-16">Pólizas registradas</b></h1>
+                                        <p class="text-semibold">Último mes</p>
                                         <div class="mrg-top-10">
                                             <h2 class="no-mrg-btm">88</h2>
-                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Online Revenue</span>
+                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Nuevas renovaciones</span>
                                             <span class="pull-right pdd-right-10 font-size-13">70%</span>
-                                            <div class="progress progress-primary">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                                            <div class="progress progress-success">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mrg-top-10">
                                             <h2 class="no-mrg-btm">69</h2>
-                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Offline Revenue</span>
+                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Sin renovar</span>
                                             <span class="pull-right pdd-right-10 font-size-13">50%</span>
-                                            <div class="progress progress-success">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                            <div class="progress progress-warning">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="col-md-4 border left border-hide-sm">
                                             <div class="card-block">
-                                                <h2>Allocation </h2>
+                                                <h2>Principales ciudades </h2>
                                                 <div class="mrg-top-40">
                                                     <div>
                                                         <canvas height="230" id="allocation-chart"></canvas>
@@ -72,19 +72,19 @@
                                                 <div class="widget-legends mrg-top-30">
                                                     <div class="relative mrg-top-15">
                                                         <span class="status info"> </span>
-                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">25%</b> Texas</span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">25%</b> Bógota</span>
                                                     </div>
                                                     <div class="relative mrg-top-15">
                                                         <span class="status primary"> </span>
-                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">45%</b> Utah</span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">45%</b> Medellín</span>
                                                     </div>
                                                     <div class="relative mrg-top-15">
                                                         <span class="status success"> </span>
-                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">10%</b> Georgia</span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">10%</b> Cali</span>
                                                     </div>
                                                     <div class="relative mrg-top-15">
                                                         <span class="status"> </span>
-                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">15%</b> Nebraska</span>
+                                                        <span class="pdd-left-20 font-size-16"><b class="text-dark">15%</b> Manizales</span>
                                                     </div>
                                                 </div>
                                             </div>

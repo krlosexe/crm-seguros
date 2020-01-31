@@ -8,7 +8,7 @@
         @csrf
 
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -61,12 +61,12 @@
                               <label for=""><b>Tipo de documento*</b></label>
                               <select name="type_document" class="form-control selectized" id="type_document_edit" required>
                                 <option value="">Seleccione</option>
-                                <option value="Cedula">Cedula</option>
-                                <option value="Cedula de Extrangeria">Cedula de Extranjería</option>
+                                <option value="CÉDULA">CÉDULA</option>
+                                <option value="CÉDULA DE EXTRANJERÍA">CÉDULA DE EXTRANJERÍA</option>
                                 <option value="RUC">RUC</option>
-                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="PASAPORTE">PASAPORTE</option>
                                 <option value="NUIP">NUIP</option>
-                                <option value="Tarjeta de indentidad">Tarjeta de indentidad</option>
+                                <option value="TARJETA DE IDENTIDAD">TARJETA DE IDENTIDAD</option>
                               </select>
                             </div>
 

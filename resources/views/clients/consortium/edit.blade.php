@@ -8,7 +8,7 @@
         @csrf
 
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -17,6 +17,7 @@
             </li>
         </ul>
 
+        <br><br>
 
         <div class="tab-content">
           

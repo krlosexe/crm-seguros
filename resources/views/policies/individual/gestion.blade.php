@@ -572,6 +572,9 @@
 					$('#iframeAnnexesView').attr('src', url);
 
 
+					var url = "policies/files/"+data.id_policies+"/0"
+					$('#iframeDigitalesView').attr('src', url);
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -662,9 +665,14 @@
 
 					var url = "policies/annexes/"+data.id_policies+"/1"
 					$('#iframeAnnexesEdit').attr('src', url);
+					
+
+					var url = "policies/files/"+data.id_policies+"/1"
+					$('#iframeDigitalesEdit').attr('src', url);
 
 
-
+					var url = "policies/wallet/"+data.id_policies+"/1"
+					$('#iframeCarteraEdit').attr('src', url);
 
 					$("#id_edit").val(data.id_policies)
 

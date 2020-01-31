@@ -73,9 +73,6 @@ class ClientsPeopleController extends Controller
             isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
 
 
-            
-            
-
             $store = ClientsPeople::create($request->all());
 
 

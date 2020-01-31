@@ -23,7 +23,7 @@
 											<tr>
 												<th>Numero de Siniestro</th>
 												<th>Fecha Siniestro</th>
-												<th>Poliza</th>
+												<th>Póliza</th>
 												<th>Estado</th>
 												<th>Fecha de registro</th>
 												<th>Acciones</th>
@@ -212,7 +212,8 @@
 					
 					ShowAmparos(data.sinister_amparos_affected, "#amparos-view", "#total_amparos_view", "view")
 					
-
+					var url = "policies/sinister/files/"+data.id_sinister+"/0"
+					$('#iframeView').attr('src', url);
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -261,6 +262,11 @@
 
 
 					$("#id_edit").val(data.id_sinister)
+
+					var url = "policies/sinister/files/"+data.id_sinister+"/1"
+					$('#iframeEdit').attr('src', url);
+
+
 
 					cuadros('#cuadro1', '#cuadro4');
 				});

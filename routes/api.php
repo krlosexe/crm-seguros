@@ -129,3 +129,10 @@ Route::get('payments/collected', 'PaymentController@paymentsCollected');
 Route::resource('tasks', 'TasksController');
 Route::post('tasks/status/{id}/{status}', 'TasksController@status');
 
+
+
+Route::resource('charge/account', 'ChargeAccountController');
+Route::get('charge/account/{id_policie}', 'ChargeAccountController@index');
+Route::get('charge/account/status/{id}/{status}', 'ChargeAccountController@status');
+
+

@@ -7,16 +7,23 @@
       
         @csrf
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
             <li class="nav-item">
                 <a href="#default-tab-2" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Vinculados</a>
             </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-3" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+
+
+
         </ul>
 
-
+        <br><br>
         <div class="tab-content">
            <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1">
             
@@ -121,6 +128,20 @@
                 </div>
 
             </div>
+
+
+            <div role="tabpanel" class="tab-pane fade in" id="default-tab-3">
+                <div class="embed-responsive embed-responsive-16by9">
+
+                  <iframe class="embed-responsive-item " id="iframeDigitalesView" allowfullscreen>
+                    
+                  </iframe>
+
+                </div>
+              </div>
+
+
+
           </div>
 
 

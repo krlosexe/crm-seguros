@@ -4,19 +4,25 @@
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
-      
-        @csrf
+
+
+        
+        @csrf 
         <input type="hidden" name="_method" value="put">
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
             <li class="nav-item">
                 <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Polizas Hijas</a>
             </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
         </ul>
 
-
+      <br><br>
         <div class="tab-content">
            <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-edit">
             
@@ -119,6 +125,20 @@
                 </div>
 
             </div>
+
+
+              <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-edit">
+                <div class="embed-responsive embed-responsive-16by9">
+
+                  <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+                    
+                  </iframe>
+
+                </div>
+              </div>
+
+
+
           </div>
         
 

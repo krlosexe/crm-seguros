@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro2">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Registro de Polizas</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Registro de Pólizas</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">

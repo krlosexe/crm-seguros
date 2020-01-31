@@ -7,7 +7,7 @@
       
         @csrf
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-0" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -19,7 +19,8 @@
                 <a href="#default-tab-3-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Oficinas</a>
             </li>
         </ul>
-
+<br>
+<br>
 
         <div class="tab-content">
         

@@ -17,6 +17,12 @@
             <li class="nav-item">
                 <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
             </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+
+
         </ul>
 
 
@@ -608,6 +614,18 @@
 
             </div>
           </div>
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-4-edit">
+                <div class="embed-responsive embed-responsive-16by9">
+
+                  <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+                    
+                  </iframe>
+
+                </div>
+              </div>
+
 
 
 

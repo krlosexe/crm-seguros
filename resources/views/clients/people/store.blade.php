@@ -59,13 +59,13 @@
                           <div class="col-sm-4">
                               <label for=""><b>Tipo de documento*</b></label>
                               <select name="type_document" class="form-control selectized" id="type_document" required>
-                                <option value="">Seleccione</option>
-                                <option value="Cedula">Cedula</option>
-                                <option value="Cedula de Extrangeria">Cedula de Extrangeria</option>
+                               <option value="">Seleccione</option>
+                                <option value="CÉDULA">CÉDULA</option>
+                                <option value="CÉDULA DE EXTRANJERÍA">CÉDULA DE EXTRANJERÍA</option>
                                 <option value="RUC">RUC</option>
-                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="PASAPORTE">PASAPORTE</option>
                                 <option value="NUIP">NUIP</option>
-                                <option value="Tarjeta de indentidad">Tarjeta de indentidad</option>
+                                <option value="TARJETA DE IDENTIDAD">TARJETA DE IDENTIDAD</option>
                               </select>
                             </div>
 

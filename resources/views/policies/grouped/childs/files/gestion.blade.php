@@ -36,8 +36,8 @@
 
     <script>
       $(document).ready(function(){
-		var url = $(location).attr('href').split("/").splice(-5);
-        validAuth(false, url[1]);
+		var url = $(location).attr('href').split("/").splice(-6);
+        validAuth(false, url[0]);
       });
     </script>
 
@@ -93,9 +93,9 @@
 				</div>
 
 
-				@include('clients.consortium.files.store')
-				@include('clients.consortium.files.view')
-				@include('clients.consortium.files.edit')
+				@include('policies.grouped.childs.files.store')
+				@include('policies.grouped.childs.files.view')
+				@include('policies.grouped.childs.files.edit')
 
 
 
@@ -180,7 +180,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						"url":''+url+'/api/files/clients_consortium/'+{{$id_client}},
+						"url":''+url+'/api/files/policies_grouped_child/'+{{$id_client}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,

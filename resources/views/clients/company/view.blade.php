@@ -9,7 +9,7 @@
 
 
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-view" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -362,7 +362,7 @@
           </div>
 
 
-          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-2-view">
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-view">
             <div class="embed-responsive embed-responsive-16by9">
               <iframe class="embed-responsive-item " id="iframeView" allowfullscreen>
 

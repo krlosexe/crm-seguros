@@ -199,6 +199,12 @@
 					
 
 					cuadros('#cuadro1', '#cuadro3');
+
+
+					var url = "policies/grouped/files/"+data.id_policies_grouped+"/0"
+					$('#iframeDigitalesView').attr('src', url);
+
+
 				});
 
 			}
@@ -240,7 +246,8 @@
 
 
 					
-
+					var url = "policies/grouped/files/"+data.id_policies_grouped+"/1"
+					$('#iframeDigitalesEdit').attr('src', url);
 
 					cuadros('#cuadro1', '#cuadro4');
 				});

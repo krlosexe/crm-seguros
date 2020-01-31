@@ -175,6 +175,12 @@
 
 					ShowPartners("#table-partner-view", data.partners_people, data.partners_company, "view")
 					cuadros('#cuadro1', '#cuadro3');
+
+
+					var url = "clients/consortium/files/"+data.id_clients_consortium+"/0"
+					$('#iframeView').attr('src', url);
+
+
 				});
 			}
 
@@ -206,8 +212,7 @@
 					$("#id_edit").val(data.id_clients_consortium)
 					cuadros('#cuadro1', '#cuadro4');
 
-
-					var url = "clients/consortium/files/"+data.id_clients_company+"/1"
+					var url = "clients/consortium/files/"+data.id_clients_consortium+"/1"
 					$('#iframeEdit').attr('src', url);
 
 

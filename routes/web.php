@@ -60,6 +60,33 @@ Route::get('clients/consortium/files/{id_client}/{management}', function ($id_cl
     return view('clients.consortium.files.gestion', ["id_client" => $id_client, "management" => $management]);
 });
 
+
+Route::get('policies/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('policies.individual.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+
+Route::get('policies/wallet/{id_policie}/{management}', function ($id_policie, $management) {
+    return view('policies.individual.wallet.gestion', ["id_policie" => $id_policie, "management" => $management]);
+});
+
+Route::get('policies/grouped/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('policies.grouped.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+
+Route::get('policies/grouped/childs/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('policies.grouped.childs.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+
+
+Route::get('policies/sinister/files/{id_client}/{management}', function ($id_client, $management) {
+    return view('policies.sinister.files.gestion', ["id_client" => $id_client, "management" => $management]);
+});
+
+
+
 Route::get('people/{id_client}', function ($id_client) {
     return view('clients.show.gestion', ["id_client" => $id_client]);
 });
@@ -172,6 +199,7 @@ Route::get('payments-collected', function () {
 
 
 
+Route::get('import', 'ImportController@import');
 
 
 

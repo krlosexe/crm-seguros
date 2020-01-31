@@ -9,7 +9,7 @@
 
 
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -20,9 +20,22 @@
             <li class="nav-item">
                 <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
             </li>
+
+
+            <li class="nav-item">
+                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="#default-tab-5-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+            </li>
+
+
+
+
         </ul>
 
-
+      <br><br>
 
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-edit">
@@ -643,6 +656,35 @@
 
             </div>
           </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-4-edit">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+                dasdasd
+              </iframe>
+
+            </div>
+          </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-5-edit">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeCarteraEdit" allowfullscreen>
+                dasdasd
+              </iframe>
+
+            </div>
+          </div>
+
+
+
+
+
 
 
           

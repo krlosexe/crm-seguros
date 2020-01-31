@@ -93,9 +93,9 @@
 				</div>
 
 
-				@include('clients.consortium.files.store')
-				@include('clients.consortium.files.view')
-				@include('clients.consortium.files.edit')
+				@include('policies.individual.files.store')
+				@include('policies.individual.files.view')
+				@include('policies.individual.files.edit')
 
 
 
@@ -180,7 +180,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						"url":''+url+'/api/files/clients_consortium/'+{{$id_client}},
+						"url":''+url+'/api/files/policies/'+{{$id_client}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
