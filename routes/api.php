@@ -96,6 +96,9 @@ Route::get('policies/annexes/{id}', 'PoliciesController@GetAnnexes');
 Route::put('policies/annexes/{id}', 'PoliciesController@UpdateAnnexes');
 Route::get('policies/annexes/status/{id}/{status}', 'PoliciesController@StatusAnnexes');
 
+Route::get('annexes/{id}', 'PoliciesController@GetAnnexesById');
+
+
 Route::get('status-policies-bind/{id}/{status}', 'PoliciesController@StatusBinds');
 
 

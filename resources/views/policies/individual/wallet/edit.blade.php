@@ -9,187 +9,146 @@
 
         <input type="hidden" name="_method" value="put">
         
-		<div class="row">
-            <div class="col-md-6">
-              <label for=""><b>Numero</b></label>
-              <div class="form-group valid-required">
-              <input name="number_annexed" type="text" class="form-control" id="number_annexed_edit">
-              </div>
-            </div>
+        <div class="row">
+        
+        <div class="col-md-6">
 
+          <div class="row">
 
             <div class="col-md-6">
-              <label for=""><b>Estado*</b></label>
+              <label for=""><b>Poliza o Anexo ?</b></label>
                 <div class="form-group valid-required">
-                  <select name="state"  class="form-control selectize-input items has-options full has-items" id="state_edit" required>
+                  <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-edit" required>
                     <option value="">Seleccione</option>
-                    <option value="Vigente">Vigente</option>
+                    <option value="Poliza">Poliza</option>
+                    <option value="Anexo">Anexo</option>
                   </select>
                 </div>
             </div>
-        </div>
+
+              <div class="col-md-6">
+                <label for=""><b>Numero*</b></label>
+                  <div class="form-group valid-required">
+                    <select name="number" id="number-edit" class="form-control" required>
+                      <option value="">Seleccione</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <label for=""><b>Fecha inico</b></label>
+              <input type="date" name="init_date" class="form-control form-control-user" id="init_date-edit">
+            </div>
+
+            <div class="col-sm-6">
+              <label for=""><b>Fecha Limite *</b></label>
+              <input type="date" name="limit_date" class="form-control form-control-user" id="limit_date-edit" required>
+            </div>
+          </div>
 
 
-        <div class="row">
-     
-            <div class="col-md-6">
-              <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
+          <br><br>
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <label for=""><b>Aasunto</b></label>
+              <input type="text" name="issue" class="form-control form-control-user" id="issue-edit">
+            </div>
+
+            <br> <br>
+            <div class="col-md-12">
+              <label for=""><b>Observaciones</b></label>
                 <div class="form-group valid-required">
-                  <input type="text" name="risk" class="form-control form-control-user" id="risk_edit" placeholder="Codigo Objeto Asegurado">
+                  <textarea name="observations" class="form-control" id="observations-edit" cols="30" rows="10"></textarea>
                 </div>
             </div>
-
-
-            <div class="col-md-3">
-              <label for="is_renewable_edit"><b>Es renovable?</b><br></label><br>
-              <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                    <input type="checkbox" name="is_renewable" id="is_renewable_edit" checked="checked">
-                    <label for="is_renewable_edit"></label>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for=""><b>Motivo*</b></label>
-              <div class="form-group valid-required">
-                <input name="reason" type="text" class="form-control" id="reason_edit"  required>
-              </div>
-            </div>
-
-        </div>
-
-
-
-        <div class="row">
-
-          <div class="col-sm-3">
-            <label for=""><b>Fecha expedicion</b></label>
-            <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
-          </div>
-
-
-          <div class="col-sm-3">
-            <label for=""><b>Fecha inicio *</b></label>
-            <input type="date" name="start_date" class="form-control form-control-user" id="start_date_edit" required>
-          </div>
-
-          <div class="col-sm-3">
-            <label for=""><b>Fecha Fin *</b></label>
-            <input type="date" name="end_date" class="form-control form-control-user" id="end_date_edit" required>
-          </div>
-
-
-          <div class="col-sm-3">
-            <label for=""><b>Fecha Recepcion</b></label>
-            <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date_edit">
           </div>
 
         </div>
 
-        <br>
+        <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <label for=""><b>Prima *</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin-edit" required value="0" style="text-align: right">
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses-edit" value="0" style="text-align: right">
+                  </div>
+              </div>
+          </div>
+      
+          <br>
+
+          <div class="row">
+              <div class="col-md-6">
+                <label for=""><b>IVA</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="vat" class="form-control form-control-user" id="vat-edit" readonly value="0" style="text-align: right">
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for=""><b>% IVA Prima*</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin-edit">
+                  </div>
+              </div>
+          </div>
+      
         <br>
 
+          <div class="row">
+              <div class="col-md-6">
+                <label for=""><b>Porcentaje Comisión</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage-edit" value="100" readonly style="text-align: right">
+                  </div>
+              </div>
 
-        <div class="row">
-
-          <div class="col-md-6">
-            <label for=""><b>Prima *</b></label>
-              <div class="form-group valid-required">
-                <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin_edit" required value="0" style="text-align: right">
+              <div class="col-md-6">
+                <label for=""><b>Participación</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="participation" class="form-control form-control-user" id="participation-edit" value="100">
+                  </div>
               </div>
           </div>
+      
+          <br>
 
-          <div class="col-md-6">
-            <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
-              <div class="form-group valid-required">
-                <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses_edit" value="0" style="text-align: right">
+
+          <div class="row">
+              <div class="col-md-6">
+                <label for=""><b>Comisión agencia</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission-edit" readonly value="0" style="text-align: right">
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for=""><b>Total</b></label>
+                  <div class="form-group valid-required">
+                    <input type="text" name="total" class="form-control form-control-user" id="total-edit" readonly value="0" style="text-align: right">
+                  </div>
               </div>
           </div>
-
-          <div class="col-md-6">
-            <label for=""><b>IVA</b></label>
-              <div class="form-group valid-required">
-                <input type="text" name="vat" class="form-control form-control-user" id="vat_edit" readonly value="0" style="text-align: right">
-              </div>
-          </div>
-
-          <div class="col-md-6">
-            <label for=""><b>% IVA Prima*</b></label>
-              <div class="form-group valid-required">
-                <input type="number" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin_edit" value="0">
-              </div>
-          </div>
-
-
-
-          <div class="col-md-6">
-            <label for=""><b>Porcentaje Comisión</b></label>
-              <div class="form-group valid-required">
-                <input type="number" name="commission_percentage" class="form-control form-control-user" id="commission_percentage_edit" value="0" style="text-align: right">
-              </div>
-          </div>
-
-
-          <div class="col-md-6">
-            <label for=""><b>Comisión agencia</b></label>
-              <div class="form-group valid-required">
-                <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission_edit" readonly value="0" style="text-align: right">
-              </div>
-          </div>
-
-
-
-            <div class="col-md-6">
-              <label for=""><b>Total</b></label>
-                <div class="form-group valid-required">
-                  <input type="text" name="total" class="form-control form-control-user" id="total_edit" readonly value="0" style="text-align: right">
-                </div>
-            </div>
-
-
+        
         </div>
 
 
+    </div>
+    <br>
+    <br>
 
-
-
-        <div class="row">
-
-          <div class="col-md-4">
-            <label for=""><b>Forma Pago</b></label>
-              <div class="form-group valid-required">
-                <select name="payment_method" class="form-control start_simulation selectized" id="payment_method_edit" required>
-                  <option value="">Seleccione</option>
-                  <option value="Contado">Contado</option>
-                  <option value="Financiado">Financiado</option>
-                </select>
-              </div>
-          </div>
-
-        </div>
-
-
-
-
-
-        <div class="row">
-          <div class="col-md-6">
-            <label for=""><b>Observaciones</b></label>
-              <div class="form-group valid-required">
-                <textarea name="observations" class="form-control" id="observations_edit" cols="30" rows="10"></textarea>
-              </div>
-          </div>
-
-
-          <div class="col-md-6">
-            <label for=""><b>Accesorios</b></label>
-              <div class="form-group valid-required">
-                <textarea name="accessories" class="form-control" id="accessories_edit" cols="30" rows="10"></textarea>
-              </div>
-          </div>
-
-        </div>
-
-        <!---END ROW-->
+    <!---END ROW-->
 
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">

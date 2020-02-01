@@ -551,6 +551,25 @@ class PoliciesController extends Controller
         return response()->json($policie)->setStatusCode(200);
     }
 
+    public function GetAnnexesById($annexe)
+    {
+        $policie = PoliciesAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
+
+                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
+                                            ->where("auditoria.tabla", "policies_annexes")
+                                            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                            ->where("policies_annexes.id_policies_annexes", $annexe)
+
+                                            ->where("auditoria.status", "!=", "0")
+                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->get();
+           
+        return response()->json($policie[0])->setStatusCode(200);
+    }
+
+
+    
 
 
 

@@ -265,26 +265,29 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#number_annexed_view").val(data.number_annexed).attr("disabled", "disabled")
-					$("#state_view").val(data.state).attr("disabled", "disabled")
-					$("#risk_view").val(data.risk).attr("disabled", "disabled")
-					$("#reason_view").val(data.reason).attr("disabled", "disabled")
-					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
-					$("#start_date_view").val(data.start_date).attr("disabled", "disabled")
-					$("#end_date_view").val(data.end_date).attr("disabled", "disabled")
-					$("#reception_date_view").val(data.reception_date).attr("disabled", "disabled")
-					$("#cousin_view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
-					$("#xpenses_view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
-					$("#vat_view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
-					$("#percentage_vat_cousin_view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
-					$("#commission_percentage_view").val(data.commission_percentage).attr("disabled", "disabled")
-					$("#agency_commission_view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
-					$("#total_view").val(number_format(data.total, 2)).attr("disabled", "disabled")
-					$("#payment_method_view").val(data.payment_method).attr("disabled", "disabled")
-					$("#observations_view").val(data.observations).attr("disabled", "disabled")
-					$("#accessories_view").val(data.accessories).attr("disabled", "disabled")
-				
-					data.is_renewable   == 1 ? $("#is_renewable_view").prop("checked", true)   : $("#is_renewable_view").prop("checked", false) 
+					$("#policie_annexes-view").val(data.policie_annexes).attr("disabled", "disabled")
+					$("#number-view").val(data.number_policies).attr("disabled", "disabled")
+					$("#number-view option").remove();
+					$("#number-view").append($('<option>',
+					{
+						value: data.policie_annexes == "Poliza" ? data.id_policie : data.number,
+						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
+						
+					}));
+
+					$("#init_date-view").val(data.init_date).attr("disabled", "disabled")
+					$("#limit_date-view").val(data.limit_date).attr("disabled", "disabled")
+					$("#issue-view").val(data.issue).attr("disabled", "disabled")
+					$("#observations-view").val(data.observations).attr("disabled", "disabled")
+
+					$("#cousin-view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
+					$("#xpenses-view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
+					$("#vat-view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
+					$("#percentage_vat_cousin-view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
+					$("#commission_percentage-view").val(data.commission_percentage).attr("disabled", "disabled")
+					$("#participation-view").val(data.participation).attr("disabled", "disabled")
+					$("#agency_commission-view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
+					$("#total-view").val(number_format(data.total, 2)).attr("disabled", "disabled")
 					
 					cuadros('#cuadro1', '#cuadro3');
 				});
@@ -302,28 +305,31 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#number_annexed_edit").val(data.number_annexed)
-					$("#state_edit").val(data.state)
-					$("#risk_edit").val(data.risk)
-					$("#reason_edit").val(data.reason)
-					$("#expedition_date_edit").val(data.expedition_date)
-					$("#start_date_edit").val(data.start_date)
-					$("#end_date_edit").val(data.end_date)
-					$("#reception_date_edit").val(data.reception_date)
-					$("#cousin_edit").val(number_format(data.cousin, 2))
-					$("#xpenses_edit").val(number_format(data.xpenses, 2))
-					$("#vat_edit").val(number_format(data.vat, 2))
-					$("#percentage_vat_cousin_edit").val(data.percentage_vat_cousin)
-					$("#commission_percentage_edit").val(data.commission_percentage)
-					$("#agency_commission_edit").val(number_format(data.agency_commission, 2))
-					$("#total_edit").val(number_format(data.total, 2))
-					$("#payment_method_edit").val(data.payment_method)
-					$("#observations_edit").val(data.observations)
-					$("#accessories_edit").val(data.accessories)
-				
-					data.is_renewable   == 1 ? $("#is_renewable_edit").prop("checked", true)   : $("#is_renewable_view").prop("checked", false) 
+					$("#policie_annexes-edit").val(data.policie_annexes).attr("disabled", "disabled")
+					$("#number-edit").val(data.number_policies).attr("disabled", "disabled")
+					$("#number-edit option").remove();
+					$("#number-edit").append($('<option>',
+					{
+						value: data.policie_annexes == "Poliza" ? data.id_policie : data.number,
+						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
+						
+					}));
 
-					$("#id_edit").val(data.id_policies_annexes)
+					$("#init_date-edit").val(data.init_date)
+					$("#limit_date-edit").val(data.limit_date)
+					$("#issue-edit").val(data.issue)
+					$("#observations-edit").val(data.observations)
+
+					$("#cousin-edit").val(number_format(data.cousin, 2))
+					$("#xpenses-edit").val(number_format(data.xpenses, 2))
+					$("#vat-edit").val(number_format(data.vat, 2)).attr("readonly", "readonly")
+					$("#percentage_vat_cousin-edit").val(data.percentage_vat_cousin)
+					$("#commission_percentage-edit").val(data.commission_percentage).attr("readonly", "readonly")
+					$("#participation-edit").val(data.participation).attr("readonly", "readonly")
+					$("#agency_commission-edit").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
+					$("#total-edit").val(number_format(data.total, 2)).attr("readonly", "readonly")
+
+					$("#id_edit").val(data.id_charge_accounts)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
@@ -335,7 +341,7 @@
 				if($(this).val() == "Poliza"){
 					var route = '/api/policies/'+{{$id_policie}};
 				}else{
-					var route = '/api/charge/account'+{{$id_policie}};
+					var route = '/api/policies/annexes/'+{{$id_policie}};
 				}
 				var url=document.getElementById('ruta').value;
 					$.ajax({
@@ -367,32 +373,87 @@
 										
 									}));
 								}
+
+								$("#cousin").val(number_format(data.cousin, 2))
+								$("#xpenses").val(number_format(data.xpenses, 2))
+								$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
+								$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
+								$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
+								$("#participation").val(data.participation).attr("readonly", "readonly")
+								$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
+								$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
+
+							}else{
+
+								$.each(data, function (key, item) { 
+									if (item.status == 1) {
+										$("#number-store").append($('<option>',
+										{
+											value: item.id_policies_annexes,
+											text : item.number_annexed,
+											
+										}));
+									} 
+								});
+								$("#number-store").trigger("change");
 							}
 
-
-
-
-						$("#cousin").val(number_format(data.cousin, 2))
-						$("#xpenses").val(number_format(data.xpenses, 2))
-						$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-						$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
-						$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-						$("#participation").val(data.participation).attr("readonly", "readonly")
-						$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-						$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
+							
 
 						}
 
 					});
 			});
 
+
+
+			$("#number-store").change(function (e) { 
+				
+				if($("#policie_annexes-store").val() != "Poliza"){
+					
+					var route = '/api/annexes/'+$(this).val();
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+route,
+						type:'GET',
+						data: {
+							"id_user": id_user,
+							"token"  : tokens,
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						
+						},
+						error: function (data) {
+						
+						},
+						success: function(data){
+
+							$("#cousin").val(number_format(data.cousin, 2))
+							$("#xpenses").val(number_format(data.xpenses, 2))
+							$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
+							$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
+							$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
+							$("#participation").val(data.participation).attr("readonly", "readonly")
+							$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
+							$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
+
+						}
+
+					});
+				}
+				
+			});
+
+
 			$("#cousin, #xpenses, #commission_percentage, #percentage_vat_cousin").keyup(function (e) { 
 				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
 			});
 
 
-			$("#cousin_edit, #xpenses_edit, #commission_percentage_edit, #percentage_vat_cousin_edit").keyup(function (e) { 
-				calc("#cousin_edit", "#xpenses_edit", "#total_edit", "#percentage_vat_cousin_edit", "#vat_edit", "#commission_percentage_edit", "#agency_commission_edit", "#participation_edit")
+			$("#cousin-edit, #xpenses-edit, #commission_percentage-edit, #percentage_vat_cousin-edit").keyup(function (e) { 
+				calc("#cousin-edit", "#xpenses-edit", "#total-edit", "#percentage_vat_cousin-edit", "#vat-edit", "#commission_percentage-edit", "#agency_commission-edit", "#participation-edit")
 			});
 
 
@@ -428,7 +489,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_policies_annexes+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -440,14 +501,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_policies_annexes+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_policies_annexes+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 
