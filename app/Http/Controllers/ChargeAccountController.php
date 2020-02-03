@@ -15,7 +15,7 @@ class ChargeAccountController extends Controller
      */
     public function index($id)
     {
-       //
+       
     }
 
     /**
@@ -25,7 +25,7 @@ class ChargeAccountController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
