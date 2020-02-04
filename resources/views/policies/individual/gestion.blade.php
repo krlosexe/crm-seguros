@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestión de Polizas.</h4>
+					<h4>Gestión de Pólizas.</h4>
 				</div>
 				<div class="row">
 					
@@ -21,7 +21,7 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
-												<th>Numero de Poliza</th>
+												<th>Numero de Póliza</th>
 												<th>Cliente</th>
 												<th>Aseguradora</th>
 												<th>Ramo</th>

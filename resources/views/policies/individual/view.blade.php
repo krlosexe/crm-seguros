@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro3">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Consulta de Polizas.</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Consulta de Pólizas.</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
@@ -118,13 +118,13 @@
 
                           <div class="row">
                               <div class="col-sm-6">
-                                <label for=""><b>Fecha expedicion</b></label>
+                                <label for=""><b>Fecha expedición</b></label>
                                 <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_view">
                               </div>
 
 
                               <div class="col-sm-6">
-                                <label for=""><b>Fecha Recepcion</b></label>
+                                <label for=""><b>Fecha Recepción</b></label>
                                 <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date_view">
                               </div>
 
@@ -151,7 +151,7 @@
 
                           <div class="row remove">
                             <div class="col-md-12">
-                              <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
+                              <label for=""><b>Riesgo (Placa, Dirección, etc)*</b></label>
                                 <div class="form-group valid-required">
                                   <input type="text" name="risk" class="form-control form-control-user" id="risk_view" placeholder="Codigo Objeto Asegurado" required>
                                 </div>
@@ -577,7 +577,7 @@
                       
                       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                          <h6 class="m-0 font-weight-bold text-primary">Simulacion de pagos</h6>
+                          <h6 class="m-0 font-weight-bold text-primary">Simulación de pagos</h6>
                         </div>
                         <div class="card-body">
 
@@ -588,7 +588,7 @@
                           <table class="table table-bordered" id="table-simulation-view" width="100%" cellspacing="0">
                             <thead>
                               <tr>
-                                <th>Numero de Cuota</th>
+                                <th>Número de Cuota</th>
                                 <th>Fecha de Pago</th>
                                 <th>Monto</th>
                               </tr>

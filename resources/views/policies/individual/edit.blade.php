@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Editar Polizas</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Editar Pólizas</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
@@ -29,9 +29,6 @@
             <li class="nav-item">
                 <a href="#default-tab-5-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
-
-
-
 
         </ul>
 
@@ -92,7 +89,7 @@
                           </div>
 
                           <div class="col-md-4">
-                            <label for="is_renewable_edit"><b>Es renovable?</b><br></label><br>
+                            <label for="is_renewable_edit"><b>¿Es renovable?</b><br></label><br>
                             <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
                                   <input type="checkbox" name="is_renewable" id="is_renewable_edit" checked="checked">
                                   <label for="is_renewable_edit"></label>
@@ -127,13 +124,13 @@
 
                         <div class="row">
                             <div class="col-sm-6">
-                              <label for=""><b>Fecha expedicion</b></label>
+                              <label for=""><b>Fecha expedición</b></label>
                               <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
                             </div>
 
 
                             <div class="col-sm-6">
-                              <label for=""><b>Fecha Recepcion</b></label>
+                              <label for=""><b>Fecha Recepción</b></label>
                               <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date_edit">
                             </div>
 
@@ -160,7 +157,7 @@
 
                         <div class="row remove">
                           <div class="col-md-12">
-                            <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
+                            <label for=""><b>Riesgo (Placa, Dirección, etc)*</b></label>
                               <div class="form-group valid-required">
                                 <input type="text" name="risk" class="form-control form-control-user" id="risk_edit" placeholder="Codigo Objeto Asegurado" required>
                               </div>
@@ -591,7 +588,7 @@
                       
                       <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                          <h6 class="m-0 font-weight-bold text-primary">Simulacion de pagos</h6>
+                          <h6 class="m-0 font-weight-bold text-primary">Simulación de pagos</h6>
                         </div>
                         <div class="card-body">
 

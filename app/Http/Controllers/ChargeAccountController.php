@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Auditoria;
 use App\ChargeAccount;
+use App\Collections;
 use Illuminate\Http\Request;
 
 class ChargeAccountController extends Controller
@@ -86,6 +87,8 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
 
+                                ->with("collections")
+                                
                                 ->where("charge_accounts.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
                                 ->get();
@@ -126,6 +129,25 @@ class ChargeAccountController extends Controller
 
             
             $update = ChargeAccount::find($chargeAccount)->update($request->all());
+
+
+            $destinationPath        = 'img/collections';
+            $request["tabla"]       = "clients_people";
+            $request["id_charge_accounts"] = $chargeAccount;
+
+            if($request->file('file')){
+                foreach($request->file('file') as $key => $value){
+                    $value->move($destinationPath,$value->getClientOriginalName());
+    
+                    $request["name"] = $value->getClientOriginalName();
+    
+                    $request["title"]  = $request["titles"][$key];
+                    $request["amount"] = $request["amounts"][$key];
+    
+                    $store_file = Collections::create($request->all());
+    
+                }
+            }
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    

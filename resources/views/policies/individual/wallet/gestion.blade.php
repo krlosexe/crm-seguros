@@ -331,10 +331,123 @@
 
 					$("#id_edit").val(data.id_charge_accounts)
 
+
+
+					ShowCollections(data.collections)
+
+
+
+
+					$('#input-file-store').fileinput('destroy');
+				
+					$("#input-file-store").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 1500,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="ei-delete-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+					});
+
+
+
+
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
 			
+
+			
+			function ShowCollections(data){
+				
+				var count = 0
+
+				$.each(data, function (key, item) { 
+					
+					count++
+					var html = "";
+					html += '<div class="col-md-12" id="file-'+count+'">'
+						html += '<div class="row">'
+							html += '<div class="col-md-6">'
+								html += ' <label for=""><b>Titulo *</b></label>'
+								html += '<div class="form-group valid-required">'
+									html += '<input type="text" name="titles[]" class="form-control form-control-user" required value="'+item.title+'">'
+								html += '</div>'
+							html += '</div>'
+
+
+							html += '<div class="col-md-6">'
+								html += ' <label for=""><b>Monto *</b></label>'
+								html += '<div class="form-group valid-required">'
+									html += '<input type="text" name="descriptions[]" class="form-control form-control-user"  required value="'+item.amount+'">'
+								html += '</div>'
+							html += '</div>'
+
+						html += '</div>'
+						html += '<br>'
+
+
+						html += '<div class="row">'
+							html += '<div class="col-md-12 text-center">'
+								html += '<div class="kv-avatar">'
+									html += '<div class="file-loading">'
+										html += '<input id="input-file-'+count+'" name="file[]" type="file" required>'
+									html += '</div>'
+								html += '</div>'
+
+								html += '<div class="kv-avatar-hintss">'
+									html += '<small>Seleccione una foto</small>'
+								html += '</div>'
+
+							html += '</div>'
+						html += '</div>'
+						html += '<br>'
+						html += '<br>'
+					html += '</div>' 
+
+
+					$("#content-file").append(html);
+					CreateInputFile("#input-file-"+count)
+				});
+
+
+				
+			}
+
+			
+
+			function CreateInputFile(input){
+
+				$(input).fileinput({
+					theme: "fas",
+					overwriteInitial: true,
+					maxFileSize: 1500,
+					showClose: false,
+					showCaption: false,
+					browseLabel: '',
+					removeLabel: '',
+					browseIcon: '<i class="fa fa-folder-open"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
+					previewFileIcon: '<i class="fas fa-file"></i>',
+					removeTitle: 'Cancel or reset changes',
+					elErrorContainer: '#kv-avatar-errors-1',
+					msgErrorClass: 'alert alert-block alert-danger',
+					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+				});
+			}
+
+
+
 			$("#policie_annexes-store").change(function (e) { 
 				
 				var type = $(this).val();

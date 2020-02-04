@@ -15,5 +15,15 @@ class ChargeAccount extends Model
     protected $table         = 'charge_accounts';
     public    $timestamps    = false;
     protected $primaryKey    = 'id_charge_accounts';
+
+
+
+    public function collections()
+    {
+      return $this->hasMany('App\Collections', 'id_charge_accounts');
+    }
+
+
+
     
 }

@@ -35,7 +35,7 @@
         <div class="website-logo">
             <a href="https://chseguros.com.co/">
                 <div class="logo">
-                    <img class="logo-size" src="https://chseguros.com.co/wp-content/uploads/2020/01/logoch2020.svg" alt="logo ch">
+                    <img class="logo-size" src="https://chseguros.com.co/wp-content/uploads/2020/02/nuevologo.svg" alt="logo ch">
                 </div>
             </a>
         </div>

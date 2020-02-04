@@ -7,148 +7,222 @@
       
         @csrf
 
-        <input type="hidden" name="_method" value="put">
+
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+            </li>
+            <li class="nav-item remove-pay">
+                <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Recaudos</a>
+            </li>
+
+        </ul>
+
+       <br><br>
+
+       <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-edit">
+            <input type="hidden" name="_method" value="put">
         
-        <div class="row">
-        
-        <div class="col-md-6">
+              <div class="row">
+                
+                <div class="col-md-6">
 
-          <div class="row">
+                  <div class="row">
 
-            <div class="col-md-6">
-              <label for=""><b>Poliza o Anexo ?</b></label>
-                <div class="form-group valid-required">
-                  <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-edit" required>
-                    <option value="">Seleccione</option>
-                    <option value="Poliza">Poliza</option>
-                    <option value="Anexo">Anexo</option>
-                  </select>
-                </div>
-            </div>
+                    <div class="col-md-6">
+                      <label for=""><b>Poliza o Anexo ?</b></label>
+                        <div class="form-group valid-required">
+                          <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-edit" required>
+                            <option value="">Seleccione</option>
+                            <option value="Poliza">Poliza</option>
+                            <option value="Anexo">Anexo</option>
+                          </select>
+                        </div>
+                    </div>
 
-              <div class="col-md-6">
-                <label for=""><b>Numero*</b></label>
-                  <div class="form-group valid-required">
-                    <select name="number" id="number-edit" class="form-control" required>
-                      <option value="">Seleccione</option>
-                    </select>
+                      <div class="col-md-6">
+                        <label for=""><b>Numero*</b></label>
+                          <div class="form-group valid-required">
+                            <select name="number" id="number-edit" class="form-control" required>
+                              <option value="">Seleccione</option>
+                            </select>
+                          </div>
+                      </div>
                   </div>
-              </div>
-          </div>
 
-          <div class="row">
-            <div class="col-sm-6">
-              <label for=""><b>Fecha inico</b></label>
-              <input type="date" name="init_date" class="form-control form-control-user" id="init_date-edit">
-            </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label for=""><b>Fecha inico</b></label>
+                      <input type="date" name="init_date" class="form-control form-control-user" id="init_date-edit">
+                    </div>
 
-            <div class="col-sm-6">
-              <label for=""><b>Fecha Limite *</b></label>
-              <input type="date" name="limit_date" class="form-control form-control-user" id="limit_date-edit" required>
-            </div>
-          </div>
+                    <div class="col-sm-6">
+                      <label for=""><b>Fecha Limite *</b></label>
+                      <input type="date" name="limit_date" class="form-control form-control-user" id="limit_date-edit" required>
+                    </div>
+                  </div>
 
 
-          <br><br>
+                  <br><br>
 
 
-          <div class="row">
-            <div class="col-sm-12">
-              <label for=""><b>Aasunto</b></label>
-              <input type="text" name="issue" class="form-control form-control-user" id="issue-edit">
-            </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for=""><b>Aasunto</b></label>
+                      <input type="text" name="issue" class="form-control form-control-user" id="issue-edit">
+                    </div>
 
-            <br> <br>
-            <div class="col-md-12">
-              <label for=""><b>Observaciones</b></label>
-                <div class="form-group valid-required">
-                  <textarea name="observations" class="form-control" id="observations-edit" cols="30" rows="10"></textarea>
+                    <br> <br>
+                    <div class="col-md-12">
+                      <label for=""><b>Observaciones</b></label>
+                        <div class="form-group valid-required">
+                          <textarea name="observations" class="form-control" id="observations-edit" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                  </div>
+
                 </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for=""><b>Prima *</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin-edit" required value="0" style="text-align: right">
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses-edit" value="0" style="text-align: right">
+                          </div>
+                      </div>
+                  </div>
+              
+                  <br>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label for=""><b>IVA</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="vat" class="form-control form-control-user" id="vat-edit" readonly value="0" style="text-align: right">
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>% IVA Prima*</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin-edit">
+                          </div>
+                      </div>
+                  </div>
+              
+                <br>
+
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label for=""><b>Porcentaje Comisión</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage-edit" value="100" readonly style="text-align: right">
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>Participación</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="participation" class="form-control form-control-user" id="participation-edit" value="100">
+                          </div>
+                      </div>
+                  </div>
+              
+                  <br>
+
+
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label for=""><b>Comisión agencia</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission-edit" readonly value="0" style="text-align: right">
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for=""><b>Total</b></label>
+                          <div class="form-group valid-required">
+                            <input type="text" name="total" class="form-control form-control-user" id="total-edit" readonly value="0" style="text-align: right">
+                          </div>
+                      </div>
+                  </div>
+                
+                </div>
+
+
             </div>
+            <br>
+            <br>
+
+            <!---END ROW-->
           </div>
 
-        </div>
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-edit">
 
-        <div class="col-md-6">
+
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+                
+              </iframe>
+
+            </div>
             <div class="row">
-              <div class="col-md-6">
-                <label for=""><b>Prima *</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin-edit" required value="0" style="text-align: right">
-                  </div>
-              </div>
 
-              <div class="col-md-6">
-                <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses-edit" value="0" style="text-align: right">
+              <div class="col-md-12" id="file-'+count+'">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for=""><b>Titulo *</b></label>
+                      <div class="form-group valid-required">
+                        <input type="text" name="titles[]" id="titles_store" class="form-control form-control-user" required>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for=""><b>Monto *</b></label>
+                      <div class="form-group valid-required">
+                        <input type="text" name="amounts[]" id="amount_store" class="form-control form-control-user" required>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+
+
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <div class="kv-avatar">
+                        <div class="file-loading">
+                          <input id="input-file-store" name="file[]" type="file" required>
+                        </div>
+                      </div>
+
+                      <div class="kv-avatar-hintss">
+                        <small>Seleccione una foto</small>
+                      </div>
+
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+
+                  <div class="row" id="content-file">
+
                   </div>
               </div>
+            </div>
           </div>
-      
-          <br>
-
-          <div class="row">
-              <div class="col-md-6">
-                <label for=""><b>IVA</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="vat" class="form-control form-control-user" id="vat-edit" readonly value="0" style="text-align: right">
-                  </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for=""><b>% IVA Prima*</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="percentage_vat_cousin" class="form-control form-control-user" id="percentage_vat_cousin-edit">
-                  </div>
-              </div>
-          </div>
-      
-        <br>
-
-          <div class="row">
-              <div class="col-md-6">
-                <label for=""><b>Porcentaje Comisión</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage-edit" value="100" readonly style="text-align: right">
-                  </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for=""><b>Participación</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="participation" class="form-control form-control-user" id="participation-edit" value="100">
-                  </div>
-              </div>
-          </div>
-      
-          <br>
-
-
-          <div class="row">
-              <div class="col-md-6">
-                <label for=""><b>Comisión agencia</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission-edit" readonly value="0" style="text-align: right">
-                  </div>
-              </div>
-
-              <div class="col-md-6">
-                <label for=""><b>Total</b></label>
-                  <div class="form-group valid-required">
-                    <input type="text" name="total" class="form-control form-control-user" id="total-edit" readonly value="0" style="text-align: right">
-                  </div>
-              </div>
-          </div>
+       </div>
         
-        </div>
-
-
-    </div>
-    <br>
-    <br>
-
-    <!---END ROW-->
 
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
