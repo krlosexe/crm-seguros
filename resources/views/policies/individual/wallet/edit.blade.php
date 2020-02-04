@@ -176,51 +176,7 @@
               </iframe>
 
             </div>
-            <div class="row">
-
-              <div class="col-md-12" id="file-'+count+'">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label for=""><b>Titulo *</b></label>
-                      <div class="form-group valid-required">
-                        <input type="text" name="titles[]" id="titles_store" class="form-control form-control-user" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <label for=""><b>Monto *</b></label>
-                      <div class="form-group valid-required">
-                        <input type="text" name="amounts[]" id="amount_store" class="form-control form-control-user" required>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-
-
-                  <div class="row">
-                    <div class="col-md-12 text-center">
-                      <div class="kv-avatar">
-                        <div class="file-loading">
-                          <input id="input-file-store" name="file[]" type="file" required>
-                        </div>
-                      </div>
-
-                      <div class="kv-avatar-hintss">
-                        <small>Seleccione una foto</small>
-                      </div>
-
-                    </div>
-                  </div>
-                  <br>
-                  <br>
-
-
-                  <div class="row" id="content-file">
-
-                  </div>
-              </div>
             </div>
-          </div>
        </div>
         
 

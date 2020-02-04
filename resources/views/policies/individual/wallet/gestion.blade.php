@@ -358,7 +358,8 @@
 						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
 					});
 
-
+					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/1"
+					$('#iframeDigitalesEdit').attr('src', url);
 
 
 					cuadros('#cuadro1', '#cuadro4');

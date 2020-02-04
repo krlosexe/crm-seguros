@@ -47,7 +47,6 @@ Route::get('people', function () {
     return view('clients.people.gestion');
 });
 
-
 Route::get('clients/people/files/{id_client}/{management}', function ($id_client, $management) {
     return view('clients.people.files.gestion', ["id_client" => $id_client, "management" => $management]);
 });
@@ -197,6 +196,9 @@ Route::get('payments-collected', function () {
 
 
 
+Route::get('policies/wallet/files/{id_charge}/{management}', function ($id_charge, $management) {
+    return view('policies.individual.wallet.files.gestion', ["id_charge" => $id_charge, "management" => $management]);
+});
 
 
 Route::get('import', 'ImportController@import');

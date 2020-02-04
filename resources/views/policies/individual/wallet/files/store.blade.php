@@ -1,7 +1,7 @@
 <div class="card shadow mb-4 hidden" id="cuadro2">
 
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Registro de Digitales</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Registro de Recaudos</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
@@ -19,15 +19,14 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Descripcion *</b></label>
+                  <label for=""><b>Monto *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="descripcion" id="descriptions_store" class="form-control form-control-user" id="description" required>
+                    <input type="text" name="amount" id="amount_store" class="form-control form-control-user" required>
                   </div>
                 </div>
 
               </div>
               <br>
-
 
               <div class="row">
                 <div class="col-md-12 text-center">
@@ -50,7 +49,7 @@
 
         <!---END ROW-->
         <input type="hidden" name="tabla" value="policies">
-        <input type="hidden" name="id_register" value="{{$id_client}}">
+        <input type="hidden" name="id_charge_accounts" value="{{$id_charge}}">
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
           <br>

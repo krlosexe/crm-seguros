@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                   <label for=""><b>Descripcion *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="descripcion" id="descriptions_edit" class="form-control form-control-user" id="description" required>
+                    <input type="text" name="amount" id="amount_edit"  class="form-control form-control-user"  required>
                   </div>
                 </div>
 

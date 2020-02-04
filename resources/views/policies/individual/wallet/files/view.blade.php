@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Descripcion *</b></label>
+                  <label for=""><b>Monto *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="descriptions" id="descriptions_view" class="form-control form-control-user" id="description" required>
+                    <input type="text" name="amount" id="amount_view" class="form-control form-control-user" required>
                   </div>
                 </div>
 

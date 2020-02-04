@@ -138,4 +138,7 @@ Route::resource('charge/account', 'ChargeAccountController');
 Route::get('charge/account/{id_policie}', 'ChargeAccountController@index');
 Route::get('charge/account/status/{id}/{status}', 'ChargeAccountController@status');
 
-
+Route::post('wallet/collections', 'CollectionsController@store');
+Route::get('wallet/collections/{id}', 'CollectionsController@get');
+Route::put('wallet/collections/{id}', 'CollectionsController@update');
+Route::get('wallet/collections/status/{id}/{status}', 'CollectionsController@status');

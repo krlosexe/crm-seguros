@@ -151,9 +151,6 @@ class FilesController extends Controller
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
-
-
-        
     }
 
     /**

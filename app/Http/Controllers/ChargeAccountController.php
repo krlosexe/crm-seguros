@@ -72,8 +72,7 @@ class ChargeAccountController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
+    
      * @param  \App\ChargeAccount  $chargeAccount
      * @return \Illuminate\Http\Response
      */
@@ -109,7 +108,7 @@ class ChargeAccountController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\ChargeAccount  $chargeAccount
      * @return \Illuminate\Http\Response
@@ -129,25 +128,6 @@ class ChargeAccountController extends Controller
 
             
             $update = ChargeAccount::find($chargeAccount)->update($request->all());
-
-
-            $destinationPath        = 'img/collections';
-            $request["tabla"]       = "clients_people";
-            $request["id_charge_accounts"] = $chargeAccount;
-
-            if($request->file('file')){
-                foreach($request->file('file') as $key => $value){
-                    $value->move($destinationPath,$value->getClientOriginalName());
-    
-                    $request["name"] = $value->getClientOriginalName();
-    
-                    $request["title"]  = $request["titles"][$key];
-                    $request["amount"] = $request["amounts"][$key];
-    
-                    $store_file = Collections::create($request->all());
-    
-                }
-            }
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
