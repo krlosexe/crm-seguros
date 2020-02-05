@@ -69,7 +69,7 @@
 
 									@if($management == 1)
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-											<i class="ti-user"></i>
+											<i class="ti-plus"></i>
 											<span>Nuevo</span>
 										</button>
 									@endif
@@ -424,8 +424,6 @@
 				
 			}
 
-			
-
 			function CreateInputFile(input){
 
 				$(input).fileinput({
@@ -446,8 +444,6 @@
 					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
 				});
 			}
-
-
 
 			$("#policie_annexes-store").change(function (e) { 
 				
@@ -569,8 +565,6 @@
 			$("#cousin-edit, #xpenses-edit, #commission_percentage-edit, #percentage_vat_cousin-edit").keyup(function (e) { 
 				calc("#cousin-edit", "#xpenses-edit", "#total-edit", "#percentage_vat_cousin-edit", "#vat-edit", "#commission_percentage-edit", "#agency_commission-edit", "#participation-edit")
 			});
-
-
 
 			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission, participation){
 				

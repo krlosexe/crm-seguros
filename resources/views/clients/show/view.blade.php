@@ -46,7 +46,7 @@
                           <select name="type_document" class="form-control selectized" id="type_document_view" required>
                             <option value="">Seleccione</option>
                             <option value="Cedula">Cedula</option>
-                            <option value="Cedula de Extrangeria">Cedula de Extrangeria</option>
+                            <option value="Cedula de Extrangeria">Cedula de Extranjería</option>
                             <option value="RUC">RUC</option>
                             <option value="Pasaporte">Pasaporte</option>
                             <option value="NUIP">NUIP</option>

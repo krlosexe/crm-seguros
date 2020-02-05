@@ -19,7 +19,7 @@
 
 
 			<div class="col-md-6">
-				<label for=""><b>Numero afiliado*</b></label>
+				<label for=""><b>Número afiliado*</b></label>
 				<div class="form-group valid-required">
 				<input name="number_affiliate" type="text" class="form-control" id="number_affiliate_bind_edit" required>
 				</div>
@@ -100,7 +100,7 @@
 			</div>
 
 			<div class="col-sm-4">
-				<label for=""><b>Genero*</b></label>
+				<label for=""><b>Género*</b></label>
 				<select name="gender" class="form-control selectize-input items has-options full has-items" id="gender_bind_edit" required>
 				<option value="">Seleccione</option>
 				<option value="Masculino">Masculino</option>
@@ -131,7 +131,7 @@
 			</div>
 
 			<div class="col-sm-4">
-				<label for=""><b>Direccion*</b></label>
+				<label for=""><b>Dirección*</b></label>
 				<input name="address" type="text" class="form-control" id="address_bind_edit">
 			</div>
 
@@ -158,7 +158,7 @@
 			</div>
 
 			<div class="col-sm-4">
-				<label for=""><b>Tipo de Afiliacion</b></label>
+				<label for=""><b>Tipo de Afiliación</b></label>
 				<input name="type_membership" type="text" class="form-control" id="type_membership_bind_edit">
 			</div>
 
@@ -177,7 +177,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<label for=""><b>Gastos de expedicion</b></label>
+				<label for=""><b>Gastos de expedición</b></label>
 				<div class="form-group valid-required">
 					<input name="expenses" type="text" class="form-control monto_formato_decimales" id="expenses_bind_edit" style="text-align: right">
 				</div>

@@ -25,7 +25,7 @@
 											<th>Nombres</th>
 											<th>Apellidos</th>
 											<th>Tipo de Documento</th>
-											<th>Numero de Documento</th>
+											<th>Número de Documento</th>
 											<th>Fecha de registro</th>
 											<th>Acciones</th>
 											</tr>

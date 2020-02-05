@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Descripcion *</b></label>
+                  <label for=""><b>Descripción *</b></label>
                   <div class="form-group valid-required">
                     <input type="text" name="descripcion" id="descriptions_store" class="form-control form-control-user" id="description" required>
                   </div>

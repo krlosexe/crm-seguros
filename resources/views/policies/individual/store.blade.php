@@ -97,13 +97,13 @@
 
                     <div class="row">
                         <div class="col-sm-6">
-                          <label for=""><b>Fecha expedicion</b></label>
+                          <label for=""><b>Fecha expedición</b></label>
                           <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date">
                         </div>
 
 
                         <div class="col-sm-6">
-                          <label for=""><b>Fecha Recepcion</b></label>
+                          <label for=""><b>Fecha Recepción</b></label>
                           <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date">
                         </div>
 

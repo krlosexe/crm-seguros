@@ -11,7 +11,7 @@
         
 		<div class="row">
             <div class="col-md-6">
-              <label for=""><b>Numero</b></label>
+              <label for=""><b>Número</b></label>
               <div class="form-group valid-required">
               <input name="number_annexed" type="text" class="form-control" id="number_annexed_edit">
               </div>
@@ -41,7 +41,7 @@
 
 
             <div class="col-md-3">
-              <label for="is_renewable_edit"><b>Es renovable?</b><br></label><br>
+              <label for="is_renewable_edit"><b>¿Es renovable?</b><br></label><br>
               <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
                     <input type="checkbox" name="is_renewable" id="is_renewable_edit" checked="checked">
                     <label for="is_renewable_edit"></label>
@@ -62,7 +62,7 @@
         <div class="row">
 
           <div class="col-sm-3">
-            <label for=""><b>Fecha expedicion</b></label>
+            <label for=""><b>Fecha expedición</b></label>
             <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
           </div>
 
@@ -79,7 +79,7 @@
 
 
           <div class="col-sm-3">
-            <label for=""><b>Fecha Recepcion</b></label>
+            <label for=""><b>Fecha Recepción</b></label>
             <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date_edit">
           </div>
 

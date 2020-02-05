@@ -70,7 +70,6 @@ class ChargeAccountController extends Controller
         }
     }
 
-
     /**
     
      * @param  \App\ChargeAccount  $chargeAccount
@@ -103,7 +102,7 @@ class ChargeAccountController extends Controller
      */
     public function edit(ChargeAccount $chargeAccount)
     {
-        //
+        
     }
 
     /**

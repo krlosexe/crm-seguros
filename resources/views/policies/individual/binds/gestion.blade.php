@@ -69,7 +69,7 @@
 
 									@if($management == 1)
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-											<i class="ti-user"></i>
+											<i class="ti-plus"></i>
 											<span>Nuevo</span>
 										</button>
 									@endif
@@ -77,8 +77,8 @@
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Numero de Anexo</th>
-													<th>Numero de Afiliado</th>
+													<th>Número de Anexo</th>
+													<th>Número de Afiliado</th>
 													<th>Nombre</th>
 													<th>Documento</th>
 													<th>Fecha de registro</th>

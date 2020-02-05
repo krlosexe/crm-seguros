@@ -59,12 +59,12 @@
                           <div class="row">
                           
                               <div class="col-sm-6">
-                                <label for=""><b>Fecha expedicion</b></label>
+                                <label for=""><b>Fecha expedición</b></label>
                                 <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_edit">
                               </div>
 
                               <div class="col-sm-6">
-                                <label for=""><b>Fecha Constitucion</b></label>
+                                <label for=""><b>Fecha Constitución</b></label>
                                 <input type="date" name="constitution_date" class="form-control form-control-user" id="constitution_date_edit">
                               </div>
 
@@ -172,7 +172,7 @@
                           <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="row">
-                                  <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
+                                  <label for="address1" class="col-md-2 control-label">Teléfono 1*</label>
                                   <div class="col-md-6">
                                       <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1" require>
                                   </div>
@@ -195,7 +195,7 @@
                           <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="row">
-                                  <label for="address1" class="col-md-2 control-label">Telefono 2</label>
+                                  <label for="address1" class="col-md-2 control-label">Teléfono 2</label>
                                   <div class="col-md-6">
                                       <input type="text" class="form-control" id="phone2_edit" name="phone2" placeholder="Telefono 2">
                                   </div>

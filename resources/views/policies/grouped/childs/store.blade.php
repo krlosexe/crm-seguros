@@ -60,7 +60,7 @@
                       </div>
 
                       <div class="col-md-4">
-                        <label for="is_renewable"><b>Es renovable?</b><br></label><br>
+                        <label for="is_renewable"><b>¿Es renovable?</b><br></label><br>
                         <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
                               <input type="checkbox" name="is_renewable" id="is_renewable" checked="checked">
                               <label for="is_renewable"></label>

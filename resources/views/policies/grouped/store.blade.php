@@ -10,7 +10,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <label for=""><b>Numero de Poliza*</b></label>
+            <label for=""><b>Número de Póliza*</b></label>
               <div class="form-group valid-required">
                 <input type="text" name="number_policies" class="form-control form-control-user" id="number_policies"required>
               </div>
@@ -77,12 +77,12 @@
 
 
           <div class="col-sm-3">
-            <label for=""><b>Fecha Recepcion</b></label>
+            <label for=""><b>Fecha Recepción</b></label>
             <input type="date" name="reception_date" class="form-control form-control-user" id="reception_date">
           </div>
 
           <div class="col-md-3">
-            <label for="is_renewable"><b>Es renovable?</b><br></label><br>
+            <label for="is_renewable"><b>¿Es renovable?</b><br></label><br>
             <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
                   <input type="checkbox" name="is_renewable" id="is_renewable" checked="checked">
                   <label for="is_renewable"></label>

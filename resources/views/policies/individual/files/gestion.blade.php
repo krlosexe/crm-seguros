@@ -67,7 +67,7 @@
 
 									@if($management == 1)
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-											<i class="ti-user"></i>
+											<i class="ti-image"></i>
 											<span>Nuevo</span>
 										</button>
 									@endif

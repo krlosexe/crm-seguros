@@ -9,7 +9,7 @@
 
 
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
                 <a href="#default-tab-1-store" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -77,7 +77,7 @@
 
 
                             <div class="col-sm-4">
-                              <label for=""><b>Fecha expedicion</b></label>
+                              <label for=""><b>Fecha expedición</b></label>
                               <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date">
                             </div>
                         </div>

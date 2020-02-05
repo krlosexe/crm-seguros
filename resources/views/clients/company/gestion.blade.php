@@ -15,14 +15,14 @@
 							<div class="card-block">
 								<div class="table-overflow">
 									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-										<i class="ti-user"></i>
+										<i class="ti-plus"></i>
 										<span>Nuevo</span>
 									</button>
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
 											
-											<th>Razon Social</th>
+											<th>Razón Social</th>
 											<th>NIT</th>
 											<th>Fecha de registro</th>
 											<th>Acciones</th>
