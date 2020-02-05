@@ -207,7 +207,9 @@ Route::get('import', 'ImportController@import');
 
 
 
-
+Route::get('Company', function () {
+    return view('configuracion.Company.gestion');
+});
 
 
 

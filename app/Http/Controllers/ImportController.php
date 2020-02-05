@@ -18,13 +18,14 @@ class ImportController extends Controller
         ini_set("default_charset", "UTF-8");
         $fila = 1;
 
-        $data = [];
-        $data_contact = [];
-        $data_info = [];
-        $data_working = [];
-        $data_notifications = [];
+       $data = [];
+       $data_contact = [];
+       $data_info = [];
+       $data_working = [];
+       $data_notifications = [];
+       $data_auditoria = [];
 
-        if (($gestor = fopen("data.csv", "r")) !== FALSE) {
+        if (($gestor = fopen("data2020.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
 
                 $numero = count($datos);
@@ -40,35 +41,37 @@ class ImportController extends Controller
                     "gender"          => $datos[6],
                     "birthdate"       => $datos[7],
                     "stratum"         => null,
-                    "data_treatment"  => $datos[8],
+                    "data_treatment"  => 1,
                     "observations"    => null,
                  );
 
                  
 
                  $data[] = $row;
+               
                  $store = ClientsPeople::create($row);
 
-                 $auditoria              = new Auditoria;
-                 $auditoria->tabla       = "clients_people";
-                 $auditoria->cod_reg     = $store["id_clients_people"];
-                 $auditoria->status      = 1;
-                 $auditoria->usr_regins  = 68;
-                 $auditoria->save();
+                 $auditoria = array(
+                    "tabla"      => "clients_people",
+                    "cod_reg"    => $store["id_clients_people"],
+                    "status"     => 1,
+                    "usr_regins" => 68
+                 );
 
 
                  $contact = array(
                     "id_clients_people" => $store["id_clients_people"],
-                    "department"        => null,
+                    "department"        => $datos[18],
                     "city"              => $datos[19],
                     "address1"          => $datos[20],
                     "type_address1"     => $datos[21],
-                    "address2"          => null,
-                    "type_address2"     => null,
-                    "phone1"            => null,
-                    "type_phone1"       => null,
-                    "phone2"            => null,
-                    "type_phone2"       => null,
+                    "address2"          => $datos[22],
+                    "type_address2"     => $datos[23],
+                    "phone1"            => $datos[24],
+                    "type_phone1"       => $datos[25],
+                    "phone2"            => $datos[26],
+                    "type_phone2"       => $datos[27],
+                    "email"  => $datos[28],
                  );
                  
 
@@ -104,15 +107,17 @@ class ImportController extends Controller
                  $data_info[]          = $infocrm;
                  $data_working[]       = $working;
                  $data_notifications[] = $notifications;
+                 $data_auditoria[]     = $auditoria;
 
 
-                 //echo json_encode($contact);
+                 echo json_encode($auditoria);
             }
         //     echo "asd";
             $store_clients_people               = ClientsPeopleContact::insert($data_contact);
             $store_clients_people_info_crm      = ClientsPeopleInfoCrm::insert($data_info);
             $store_clients_notification         = ClientsNotifications::insert($data_notifications);
             $store_clients_working_informations = ClientsWorkingInformation::insert($data_working);
+            $store_auditoria                    = Auditoria::insert($data_auditoria);
                 
             fclose($gestor);
         }
