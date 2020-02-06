@@ -213,7 +213,6 @@ Route::get('Company', function () {
 
 
 
-
-
-
-
+Route::get('policies/wallet/pdf', function () {
+    return view('policies.wallet.pdf');
+});

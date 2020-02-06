@@ -198,9 +198,9 @@
                 Guardar
             </button>
 
-            <button type="button"  class="btn btn-danger btn-user" >
+            <a href="/policies/wallet/pdf" target="_blanck" class="btn btn-danger btn-user" >
                 Imprimir
-            </button>
+            </a>
 
             
 
