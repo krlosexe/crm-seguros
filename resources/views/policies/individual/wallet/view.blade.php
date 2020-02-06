@@ -124,7 +124,6 @@
         
             <br>
 
-
             <div class="row">
                 <div class="col-md-6">
                   <label for=""><b>Comisión agencia</b></label>
@@ -160,6 +159,12 @@
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro3')">
                 Cancelar
             </button>
+
+            <button type="button"  class="btn btn-danger btn-user" >
+                Imprimir
+            </button>
+
+
           </center>
           <br>
           <br>

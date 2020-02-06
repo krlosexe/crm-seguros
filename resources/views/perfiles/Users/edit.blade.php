@@ -97,7 +97,7 @@
 			  		<div class="row">
 
 				        <div class="col-sm-4 valid-required">
-                            <label for=""><b>Numero de Cedula</b></label>
+                            <label for=""><b>Numero de Cédula</b></label>
 				            <input type="text" name="n_cedula" class="form-control form-control-user" id="n_cedula-edit" placeholder="Numero de Cedula" required>
 				        </div>
 
@@ -107,8 +107,8 @@
 				        </div>
 
 			  			<div class="col-sm-4 valid-required">
-                          <label for=""><b>Numero de Telefono</b></label>
-				            <input type="text" name="telefono" class="form-control form-control-user" id="telefono-edit" placeholder="Numero de Telefono" required>
+                          <label for=""><b>Número de Teléfono</b></label>
+				            <input type="text" name="telefono" class="form-control form-control-user" id="telefono-edit" placeholder="Número de Teléfono" required>
 				        </div>
 
 			  		</div>
@@ -119,8 +119,8 @@
 
 			  		<div class="row">
 			  			<div class="col-sm-12 valid-required">
-                            <label for=""><b>Direccion</b></label>
-				            <textarea name="direccion" placeholder="Direccion" id="direccion-edit" class="form-control" cols="30" rows="10"></textarea>
+                            <label for=""><b>Dirección</b></label>
+				            <textarea name="direccion" placeholder="Dirección" id="direccion-edit" class="form-control" cols="30" rows="10"></textarea>
 				        </div>
 			  		</div>
 					

@@ -198,6 +198,12 @@
                 Guardar
             </button>
 
+            <button type="button"  class="btn btn-danger btn-user" >
+                Imprimir
+            </button>
+
+            
+
           </center>
           <br>
           <br>

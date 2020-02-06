@@ -69,9 +69,7 @@ class ChargeAccountController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
-
     /**
-    
      * @param  \App\ChargeAccount  $chargeAccount
      * @return \Illuminate\Http\Response
      */
@@ -93,7 +91,6 @@ class ChargeAccountController extends Controller
            
             return response()->json($modulos)->setStatusCode(200);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,8 +99,13 @@ class ChargeAccountController extends Controller
      */
     public function edit(ChargeAccount $chargeAccount)
     {
-        
+
+
     }
+
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -115,8 +117,6 @@ class ChargeAccountController extends Controller
     public function update(Request $request, $chargeAccount)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-
-
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
             $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
             $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
@@ -163,11 +163,9 @@ class ChargeAccountController extends Controller
     }
     /**
      * Remove the specified resource from storage.
-     *
      * @param  \App\ChargeAccount  $chargeAccount
      * @return \Illuminate\Http\Response
      */
-    
     public function destroy(ChargeAccount $chargeAccount)
     {
         //

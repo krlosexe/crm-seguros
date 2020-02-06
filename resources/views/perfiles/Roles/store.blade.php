@@ -17,7 +17,7 @@
 
            
           <div class="col-sm-6 valid-required">
-            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripcion" required>
+            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripción" required>
           </div>
 
         </div>

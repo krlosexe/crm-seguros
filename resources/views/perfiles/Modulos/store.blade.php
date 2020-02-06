@@ -18,8 +18,8 @@
 
            
           <div class="col-sm-3">
-           <label for=""><b>Descripcion</b></label>
-            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripcion" required>
+           <label for=""><b>Descripción</b></label>
+            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripción" required>
           </div>
 
 
@@ -30,7 +30,7 @@
 
 
           <div class="col-sm-3">
-            <label for=""><b>Posicion</b></label>
+            <label for=""><b>Posición</b></label>
            <select id="posicion_modulo_vista_registrar" required class="form-control form-group" name="posicion">
             <option value="">Seleccione</option>
           </select>

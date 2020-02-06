@@ -211,7 +211,7 @@ class UsuariosController extends Controller
                 return response()->json($validator->errors())->setStatusCode(400);
             }else{
 
-               $file = $request->file('img-profile');
+                $file = $request->file('img-profile');
               
                 $User = User::find($id);
 

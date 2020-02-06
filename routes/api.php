@@ -142,3 +142,5 @@ Route::post('wallet/collections', 'CollectionsController@store');
 Route::get('wallet/collections/{id}', 'CollectionsController@get');
 Route::put('wallet/collections/{id}', 'CollectionsController@update');
 Route::get('wallet/collections/status/{id}/{status}', 'CollectionsController@status');
+
+Route::resource('my/company', 'MyCompanyController');

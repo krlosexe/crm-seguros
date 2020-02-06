@@ -14,7 +14,7 @@
 
            
           <div class="col-sm-4 valid-required">
-            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripcion" required>
+            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion" placeholder="Descripción" required>
           </div>
 
 
@@ -31,14 +31,14 @@
         <div class="row">
 
         	<div class="col-sm-4 valid-required">
-        		<label for=""><b>Modulos</b></label>
+        		<label for=""><b>Módulos</b></label>
 	           <select id="modulos_store" required class="form-control form-group" name="id_modulo">
 	            <option value="">Seleccione</option>
 	          </select>
 	        </div>
 
 	        <div class="col-sm-4 valid-required">
-	           <label for=""><b>Posicion</b></label>
+	           <label for=""><b>Posición</b></label>
 	           <select id="posicion_registrar" required class="form-control form-group" name="posicion">
 	            <option value="">Seleccione</option>
 	          </select>

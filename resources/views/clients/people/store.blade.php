@@ -601,9 +601,9 @@
                         <div class="row">
 
                           <div class="col-md-12">
-                              <label for=""><b>Ocupación *</b></label>
+                              <label for=""><b>Ocupación </b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="occupation" class="form-control form-control-user" id="occupation" required>
+                                <input type="text" name="occupation" class="form-control form-control-user" id="occupation" >
                               </div>
                           </div>
 

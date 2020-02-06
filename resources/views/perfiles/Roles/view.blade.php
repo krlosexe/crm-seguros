@@ -19,7 +19,7 @@
            
           <div class="col-sm-6 valid-required">
             <label for="modulo_vista_registrar"><b>Descripcion</b></label>
-            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion_view" placeholder="Descripcion" required>
+            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion_view" placeholder="Descripción" required>
           </div>
 
         </div>

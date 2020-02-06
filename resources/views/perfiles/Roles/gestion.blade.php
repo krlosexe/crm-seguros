@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestion de Roles</h4>
+					<h4>Gestión de Roles</h4>
 				</div>
 				<div class="row">
 					
@@ -14,8 +14,8 @@
 						<div class="card">
 							<div class="card-block">
 								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-primary" style="float: right;">
-										<i class="ei-addthis"></i>
+									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+										<i class="ti-plus"></i>
 										<span>Nuevo</span>
 									</button>
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
@@ -23,7 +23,7 @@
 											<tr>
 											<th>Acciones</th>
 											<th>Nombre</th>
-											<th>Descripcion</th>
+											<th>Descripción</th>
 											<th>Fecha de Registro</th>
 											<th>Registrado por</th>
 											</tr>

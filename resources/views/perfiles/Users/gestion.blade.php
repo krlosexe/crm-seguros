@@ -43,11 +43,12 @@
 						<div class="card">
 							<div class="card-block">
 								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-primary" style="float: right;">
-										<i class="ei-addthis"></i>
+									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+										<i class="ti-user"></i>
 										<span>Nuevo</span>
 									</button>
-									<table class="table table-lg table-hover" id="table" width="100%" cellspacing="0">
+
+									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
 												<th>Nombres</th>

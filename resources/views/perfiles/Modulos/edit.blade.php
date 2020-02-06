@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Editar de Modulos</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Editar de Módulos</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
@@ -18,8 +18,8 @@
 
            
           <div class="col-md-3">
-              <label for=""><b>Descripcion</b></label>
-            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion-edit" placeholder="Descripcion" required>
+              <label for=""><b>Descripción</b></label>
+            <input type="text" name="descripcion" class="form-control form-control-user" id="descripcion-edit" placeholder="Descripción" required>
           </div>
 
 
@@ -31,7 +31,7 @@
 
 
           <div class="col-md-3">
-            <label for=""><b>Posicion</b></label>
+            <label for=""><b>Posición</b></label>
            <select id="posicion-edit" required class="form-control form-group" name="posicion">
             <option value="">Seleccione</option>
           </select>

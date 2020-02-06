@@ -2,13 +2,14 @@
 	<div class="card-header py-3">
 	  <h6 class="m-0 font-weight-bold text-primary">Registro de usuarios</h6>
 	</div>
-	<div class="card-body">
+	<div class="card-block">
 	  	<form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
-			
+			<div class="page-title">
+	  
+
 			@csrf
 
-			<br><br>	<br><br>	<br><br>	<br><br>
-
+			<br><br>	<center><h4>Actualizar información de la Empresa</h4></center> 	</div><br><br>	<br><br>
 
 			<div class="row">
 					
@@ -17,11 +18,11 @@
 						<div class="col-sm-12 text-center">
 							<div class="kv-avatar">
 								<div class="file-loading">
-									<input id="avatar-1" name="img-profile" type="file" required>
+									<input id="avatar-1" name="logo_file" type="file" >
 								</div>
 							</div>
 							<div class="kv-avatar-hintss">
-								<small>Seleccione una foto</small>
+								<small>Sube el logo de tu empresa</small>
 							</div>
 						</div>
 					</div>
@@ -30,34 +31,34 @@
 
 				<div class="col-md-6">
 					<div class="form-group valid-required">
-						<label for="">Nombre Empresa</label>
-						<input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Email" required>
+						<label for="">Nombre de la empresa</label>
+						<input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Rázon social" required>
 					</div>
 					<div class="form-group row">
 						<div class="col-sm-12 mb-3 mb-sm-0 valid-required">
 							<label for="">Nit</label>
-							<input type="number" name="password" class="form-control form-control-user" id="password" placeholder="Contraseña" required>
+							<input type="text" name="nit" class="form-control form-control-user" id="nit" placeholder="Número de NIT" required>
 						</div>
 					</div>
 			
 					<div class="row">
-						
 						<div class="col-sm-6 valid-required">
-							<label for="">Telefono</label>
-							<input type="number" name="repeat-password" class="form-control form-control-user" id="RepeatPassword" placeholder="Repita Contraseña" required>
+							<label for="">Teléfono</label>
+							<input type="number" name="phone" class="form-control form-control-user" id="phone" placeholder="Teléfono de oficina" required>
 						</div>
 						<div class="col-sm-6 valid-required">
 							<label for="">Email</label>
-							<input type="email" name="repeat-password" class="form-control form-control-user" id="RepeatPassword" placeholder="Repita Contraseña" required>
+							<input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Correo Eléctronico" required>
 						</div>
 					</div>
-
-			
 				</div>
-			</div>
+			</div>        
+  			<br>
+       		<br>
+            <br>
+			<input type="hidden" name="_method" value="put">
+			<input type="hidden" name="id_user_edit" id="id_edit" value="1">
 
-            
-            
 
             <center>
             	<button id="send_usuario" class="btn btn-primary btn-user">
@@ -65,7 +66,11 @@
             	</button>
 
             </center>
-          
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
         </form>
 	</div>
 </div>
