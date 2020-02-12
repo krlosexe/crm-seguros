@@ -143,4 +143,18 @@ Route::get('wallet/collections/{id}', 'CollectionsController@get');
 Route::put('wallet/collections/{id}', 'CollectionsController@update');
 Route::get('wallet/collections/status/{id}/{status}', 'CollectionsController@status');
 
+
+Route::get('wallet/{id}', 'ChargeAccountController@get');
+
+
+Route::get('wallet/collection/{id}', 'ChargeAccountController@getCollection');
+
+
 Route::resource('my/company', 'MyCompanyController');
+
+
+Route::resource('footers', 'FootersController');
+
+
+
+Route::post('footers/update', 'FootersController@updateFooter');

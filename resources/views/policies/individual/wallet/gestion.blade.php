@@ -104,6 +104,8 @@
 
 
       </div>
+
+	  
     </div>
     <!-- End of Content Wrapper -->
 
@@ -255,6 +257,99 @@
 				cuadros("#cuadro1", "#cuadro2");
 			}
 
+
+			var api = "/api/footers";
+			$("#add-pie").click(function (e) { 
+				$("#default-modal").modal("show")
+				getFooters()
+			});
+
+			$("#new-pie").click(function (e) { 
+				$(".btn-save-pie").removeAttr("disabled")
+				$(".remove-pie").css("display", "block")
+				$("#name-footer").val("")
+				$("#content-footer").val("")
+				api = "/api/footers";
+				
+			});
+
+
+			$("#footers").change(function (e) { 
+				$(".btn-save-pie").removeAttr("disabled")
+				$("#name-footer").val($("#footers option:selected").text())
+				$("#content-footer").val($(this).val())
+				$(".remove-pie").css("display", "block")
+				api = "/api/footers/update";
+			});
+
+
+			$("#btn-select-pie").click(function (e) { 
+				$("#footer-store").val($("#content-footer").val())
+				
+			});
+
+
+			function getFooters(){
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+					url:''+url+"/api/footers",
+					type:'GET',
+					dataType:'JSON',
+					async: false,
+					beforeSend: function(){
+					
+					},
+					error: function (data) {
+					
+					},
+					success: function(data){
+						$("#footers option").remove();
+						$.each(data, function (key, item) { 
+							$("#footers").append($('<option>',
+							{
+								value: item.content,
+								text : item.name,
+								
+							}));
+							
+						});
+					}
+
+				});
+			}
+
+
+
+			$("#btn-save-pie").click(function (e) { 
+				e.preventDefault();
+				
+				if(($("#name-footer").val() == "") || ($("#content-footer").val() == "")){
+					alert("Los Campos son requeridos")
+				}else{
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+api,
+						type:'POST',
+						data: {
+							"name"     : $("#name-footer").val(),
+							"content"  : $("#content-footer").val()
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						
+						},
+						error: function (data) {
+						
+						},
+						success: function(data){
+							getFooters()
+						}
+
+					});
+				}
+				
+			});
 			/* ---------------------------11111111111111---------------------------------------------------- */
 			/* 
 				Funcion que muestra el cuadro3 para la consulta del banco.
@@ -289,6 +384,7 @@
 					$("#agency_commission-view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
 					$("#total-view").val(number_format(data.total, 2)).attr("disabled", "disabled")
 					
+					$("#btn-print-view").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -331,7 +427,7 @@
 
 					$("#id_edit").val(data.id_charge_accounts)
 
-
+					$("#btn-print").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
 
 					ShowCollections(data.collections)
 

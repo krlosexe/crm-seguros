@@ -13,7 +13,7 @@
           <div class="col-md-12" id="file-'+count+'">
               <div class="row">
                 <div class="col-md-6">
-                  <label for=""><b>Titulo *</b></label>
+                  <label for=""><b>Forma de Pago *</b></label>
                   <div class="form-group valid-required">
                     <input type="text" name="title" id="titles_edit" class="form-control form-control-user" required>
                   </div>
@@ -70,6 +70,12 @@
             <button id="send_usuario" class="btn btn-success btn-user">
                 Guardar
             </button>
+
+
+            <a href="/policies/wallet/pdf" id="btn-print" target="_blanck" class="btn btn-danger btn-user" >
+              <i class="ti-printer"></i>
+                Imprimir
+            </a>
 
           </center>
           <br>

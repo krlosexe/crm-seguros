@@ -8,6 +8,8 @@
         @csrf
 
         <ul class="nav nav-pills" role="tablist">
+
+
             <li class="nav-item">
                 <a href="#default-tab-1" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
@@ -22,6 +24,10 @@
 
             <li class="nav-item">
                 <a href="#default-tab-4-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-5-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
 
 
@@ -648,6 +654,21 @@
 
             </div>
           </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-5-view">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <iframe class="embed-responsive-item " id="iframeCarteraView" allowfullscreen>
+                dasdasd
+              </iframe>
+
+            </div>
+          </div>
+
+
+
 
 
 

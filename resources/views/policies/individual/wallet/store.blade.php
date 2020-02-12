@@ -1,9 +1,9 @@
-<div class="card shadow mb-4 hidden" id="cuadro2">
+<div class="card shadow mb-4 hidden" id="cuadro2" >
 
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Registro de Cuenta Cobro</h6>
   </div>
-  <div class="card-body">
+  <div class="card-body ">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
       
         @csrf
@@ -15,7 +15,7 @@
             <div class="row">
 
               <div class="col-md-6">
-                <label for=""><b>Poliza o Anexo ?</b></label>
+                <label for=""><b>¿Póliza o Anexo ?</b></label>
                   <div class="form-group valid-required">
                     <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-store" required>
                       <option value="">Seleccione</option>
@@ -26,7 +26,7 @@
               </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Numero*</b></label>
+                  <label for=""><b>Número*</b></label>
                     <div class="form-group valid-required">
                       <select name="number" id="number-store" class="form-control" required>
                         <option value="">Seleccione</option>
@@ -53,18 +53,86 @@
 
             <div class="row">
               <div class="col-sm-12">
-                <label for=""><b>Aasunto</b></label>
-                <input type="text" name="issue" class="form-control form-control-user" id="issue-store">
+                  <label for=""><b>Asunto</b></label>
+                  <input type="text" name="issue" class="form-control form-control-user" id="issue-store">
               </div>
+            </div>
 
-              <br> <br>
+            <br><br>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="button" id="add-pie" class="btn btn-success" data-toggle="default-modal" data-target="default-modal">Añadir nuevo</button>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="col-md-12">
-                <label for=""><b>Observaciones</b></label>
+                <label for=""><b>Pie de Página</b></label>
                   <div class="form-group valid-required">
-                    <textarea name="observations" class="form-control" id="observations" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="observations" id="footer-store" cols="30" rows="10"></textarea>
                   </div>
               </div>
             </div>
+
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="default-modal" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+								<h4>Pie de página</h4></div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <label for=""><b>Seleccione</b></label>
+                        <select name="" id="footers" class="form-control">
+                          <option value="">Seleccione</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-4">
+                        <button type="button" id="new-pie" class="btn btn-success">Nuevo</button>
+                      </div>
+                    </div>
+                    
+
+
+                    <div id="content-pie" class="remove-pie" style="display:none">
+                      <div class="row">
+                        <div class="col-md-12">
+                        <label for=""><b>Nombre</b></label>
+                          <div class="form-group valid-required">
+                          <input type="text" name="issue" class="form-control form-control-user" id="name-footer">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                        <label for=""><b>Contenido</b></label>
+                          <div class="form-group valid-required">
+                            <textarea class="form-control" name="" id="content-footer" cols="30" rows="10"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="modal-footer no-border">
+                      <div class="text-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btn-save-pie" class="btn btn-success btn-save-pie" disabled>Guardar</button>
+                      </div>
+
+
+                      <div class="text-right">
+                        <button type="button" id="btn-select-pie" data-dismiss="modal" class="btn btn-success btn-save-pie" disabled>Seleccionar</button>
+                      </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        
 
           </div>
 

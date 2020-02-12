@@ -23,8 +23,8 @@
     <!-- page plugins css -->
     <!-- <link rel="stylesheet" href="<?= url('/') ?>/vendors/dragula-master/dist/dragula.min.css" /> -->
 
-    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css" />
     <link href="<?= url('/') ?>/vendors/sweetalert/sweetalert.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
     <link href="<?= url('/') ?>/css/ei-icon.css" rel="stylesheet">
@@ -40,7 +40,7 @@
 <body>
     <div class="app">
         <div class="layout">
-            
+
             <!-- Page Container START -->
             <div class="page-container">
 
@@ -297,7 +297,7 @@
                                             <li>
                                                 <a href="">
                                                     <span class="thumb-img bg-info text-center font-size-25 font-secondary">
-															<span class="text-white">E</span>
+                                                            <span class="text-white">E</span>
                                                     </span>
                                                     <div class="info">
                                                         <span class="title">Espire</span>
@@ -487,7 +487,6 @@
                 </div>
                 <!-- theme configurator END -->
 
-
                 <!-- Content Wrapper START -->
                 <div class="main-content">
                     <div class="container-fluid">
@@ -514,30 +513,38 @@
                                         <div class="mrg-top-15">
                                             <div class="inline-block">
                                                 <img class="img-responsive" src="assets/images/logo/logo.png" id="logo" width="199px">
-                                                   <address class="pdd-left-10 mrg-top-20">
-														<b class="text-dark" id="name">Espire, Inc.</b><br>
-														<!-- <span>9498 Harvard Street</span><br> -->
-														<!-- <span>Fairfield, Chicago Town 06824</span><br> -->
-														<span>Nit: 9005678263</span><br>
-														<span>(4) 448 02 01</span>
-													</address>
+                                                <address class="pdd-left-10 mrg-top-20">
+                                                        <b class="text-dark" id="name">Espire, Inc.</b><br>
+                                                        <!-- <span>9498 Harvard Street</span><br> -->
+                                                        <!-- <span>Fairfield, Chicago Town 06824</span><br> -->
+                                                        <span>Nit: 9005678263</span><br>
+                                                        <span>(4) 448 02 01</span>
+                                                    </address>
                                             </div>
                                             <div class="pull-right">
-                                                <h2>CUENTA DE COBRO</h2>
+                                                <h2>RECAUDO</h2>
                                             </div>
                                         </div>
                                         <div class="row mrg-top-20">
+
                                             <div class="col-md-9 col-sm-9">
-                                                <h3 class="pdd-left-10 mrg-top-10">PARA:</h3>
+                                                <h5 class="pdd-left-10 mrg-top-10">PAGA:</h3>
                                                 <address class="pdd-left-10 mrg-top-10">
-														<b class="text-dark" id="name_client">JUAN FERNANDO RIVERA QUEVEDO</b><br>
-														<span id="number_document">CÉDULA: 1036686527</span><br>
-														<span id="address">BELLO, ANTIOQUIA</span>
-													</address>
+                                                        <b class="text-dark" id="client">EMPRESA QUE PAGA</b><br>
+                                                        <span id="address">BELLO, ANTIOQUIA</span>
+                                                    </address>
                                             </div>
+
+                                            <div class="col-md-9 col-sm-9">
+                                                <h5 class="pdd-left-10 mrg-top-10">RECIBE:</h3>
+                                                <address class="pdd-left-10 mrg-top-10">
+                                                        <b class="text-dark" id="name_insurer">JUAN FERNANDO RIVERA QUEVEDO</b><br>
+                                                    </address>
+                                            </div>
+
                                             <div class="col-md-3 col-sm-3">
                                                 <div class="mrg-top-80">
-                                                    <div class="text-dark text-uppercase inline-block"><b>No. Cuenta Cobro:</b></div>
+                                                    <div class="text-dark text-uppercase inline-block"><b>No. De Recaudo:</b></div>
                                                     <div class="pull-right" id="id">#1668</div>
                                                 </div>
                                                 <div class="">
@@ -546,16 +553,39 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mrg-top-50">
+                                        <!-- <div class="row mrg-top-50">
                                                     <div class="col-md-12">
                                                         <div class="text-dark">
                                                           <p><b class="text-dark text-uppercase">Cordial Saludo</b></p>
                                                             <p class="text-opacity" id="issue">Ajuntamos el documento relacionado a continuación el cual corresponde a la expedición de la Póliza de asunto vigencia 2019 - 2020, esperamos una pronta respuesta</p>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                         <div class="row mrg-top-20">
                                             <div class="col-md-12">
+                                                <div class="table-overflow">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>F.Pago</th>
+                                                                <th>Valor</th>
+                                                                <th>Banco o Entidad</th>
+                                                                <th>N° Cheque</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td id="way_to_pay">SEGURO DE VIDA</td>
+                                                                <td id="amount">0012654</td>
+                                                                <td></td>
+                                                                <td id="cousin"></td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br><br>
+
                                                 <div class="table-overflow">
                                                     <table class="table table-hover">
                                                         <thead>
@@ -579,28 +609,23 @@
                                                                 <td id="vat">450.000</td>
                                                                 <td id="total" class="text-right">4.950.000</td>
                                                             </tr>
-                                                           
+
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="row mrg-top-30">
-                                                    <div class="col-md-12">
-                                                        <div class="pull-right text-right">
-                                                            <p>Subtotal: 4.500.000</p>
-                                                            <p>IVA (19%): 450.000 </p>
-                                                            <hr>
-                                                            <h3><b>Total a pagar:</b> 4.950.000</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row mrg-top-30">
+
+    <br>
+    <br>
+    <br>
+
+                                                <!-- <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class=" top bottom pdd-vertical-20">
                                                             <p><b class="text-dark text-uppercase">Condiciones generales de la póliza</b></p>
                                                             <p class="text-opacity" id="observations">De acuerdo con lo anterior le solicitamos girar  cheque por valor de 4.950.000 a nombre de la compañía SURAMERICANA DE SEGUROS S A NIT: 89768723-9</p>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class="border top bottom pdd-vertical-20">
@@ -633,7 +658,6 @@
                 </div>
                 <!-- Content Wrapper END -->
 
-               
                 <!-- Footer END -->
 
             </div>
@@ -650,7 +674,6 @@
 
 <script>
     var id = {{$id}}
-    
 
     $(document).ready(function(){
         getDataCompany();
@@ -658,43 +681,42 @@
         getDataChargeAccount();
     });
 
-
     function getData(){
         var url=document.getElementById('ruta').value; 
         $.ajax({
-            url:''+url+'/api/wallet/'+id,
+            url:''+url+'/api/wallet/collection/'+id,
             type:"GET",
             dataType:'JSON',
             async: false,
             beforeSend: function(){
-            
+
             },
             error: function (repuesta) {
-                
+
             },
             success: function(data){
                 $("#issue").text(data.issue);
-                $("#id").text("#"+data.id_charge_accounts);
-                $("#date").text(data.init_date)
-                $("#observations").text(data.observations)
-                $("#name_client").text(data.name_client+" "+data.last_names)
+                $("#id").text("#"+data.id_collections);
+                $("#date").text(data.fec_regins)
+
+
+                $("#client").text(data.name_client+" "+data.last_names)
+                $("#address").text(data.department+", "+data.city)
+
+                $("#way_to_pay").text(data.title)
+                $("#amount").text(data.amount)
+                $("#name_insurer").text(data.name_insurer)
                 $("#number_document").text(data.number_document)
                 $("#address").text(data.department+", "+data.city)
                 $("#branch").text(data.name_branch)
                 $("#number_policie").text(data.number_policies)
                 $("#cousin").text(number_format((data.cousin + data.xpenses), 2))
                 $("#vat").text(data.vat)
-                $("#total").text(data.total)
-                
-                
-
 
             }
         });
 
     }
-
-
 
     function getDataCompany(){
 
@@ -705,16 +727,15 @@
             dataType:'JSON',
             async: false,
             beforeSend: function(){
-            
+
             },
             error: function (repuesta) {
-                
+
             },
             success: function(data){
 
                 url_imagen = '/img/my_company/'
                 $("#logo").attr("src", url_imagen+"/"+data.logo)
-
 
                 $("#name").text(data.name)
                 $("#phone").text(data.phone)
@@ -722,10 +743,5 @@
             }
         });
     }
-
-
-
-
-
 
 </script>

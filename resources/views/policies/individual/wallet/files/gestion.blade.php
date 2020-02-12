@@ -76,7 +76,8 @@
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Nombre</th>
+													<th>Forma de Pago</th>
+													<th>Monto</th>
 													<th>Fecha de registro</th>
 													<th>Acciones</th>
 												</tr>
@@ -191,6 +192,12 @@
 					"columns":[
 						
 						{"data":"title"},
+						{"data":"amount",
+							render: function (data, type, row) { 
+
+								return number_format(data, 2)
+							 }
+						},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -324,7 +331,7 @@
 
 					});
 
-
+					$("#btn-print-view").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
 
 
 					
@@ -359,7 +366,8 @@
 						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
-					
+					$("#btn-print").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
+
 					$("#input-file-edit").fileinput({
 						theme: "fas",
 						overwriteInitial: true,

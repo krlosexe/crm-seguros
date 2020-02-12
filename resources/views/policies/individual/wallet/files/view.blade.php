@@ -13,7 +13,7 @@
           <div class="col-md-12" id="file-'+count+'">
               <div class="row">
                 <div class="col-md-6">
-                  <label for=""><b>Titulo *</b></label>
+                  <label for=""><b>Forma de Pago *</b></label>
                   <div class="form-group valid-required">
                     <input type="text" name="titles" id="titles_view" class="form-control form-control-user" required>
                   </div>
@@ -63,6 +63,13 @@
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro3')">
                 Cancelar
             </button>
+
+            <a href="/policies/wallet/pdf" id="btn-print-view" target="_blanck" class="btn btn-danger btn-user" >
+              <i class="ti-printer"></i>
+                Imprimir
+            </a>
+
+
           </center>
           <br>
           <br>

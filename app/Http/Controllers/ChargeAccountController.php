@@ -75,7 +75,7 @@ class ChargeAccountController extends Controller
      */
     public function show($id_policie)
     {
-        $modulos = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
+        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
                                 ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
                                 ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
                                 ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
@@ -89,7 +89,7 @@ class ChargeAccountController extends Controller
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
                                 ->get();
            
-            return response()->json($modulos)->setStatusCode(200);
+            return response()->json($data)->setStatusCode(200);
     }
     /**
      * Show the form for editing the specified resource.
@@ -103,7 +103,34 @@ class ChargeAccountController extends Controller
 
     }
 
+    public function get($chargeAccount)
+    {
+        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", 
+                                        "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
+                                        "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
+                                        
+                                        "auditoria.*", "user_registro.email as email_regis")
 
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
+                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people", "left")
+                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch", "left")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
+                                ->where("auditoria.tabla", "charge_accounts")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->where("auditoria.status", "!=", "0")
+
+                                ->with("collections")
+                                
+                                ->where("charge_accounts.id_charge_accounts", $chargeAccount)
+                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
+                                ->first();
+           
+            return response()->json($data)->setStatusCode(200);
+
+    }
 
 
 
@@ -160,6 +187,33 @@ class ChargeAccountController extends Controller
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
+    }
+
+
+
+    public function getCollection($id){
+        $data = Collections::select("collections.*", "insurers.name as name_insurer", 
+                                    "charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "branchs.name as name_branch",
+                                    "clients_people.names as name_client", "clients_people.last_names" , "clients_people_contact.department","clients_people_contact.city", 
+                                    "auditoria.*",   
+                                )
+
+                                ->join("charge_accounts", "charge_accounts.id_charge_accounts", "=", "collections.id_charge_accounts")
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie")
+                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
+                                ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people", "left")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "collections.id_collections")
+
+                                ->where("auditoria.tabla", "collections")
+                                ->where("collections.id_collections", $id)
+                                
+                                ->first();
+           
+            return response()->json($data)->setStatusCode(200);
     }
     /**
      * Remove the specified resource from storage.

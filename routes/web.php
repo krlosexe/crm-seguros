@@ -213,6 +213,11 @@ Route::get('Company', function () {
 
 
 
-Route::get('policies/wallet/pdf', function () {
-    return view('policies.wallet.pdf');
+Route::get('policies/wallet/pdf/{id}/1', function ($id) {
+    return view('policies.wallet.pdf', ["id" => $id]);
+});
+
+
+Route::get('policies/wallet/collection/pdf/{id}/1', function ($id) {
+    return view('policies.wallet.collection', ["id" => $id]);
 });

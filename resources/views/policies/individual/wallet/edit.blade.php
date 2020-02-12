@@ -169,13 +169,13 @@
           <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-edit">
 
 
-            <div class="embed-responsive embed-responsive-16by9">
+              <div class="embed-responsive embed-responsive-16by9">
 
-              <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
-                
-              </iframe>
+                <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+                  
+                </iframe>
 
-            </div>
+              </div>
             </div>
        </div>
         
@@ -198,7 +198,8 @@
                 Guardar
             </button>
 
-            <a href="/policies/wallet/pdf" target="_blanck" class="btn btn-danger btn-user" >
+            <a href="/policies/wallet/pdf" id="btn-print" target="_blanck" class="btn btn-danger btn-user" >
+              <i class="ti-printer"></i>
                 Imprimir
             </a>
 

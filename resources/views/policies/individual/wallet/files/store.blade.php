@@ -12,7 +12,7 @@
           <div class="col-md-12" id="file-'+count+'">
               <div class="row">
                 <div class="col-md-6">
-                  <label for=""><b>Titulo *</b></label>
+                  <label for=""><b>Forma de Pago *</b></label>
                   <div class="form-group valid-required">
                     <input type="text" name="title" id="titles_store" class="form-control form-control-user" required>
                   </div>

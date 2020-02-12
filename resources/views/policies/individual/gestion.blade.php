@@ -575,6 +575,12 @@
 					var url = "policies/files/"+data.id_policies+"/0"
 					$('#iframeDigitalesView').attr('src', url);
 
+
+					var url = "policies/wallet/"+data.id_policies+"/0"
+					$('#iframeCarteraView').attr('src', url);
+
+
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
