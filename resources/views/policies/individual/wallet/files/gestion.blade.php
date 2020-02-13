@@ -36,8 +36,8 @@
 
     <script>
       $(document).ready(function(){
-		var url = $(location).attr('href').split("/").splice(-5);
-
+		var url = $(location).attr('href').split("/").splice(-6);
+		alert(url[0])
         validAuth(false, url[0]);
       });
     </script>

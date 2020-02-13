@@ -15,7 +15,7 @@
                                         </div>
                                     </div>
                                     <div class="card-block">
-                                        <button type="button" class="add-event btn-warning" data-toggle="modal" data-target="#calendar-edit">
+                                        <button type="button" class="add-event btn-warning" id="new-tasks">
                                             <i class="ti-plus"></i>
                                         </button>
                                         <ul class="event-list">
@@ -107,19 +107,17 @@
                         </div>
 
 
-
-
                         <div class="modal fade" id="calendar-edit">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="border btm padding-15">
-                                        <h4 class="no-mrg">Edit Event</h4>
+                                        <h4 class="no-mrg" id="title-modal">Tarea</h4>
                                     </div>
                                     <div class="modal-body">
                                         <form method="post" id="form-store">
                                             <div class="form-group">
                                                 <label>Responsable</label>
-                                                <select class="selectized" id="responsable" required>
+                                                <select class="selectized" name="responsable" id="responsable" required>
                                                     <option value="">Seleccione</option>
                                                 </select>
                                             </div>
@@ -127,20 +125,20 @@
 
                                             <div class="form-group">
                                                 <label>Asunto</label>
-                                                <input class="form-control" required>
+                                                <input  name="issue" id="issue" class="form-control" required>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>Fecha de Entrega</label>
                                                     <div class="timepicker-input input-icon form-group">
                                                         <i class="ti-calendar"></i>
-                                                        <input type="text" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
+                                                        <input type="text" autocomplete="off" id="delivery_date" name="delivery_date" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Descripcion</label>
-                                                <textarea class="form-control"></textarea>
+                                                <textarea name="description" id="description" class="form-control"></textarea>
                                             </div>
                                             <div class="text-right">
                                                 <button type="submit" class="btn btn-success">Guardar</button>
@@ -154,11 +152,13 @@
                     </div>
                 </div>
 
-			@include('configuracion.branch.store')
-			@include('configuracion.branch.view')
-			@include('configuracion.branch.edit')
 
 		</div>
+        
+        <input type="hidden" name="id_user" class="id_user">
+        <input type="hidden" name="token" class="token">
+
+
                 <!-- Content Wrapper END -->
 	@endsection
 
@@ -172,120 +172,128 @@
 		<script>
             
 			$(document).ready(function(){
-				store();
-			//	list();
-				update();
-
+	
 				$("#collapse_Configuraciones").addClass("show");
 				$("#nav_li_Configuraciones").addClass("open");
                 $("#nav_users, #modulo_Configuraciones").addClass("active");
-                
-               
 
                 verifyPersmisos(id_user, tokens, "modules");
                 GetUsers("#responsable")
-			});
 
 
-			function update(){
-				enviarFormularioPut("#form-update", 'api/branchs', '#cuadro4', false, "#avatar-edit");
-			}
+                initCalendar()
 
-			function store(){
-				enviarFormulario("#form-store", 'api/tasks', '#cuadro2');
-			}
+            });
+            
 
+            function initCalendar(){
+                $('#full-calendar').fullCalendar("destroy")
 
-
-			function list(cuadro) {
-				var data = {
-					"id_user": id_user,
-					"token"  : tokens,
-				};
-				$('#table tbody').off('click');
-				var url=document.getElementById('ruta').value; 
-				cuadros(cuadro, "#cuadro1");
-
-				var table=$("#table").DataTable({
-					"destroy":true,
-					
-					"stateSave": true,
-					"serverSide":false,
-					"ajax":{
-						"method":"GET",
-						 "url":''+url+'/api/branchs',
-						 "data": {
-							"id_user": id_user,
-							"token"  : tokens,
-						},
-						"dataSrc":""
-					},
-					"columns":[
-						
-						{"data":"name"},
-						{"data": "fec_regins"},
-						{"data": null,
-							render : function(data, type, row) {
-								var botones = "";
-								if(consultar == 1)
-									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
-								if(actualizar == 1)
-									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
-								if(data.status == 1 && actualizar == 1)
-									botones += "<span class='desactivar btn btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
-								else if(data.status == 2 && actualizar == 1)
-									botones += "<span class='activar btn btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
-								if(borrar == 1)
-									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
-								return botones;
-							}
-						}
-						
-					],
-					"language": idioma_espanol,
-					"dom": 'Bfrtip',
-					"ordering": false,
-					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
-				});
+                $('#full-calendar').fullCalendar({
+                    lang: 'es',
+                    height: 800,
+                    editable: true,
+                    header:{
+                        left: 'month,agendaWeek,agendaDay',
+                        center: 'title',
+                        right: 'today prev,next'
+                    },
+                    eventSources: [
+							{
+								url: 'api/calendar/tasks', 
+                            }
+                    ],
 
 
-				ver("#table tbody", table)
-				edit("#table tbody", table)
-				activar("#table tbody", table)
-				desactivar("#table tbody", table)
-				eliminar("#table tbody", table)
+                    eventClick: function(calEvent, jsEvent, view) {
 
-
-			}
+                        enviarFormularioTask("#form-store", 'api/tasks/update/'+calEvent.id_tasks, '#cuadro2');
 
 
 
-			function nuevo() {
-				$("#alertas").css("display", "none");
-				$("#store")[0].reset();
-				cuadros("#cuadro1", "#cuadro2");
-			}
+                         $("#issue").val(calEvent.title)
+                         $("#delivery_date").val(calEvent.delivery_date)
+                         $("#description").val(calEvent.description)
+                        
+                        $("#responsable").each(function() {
+                            if (this.selectize) {
+                            this.selectize.destroy();
+                            }
+                        });
+
+                        $("#responsable").val(calEvent.responsable);
+                         
+                        $("#responsable").selectize({});
+
+                        $("#calendar-edit").modal("show")
+                    }
+                        
+
+                })
+
+                $('.start-date').datepicker();
+                $('.end-date').datepicker();
+
+            }
+
+            
+            
 
 
-			
+            function enviarFormularioTask(form, controlador, cuadro, auth = false){
+                $(form).unbind().submit(function(e){
+                    e.preventDefault(); //previene el comportamiento por defecto del formulario al darle click al input submit
+                    var url=document.getElementById('ruta').value; 
+                    var formData=new FormData($(form)[0]); //obtiene todos los datos de los inputs del formulario pasado por parametros
+                    var method = $(this).attr('method'); //obtiene el method del formulario
+                    $('input[type="submit"]').attr('disabled','disabled'); //desactiva el input submit
+                    $.ajax({
+                        url:''+url+'/'+controlador+'',
+                        type:method,
+                        dataType:'JSON',
+                        data:formData,
+                        cache:false,
+                        contentType:false,
+                        processData:false,
+                        beforeSend: function(){
+                        showNoty('info', "topLeft",'<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
+                        },
+                        error: function (repuesta) {
+                            $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
+                            var errores=repuesta.responseText;
+                            if(errores!="")
+                                showNoty("error", "topRight", errores, 3000)
+                            else
+                                showNoty("error", "topRight","<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000)
+                        },
+                        success: function(respuesta){
+                            if (respuesta.success == false) {
+                                showNoty('error', "topRight", respuesta.message, 3000);
+                                $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
+                            }else{
+                                $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
+                                showNoty('success', "topRight", respuesta.mensagge, 3000);
+                               
+                            }
 
-			/* ------------------------------------------------------------------------------- */
-			/* 
-				Funcion que muestra el cuadro3 para la consulta del banco.
-			*/
-			function ver(tbody, table){
-				$(tbody).on("click", "span.consultar", function(){
-					$("#alertas").css("display", "none");
-					var data = table.row( $(this).parents("tr") ).data();
+                            initCalendar()
 
-					$("#name_view").val(data.name).attr("disabled", "disabled")
-					
-					cuadros('#cuadro1', '#cuadro3');
-				});
-			}
+                            $("#calendar-edit").modal("hide")
+
+                        }
+
+                    });
+                });
+            }
+
+
+
+            $("#new-tasks").click(function (e) { 
+                $("#calendar-edit").modal("show")
+
+                enviarFormularioTask("#form-store", 'api/tasks', '#cuadro2');
+
+            });
 		
 		</script>
 	@endsection

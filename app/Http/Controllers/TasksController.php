@@ -7,6 +7,10 @@ use App\Auditoria;
 use App\TasksFollowers;
 use Illuminate\Http\Request;
 
+use DateTime;
+
+
+
 class TasksController extends Controller
 {
     /**
@@ -97,37 +101,19 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+        $fecha = $request["delivery_date"];
+
+        $dt = new DateTime($fecha);
+        $request["delivery_date"] = $dt->format('Y-m-d');
+        $store = Tasks::create($request->all());
 
 
-            $store = Tasks::create($request->all());
-
-            $followers = [];
-            foreach($request->followers as $key => $value){
-                $array = [];
-                $array["id_task"]     = $store["id_tasks"];
-                $array["id_follower"] = $value;
-                array_push($followers, $array);
-            }
-
-            TasksFollowers::insert($followers);
-
-            $auditoria              = new Auditoria;
-            $auditoria->tabla       = "tasks";
-            $auditoria->cod_reg     = $store["id_tasks"];
-            $auditoria->status      = 1;
-            $auditoria->usr_regins  = $request["id_user"];
-            $auditoria->save();
-
-            if ($store) {
-                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
-                return response()->json($data)->setStatusCode(200);
-            }else{
-                return response()->json("A ocurrido un error")->setStatusCode(400);
-            }
-     
+        if ($store) {
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
         }else{
-            return response()->json("No esta autorizado")->setStatusCode(400);
+            return response()->json("A ocurrido un error")->setStatusCode(400);
         }
     }
 
@@ -162,32 +148,18 @@ class TasksController extends Controller
      */
     public function update(Request $request, $tasks)
     {
-        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+        
             
-            $update = Tasks::find($tasks)->update($request->all());
+        $update = Tasks::find($tasks)->update($request->all());
 
-            TasksFollowers::where("id_task", $tasks)->delete();
-
-            $followers = [];
-            foreach($request->followers as $key => $value){
-                $array = [];
-                $array["id_task"]     = $tasks;
-                $array["id_follower"] = $value;
-                array_push($followers, $array);
-            }
-
-            TasksFollowers::insert($followers);
-
-            if ($update) {
-                $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
-                return response()->json($data)->setStatusCode(200);
-            }else{
-                return response()->json("A ocurrido un error")->setStatusCode(400);
-            }
-
+        if ($update) {
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
         }else{
-            return response()->json("No esta autorizado")->setStatusCode(400);
+            return response()->json("A ocurrido un error")->setStatusCode(400);
         }
+
+       
     }
 
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title>Espire - Bootstrap 4 Admin Template</title>
+    <title>Recaudo</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
@@ -35,15 +35,27 @@
     <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
     <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?= url('/') ?>/js/funciones.js"></script>
+
+
+    <script>
+      $(document).ready(function(){
+        var url = $(location).attr('href').split("/").splice(-6);
+         validAuth(false, url[0]);
+      });
+    </script>
+
+
+
 </head>
 
 <body>
     <div class="app">
         <div class="layout">
+        @include('layouts.sidebar')
 
             <!-- Page Container START -->
             <div class="page-container">
-
+                @include('layouts.topBar') 
                 <!-- Side Panel START -->
                 <div class="side-panel">
                     <div class="side-panel-wrapper bg-white">
@@ -674,11 +686,12 @@
 
 <script>
     var id = {{$id}}
-
+      
     $(document).ready(function(){
         getDataCompany();
         getData();
-        getDataChargeAccount();
+
+        verifyPersmisos(1, tokens, "modules");
     });
 
     function getData(){

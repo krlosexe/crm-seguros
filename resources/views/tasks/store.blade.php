@@ -51,8 +51,7 @@
 
         <!---END ROW-->
 
-        <input type="hidden" name="id_user" class="id_user">
-        <input type="hidden" name="token" class="token">
+        
           <br>
           <br>
         </div>

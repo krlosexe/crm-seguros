@@ -130,6 +130,7 @@ Route::get('payments/beaten', 'PaymentController@paymentsBeaten');
 Route::get('payments/collected', 'PaymentController@paymentsCollected');
 
 Route::resource('tasks', 'TasksController');
+Route::post('tasks/update/{id}', 'TasksController@update');
 Route::post('tasks/status/{id}/{status}', 'TasksController@status');
 
 
@@ -158,3 +159,7 @@ Route::resource('footers', 'FootersController');
 
 
 Route::post('footers/update', 'FootersController@updateFooter');
+
+
+Route::get('calendar/tasks/', 'CalendarController@getTask');
+

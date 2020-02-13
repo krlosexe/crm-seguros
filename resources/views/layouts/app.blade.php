@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/datatables/media/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="<?= url('/') ?>/vendors/fullcalendar/dist/fullcalendar.min.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
     <!-- page plugins css -->
@@ -44,7 +44,6 @@
 
     <script>
       $(document).ready(function(){
-
         var url = $(location).attr('href').split("/").splice(-1);
          validAuth(false, url[0]);
       });
@@ -119,13 +118,26 @@
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
       <script src="<?= url('/') ?>/vendors/moment/min/moment.min.js"></script>
-    <script src="<?= url('/') ?>/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="<?= url('/') ?>/vendors/fullcalendar/dist/gcal.js"></script>
-    <script src="<?= url('/') ?>/vendors/fullCalendar/dist/lang-all.js"></script>
+      <script src="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/fullcalendar_old/dist/gcal.js"></script>
+      <script src="<?= url('/') ?>/vendors/fullCalendar_old/dist/lang-all.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-        <script src="<?= url('/') ?>/js/apps/calendar.js"></script>
+        
+
+
+
+        <!-- <link href='<?= url('/') ?>/vendors/fullcalendar/packages/core/main.css' rel='stylesheet' />
+        <link href='<?= url('/') ?>/vendors/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+        <link href='<?= url('/') ?>/vendors/fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+        <link href='<?= url('/') ?>/vendors/fullcalendar/packages/list/main.css' rel='stylesheet' />
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/core/main.js'></script>
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/core/locales-all.js'></script>
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/interaction/main.js'></script>
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/daygrid/main.js'></script>
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/timegrid/main.js'></script>
+        <script src='<?= url('/') ?>/vendors/fullcalendar/packages/list/main.js'></script> -->
       <!-- page plugins js -->
     <!-- <script src="<?= url('/') ?>/vendors/dragula-master/dist/dragula.js"></script> -->
  

@@ -195,7 +195,7 @@ class ChargeAccountController extends Controller
         $data = Collections::select("collections.*", "insurers.name as name_insurer", 
                                     "charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "branchs.name as name_branch",
                                     "clients_people.names as name_client", "clients_people.last_names" , "clients_people_contact.department","clients_people_contact.city", 
-                                    "auditoria.*",   
+                                    "auditoria.*"
                                 )
 
                                 ->join("charge_accounts", "charge_accounts.id_charge_accounts", "=", "collections.id_charge_accounts")
