@@ -16,6 +16,14 @@
             <li class="nav-item">
                 <a href="#default-tab-2-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
+
+
+            <li class="nav-item">
+                <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Polizas</a>
+            </li>
+
+
+
         </ul>
 
         <br><br>
@@ -369,6 +377,19 @@
               </iframe>
             </div>
           </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-view">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframePoliciesView" allowfullscreen>
+
+              </iframe>
+            </div>
+          </div>
+
+
+
 
 
         </div>

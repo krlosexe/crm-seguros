@@ -8,17 +8,17 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="card calendar-event">
-                                    <div class="card-block overlay-dark bg" style="background-image: url('assets/images/others/img-8.jpg')">
+                                    <div class="card-block overlay-dark bg" style="background-image: url('images/others/img-8.jpg')">
                                         <div class="text-center">
-                                            <h1 class="font-size-65 text-light mrg-btm-5 lh-1">28<span class="font-size-18">th</span></h1>
-                                            <h2 class="no-mrg-top">Sunday</h2>
+                                                 <h1 class="font-size-65 text-light mrg-btm-5 lh-1"><?= date("d") ?></h1>
+												<h2 class="no-mrg-top"><?= date('l', strtotime(date("d"))); ?></h2>
                                         </div>
                                     </div>
                                     <div class="card-block">
                                         <button type="button" class="add-event btn-warning" id="new-tasks">
                                             <i class="ti-plus"></i>
                                         </button>
-                                        <ul class="event-list">
+                                        <ul class="event-list" id="list-today">
                                             <li class="event-items">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
                                                     <span class="bullet success"></span>
@@ -135,6 +135,18 @@
                                                         <input type="text" autocomplete="off" id="delivery_date" name="delivery_date" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
                                                     </div>
                                                 </div>
+
+
+                                                <div class="col-md-6">
+                                                    <label>Estado</label>
+                                                    <select class="form-control" name="state" id="state" required>
+                                                        <option value="Abierta">Abierta</option>
+                                                        <option value="Finalizada">Finalizada</option>
+                                                        <option value="Cancelada">Cancelada</option>
+                                                    </select>
+                                                </div>
+
+
                                             </div>
                                             <div class="form-group">
                                                 <label>Descripcion</label>
@@ -183,6 +195,10 @@
 
                 initCalendar()
 
+                ListTasksToday("#list-today")
+
+
+
             });
             
 
@@ -214,7 +230,7 @@
                          $("#issue").val(calEvent.title)
                          $("#delivery_date").val(calEvent.delivery_date)
                          $("#description").val(calEvent.description)
-                        
+                         $("#state").val(calEvent.state)
                         $("#responsable").each(function() {
                             if (this.selectize) {
                             this.selectize.destroy();
@@ -277,6 +293,7 @@
                             }
 
                             initCalendar()
+                            ListTasksToday("#list-today")
 
                             $("#calendar-edit").modal("hide")
 
@@ -290,10 +307,90 @@
 
             $("#new-tasks").click(function (e) { 
                 $("#calendar-edit").modal("show")
+                $("#form-store")[0].reset()
 
                 enviarFormularioTask("#form-store", 'api/tasks', '#cuadro2');
 
             });
+
+
+
+
+
+            function ListTasksToday(list){
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/tasks-today',
+                    type:'GET',
+                    dataType:'JSON',
+                    async: false,
+                    beforeSend: function(){
+                    
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+                        var html = ""
+
+                        var array = []
+                        $.each(data, function (key, event) { 
+                            array.push(event)
+                        });	
+
+
+                        array.sort(function(a,b){
+                            return  new Date(a.start) - new Date(b.start);
+                        });
+
+                        $.each(array, function (key, event) { 
+                            html += '<li class="event-items">'
+                                    html += '<a href="javascript:void(0);" data-event=\''+JSON.stringify(event)+'\' onclick="showEvent(this)">'
+                                        html += '<span class="bullet success"></span>'
+                                        html += '<span class="event-name">'+event.title+'</span>'
+                                        html += '<div class="event-detail">'
+                                            html += '<span>'+event.delivery_date+' - </span>'
+                                            html += '<i>'+event.nombres+' '+event.apellido_p+'</i>'
+                                        html += '</div>'
+                                    html += '</a>'
+                                    
+                                html += '</li>'
+                        });
+
+                        $(list).html(html)
+
+
+                    }
+                });
+
+            }
+
+
+
+            function showEvent(data){
+
+                var data = JSON.parse($(data).attr("data-event"));
+
+                
+                enviarFormularioTask("#form-store", 'api/tasks/update/'+data.id_tasks, '#cuadro2');
+
+                $("#issue").val(data.title)
+                $("#delivery_date").val(data.delivery_date)
+                $("#description").val(data.description)
+                $("#state").val(data.state)
+                $("#responsable").each(function() {
+                    if (this.selectize) {
+                    this.selectize.destroy();
+                    }
+                });
+
+                $("#responsable").val(data.responsable);
+                    
+                $("#responsable").selectize({});
+
+                $("#calendar-edit").modal('show');
+
+            }
 		
 		</script>
 	@endsection

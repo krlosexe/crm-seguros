@@ -108,6 +108,24 @@
                           </div>
                         </div>
 
+                        <br>
+
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label for=""><b>Peso</b></label>
+                            <input type="number" name="weight" class="form-control form-control-user" id="weight">  
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>Altura*</b></label>
+                            <input type="number" name="height" class="form-control form-control-user" id="height">
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>EPS</b></label>
+                            <input type="text" name="eps" class="form-control form-control-user" id="eps">
+                          </div>
+                        </div>
 
                         <br>
 
@@ -116,8 +134,6 @@
                             <label for=""><b>Estrato</b></label>
                             <input type="text" name="stratum" class="form-control form-control-user" id="stratum">
                           </div>
-
-
 
                           <div class="col-md-4">
                             <label for=""><br><b>Autoriza tratamiento de datos*</b></label>

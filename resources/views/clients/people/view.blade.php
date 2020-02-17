@@ -15,6 +15,14 @@
             <li class="nav-item">
                 <a href="#default-tab-2-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
+
+
+            <li class="nav-item">
+                <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Pólizas</a>
+            </li>
+
+
+
         </ul>
 
         <br><br>
@@ -71,19 +79,38 @@
 
 
                             <div class="col-sm-4">
-                              <label for=""><b>Numero documento*</b></label>
+                              <label for=""><b>Número documento*</b></label>
                               <input type="text" name="number_document" class="form-control form-control-user" id="number_document_view" required>
                             </div>
 
 
                             <div class="col-sm-4">
-                              <label for=""><b>Fecha expedicion</b></label>
+                              <label for=""><b>Fecha expedición</b></label>
                               <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_view">
                             </div>
                         </div>
 
                         <br>
-                          
+
+
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label for=""><b>Peso</b></label>
+                            <input type="number" name="weight" class="form-control form-control-user" id="weight_view">  
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>Altura</b></label>
+                            <input type="number" name="height" class="form-control form-control-user" id="height_view">
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>EPS</b></label>
+                            <input type="text" name="eps" class="form-control form-control-user" id="eps_view">
+                          </div>
+                        </div>
+
+                        <br>
 
                         <div class="row">
                           <div class="col-sm-4">
@@ -634,6 +661,19 @@
               </iframe>
             </div>
           </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-view">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframePoliciesView" allowfullscreen>
+
+              </iframe>
+            </div>
+          </div>
+
+
+          
 
         </div>
 

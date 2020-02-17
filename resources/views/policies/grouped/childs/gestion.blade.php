@@ -555,7 +555,7 @@
 				var participation                     = inNum($(participation).val())
 				
 				var result_percentage_vat_cousin = inNum(((value_cousin + value_xpenses)/100) * value_percentage_vat_cousin)
-				var result_commission_percentage = inNum((value_cousin/100) * value_input_commission_percentage)
+				var result_commission_percentage = inNum(((value_cousin - (value_cousin*value_percentage_vat_cousin/100)) /100) * value_input_commission_percentage)
 				
 				var comission_total =  inNum(((result_commission_percentage / 100) * participation))
 

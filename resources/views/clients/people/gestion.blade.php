@@ -192,6 +192,9 @@
 					$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
 					$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
 					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
+					$("#weight_view").val(data.weight).attr("disabled", "disabled")
+					$("#height_view").val(data.height).attr("disabled", "disabled")
+					$("#eps_view").val(data.eps).attr("disabled", "disabled")
 					$("#gender_view").val(data.gender).attr("disabled", "disabled")
 					$("#birthdate_view").val(data.birthdate).attr("disabled", "disabled")
 					$("#stratum_view").val(data.stratum).attr("disabled", "disabled")
@@ -199,6 +202,7 @@
 					$("#age_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
 
 					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
+					$("#data_treatment_view").attr("disabled", "disabled")
 					$("#observations_view").val(data.observations).attr("disabled", "disabled")
 
 
@@ -223,7 +227,9 @@
 
 					data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
 					$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
-
+					$("#own_house_view").prop("checked", true).attr("disabled", "disabled")
+					$("#children_view").attr("disabled", "disabled")
+					$("#vehicle_view").attr("disabled", "disabled")
 					if(data.childrens.length > 0){
 						$("#children_view").prop("checked", true)
 						$(".container-datos-adicionales-hijo-view").css("display", "block");
@@ -250,12 +256,26 @@
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
 
+
+
+					$("#send_policies_for_expire_email_view").attr("disabled", "disabled")
+					$("#send_portfolio_for_expire_email_view").attr("disabled", "disabled")
+					$("#send_policies_for_expire_sms_view").attr("disabled", "disabled")
+					$("#send_portfolio_for_expire_sms_view").attr("disabled", "disabled")
+					$("#send_birthday_card_view").attr("disabled", "disabled")       
+
+
 					$("#occupation_view").val(data.occupation).attr("disabled", "disabled")
 					$("#company_view").val(data.company).attr("disabled", "disabled")
 
 
 					var url = "clients/people/files/"+data.id_clients_people+"/0"
 					$('#iframeView').attr('src', url);
+
+
+					var url = "clients/policies/files/"+data.id_clients_people+"/0"
+					$('#iframePoliciesView').attr('src', url);
+
 
 
 
@@ -282,6 +302,9 @@
 					$("#type_document_edit").val(data.type_document)
 					$("#number_document_edit").val(data.number_document)
 					$("#expedition_date_edit").val(data.expedition_date)
+					$("#weight_edit").val(data.weight)
+					$("#height_edit").val(data.height)
+					$("#eps_edit").val(data.eps)
 					$("#gender_edit").val(data.gender)
 					$("#birthdate_edit").val(data.birthdate)
 					$("#stratum_edit").val(data.stratum)

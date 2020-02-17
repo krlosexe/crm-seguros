@@ -15,15 +15,47 @@ class CalendarController extends Controller
 {
     function getTask(Request $request, $today = false){
 
-        
         $data = Tasks::select("tasks.id_tasks", "tasks.responsable","tasks.issue as title", "tasks.delivery_date", "tasks.description", "tasks.delivery_date as start",
-                             "tasks.description", "datos_personales.nombres", "datos_personales.apellido_p", 
+                             "tasks.description", "tasks.state", "datos_personales.nombres", "datos_personales.apellido_p", 
                              "user_responsable.img_profile")
                            
                             ->join("datos_personales", "datos_personales.id_usuario", "=", "tasks.responsable")
                             ->join("users as user_responsable", "user_responsable.id", "=", "tasks.responsable")
+
+
+                            ->where(function ($query) use ($today) {
+                                if($today != false){
+                                    $query->where("tasks.delivery_date", $today);
+                                }
+                            })
                             
                             ->get();
+
+
+        foreach($data as $key => $value){
+            
+
+            if($value["state"] == "Abierta"){
+                $value["textColor"] = "#0f9aee";
+
+                if(date("Y-m-d") > $value["delivery_date"]){
+                    $value["color"] = "#FF3C7E";
+                    $value["textColor"] = "white";
+                }
+            }
+
+
+            if($value["state"] == "Finalizada"){
+                $value["color"] = "#68D667";
+                $value["textColor"] = "white";
+            }
+
+            if($value["state"] == "Cancelada"){
+                $value["color"] = "#FF3C7E";
+                $value["textColor"] = "white";
+            }
+            
+        }
 
      
         return response()->json($data)->setStatusCode(200);
@@ -34,21 +66,9 @@ class CalendarController extends Controller
 
     public function Today(Request $request)
     {
-      
-        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+        $data = $this->getTask($request, date("Y-m-d"))->original;
+        return response()->json($data)->setStatusCode(200);
 
-            $data["tasks"]          = $this->getTask($request, date("Y-m-d"))->original;
-            $data["queries"]        = $this->getQueries($request, date("Y-m-d"))->original;
-            $data["valuations"]     = $this->getValuations($request, date("Y-m-d"))->original;
-            $data["surgeries"]      = $this->Surgeries($request, date("Y-m-d"))->original;
-            $data["revision"]       = $this->Revision($request, date("Y-m-d"))->original;
-            $data["preanestesia"]   = $this->Preanesthesia($request, date("Y-m-d"))->original;
-            
-            return response()->json($data)->setStatusCode(200);
-
-        }else{
-            return response()->json("No esta autorizado")->setStatusCode(400);
-        }
     }
 
     public function Json_Super_Unique($array,$key){

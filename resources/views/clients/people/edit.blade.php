@@ -112,6 +112,29 @@
 
                         <br>
 
+
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label for=""><b>Peso</b></label>
+                            <input type="number" name="weight" class="form-control form-control-user" id="weight_edit">  
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>Altura</b></label>
+                            <input type="number" name="height" class="form-control form-control-user" id="height_edit">
+                          </div>
+
+                          <div class="col-sm-4">
+                            <label for=""><b>EPS</b></label>
+                            <input type="text" name="eps" class="form-control form-control-user" id="eps_edit">
+                          </div>
+                        </div>
+
+                        <br>
+
+
+
+
                         <div class="row">
                           <div class="col-sm-4">
                             <label for=""><b>Estrato</b></label>

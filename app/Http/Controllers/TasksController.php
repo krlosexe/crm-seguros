@@ -148,7 +148,10 @@ class TasksController extends Controller
      */
     public function update(Request $request, $tasks)
     {
-        
+        $fecha = $request["delivery_date"];
+
+        $dt = new DateTime($fecha);
+        $request["delivery_date"] = $dt->format('Y-m-d');
             
         $update = Tasks::find($tasks)->update($request->all());
 

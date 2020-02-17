@@ -132,7 +132,7 @@ Route::get('payments/collected', 'PaymentController@paymentsCollected');
 Route::resource('tasks', 'TasksController');
 Route::post('tasks/update/{id}', 'TasksController@update');
 Route::post('tasks/status/{id}/{status}', 'TasksController@status');
-
+Route::get('tasks-today', 'CalendarController@Today');
 
 
 Route::resource('charge/account', 'ChargeAccountController');

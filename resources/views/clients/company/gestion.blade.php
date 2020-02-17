@@ -186,6 +186,8 @@
 					
 
 					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
+					$("#data_treatment_view").attr("disabled", "disabled")
+
 					$("#observations_view").val(data.observations).attr("disabled", "disabled")
 
 
@@ -215,6 +217,14 @@
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
 					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
+					
+					$("#send_policies_for_expire_email_view").attr("disabled", "disabled")
+					$("#send_portfolio_for_expire_email_view").attr("disabled", "disabled")
+					$("#send_policies_for_expire_sms_view").attr("disabled", "disabled")
+					$("#send_portfolio_for_expire_sms_view").attr("disabled", "disabled")
+					$("#send_birthday_card_view").attr("disabled", "disabled")
+
+
 					cuadros('#cuadro1', '#cuadro3');
 
 					var url = "clients/company/files/"+data.id_clients_company+"/0"
