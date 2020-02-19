@@ -23,7 +23,7 @@ class PoliciesController extends Controller
      */
     public function index()
     {
-        $modulos = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
+        $data = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
                                     "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
                                     "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
                                     "auditoria.*", "user_registro.email as email_regis")
@@ -49,7 +49,7 @@ class PoliciesController extends Controller
                                 ->orderBy("policies.id_policies", "DESC")
                                 ->get();
            
-        return response()->json($modulos)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
     /**

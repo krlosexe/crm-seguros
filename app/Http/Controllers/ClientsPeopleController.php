@@ -11,6 +11,10 @@ use App\ClientsPeopleVehicle;
 use App\ClientsPeopleChildrens;
 use App\ClientsNotifications;
 use App\ClientsWorkingInformation;
+
+use App\Policies;
+use App\PoliciesAnnexes;
+use App\ChargeAccount;
 use Illuminate\Http\Request;
 
 class ClientsPeopleController extends Controller
@@ -290,6 +294,83 @@ class ClientsPeopleController extends Controller
                         ->get();
            
         return response()->json($files)->setStatusCode(200);
+    }
+
+
+    public function Policies($id_client){
+
+        $data = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
+                                    "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
+                                    "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
+                                    "auditoria.*", "user_registro.email as email_regis")
+
+                                ->join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                                ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch")
+                                ->join("policies_cousins_commissions", "policies_cousins_commissions.id_policies", "=", "policies.id_policies", "left")
+                                ->join("policies_observations", "policies_observations.id_policies", "=", "policies.id_policies")
+                                ->join("policies_notifications", "policies_notifications.id_policies", "=", "policies.id_policies", "left")
+                                ->join("policies_info_payments", "policies_info_payments.id_policies", "=", "policies.id_policies")
+                                
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                                ->where("auditoria.tabla", "policies")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("policies_bind")
+
+                                ->where("policies.clients", $id_client)
+
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("policies.id_policies_grouped", "=", null)
+                                ->orderBy("policies.id_policies", "DESC")
+                                ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+
+    public function Annexes($id_client){
+
+        $data = PoliciesAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
+
+                                            ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
+                                            ->where("auditoria.tabla", "policies_annexes")
+                                            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                            ->join("policies", "policies.id_policies", "=", "policies_annexes.id_policie")
+
+
+                                            ->where("policies.clients", $id_client)
+
+                                            ->where("auditoria.status", "!=", "0")
+                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+    public function Wallet($id_client){
+
+        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
+                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
+                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
+                                ->where("auditoria.tabla", "charge_accounts")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->where("auditoria.status", "!=", "0")
+
+                                ->with("collections")
+                                
+                                ->where("policies.clients", $id_client)
+                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
+                                ->get();
+           
+        return response()->json($data)->setStatusCode(200);
     }
 
     /**

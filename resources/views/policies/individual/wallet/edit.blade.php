@@ -31,7 +31,7 @@
                   <div class="row">
 
                     <div class="col-md-6">
-                      <label for=""><b>Poliza o Anexo ?</b></label>
+                      <label for=""><b>¿Póliza o Anexo?</b></label>
                         <div class="form-group valid-required">
                           <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-edit" required>
                             <option value="">Seleccione</option>
@@ -42,7 +42,7 @@
                     </div>
 
                       <div class="col-md-6">
-                        <label for=""><b>Numero*</b></label>
+                        <label for=""><b>Número*</b></label>
                           <div class="form-group valid-required">
                             <select name="number" id="number-edit" class="form-control" required>
                               <option value="">Seleccione</option>
@@ -53,7 +53,7 @@
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <label for=""><b>Fecha inico</b></label>
+                      <label for=""><b>Fecha inicio</b></label>
                       <input type="date" name="init_date" class="form-control form-control-user" id="init_date-edit">
                     </div>
 
@@ -69,7 +69,7 @@
 
                   <div class="row">
                     <div class="col-sm-12">
-                      <label for=""><b>Aasunto</b></label>
+                      <label for=""><b>Asunto</b></label>
                       <input type="text" name="issue" class="form-control form-control-user" id="issue-edit">
                     </div>
 

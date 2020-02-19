@@ -586,10 +586,10 @@
                                                 <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class="pull-right text-right">
-                                                            <p>Subtotal: 4.500.000</p>
-                                                            <p>IVA (19%): 450.000 </p>
+                                                            <p >Subtotal: <span id="subtotal">4.500.000</span></p>
+                                                            <p >IVA (19%): <span id="ivasubtotal" >450.000</span>  </p>
                                                             <hr>
-                                                            <h3><b>Total a pagar:</b> 4.950.000</h3>
+                                                            <h3><b>Total a pagar:</b> <span id="totalpagar">4.950.000</span></h3>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -683,10 +683,12 @@
                 $("#branch").text(data.name_branch)
                 $("#number_policie").text(data.number_policies)
                 $("#cousin").text(number_format((data.cousin + data.xpenses), 2))
-                $("#vat").text(data.vat)
-                $("#total").text(data.total)
+                $("#vat").text(number_format(data.vat, 2))
+                $("#total").text(number_format((data.cousin + data.xpenses) + data.vat, 2))
                 
-                
+                $("#subtotal").text(number_format((data.cousin + data.xpenses), 2))
+                $("#ivasubtotal").text(number_format(data.vat, 2))
+                $("#totalpagar").text(number_format(data.vat + (data.cousin + data.xpenses), 2))
 
 
             }

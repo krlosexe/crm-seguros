@@ -385,6 +385,13 @@
 					$("#total-view").val(number_format(data.total, 2)).attr("disabled", "disabled")
 					
 					$("#btn-print-view").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
+
+
+					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/0"
+					$('#iframeDigitalesView').attr('src', url);
+
+
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 

@@ -42,7 +42,6 @@ Route::get('modules', function () {
 Route::get('funciones', function () {
     return view('perfiles.Funciones.gestion');
 });
-
 Route::get('people', function () {
     return view('clients.people.gestion');
 });
@@ -50,6 +49,17 @@ Route::get('people', function () {
 Route::get('clients/people/files/{id_client}/{management}', function ($id_client, $management) {
     return view('clients.people.files.gestion', ["id_client" => $id_client, "management" => $management]);
 });
+
+
+Route::get('clients/people/policies/{id_client}', function ($id_client) {
+    return view('clients.people.policies.gestion', ["id_client" => $id_client]);
+});
+
+
+Route::get('clients/people/wallet/{id_client}/{management}', function ($id_client, $management) {
+    return view('clients.people.wallet.gestion',["id_client" => $id_client, "management" => $management]);
+});
+
 
 Route::get('clients/company/files/{id_client}/{management}', function ($id_client, $management) {
     return view('clients.company.files.gestion', ["id_client" => $id_client, "management" => $management]);
@@ -205,13 +215,16 @@ Route::get('import', 'ImportController@import');
 
 
 
-
-
 Route::get('Company', function () {
     return view('configuracion.Company.gestion');
 });
 
-
+Route::get('profile', function () {
+    return view('profile.gestion');
+});
+Route::get('vehicles', function () {
+    return view('vehicles.gestion');
+});
 
 Route::get('policies/wallet/pdf/{id}/1', function ($id) {
     return view('policies.wallet.pdf', ["id" => $id]);
@@ -221,3 +234,6 @@ Route::get('policies/wallet/pdf/{id}/1', function ($id) {
 Route::get('policies/wallet/collection/pdf/{id}/1', function ($id) {
     return view('policies.wallet.collection', ["id" => $id]);
 });
+
+
+Route::get("fasecolda/import", "FasecoldaController@Import");

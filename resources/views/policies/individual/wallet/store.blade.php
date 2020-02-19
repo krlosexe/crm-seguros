@@ -94,7 +94,6 @@
                         <button type="button" id="new-pie" class="btn btn-success">Nuevo</button>
                       </div>
                     </div>
-                    
 
 
                     <div id="content-pie" class="remove-pie" style="display:none">

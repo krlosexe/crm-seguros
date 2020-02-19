@@ -110,15 +110,15 @@
                   </a>
                   <ul class="dropdown-menu">
                       <li>
-                          <a href="">
+                          <a href="Company">
                               <i class="ti-settings pdd-right-10"></i>
                               <span>Configuración</span>
                           </a>
                       </li>
                       <li>
-                          <a href="">
+                          <a href="profile">
                               <i class="ti-user pdd-right-10"></i>
-                              <span>Perfil</span>
+                              <span>Mi perfil</span>
                           </a>
                       </li>
                       <li>
@@ -193,7 +193,7 @@
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="#profile" role="tab" data-toggle="tab">
-                      <span>Profile</span>
+                      <span>Mi perfil</span>
                   </a>
               </li>
               <li class="nav-item ">

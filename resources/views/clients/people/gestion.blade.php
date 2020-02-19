@@ -273,10 +273,11 @@
 					$('#iframeView').attr('src', url);
 
 
-					var url = "clients/policies/files/"+data.id_clients_people+"/0"
+					var url = "clients/people/policies/"+data.id_clients_people+""
 					$('#iframePoliciesView').attr('src', url);
 
-
+					var url = "clients/people/wallet/"+data.id_clients_people+"/0"
+					$('#iframeCarteraView').attr('src', url);
 
 
 					cuadros('#cuadro1', '#cuadro3');
@@ -356,7 +357,6 @@
 					}
 
 
-
 					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
 					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
 					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
@@ -376,9 +376,16 @@
 					AddVehicle("#add-vehicle-edit", "#dato-extra-vehicle-container-edit")
 
 
-
 					var url = "clients/people/files/"+data.id_clients_people+"/1"
 					$('#iframeEdit').attr('src', url);
+
+
+					var url = "clients/people/policies/"+data.id_clients_people+""
+					$('#iframePolizasEdit').attr('src', url);
+
+
+					var url = "clients/people/wallet/"+data.id_clients_people+"/1"
+					$('#iframeCarteraEdit').attr('src', url);
 
 					cuadros('#cuadro1', '#cuadro4');
 				});

@@ -178,7 +178,7 @@
 									</div>
 
 									<div class="col-sm-4">
-										<label for=""><b>Direccion*</b></label>
+										<label for=""><b>Dirección*</b></label>
 										<input type="text" class="form-control" id="address_bind">
 									</div>
 
@@ -205,7 +205,7 @@
 									</div>
 
 									<div class="col-sm-4">
-										<label for=""><b>Tipo de Afiliacion</b></label>
+										<label for=""><b>Tipo de Afiliación</b></label>
 										<input type="text" class="form-control" id="type_membership_bind">
 									</div>
 

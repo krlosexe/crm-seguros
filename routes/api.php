@@ -163,3 +163,14 @@ Route::post('footers/update', 'FootersController@updateFooter');
 
 Route::get('calendar/tasks/', 'CalendarController@getTask');
 
+
+Route::get('clients/people/policies/{id_client}', 'ClientsPeopleController@Policies');
+
+
+Route::get('client/policies/annexes/{id_client}', 'ClientsPeopleController@Annexes');
+
+
+Route::get('client/charge/account/{id_client}', 'ClientsPeopleController@Wallet');
+
+Route::get('fasecolda/typevehicule', 'FasecoldaController@typeVehicule');
+Route::get('fasecolda/typevehicule/trademark/', 'FasecoldaController@typeVehiculeTrademark');

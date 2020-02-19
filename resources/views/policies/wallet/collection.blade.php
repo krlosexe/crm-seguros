@@ -590,7 +590,7 @@
                                                                 <td id="way_to_pay">SEGURO DE VIDA</td>
                                                                 <td id="amount">0012654</td>
                                                                 <td></td>
-                                                                <td id="cousin"></td>
+                                                                <td></td>
                                                             </tr>
 
                                                         </tbody>
@@ -708,6 +708,7 @@
 
             },
             success: function(data){
+
                 $("#issue").text(data.issue);
                 $("#id").text("#"+data.id_collections);
                 $("#date").text(data.fec_regins)
@@ -717,14 +718,15 @@
                 $("#address").text(data.department+", "+data.city)
 
                 $("#way_to_pay").text(data.title)
-                $("#amount").text(data.amount)
+                $("#amount").text(number_format(data.amount, 2))
                 $("#name_insurer").text(data.name_insurer)
                 $("#number_document").text(data.number_document)
                 $("#address").text(data.department+", "+data.city)
                 $("#branch").text(data.name_branch)
                 $("#number_policie").text(data.number_policies)
                 $("#cousin").text(number_format((data.cousin + data.xpenses), 2))
-                $("#vat").text(data.vat)
+                $("#vat").text(number_format(data.vat, 2))
+                $("#total").text(number_format((data.cousin + data.xpenses) + data.vat, 2))
 
             }
         });

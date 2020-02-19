@@ -89,7 +89,7 @@ class ChargeAccountController extends Controller
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
                                 ->get();
            
-            return response()->json($data)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
     /**
      * Show the form for editing the specified resource.

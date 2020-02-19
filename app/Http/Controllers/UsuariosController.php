@@ -159,7 +159,20 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        $User = User::select("users.*", "datos_personales.*", "roles.nombre_rol", "auditoria.status", "auditoria.fec_regins", "user_registro.email as user_registro")
+                          ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
+                          ->join("auditoria", "auditoria.cod_reg", "=", "users.id")
+                          ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                          ->join("roles", "roles.id_rol", "=", "users.id_rol")
+                          
+                          ->where("users.id", $id)
+                          ->where("auditoria.tabla", "users")
+                          ->where("auditoria.status", "!=", "0")
+                          ->orderBy("users.id", "desc")
+                          
+                          ->first();
+        
+        return response()->json($User)->setStatusCode(200);
     }
 
     /**
@@ -182,7 +195,7 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+       
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
             $messages = [
@@ -193,7 +206,7 @@ class UsuariosController extends Controller
 
             $validator = Validator::make($request->all(), [
                 //'email'           => 'required|unique:users',
-                'rol'             => 'required'
+                //'rol'             => 'required'
 
             ], $messages); 
             
@@ -211,17 +224,37 @@ class UsuariosController extends Controller
                 return response()->json($validator->errors())->setStatusCode(400);
             }else{
 
+
+                $firm = $request->file("firm");
+                
+                
                 $file = $request->file('img-profile');
-              
+                
+
                 $User = User::find($id);
 
-                $User->email  = $request["email"];
-                $User->id_rol = $request["rol"];
 
+                if(isset($request["email"])){
+                    $User->email  = $request["email"];
+                }
+
+
+                if(isset($request["rol"])){
+                    $User->id_rol = $request["rol"];
+                }
+                
                 if($file != null){
                     $destinationPath = 'img/usuarios/profile';
                     $file->move($destinationPath,$file->getClientOriginalName());
                     $User->img_profile = $file->getClientOriginalName();
+                }
+
+               
+               
+                if($firm != null){
+                    $destinationPath = 'img/usuarios/firms';
+                    $firm->move($destinationPath,$firm->getClientOriginalName());
+                    $User->firm = $firm->getClientOriginalName();
                 }
 
 
@@ -235,14 +268,23 @@ class UsuariosController extends Controller
 
                 $datos_personales = datosPersonaesModel::where("id_usuario", $id)->first();
 
+                if($request["nombres"]){
+                    $datos_personales->nombres          = $request["nombres"];
+                    $datos_personales->apellido_p       = $request["apellido_p"];
+                    $datos_personales->apellido_m       = $request["apellido_m"];
+                    $datos_personales->n_cedula         = $request["n_cedula"];
+                    $datos_personales->fecha_nacimiento = $request["fecha_nacimiento"];
+                   
 
-                $datos_personales->nombres          = $request["nombres"];
-                $datos_personales->apellido_p       = $request["apellido_p"];
-                $datos_personales->apellido_m       = $request["apellido_m"];
-                $datos_personales->n_cedula         = $request["n_cedula"];
-                $datos_personales->fecha_nacimiento = $request["fecha_nacimiento"];
-                $datos_personales->telefono         = $request["telefono"];
-                $datos_personales->direccion        = $request["direccion"];
+                    if($request["telefono"]){
+                        $datos_personales->telefono         = $request["telefono"];
+                    }
+                   
+
+
+                    $datos_personales->direccion        = $request["direccion"];
+                }
+                
 
                 $datos_personales->save();
 
