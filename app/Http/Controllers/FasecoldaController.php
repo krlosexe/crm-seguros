@@ -81,6 +81,33 @@ class FasecoldaController extends Controller
 
         return response()->json($data)->setStatusCode(200);
     }
+
+
+
+    public function typeVehiculeTrademarkLine(Request $request){
+
+        $data = Fasecolda::select("referencia1")
+                        ->where("marca", $request["marca"])
+                        ->groupBy("referencia1")
+                        ->get();
+
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+    public function typeVehiculeTrademarkRefer2(Request $request){
+
+        $data = Fasecolda::select("referencia2")
+                        ->where("referencia1", $request["linea"])
+                        ->groupBy("referencia2")
+                        ->get();
+
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
     public function index()
     {
         //

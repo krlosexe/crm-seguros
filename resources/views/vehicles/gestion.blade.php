@@ -495,6 +495,120 @@
 				  
 			  });
 
+
+			  $("#marca").change(function (e) { 
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/fasecolda/typevehicule/trademark/line/',
+				  type:'GET',
+				  data: {
+					  "marca"  : $(this).val(),
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$("#line").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$("#line option").remove();
+					$("#line").append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					  
+						$("#line").append($('<option>',
+						{
+						  value: item.referencia1,
+						  text : item.referencia1,
+						}));
+					 
+					});
+
+					$("#line").selectize({
+						//sortField: 'text'
+					});
+			  
+				  }
+				});
+				  
+			  });
+
+
+
+
+
+
+
+
+
+
+			  $("#line").change(function (e) { 
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/fasecolda/typevehicule/trademark/line/refer2',
+				  type:'GET',
+				  data: {
+					  "line"  : $(this).val(),
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$("#refer2").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$("#refer2 option").remove();
+					$("#refer2").append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					  
+						$("#refer2").append($('<option>',
+						{
+						  value: item.referencia2,
+						  text : item.referencia2,
+						}));
+					 
+					});
+
+					$("#refer2").selectize({
+						//sortField: 'text'
+					});
+			  
+				  }
+				});
+				  
+			  });
+
+
+
 		/* ------------------------------------------------------------------------------- */
 			/*
 				Funcion que capta y envia los datos a desactivar

@@ -163,7 +163,7 @@
 
 
 			function store(){
-				enviarFormulario("#store", 'api/policies-binds/', '#cuadro2');
+				enviarFormulario("#store", 'api/policies-binds', '#cuadro2');
 			}
 
 

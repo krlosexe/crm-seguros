@@ -155,7 +155,7 @@
 
 
 			function store(){
-				enviarFormulario("#store", 'api/files/', '#cuadro2');
+				enviarFormulario("#store", 'api/files', '#cuadro2');
 			}
 
 

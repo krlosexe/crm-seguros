@@ -164,7 +164,7 @@
 
 
 			function store(){
-				enviarFormulario("#store", 'api/charge/account/', '#cuadro2');
+				enviarFormulario("#store", 'api/charge/account', '#cuadro2');
 			}
 
 

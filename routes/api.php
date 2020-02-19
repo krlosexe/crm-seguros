@@ -174,3 +174,5 @@ Route::get('client/charge/account/{id_client}', 'ClientsPeopleController@Wallet'
 
 Route::get('fasecolda/typevehicule', 'FasecoldaController@typeVehicule');
 Route::get('fasecolda/typevehicule/trademark/', 'FasecoldaController@typeVehiculeTrademark');
+Route::get('fasecolda/typevehicule/trademark/line', 'FasecoldaController@typeVehiculeTrademarkLine');
+Route::get('fasecolda/typevehicule/trademark/line/refer2', 'FasecoldaController@typeVehiculeTrademarkRefer2');

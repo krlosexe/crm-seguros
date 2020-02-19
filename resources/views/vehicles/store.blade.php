@@ -69,22 +69,23 @@
 
                             <div class="col-sm-4">
                               <label for=""><b>Linea*</b></label>
-                              <select name="type_document" class="form-control selectized" id="type_document" required>
+                              <select name="line" class="selectized" id="line" required>
                                <option value="">Seleccione</option>
                                 
                               </select>
                             </div>
-                              <div class="col-sm-4">
-                              <label for=""><b>Referencia 1*</b></label>
-                              <select name="marca" class="form-control selectized" id="marca" required>
+                            
+                            <div class="col-sm-4">
+                              <label for=""><b>Referencia 2*</b></label>
+                              <select name="refer2" class="selectized" id="refer2" required>
                                <option value="">Seleccione</option>
                                 
                               </select>
                             </div>
 
                             <div class="col-sm-4">
-                              <label for=""><b>Referencia 2*</b></label>
-                              <select name="marca" class="form-control selectized" id="marca" required>
+                              <label for=""><b>Referencia 3*</b></label>
+                              <select name="refer3" class="selectized" id="refer3" required>
                                <option value="">Seleccione</option>
                                 
                               </select>
