@@ -102,27 +102,18 @@
                         <div class="row">
                           <div class="col-sm-4">
                               <label for=""><b>Modelo*</b></label>
-                              <select name="type_document" class="form-control selectized" id="type_document" required>
-                               <option value="">Seleccione</option>
-                                
-                              </select>
+                              <input type="number" name="model" class="form-control form-control-user" id="model" placeholder="EJ: 2007" required>
                             </div>
                           <div class="col-sm-4">
                             <label for=""><b>Color*</b></label>
-                            <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender" required>
-                              <option value="">Seleccione</option>
-                              <option value="Masculino">Masculino</option>
-                              <option value="Femenino">Femenino</option>
-                            </select>
+                              <input type="text" name="color" class="form-control form-control-user" id="gender" placeholder="Color del vehículo" required>
+                      
                           </div>
 
 
                             <div class="col-sm-4">
                             <label for=""><b>Servicio*</b></label>
-                            <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender" required>
-                              <option value="">Seleccione</option>
-                           
-                            </select>
+                            <input type="text" name="service" class="form-control form-control-user" id="service" placeholder="Tipo de servicio" readonly>
                           </div>
 
 
@@ -130,8 +121,8 @@
                         </div>
 
                       </div>
-                                <br>
-                                  <br>
+                        <br>
+                        <br>
                     </div>
                   </div>
                 </div>
@@ -149,21 +140,21 @@
                           <div class="col-md-4">
                             <label for=""><b>Cilindraje*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="department" class="form-control form-control-user" id="department" placeholder="Cilindraje" required>
+                                <input type="text" name="cc" class="form-control form-control-user" id="cc" placeholder="Cilindraje" required>
                               </div>
                           </div>
 
                           <div class="col-md-4">
                             <label for=""><b>Número de Motor*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Número de motor" required>
+                                <input type="text" name="number_motor" class="form-control form-control-user" id="number_motor" placeholder="Número de motor" required>
                               </div>
                           </div>
 
                           <div class="col-md-4">
                             <label for=""><b>Número de Chasis*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Número de chasis" required>
+                                <input type="text" name="number_chassis" class="form-control form-control-user" id="number_chassis" placeholder="Número de chasis" required>
                               </div>
                           </div>
                         </div>
@@ -176,19 +167,19 @@
                                 <div class="col-md-4">
                                     <label for=""><b>Número de pasajeros*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Número pasajeros" required>
+                                        <input type="text" name="number_passengers" class="form-control form-control-user" id="number_passengers" placeholder="Número pasajeros" required>
                                       </div>
                                 </div>
                                 <div class="col-md-4">
                                      <label for=""><b>Puertas*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Número de puertas" required>
+                                        <input type="text" name="doors" class="form-control form-control-user" id="doors" placeholder="Número de puertas" required>
                                       </div>
                                 </div>
                                  <div class="col-md-4">
                                     <label for=""><b>Peso de vehículo*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Peso en KG" required>
+                                        <input type="text" name="vehicle_weight" class="form-control form-control-user" id="vehicle_weight" placeholder="Peso en KG" required>
                                       </div>
                                 </div>
                               </div>
@@ -200,20 +191,20 @@
                                 <div class="col-md-4">
                                      <label for=""><b>Ejes*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Número de ejes" required>
+                                        <input type="text" name="axes" class="form-control form-control-user" id="axes" placeholder="Número de ejes" required>
                                       </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for=""><b>Tipo de caja*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Tipo de caja" required>
+                                        <input type="text" name="type_drop" class="form-control form-control-user" id="type_drop" placeholder="Tipo de caja" required>
                                       </div>
                                 </div>
                                 <div class="col-md-4">
                                      <label for=""><b>Tipo de combustible*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Tipo de combustible" required>
+                                        <input type="text" name="type_fuel" class="form-control form-control-user" id="type_fuel" placeholder="Tipo de combustible" required>
                                       </div>
                                 </div>
 
@@ -223,9 +214,9 @@
                                 
 
                                 <div class="col-md-4">
-                                     <label for=""><b>Transmisión*</b></label>
+                                      <label for=""><b>Transmisión*</b></label>
                                       <div class="form-group valid-required">
-                                        <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Mecánica/Automatica" required>
+                                        <input type="text" name="transmission" class="form-control form-control-user" id="transmission" placeholder="Mecánica/Automatica" required>
                                       </div>
                                 </div>
 
@@ -261,14 +252,14 @@
                           <div class="col-md-6">
                             <label for=""><b>Fecha de vencimiento de técnico mecánica</b></label>
                               <div class="form-group valid-required">
-                                <input type="date" name="monthly_income" class="form-control form-control-user" id="names" >
+                                <input type="date" name="due_date_techno_mechanics" class="form-control form-control-user" id="due_date_techno_mechanics" >
                               </div>
                           </div>
 
                           <div class="col-md-6">
-                            <label for=""><b>Valor Fasecolda año actual*</b></label>
+                            <label for=""><b>Valor Fasecolda*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="heritage" class="form-control form-control-user" id="heritage" placeholder="Valor en pesos" >
+                                <input type="text" name="value_fasecolda" class="form-control form-control-user" id="value_fasecolda" placeholder="Valor en pesos" >
                               </div>
                           </div>
                           
@@ -280,7 +271,7 @@
                           <div class="col-md-12">
                             <label for=""><b>Código Fasecolda</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="monthly_income" class="form-control form-control-user" id="names" >
+                                <input type="text" name="code" class="form-control form-control-user" id="code" >
                               </div>
                           </div>
                            <div class="card-header py-3">
@@ -294,24 +285,13 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
-
-
-
-              
-              
+                </div>   
             </div>
 
           <!---END ROW-->
           </div>
-
-
-
           <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-store">
             <div class="col-md-12" >
-             
-
               <div class="row">
                 <div class="col-md-6">
                   <button type="button" id="add-file" class="btn btn-success btn-user" >
@@ -320,24 +300,12 @@
                   </button>
                 </div>
               </div>
-
               <br>
-
-              <div id="content-file" class="row">
-
-                
-              </div>
-
-              
+              <div id="content-file" class="row">       
+              </div> 
             </div>
           </div>
         </div>
-
-
-
-
-        
-
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
           <br>

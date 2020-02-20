@@ -225,6 +225,9 @@ Route::get('profile', function () {
 Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
+Route::get('notas', function () {
+    return view('tasks.notas.gestion');
+});
 
 Route::get('policies/wallet/pdf/{id}/1', function ($id) {
     return view('policies.wallet.pdf', ["id" => $id]);

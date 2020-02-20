@@ -176,3 +176,12 @@ Route::get('fasecolda/typevehicule', 'FasecoldaController@typeVehicule');
 Route::get('fasecolda/typevehicule/trademark/', 'FasecoldaController@typeVehiculeTrademark');
 Route::get('fasecolda/typevehicule/trademark/line', 'FasecoldaController@typeVehiculeTrademarkLine');
 Route::get('fasecolda/typevehicule/trademark/line/refer2', 'FasecoldaController@typeVehiculeTrademarkRefer2');
+Route::get('fasecolda/typevehicule/trademark/line/refer2/refer3', 'FasecoldaController@typeVehiculeTrademarkRefer2Refer3');
+
+Route::get('fasecolda/get/by/clase/marca/refer1/refer2/refer3', 'FasecoldaController@getByClaseMarcaRefer1Refer2Refer3');
+
+Route::get('fasecolda/value', 'FasecoldaController@value');
+
+
+Route::resource('vehicle', 'VehicleController');
+Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');

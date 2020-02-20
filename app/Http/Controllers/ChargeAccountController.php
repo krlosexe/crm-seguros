@@ -75,6 +75,7 @@ class ChargeAccountController extends Controller
      */
     public function show($id_policie)
     {
+        
         $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
                                 ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
                                 ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
@@ -105,15 +106,20 @@ class ChargeAccountController extends Controller
 
     public function get($chargeAccount)
     {
-        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", 
+        $data = ChargeAccount::select("charge_accounts.*","policies.type_clients", "policies.number_policies","policies_annexes.number_annexed", 
                                         "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
                                         "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
-                                        
-                                        "auditoria.*", "user_registro.email as email_regis")
+                                        "clients_company_contact.department","clients_company_contact.city",
+                                        "auditoria.*", "user_registro.email as email_regis,", "clients_company.business_name")
 
                                 ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
                                 ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
                                 ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+
+                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                                ->join("clients_company_contact", "clients_company_contact.id_clients_company", "=", "clients_company.id_clients_company", "left")
+
+
                                 ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people", "left")
                                 ->join("branchs", "branchs.id_branchs", "=", "policies.branch", "left")
 

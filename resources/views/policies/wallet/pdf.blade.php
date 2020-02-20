@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title>Espire - Bootstrap 4 Admin Template</title>
+    <title>Cuenta de cobro</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
@@ -23,8 +23,8 @@
     <!-- page plugins css -->
     <!-- <link rel="stylesheet" href="<?= url('/') ?>/vendors/dragula-master/dist/dragula.min.css" /> -->
 
-    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css" />
     <link href="<?= url('/') ?>/vendors/sweetalert/sweetalert.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
     <link href="<?= url('/') ?>/css/ei-icon.css" rel="stylesheet">
@@ -35,14 +35,29 @@
     <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
     <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?= url('/') ?>/js/funciones.js"></script>
+
+
+    <script>
+      $(document).ready(function(){
+        var url = $(location).attr('href').split("/").splice(-5);
+
+        console.log(url)
+         validAuth(false, url[0]);
+      });
+    </script>
+
+
+
 </head>
 
 <body>
     <div class="app">
         <div class="layout">
-            
+        @include('layouts.sidebar')
+
             <!-- Page Container START -->
             <div class="page-container">
+                @include('layouts.topBar') 
 
                 <!-- Side Panel START -->
                 <div class="side-panel">
@@ -513,7 +528,7 @@
                                     <div class="pdd-horizon-30">
                                         <div class="mrg-top-15">
                                             <div class="inline-block">
-                                                <img class="img-responsive" src="assets/images/logo/logo.png" id="logo" width="199px">
+                                                <img class="img-responsive" src="assets/images/logo/logo.png" id="logo" width="260px">
                                                    <address class="pdd-left-10 mrg-top-20">
 														<b class="text-dark" id="name">Espire, Inc.</b><br>
 														<!-- <span>9498 Harvard Street</span><br> -->
@@ -528,7 +543,7 @@
                                         </div>
                                         <div class="row mrg-top-20">
                                             <div class="col-md-9 col-sm-9">
-                                                <h3 class="pdd-left-10 mrg-top-10">PARA:</h3>
+                                                <h3 class="pdd-left-10 mrg-top-10">Asegurado:</h3>
                                                 <address class="pdd-left-10 mrg-top-10">
 														<b class="text-dark" id="name_client">JUAN FERNANDO RIVERA QUEVEDO</b><br>
 														<span id="number_document">CÉDULA: 1036686527</span><br>
@@ -677,7 +692,7 @@
                 $("#id").text("#"+data.id_charge_accounts);
                 $("#date").text(data.init_date)
                 $("#observations").text(data.observations)
-                $("#name_client").text(data.name_client+" "+data.last_names)
+                
                 $("#number_document").text(data.number_document)
                 $("#address").text(data.department+", "+data.city)
                 $("#branch").text(data.name_branch)
@@ -689,6 +704,14 @@
                 $("#subtotal").text(number_format((data.cousin + data.xpenses), 2))
                 $("#ivasubtotal").text(number_format(data.vat, 2))
                 $("#totalpagar").text(number_format(data.vat + (data.cousin + data.xpenses), 2))
+
+
+                if(data.type_clients == 1){
+                    $("#name_client").text(data.business_name)
+                }else{
+                    $("#name_client").text(data.name_client+" "+data.last_names)
+                }
+                
 
 
             }

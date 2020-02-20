@@ -185,9 +185,9 @@
             
 			$(document).ready(function(){
 	
-				$("#collapse_Configuraciones").addClass("show");
-				$("#nav_li_Configuraciones").addClass("open");
-                $("#nav_users, #modulo_Configuraciones").addClass("active");
+				$("#collapse_Tareas").addClass("show");
+				$("#nav_li_Tareas").addClass("open");
+                $("#nav_users, #modulo_Tareas").addClass("active");
 
                 verifyPersmisos(id_user, tokens, "modules");
                 GetUsers("#responsable")

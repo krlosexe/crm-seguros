@@ -80,12 +80,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/people', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/vehicle', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/people', '#cuadro2');
+				enviarFormulario("#store", 'api/vehicle', '#cuadro2');
 			}
 
 
@@ -107,7 +107,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/people',
+						 "url":''+url+'/api/vehicle',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -116,10 +116,14 @@
 					},
 					"columns":[
 						
-						{"data":"names"},
-						{"data":"last_names"},
-						{"data":"type_document"},
-						{"data":"number_document"},
+						{"data":"placa"},
+						{"data":"clase"},
+						{"data":"marca"},
+						{"data":"valor_fasecolda", 
+							render: function(data, type, row){
+								return number_format(data, 2)
+							}
+						},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -183,100 +187,49 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
-					$("#names_view").val(data.names).attr("disabled", "disabled")
-					$("#last_names_view").val(data.last_names).attr("disabled", "disabled")
-					$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
-					$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
-					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
-					$("#weight_view").val(data.weight).attr("disabled", "disabled")
-					$("#height_view").val(data.height).attr("disabled", "disabled")
-					$("#eps_view").val(data.eps).attr("disabled", "disabled")
-					$("#gender_view").val(data.gender).attr("disabled", "disabled")
-					$("#birthdate_view").val(data.birthdate).attr("disabled", "disabled")
-					$("#stratum_view").val(data.stratum).attr("disabled", "disabled")
-
-					$("#age_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
-
-					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
-					$("#data_treatment_view").attr("disabled", "disabled")
-					$("#observations_view").val(data.observations).attr("disabled", "disabled")
-
-
-					$("#department_view").val(data.department).attr("disabled", "disabled")
-					$("#city_view").val(data.city).attr("disabled", "disabled")
-
-					$("#address1_view").val(data.address1).attr("disabled", "disabled")
-					$("#type_address1_view").val(data.type_address1).attr("disabled", "disabled")
-					$("#address2_view").val(data.address2).attr("disabled", "disabled")
-					$("#type_address2_view").val(data.type_address2).attr("disabled", "disabled")
-
-					$("#phone1_view").val(data.phone1).attr("disabled", "disabled")
-					$("#type_phone1_view").val(data.type_phone1).attr("disabled", "disabled")
-					$("#phone2_view").val(data.phone2).attr("disabled", "disabled")
-					$("#type_phone2_view").val(data.type_phone2).attr("disabled", "disabled")
-
-					$("#email_view").val(data.email).attr("disabled", "disabled")
-
-					$("#marital_status_view").val(data.marital_status).attr("disabled", "disabled")
-					$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
-					$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
-
-					data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
-					$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
-					$("#own_house_view").prop("checked", true).attr("disabled", "disabled")
-					$("#children_view").attr("disabled", "disabled")
-					$("#vehicle_view").attr("disabled", "disabled")
-					if(data.childrens.length > 0){
-						$("#children_view").prop("checked", true)
-						$(".container-datos-adicionales-hijo-view").css("display", "block");
-						ShowChildren("#dato-extra-hijo-container-view", data.childrens, "view")
-					}else{
-						$(".container-datos-adicionales-hijo-view").css("display", "none");
-						$("#children_view").prop("checked", false)
-					}
-
-					if(data.vehicle.length > 0){
-						$("#vehicle_view").prop("checked", true)
-						$(".container-datos-adicionales-vehicle-view").css("display", "block");
-						ShowVehicle("#dato-extra-vehicle-container-view", data.vehicle, "view")
-					}else{
-						$(".container-datos-adicionales-vehicle-view").css("display", "none");
-						$("#vehicle_view").prop("checked", false)
-					}
-
-
-
-					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_view").prop("checked", true)  : $("#send_policies_for_expire_email_view").prop("checked", false) 
-					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_view").prop("checked", true) : $("#send_portfolio_for_expire_email_view").prop("checked", false) 
-					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
-					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
-					data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
-
-
-
-					$("#send_policies_for_expire_email_view").attr("disabled", "disabled")
-					$("#send_portfolio_for_expire_email_view").attr("disabled", "disabled")
-					$("#send_policies_for_expire_sms_view").attr("disabled", "disabled")
-					$("#send_portfolio_for_expire_sms_view").attr("disabled", "disabled")
-					$("#send_birthday_card_view").attr("disabled", "disabled")       
-
-
-					$("#occupation_view").val(data.occupation).attr("disabled", "disabled")
-					$("#company_view").val(data.company).attr("disabled", "disabled")
-
-
-					var url = "clients/people/files/"+data.id_clients_people+"/0"
-					$('#iframeView').attr('src', url);
-
-
-					var url = "clients/people/policies/"+data.id_clients_people+""
-					$('#iframePoliciesView').attr('src', url);
-
-					var url = "clients/people/wallet/"+data.id_clients_people+"/0"
-					$('#iframeCarteraView').attr('src', url);
-
 
 					cuadros('#cuadro1', '#cuadro3');
+
+					ShowTypeVehicule("#type_vehicule_view", data.clase, false)
+
+					$("#placa_view").val(data.placa).attr("disabled", "disabled")
+					$("#type_vehicule_view").attr("disabled", "disabled")
+
+					changeTypeVehicule("#type_vehicule_view", "#marca_view", data.marca)
+					$("#type_vehicule_view").trigger("change");
+
+					
+					changeMarca("#marca_view", "#line_view", data.referencia1)
+					$("#marca_view").trigger("change");
+					
+
+					ChangeRefer1("#line_view", "#refer2_view", data.referencia2)
+					$("#line_view").trigger("change");
+
+					ChangeRefer2("#refer2_view", "#refer3_view", data.referencia3)
+					$("#refer2_view").trigger("change");
+
+					changeRefer3("#refer3_view", "view")
+					$("#refer3_view").trigger("change");
+
+
+					$("#marca_view").attr("disabled", "disabled")
+					$("#line_view").attr("disabled", "disabled")
+					$("#refer2_view").attr("disabled", "disabled")
+					$("#refer3_view").attr("disabled", "disabled")
+
+					
+					$("#model_view").val(data.model).attr("disabled", "disabled")
+					$("#color_view").val(data.color).attr("disabled", "disabled")
+					$("#due_date_techno_mechanics_view").val(data.due_date_techno_mechanics).attr("disabled", "disabled")
+
+					$("#number_motor_view").val(data.number_motor).attr("disabled", "disabled")
+					$("#number_chassis_view").val(data.number_chassis).attr("disabled", "disabled")
+
+					$("#value_fasecolda_view").val(number_format(data.valor_fasecolda ,2)).attr("disabled", "disabled")
+					
+					$("#service_view").val(data.servicio)
+					
 				});
 			}
 
@@ -294,94 +247,41 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#names_edit").val(data.names)
-					$("#last_names_edit").val(data.last_names)
-					$("#type_document_edit").val(data.type_document)
-					$("#number_document_edit").val(data.number_document)
-					$("#expedition_date_edit").val(data.expedition_date)
-					$("#weight_edit").val(data.weight)
-					$("#height_edit").val(data.height)
-					$("#eps_edit").val(data.eps)
-					$("#gender_edit").val(data.gender)
-					$("#birthdate_edit").val(data.birthdate)
-					$("#stratum_edit").val(data.stratum)
+			
+					ShowTypeVehicule("#type_vehicule_edit", data.clase, false)
 
-					$("#age_edit").val(calcularEdad(data.birthdate))
+					$("#placa_edit").val(data.placa)
+				
 
-					data.data_treatment == 1 ? $("#data_treatment_edit").prop("checked", true) : $("#data_treatment_edit").prop("checked", false) 
-					$("#observations_edit").val(data.observations)
+					changeTypeVehicule("#type_vehicule_edit", "#marca_edit", data.marca)
+					$("#type_vehicule_edit").trigger("change");
 
+					
+					changeMarca("#marca_edit", "#line_edit", data.referencia1)
+					$("#marca_edit").trigger("change");
+					
 
-					$("#department_edit").val(data.department)
-					$("#city_edit").val(data.city)
+					ChangeRefer1("#line_edit", "#refer2_edit", data.referencia2)
+					$("#line_edit").trigger("change");
 
-					$("#address1_edit").val(data.address1)
-					$("#type_address1_edit").val(data.type_address1)
-					$("#address2_edit").val(data.address2)
-					$("#type_address2_edit").val(data.type_address2)
+					ChangeRefer2("#refer2_edit", "#refer3_edit", data.referencia3)
+					$("#refer2_edit").trigger("change");
 
-					$("#phone1_edit").val(data.phone1)
-					$("#type_phone1_edit").val(data.type_phone1)
-					$("#phone2_edit").val(data.phone2)
-					$("#type_phone2_edit").val(data.type_phone2)
+					changeRefer3("#refer3_edit", "edit")
+					$("#refer3_edit").trigger("change");
 
-					$("#email_edit").val(data.email)
+					
+					$("#model_edit").val(data.model)
+					$("#color_edit").val(data.color)
+					$("#due_date_techno_mechanics_edit").val(data.due_date_techno_mechanics)
 
-					$("#marital_status_edit").val(data.marital_status)
-					$("#monthly_income_edit").val(data.monthly_income)
-					$("#heritage_edit").val(data.heritage)
+					$("#number_motor_edit").val(data.number_motor)
+					$("#number_chassis_edit").val(data.number_chassis)
 
-					data.own_house == 1 ? $("#own_house_edit").prop("checked", true) : $("#own_house_edit").prop("checked", false) 
-					$("#number_house_edit").val(data.number_house)
+					$("#value_fasecolda_edit").val(number_format(data.valor_fasecolda ,2))
+					$("#service_edit").val(data.servicio)
 
-					if(data.childrens.length > 0){
-						$("#children_edit").prop("checked", true)
-						$(".container-datos-adicionales-hijo-edit").css("display", "block");
-						ShowChildren("#dato-extra-hijo-container-edit", data.childrens, "edit")
-					}else{
-						$(".container-datos-adicionales-hijo-edit").css("display", "none");
-						$("#children_edit").prop("checked", false)
-					}
-
-					if(data.vehicle.length > 0){
-						$("#vehicle_edit").prop("checked", true)
-						$(".container-datos-adicionales-vehicle-edit").css("display", "block");
-						ShowVehicle("#dato-extra-vehicle-container-edit", data.vehicle, "edit")
-					}else{
-						$(".container-datos-adicionales-vehicle-edit").css("display", "none");
-						$("#vehicle_edit").prop("checked", false)
-					}
-
-
-					data.send_policies_for_expire_email  == 1 ? $("#send_policies_for_expire_email_edit").prop("checked", true)  : $("#send_policies_for_expire_email_edit").prop("checked", false) 
-					data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
-					data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
-					data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
-					data.send_birthday_card              == 1 ? $("#send_birthday_card_edit").prop("checked", true)              : $("#send_birthday_card_edit").prop("checked", false) 
-
-					$("#occupation_edit").val(data.occupation)
-					$("#company_edit").val(data.company)
-
-					$("#id_edit").val(data.id_clients_people)
-
-					showCasa("#own_house_edit", "#number_house_edit")
-					showHijos("#children_edit", ".container-datos-adicionales-hijo-edit")
-					showVehicle("#vehicle_edit", ".container-datos-adicionales-vehicle-edit")
-
-					AddChildren("#add-children-edit", "#dato-extra-hijo-container-edit")
-					AddVehicle("#add-vehicle-edit", "#dato-extra-vehicle-container-edit")
-
-
-					var url = "clients/people/files/"+data.id_clients_people+"/1"
-					$('#iframeEdit').attr('src', url);
-
-
-					var url = "clients/people/policies/"+data.id_clients_people+""
-					$('#iframePolizasEdit').attr('src', url);
-
-
-					var url = "clients/people/wallet/"+data.id_clients_people+"/1"
-					$('#iframeCarteraEdit').attr('src', url);
+					$("#id_edit").val(data.id_vehicules)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
@@ -389,7 +289,7 @@
 			
 
 
-			function ShowTypeVehicule(select, select_default = false){
+			function ShowTypeVehicule(select, select_default = false, asinc = true){
 				
 				var url=document.getElementById('ruta').value;
 				$.ajax({
@@ -399,8 +299,10 @@
 					  "id_user": id_user,
 					  "token"  : tokens,
 					},
+
+					async: asinc,
+
 				  dataType:'JSON',
-				  async: false,
 				  beforeSend: function(){
 				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
 				  },
@@ -429,7 +331,7 @@
 						{
 						  value: item.clase,
 						  text : item.clase,
-						  selected: select_default == item.id_type_sub_company ? true : false
+						  selected: select_default == item.clase ? true : false
 						}));
 					 
 					});
@@ -442,6 +344,276 @@
 
 
 
+			  
+			  function changeTypeVehicule(type_vehicule, marca, value_marca){
+					$(type_vehicule).unbind().change(function (e) { 
+					
+						var url=document.getElementById('ruta').value;
+						$.ajax({
+							url:''+url+'/api/fasecolda/typevehicule/trademark/',
+							type:'GET',
+							data: {
+								"clase"  : $(this).val(),
+							},
+							dataType:'JSON',
+							async: false,
+							
+							beforeSend: function(){
+							// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+							},
+							error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+							},
+							success: function(data){
+						
+							$(marca).each(function() {
+								if (this.selectize) {
+								this.selectize.destroy();
+								}
+							});
+							
+							$(marca+" option").remove();
+							$(marca).append($('<option>',
+							{
+								value: "null",
+								text : "Seleccione"
+							}));
+						
+							$.each(data, function(i, item){
+								
+								
+								$(marca).append($('<option>',
+								{
+									value: item.marca,
+									text : item.marca,
+									selected: value_marca == item.marca ? true : false
+								}));
+							
+							});
+		
+							$(marca).selectize({
+								//sortField: 'text'
+							});
+						
+							
+							}
+						});
+					});
+			  }
+
+
+
+			  function changeMarca(marca, referencia1, value_referencia1){
+					$(marca).unbind().change(function (e) { 
+						var url=document.getElementById('ruta').value;
+						$.ajax({
+						url:''+url+'/api/fasecolda/typevehicule/trademark/line/',
+						type:'GET',
+						data: {
+							"marca"  : $(this).val(),
+							},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+					
+							$(referencia1).each(function() {
+							if (this.selectize) {
+								this.selectize.destroy();
+							}
+						});
+						
+							$(referencia1+" option").remove();
+							$(referencia1).append($('<option>',
+							{
+							value: "null",
+							text : "Seleccione"
+							}));
+					
+							$.each(data, function(i, item){
+							
+							
+								$(referencia1).append($('<option>',
+								{
+									value: item.referencia1,
+									text : item.referencia1,
+									selected: value_referencia1 == item.referencia1 ? true : false
+								}));
+							
+							});
+
+							$(referencia1).selectize({
+								//sortField: 'text'
+							});
+					
+						}
+						});
+						
+					});
+			  }
+
+
+
+
+
+			  function ChangeRefer1(referencia1, referencia2, value_referencia2){
+					$(referencia1).unbind().change(function (e) { 
+						var url=document.getElementById('ruta').value;
+						$.ajax({
+						url:''+url+'/api/fasecolda/typevehicule/trademark/line/refer2',
+						type:'GET',
+						data: {
+							"line"  : $(this).val(),
+							},
+						async: false,
+						dataType:'JSON',
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+					
+							$(referencia2).each(function() {
+							if (this.selectize) {
+								this.selectize.destroy();
+							}
+						});
+						
+							$(referencia2+" option").remove();
+							$(referencia2).append($('<option>',
+							{
+							value: "null",
+							text : "Seleccione"
+							}));
+					
+							$.each(data, function(i, item){
+							
+							
+								$(referencia2).append($('<option>',
+								{
+									value: item.referencia2,
+									text : item.referencia2,
+									selected: value_referencia2 == item.referencia2 ? true : false
+								}));
+							
+							});
+
+							$(referencia2).selectize({
+								//sortField: 'text'
+							});
+					
+						}
+					});
+					
+				});
+			  }
+
+
+			  function ChangeRefer2(referencia2, referencia3, value_referencia3){
+					$(referencia2).unbind().change(function (e) { 
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/fasecolda/typevehicule/trademark/line/refer2/refer3',
+						type:'GET',
+						data: {
+							"refer2"  : $(this).val(),
+							},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+					
+							$(referencia3).each(function() {
+							if (this.selectize) {
+								this.selectize.destroy();
+							}
+						});
+						
+							$(referencia3+" option").remove();
+							$(referencia3).append($('<option>',
+							{
+							value: "null",
+							text : "Seleccione"
+							}));
+					
+							$.each(data, function(i, item){
+							
+							
+								$(referencia3).append($('<option>',
+								{
+									value: item.referencia3,
+									text : item.referencia3,
+									selected: value_referencia3 == item.referencia3 ? true : false
+								}));
+							
+							});
+
+							$(referencia3).selectize({
+								//sortField: 'text'
+							});
+					
+						}
+					});
+					
+				});
+			  }
+
+
+
+
+			  function changeRefer3(refer3, type){
+					$(refer3).unbind().change(function (e) { 
+						var url=document.getElementById('ruta').value;
+						$.ajax({
+						url:''+url+'/api/fasecolda/get/by/clase/marca/refer1/refer2/refer3',
+						type:'GET',
+						data: {
+							"clase"  : $("#type_vehicule_"+type).val(),
+							"marca"  : $("#marca_"+type).val(),
+							"refer1" : $("#line_"+type).val(),
+							"refer2"  : $("#refer2_"+type).val(),
+							"refer3"  : $(refer3).val(),
+							},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							$("#service").val(data.servicio)
+
+							$("#cc_"+type).val(data.cilindraje).attr("readonly", "readonly")
+							$("#number_passengers_"+type).val(data.capacidad_pasajeros).attr("readonly", "readonly")
+							$("#doors_"+type).val(data.puertas).attr("readonly", "readonly")
+							$("#vehicle_weight_"+type).val(data.peso).attr("readonly", "readonly")
+							$("#axes_"+type).val(data.ejes).attr("readonly", "readonly")
+							$("#type_drop_"+type).val(data.tipo_caja).attr("readonly", "readonly")
+							$("#type_fuel_"+type).val(data.combustible).attr("readonly", "readonly")
+							$("#transmission_"+type).val(data.transmision).attr("readonly", "readonly")
+
+							$("#code_"+type).val(data.codigo).attr("readonly", "readonly")
+					
+						}
+					});
+					
+				});
+			  }
+
 			  $("#type_vehicule").change(function (e) { 
 				  
 				var url=document.getElementById('ruta').value;
@@ -452,7 +624,6 @@
 					  "clase"  : $(this).val(),
 					},
 				  dataType:'JSON',
-				  async: false,
 				  beforeSend: function(){
 				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
 				  },
@@ -492,7 +663,6 @@
 					
 				  }
 				});
-				  
 			  });
 
 
@@ -505,7 +675,6 @@
 					  "marca"  : $(this).val(),
 					},
 				  dataType:'JSON',
-				  async: false,
 				  beforeSend: function(){
 				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
 				  },
@@ -565,7 +734,6 @@
 					  "line"  : $(this).val(),
 					},
 				  dataType:'JSON',
-				  async: false,
 				  beforeSend: function(){
 				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
 				  },
@@ -609,6 +777,129 @@
 
 
 
+
+
+
+			  $("#refer2").change(function (e) { 
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/fasecolda/typevehicule/trademark/line/refer2/refer3',
+				  type:'GET',
+				  data: {
+					  "refer2"  : $(this).val(),
+					},
+				  dataType:'JSON',
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$("#refer3").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$("#refer3 option").remove();
+					$("#refer3").append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					  
+						$("#refer3").append($('<option>',
+						{
+						  value: item.referencia3,
+						  text : item.referencia3,
+						}));
+					 
+					});
+
+					$("#refer3").selectize({
+						//sortField: 'text'
+					});
+			  
+				  }
+				});
+				  
+			  });
+
+
+
+			  $("#refer3").change(function (e) { 
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/fasecolda/get/by/clase/marca/refer1/refer2/refer3',
+				  type:'GET',
+				  data: {
+					  "clase"  : $("#type_vehicule").val(),
+					  "marca"  : $("#marca").val(),
+					  "refer1" : $("#line").val(),
+					  "refer2"  : $("#refer2").val(),
+					  "refer3"  : $("#refer3").val(),
+					},
+				  dataType:'JSON',
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+					$("#service").val(data.servicio)
+
+					$("#cc").val(data.cilindraje).attr("readonly", "readonly")
+					$("#number_passengers").val(data.capacidad_pasajeros).attr("readonly", "readonly")
+					$("#doors").val(data.puertas).attr("readonly", "readonly")
+					$("#vehicle_weight").val(data.peso).attr("readonly", "readonly")
+					$("#axes").val(data.ejes).attr("readonly", "readonly")
+					$("#type_drop").val(data.tipo_caja).attr("readonly", "readonly")
+					$("#type_fuel").val(data.combustible).attr("readonly", "readonly")
+					$("#transmission").val(data.transmision).attr("readonly", "readonly")
+
+					$("#code").val(data.codigo).attr("readonly", "readonly")
+				
+
+			  
+				  }
+				});
+				  
+			  });
+
+
+			  $("#model").keyup(function (e) { 
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/fasecolda/value',
+						type:'GET',
+						data: {
+							"clase"   : $("#type_vehicule").val(),
+							"marca"   : $("#marca").val(),
+							"refer1"  : $("#line").val(),
+							"refer2"  : $("#refer2").val(),
+							"refer3"  : $("#refer3").val(),
+							"year"    : $("#model").val(),
+						},
+						dataType:'JSON',
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							$("#value_fasecolda").val(number_format(data, 2)).attr("readonly", "readonly")
+						}
+				});
+			  });
+
+
 		/* ------------------------------------------------------------------------------- */
 			/*
 				Funcion que capta y envia los datos a desactivar
@@ -616,7 +907,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -628,14 +919,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/status-people/'+data.id_clients_people+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 		</script>

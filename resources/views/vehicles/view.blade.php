@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro3">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Consulta de Clientes - Personas.</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Consulta de Vehiculo.</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
@@ -10,31 +10,20 @@
 
         <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
-                <a href="#default-tab-1-view" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+                <a href="#default-tab-1-store" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
-
             <li class="nav-item">
-                <a href="#default-tab-2-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+                <a href="#default-tab-2-store" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
-
-            <li class="nav-item">
-                <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Pólizas</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#default-tab-4-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
-            </li>
-
         </ul>
 
         <br><br>
 
 
         <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-store">
 
-          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-view">
             <div class="row">
-          
               <div class="col-md-6">
 
                 <div class="row">
@@ -48,129 +37,91 @@
                       <div class="card-body">
 
                         <div class="row">
-                          <div class="col-md-6">
-                            <label for=""><b>Nombres*</b></label>
+                          <div class="col-md-4">
+                            <label for=""><b>Número de placa*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="names" class="form-control form-control-user" id="names_view" placeholder="Nombre" required>
+                                <input type="text" name="placa" class="form-control form-control-user" id="placa_view" placeholder="EJ: FHP823" required>
                               </div>
                           </div>
 
-                          <div class="col-md-6">
-                            <label for=""><b>Apellidos*</b></label>
-                              <div class="form-group valid-required">
-                                <input type="text" name="last_names" class="form-control form-control-user" id="last_names_view" placeholder="Apellidos" required>
-                              </div>
+                          <div class="col-md-4">
+                            <label for=""><b>Tipo de Vehículo*</b></label>
+                              <select name="type_vehicule" class="form-control" id="type_vehicule_view" required>
+                               <option value="">Seleccione</option>
+                               
+                              </select>
                           </div>
+                            <div class="col-sm-4">
+                              <label for=""><b>Marca*</b></label>
+                              <select name="marca" class="selectized" id="marca_view" required>
+                               <option value="">Seleccione</option>
+                                
+                              </select>
+                            </div>
+
                         </div>
 
 
                         <div class="row">
                         
-                          <div class="col-sm-4">
-                              <label for=""><b>Tipo de documento*</b></label>
-                              <select name="type_document" class="form-control selectized" id="type_document_view" required>
-                                <option value="">Seleccione</option>
-                                <option value="CÉDULA">CÉDULA</option>
-                                <option value="CÉDULA DE EXTRANJERÍA">CÉDULA DE EXTRANJERÍA</option>
-                                <option value="RUC">RUC</option>
-                                <option value="PASAPORTE">PASAPORTE</option>
-                                <option value="NUIP">NUIP</option>
-                                <option value="TARJETA DE IDENTIDAD">TARJETA DE IDENTIDAD</option>
+                        
+
+                            <div class="col-sm-4">
+                              <label for=""><b>Linea*</b></label>
+                              <select name="line" class="selectized" id="line_view" required>
+                               <option value="">Seleccione</option>
+                                
+                              </select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                              <label for=""><b>Referencia 2*</b></label>
+                              <select name="refer2" class="selectized" id="refer2_view" required>
+                               <option value="">Seleccione</option>
+                                
+                              </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                              <label for=""><b>Referencia 3*</b></label>
+                              <select name="refer3" class="selectized" id="refer3_view" required>
+                               <option value="">Seleccione</option>
+                                
                               </select>
                             </div>
 
 
-                            <div class="col-sm-4">
-                              <label for=""><b>Número documento*</b></label>
-                              <input type="text" name="number_document" class="form-control form-control-user" id="number_document_view" required>
+
+                            
+                        </div>
+
+                        <br>
+                          
+
+                        <div class="row">
+                          <div class="col-sm-4">
+                              <label for=""><b>Modelo*</b></label>
+                              <input type="number" name="model" class="form-control form-control-user" id="model_view" placeholder="EJ: 2007" required>
                             </div>
+                          <div class="col-sm-4">
+                            <label for=""><b>Color*</b></label>
+                              <input type="text" name="color" class="form-control form-control-user" id="color_view" placeholder="Color del vehículo" required>
+                      
+                          </div>
 
 
                             <div class="col-sm-4">
-                              <label for=""><b>Fecha expedición</b></label>
-                              <input type="date" name="expedition_date" class="form-control form-control-user" id="expedition_date_view">
-                            </div>
+                            <label for=""><b>Servicio*</b></label>
+                            <input type="text" name="service" class="form-control form-control-user" id="service_view" placeholder="Tipo de servicio" readonly>
+                          </div>
+
+
+                          
                         </div>
-
-                        <br>
-
-
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label for=""><b>Peso</b></label>
-                            <input type="number" name="weight" class="form-control form-control-user" id="weight_view">  
-                          </div>
-
-                          <div class="col-sm-4">
-                            <label for=""><b>Altura</b></label>
-                            <input type="number" name="height" class="form-control form-control-user" id="height_view">
-                          </div>
-
-                          <div class="col-sm-4">
-                            <label for=""><b>EPS</b></label>
-                            <input type="text" name="eps" class="form-control form-control-user" id="eps_view">
-                          </div>
-                        </div>
-
-                        <br>
-
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label for=""><b>Genero*</b></label>
-                            <select name="gender" class="form-control selectize-input items has-options full has-items" id="gender_view" required>
-                              <option value="">Seleccione</option>
-                              <option value="Masculino">Masculino</option>
-                              <option value="Femenino">Femenino</option>
-                            </select>
-                          </div>
-
-
-                          <div class="col-sm-4">
-                            <label for=""><b>Fecha nacimiento*</b></label>
-                            <input type="date" name="birthdate" class="form-control form-control-user" id="birthdate_view"  required>
-                          </div>
-
-
-                          <div class="col-sm-2">
-                            <label for=""><b>Edad</b></label>
-                            <input type="text" name="age" class="form-control form-control-user" id="age_view"  disabled>
-                          </div>
-                        </div>
-
-
-                        <br>
-
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <label for=""><b>Estrato</b></label>
-                            <input type="text" name="stratum" class="form-control form-control-user" id="stratum_view">
-                          </div>
-
-
-
-                          <div class="col-md-4">
-                            <label for=""><br><b>Autoriza tratamiento de datos*</b></label>
-                            <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
-                                  <input type="checkbox" name="data_treatment" id="data_treatment_view" checked="">
-                                  <label for="data_treatment_view"></label>
-                              </div>
-                          </div>
-
-
-                        </div>
-
-
-                        <br>
-
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label for=""><b>Observaciones*</b></label>
-                            <textarea class="form-control" name="observations" id="observations_view" cols="30" rows="10"></textarea>
-                          </div>
-                        </div>
-
 
                       </div>
+                        <br>
+                        <br>
                     </div>
                   </div>
                 </div>
@@ -180,22 +131,29 @@
                   <div class="col-md-12">
                     <div class="card shadow mb-4">
                       <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Datos de contacto</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Característica</h6>
                       </div>
                       <div class="card-body">
 
                         <div class="row">
-                          <div class="col-md-6">
-                            <label for=""><b>Departamento*</b></label>
+                          <div class="col-md-4">
+                            <label for=""><b>Cilindraje*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="department" class="form-control form-control-user" id="department_view" placeholder="Departamento" required>
+                                <input type="text" name="cc" class="form-control form-control-user" id="cc_view" placeholder="Cilindraje" required>
                               </div>
                           </div>
 
-                          <div class="col-md-6">
-                            <label for=""><b>Ciudad*</b></label>
+                          <div class="col-md-4">
+                            <label for=""><b>Número de Motor*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="city" class="form-control form-control-user" id="city_view" placeholder="Ciudad" required>
+                                <input type="text" name="number_motor" class="form-control form-control-user" id="number_motor_view" placeholder="Número de motor" required>
+                              </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <label for=""><b>Número de Chasis*</b></label>
+                              <div class="form-group valid-required">
+                                <input type="text" name="number_chassis" class="form-control form-control-user" id="number_chassis_view" placeholder="Número de chasis" required>
                               </div>
                           </div>
                         </div>
@@ -205,104 +163,68 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="address1_view" name="address1" placeholder="Direccion 1" require>
+                                <div class="col-md-4">
+                                    <label for=""><b>Número de pasajeros*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="number_passengers" class="form-control form-control-user" id="number_passengers_view" placeholder="Número pasajeros" required>
+                                      </div>
+                                </div>
+                                <div class="col-md-4">
+                                     <label for=""><b>Puertas*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="doors" class="form-control form-control-user" id="doors_view" placeholder="Número de puertas" required>
+                                      </div>
+                                </div>
+                                 <div class="col-md-4">
+                                    <label for=""><b>Peso de vehículo*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="vehicle_weight" class="form-control form-control-user" id="vehicle_weight_view" placeholder="Peso en KG" required>
+                                      </div>
+                                </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                
+
+
+                                <div class="col-md-4">
+                                     <label for=""><b>Ejes*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="axes" class="form-control form-control-user" id="axes_view" placeholder="Número de ejes" required>
+                                      </div>
                                 </div>
 
                                 <div class="col-md-4">
-                                  <select name="type_address1" class="form-control selectize-input items has-options full has-items" id="type_address1_view">
-                                    <option value="Residencial">Residencial</option>
-                                    <option value="Oficina">Oficina</option>
-                                    <option value="Otro">Otro</option>
-                                  </select>
+                                    <label for=""><b>Tipo de caja*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="type_drop" class="form-control form-control-user" id="type_drop_view" placeholder="Tipo de caja" required>
+                                      </div>
                                 </div>
+                                <div class="col-md-4">
+                                     <label for=""><b>Tipo de combustible*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="type_fuel" class="form-control form-control-user" id="type_fuel_view" placeholder="Tipo de combustible" required>
+                                      </div>
+                                </div>
+
                               </div>
-                          </div>
-                        </div>
-                        <br>
-
-
-                        <div class="row">
-                          <div class="form-group col-md-12">
+                              <br>
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Dirección 2</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="address2_view" name="address2" placeholder="Direccion 2">
-                                </div>
+                                
 
                                 <div class="col-md-4">
-                                  <select name="type_address2" class="form-control selectize-input items has-options full has-items" id="type_address2_view">
-                                    <option value="Residencial">Residencial</option>
-                                    <option value="Oficina">Oficina</option>
-                                    <option value="Otro">Otro</option>
-                                  </select>
+                                      <label for=""><b>Transmisión*</b></label>
+                                      <div class="form-group valid-required">
+                                        <input type="text" name="transmission" class="form-control form-control-user" id="transmission_view" placeholder="Mecánica/Automatica" required>
+                                      </div>
                                 </div>
+
+                               
                               </div>
                           </div>
                         </div>
                         <br>
 
-
-                        <div class="row">
-                          <div class="form-group col-md-12">
-                              <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Teléfono 1*</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="phone1_view" name="phone1_view" placeholder="Telefono 1" require>
-                                </div>
-
-                                <div class="col-md-4">
-                                  <select name="type_phone1" class="form-control selectize-input items has-options full has-items" id="type_phone1_view">
-                                    <option value="Personal">Personal</option>
-                                    <option value="Residencial">Residencial</option>
-                                    <option value="Oficina">Oficina</option>
-                                    <option value="Otro">Otro</option>
-                                  </select>
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                        <br>
-
-
-
-                        <div class="row">
-                          <div class="form-group col-md-12">
-                              <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Teléfono 2</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="phone2_view" name="phone2" placeholder="Telefono 2">
-                                </div>
-
-                                <div class="col-md-4">
-                                  <select name="type_phone2" class="form-control selectize-input items has-options full has-items" id="type_phone2_view">
-                                    <option value="Personal">Personal</option>
-                                    <option value="Residencial">Residencial</option>
-                                    <option value="Oficina">Oficina</option>
-                                    <option value="Otro">Otro</option>
-                                  </select>
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                        <br>
-
-
-
-
-
-                        <div class="row">
-                          <div class="form-group col-md-12">
-                              <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Email*</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="email_view" name="email" placeholder="Email" require>
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                        <br>
                       </div>
                     </div>
                   </div>
@@ -322,44 +244,21 @@
                   <div class="col-md-12">
                     <div class="card shadow mb-4">
                       <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Información CRM</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Informacion adicional</h6>
                       </div>
                       <div class="card-body">
-
-
-                        <div class="row">
-
-                          <div class="col-md-12">
-                            <label for=""><b>Estado civil</b></label>
-                              <select name="marital_status" class="form-control selectize-input items has-options full has-items" id="marital_status_view">
-                                <option value="">Seleccione</option>
-                                <option value="Soltero">Soltero</option>ss
-                                <option value="Casado">Casado</option>
-                                <option value="Divorciado">Divorciado</option>
-                                <option value="Unión Libre">Unión Libre</option>
-                                <option value="Seperado">Seperado</option>
-                                <option value="Viudo">Viudo</option>
-                            </select>
-                          </div>
-
-                        </div>
-
-
-                        <br>
-
-
                         <div class="row">
                           <div class="col-md-6">
-                            <label for=""><b>Ingreso mensual</b></label>
+                            <label for=""><b>Fecha de vencimiento de técnico mecánica</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="monthly_income" class="form-control form-control-user" id="monthly_income_view" >
+                                <input type="date" name="due_date_techno_mechanics" class="form-control form-control-user" id="due_date_techno_mechanics_view" >
                               </div>
                           </div>
 
                           <div class="col-md-6">
-                            <label for=""><b>Patrimonio</b></label>
+                            <label for=""><b>Valor Fasecolda*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="heritage" class="form-control form-control-user" id="heritage_view" >
+                                <input type="text" name="value_fasecolda" class="form-control form-control-user" id="value_fasecolda_view" placeholder="Valor en pesos" >
                               </div>
                           </div>
                           
@@ -367,329 +266,61 @@
 
 
                         <br>
-
-                        <div class="row">
-
-
-                        <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                            <div class="row">
-
-                              <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                                <div class="form-group row" style="margin-bottom: 0px !important">
-                                    <label for="form-1-1" class="col-md-5 control-label">Casa propia</label>
-                                    <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                    <input type="checkbox" name="own_house_view" id="own_house_view">
-                                    <label for="own_house_view"></label>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="col-md-6 form-group" style="margin-bottom: 0px !important">
-                                <div class="form-group row" style="margin-bottom: 0px !important">
-                                    <label for="form-1-1" class="col-md-4 control-label">No. Casas</label>
-                                    <div class="col-md-6">
-                                        <input type="number" class="form-control" id="number_house_view" name="number_house" disabled>
-                                    </div>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-
-
-
-
-
-                          <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                            <div class="row">
-
-                              <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                                <div class="form-group row" style="margin-bottom: 0px !important">
-                                    <label for="form-1-1" class="col-md-5 control-label">Hijos</label>
-                                    <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                    <input type="checkbox" name="children_view" id="children_view">
-                                    <label for="children_view"></label>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="container-datos-adicionales-hijo-view col-sm-12" style="display: none;">
-                                  <table class="table table-bordered">
-                                      <thead>
-                                          <tr>
-                                              <th>Nombre</th>
-                                              <th>Teléfono</th>
-                                              <th>Fecha nacimiento</th>
-                                              <th>
-                                                  
-                                                <!-- <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-children">
-                                                    <i class="fa fa-plus"  aria-hidden="true"></i>
-                                                </button> -->
-                                                  
-                                              </th>
-                                          </tr>
-                                      </thead>
-                                      <tbody id="dato-extra-hijo-container-view"></tbody>
-                                  </table>
-                              </div>
-
-                            </div>
-                          </div>
-
-
-
-
-
-
-
-
-
-
-
-                          <div class="col-md-12" style="padding: 0;padding-left: 10px;padding-top: 10px;padding-bottom: 10px;border: 2px solid #e6e6e6;">
-
-                            <div class="row">
-
-                              <div class="col-md-5 form-group" style="margin-bottom: 0px !important">
-                                <div class="form-group row" style="margin-bottom: 0px !important">
-                                    <label for="form-1-1" class="col-md-5 control-label">Vehículo</label>
-                                    <div class="col-md-5 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                    <input type="checkbox" name="vehicle_view" id="vehicle_view">
-                                    <label for="vehicle_view"></label>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="container-datos-adicionales-vehicle-view col-sm-12" style="display: none;">
-                                  <table class="table table-bordered">
-                                      <thead>
-                                          <tr>
-                                              <th>Placa</th>
-                                              <th>Fecha vencimiento SOAT</th>
-                                              <th>Fecha pago de impuestos</th>
-                                              <th>Fecha vencimiento tecnomecánica</th>
-                                              <th>
-                                                  
-                                              <!-- <button class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle">
-                                                  <i class="fa fa-plus"  aria-hidden="true"></i>
-                                              </button>
-                                                  -->
-                                              </th>
-                                          </tr>
-                                      </thead>
-                                      <tbody id="dato-extra-vehicle-container-view"></tbody>
-                                  </table>
-                              </div>
-
-                            </div>
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="row">
-                
-                  <div class="col-md-12">
-                    
-                    <div class="card shadow mb-4">
-                      <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Notificaciones</h6>
-                      </div>
-                      <div class="card-body">
-                        
-
-                        <div class="row">
-
-                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                          
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="send_policies_for_expire_email" class="col-md-6 control-label">Enviar correo pólizas por vencer</label>
-                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="send_policies_for_expire_email" id="send_policies_for_expire_email_view">
-                                <label for="send_policies_for_expire_email_view"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <br>
-
-
-                        <div class="row">
-
-                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                          
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="send_portfolio_for_expire_email" class="col-md-6 control-label">Enviar correo cartera por vencer</label>
-                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="send_portfolio_for_expire_email" id="send_portfolio_for_expire_email_view">
-                                <label for="send_portfolio_for_expire_email_view"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <br>
-
-
-
-
-
-
-
-                        <div class="row">
-
-                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                          
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="send_policies_for_expire_sms" class="col-md-6 control-label">Enviar SMS pólizas por vencer</label>
-                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="send_policies_for_expire_sms" id="send_policies_for_expire_sms_view">
-                                <label for="send_policies_for_expire_sms_view"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <br>
-
-
-
-
-
-                        <div class="row">
-
-                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                          
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="send_portfolio_for_expire_sms" class="col-md-6 control-label">Enviar SMS cartera por vencer</label>
-                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="send_portfolio_for_expire_sms" id="send_portfolio_for_expire_sms_view">
-                                <label for="send_portfolio_for_expire_sms_view"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <br>
-
-
-
-
-
-                        <div class="row">
-
-                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
-                          
-                            <div class="form-group row" style="margin-bottom: 0px !important">
-                                <label for="send_birthday_card" class="col-md-6 control-label">Enviar tarjeta de compleaños</label>
-                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
-                                <input type="checkbox" name="send_birthday_card" id="send_birthday_card_view">
-                                <label for="send_birthday_card_view"></label>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <br>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-
-
-
-                <div class="row">
-                
-                  <div class="col-md-12">
-                    
-                    <div class="card shadow mb-4">
-                      <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Información laboral</h6>
-                      </div>
-                      <div class="card-body">
-
-                        <div class="row">
-
+                      <div class="row">
                           <div class="col-md-12">
-                            <label for=""><b>Ocupación *</b></label>
+                            <label for=""><b>Código Fasecolda</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="occupation" class="form-control form-control-user" id="occupation_view" >
+                                <input type="text" name="code" class="form-control form-control-user" id="code_view" >
                               </div>
                           </div>
+                           <div class="card-header py-3">
+                           <center> <a href="https://fasecolda.com/guia-de-valores/index.php" target="_blank"><h6 class="m-0 font-weight-bold text-primary">Para buscar información más detallada haz clic aquí</h6></a></center>
+                           </div>
+                        </div>
 
+                      
                         </div>
-                        <br>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label for=""><b>Empresa *</b></label>
-                              <div class="form-group valid-required">
-                                <input type="text" name="company" class="form-control form-control-user" id="company_view" >
-                              </div>
-                          </div>
-                        </div>
-                        <br>
 
                       </div>
                     </div>
                   </div>
                 </div>
 
+
+
+
+              
+              
+            </div>
+
+          <!---END ROW-->
+          </div>
+
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-store">
+            <div class="col-md-12" >
+             
+
+              <div class="row">
+                <div class="col-md-6">
+                  <button type="button" id="add-file" class="btn btn-success btn-user" >
+                    <i class="ti-image"></i>
+                    Agregar
+                  </button>
+                </div>
+              </div>
+
+              <br>
+
+              <div id="content-file" class="row">
+
+                
               </div>
 
               
-              
-            </div>
-
-            <!---END ROW-->
-          </div>
-
-          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-view">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item " id="iframeView" allowfullscreen>
-
-              </iframe>
             </div>
           </div>
-
-
-
-          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-view">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item " id="iframePoliciesView" allowfullscreen>
-
-              </iframe>
-            </div>
-          </div>
-
-
-
-          <div role="tabpanel" class="tab-pane fade in " id="default-tab-4-view">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item " id="iframeCarteraView" allowfullscreen>
-
-              </iframe>
-            </div>
-          </div>
-
-
-
-
-
-          
-
         </div>
 
 
