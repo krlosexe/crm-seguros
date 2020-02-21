@@ -570,7 +570,7 @@
 					var html = ""
 					$.map(data.vehicules, function (item, key) {
 						html += "<tr>"
-							html +="<td><a href='#'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
+							html +="<td><a target='_blank' href='vehicles/"+item.placa+"'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
 							html +="<td></td>"
 						html += "</tr>"
 					});

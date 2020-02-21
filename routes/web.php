@@ -225,9 +225,17 @@ Route::get('Company', function () {
 Route::get('profile', function () {
     return view('profile.gestion');
 });
+
+
 Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
+
+Route::get('vehicles/{plate}', function ($plate) {
+    return view('vehicles.show', ["plate", $plate]);
+});
+
+
 Route::get('notas', function () {
     return view('tasks.notas.gestion');
 });
