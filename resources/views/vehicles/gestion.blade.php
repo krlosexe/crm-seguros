@@ -235,6 +235,54 @@
 
 
 
+			$("#code").keyup(function (e) { 
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+					url:''+url+'/api/fasecolda/get/'+$(this).val(),
+					type:'GET',
+					dataType:'JSON',
+					//async: false,
+					beforeSend: function(){
+					// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+					},
+					error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+					},
+					success: function(data){
+						
+						ShowTypeVehicule("#type_vehicule", data.clase, false)
+
+						$("#type_vehicule").attr("disabled", "disabled")
+
+						changeTypeVehicule("#type_vehicule", "#marca", data.marca)
+						$("#type_vehicule").trigger("change");
+
+
+						changeMarca("#marca", "#line", data.referencia1)
+						$("#marca").trigger("change");
+						
+
+						ChangeRefer1("#line", "#refer2", data.referencia2)
+						$("#line").trigger("change");
+
+						ChangeRefer2("#refer2", "#refer3", data.referencia3)
+						$("#refer2").trigger("change");
+
+						changeRefer3Temporal("#refer3", "")
+						$("#refer3").trigger("change");
+
+
+						$("#marca").attr("disabled", "disabled")
+						$("#line").attr("disabled", "disabled")
+						$("#refer2").attr("disabled", "disabled")
+						$("#refer3").attr("disabled", "disabled")
+						
+						$("#service").val(data.servicio)
+
+					}
+				});
+			});
+
 
 
 
@@ -614,6 +662,51 @@
 				});
 			  }
 
+
+
+			  function changeRefer3Temporal(refer3, type){
+					$(refer3).unbind().change(function (e) { 
+						var url=document.getElementById('ruta').value;
+						$.ajax({
+						url:''+url+'/api/fasecolda/get/by/clase/marca/refer1/refer2/refer3',
+						type:'GET',
+						data: {
+							"clase"  : $("#type_vehicule").val(),
+							"marca"  : $("#marca").val(),
+							"refer1" : $("#line").val(),
+							"refer2"  : $("#refer2").val(),
+							"refer3"  : $(refer3).val(),
+							},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+							//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							$("#service").val(data.servicio)
+
+							$("#cc").val(data.cilindraje).attr("readonly", "readonly")
+							$("#number_passengers").val(data.capacidad_pasajeros).attr("readonly", "readonly")
+							$("#doors").val(data.puertas).attr("readonly", "readonly")
+							$("#vehicle_weight").val(data.peso).attr("readonly", "readonly")
+							$("#axes").val(data.ejes).attr("readonly", "readonly")
+							$("#type_drop").val(data.tipo_caja).attr("readonly", "readonly")
+							$("#type_fuel").val(data.combustible).attr("readonly", "readonly")
+							$("#transmission").val(data.transmision).attr("readonly", "readonly")
+
+							$("#code").val(data.codigo).attr("readonly", "readonly")
+					
+						}
+					});
+					
+				});
+			  }
+
+
+
 			  $("#type_vehicule").change(function (e) { 
 				  
 				var url=document.getElementById('ruta').value;
@@ -896,8 +989,11 @@
 						success: function(data){
 							$("#value_fasecolda").val(number_format(data, 2)).attr("readonly", "readonly")
 						}
-				});
+					});
 			  });
+
+
+			  
 
 
 		/* ------------------------------------------------------------------------------- */

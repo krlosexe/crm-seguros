@@ -166,6 +166,18 @@ class FasecoldaController extends Controller
 
 
 
+    public function Get($codigo){
+
+        $data = Fasecolda::where("codigo", $codigo)->first();
+
+        if($data){
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("nada")->setStatusCode(400);
+        }
+        
+    }
+
     public function index()
     {
         //

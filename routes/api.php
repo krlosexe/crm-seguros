@@ -183,5 +183,10 @@ Route::get('fasecolda/get/by/clase/marca/refer1/refer2/refer3', 'FasecoldaContro
 Route::get('fasecolda/value', 'FasecoldaController@value');
 
 
+
+Route::get('fasecolda/get/{codigo}', 'FasecoldaController@Get');
+
+
+
 Route::resource('vehicle', 'VehicleController');
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');

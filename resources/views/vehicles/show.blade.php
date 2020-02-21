@@ -37,7 +37,8 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-2);
-        validAuth(false, url[1]);
+		
+        validAuth(false, url[0]);
       });
     </script>
 
@@ -84,11 +85,6 @@
 					</div>
 
 				</div>
-
-
-				@include('policies.individual.files.store')
-				@include('policies.individual.files.view')
-				@include('policies.individual.files.edit')
 
 
 
@@ -157,7 +153,7 @@
 
 			function list(cuadro) {
 
-				var management = {{ $management }}
+			
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,
@@ -173,7 +169,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						"url":''+url+'/api/files/policies/'+{{$id_client}},
+						"url":''+url+'/api/files/policies/',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
