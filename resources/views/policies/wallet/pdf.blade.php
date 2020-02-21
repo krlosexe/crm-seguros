@@ -533,8 +533,7 @@
 														<b class="text-dark" id="name">Espire, Inc.</b><br>
 														<!-- <span>9498 Harvard Street</span><br> -->
 														<!-- <span>Fairfield, Chicago Town 06824</span><br> -->
-														<span>Nit: 9005678263</span><br>
-														<span>(4) 448 02 01</span>
+														<span class="text-uppercase">Nit: 900709309-1</span><br>
 													</address>
                                             </div>
                                             <div class="pull-right">
@@ -543,11 +542,11 @@
                                         </div>
                                         <div class="row mrg-top-20">
                                             <div class="col-md-9 col-sm-9">
-                                                <h3 class="pdd-left-10 mrg-top-10">Asegurado:</h3>
+                                                <h3 class="pdd-left-10 mrg-top-10 text-uppercase">Asegurado:</h3>
                                                 <address class="pdd-left-10 mrg-top-10">
 														<b class="text-dark" id="name_client">JUAN FERNANDO RIVERA QUEVEDO</b><br>
 														<span id="number_document">CÉDULA: 1036686527</span><br>
-														<span id="address">BELLO, ANTIOQUIA</span>
+														<span id="address text-uppercase">BELLO, ANTIOQUIA</span>
 													</address>
                                             </div>
                                             <div class="col-md-3 col-sm-3">
@@ -565,7 +564,7 @@
                                                     <div class="col-md-12">
                                                         <div class="text-dark">
                                                           <p><b class="text-dark text-uppercase">Cordial Saludo</b></p>
-                                                            <p class="text-opacity" id="issue">Ajuntamos el documento relacionado a continuación el cual corresponde a la expedición de la Póliza de asunto vigencia 2019 - 2020, esperamos una pronta respuesta</p>
+                                                            <p class="text-opacity text-uppercase" id="issue" >Ajuntamos el documento relacionado a continuación el cual corresponde a la expedición de la Póliza de asunto vigencia 2019 - 2020, esperamos una pronta respuesta</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -601,17 +600,17 @@
                                                 <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class="pull-right text-right">
-                                                            <p >Subtotal: <span id="subtotal">4.500.000</span></p>
-                                                            <p >IVA (19%): <span id="ivasubtotal" >450.000</span>  </p>
+                                                            <p class="text-uppercase" >Subtotal: <span id="subtotal">4.500.000</span></p>
+                                                            <p class="text-uppercase">IVA (19%): <span id="ivasubtotal" >450.000</span>  </p>
                                                             <hr>
-                                                            <h3><b>Total a pagar:</b> <span id="totalpagar">4.950.000</span></h3>
+                                                            <h3><b class="text-uppercase">Total a pagar:</b> <span id="totalpagar">4.950.000</span></h3>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class=" top bottom pdd-vertical-20">
-                                                            <p><b class="text-dark text-uppercase">Condiciones generales de la póliza</b></p>
+                                                            <p><b class="text-dark text-uppercase">Instructivo de pago</b></p>
                                                             <p class="text-opacity" id="observations">De acuerdo con lo anterior le solicitamos girar  cheque por valor de 4.950.000 a nombre de la compañía SURAMERICANA DE SEGUROS S A NIT: 89768723-9</p>
                                                         </div>
                                                     </div>
@@ -619,11 +618,11 @@
                                                 <div class="row mrg-top-30">
                                                     <div class="col-md-12">
                                                         <div class="border top bottom pdd-vertical-20">
-                                                            <span><b class="text-dark">Agradecemos la atención prestada</b></span> <br>
-                                                            <span class="text-opacity">Atentamente,</span> <br>                       
+                                                            <span><b class="text-dark text-uppercase">Agradecemos la atención prestada</b></span> <br>
+                                                            <span class="text-opacity text-uppercase">Atentamente,</span> <br>                       
                                                                  <img class="img-responsive text-opacity mrg-top-5" width="150" src="https://upload.wikimedia.org/wikipedia/commons/1/14/Firma_Ildefonso_Leal.jpg" alt=""> <br>
                                                             <span><b class="text-dark text-uppercase">JUAN FERNANDO RIVERA QUEVEDO</b></span> <br>
-                                                            <span class="text-opacity">Asistente en seguros</span>
+                                                            <span class="text-opacity text-uppercase" >Asistente en seguros</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -632,10 +631,13 @@
                                                     <div class="col-md-6">
                                                         <img class="img-responsive text-opacity mrg-top-5" width="100" src="assets/images/logo/logo.png" alt="">
                                                     </div>
-                                                    <div class="col-md-6 text-right">
-                                                        <small><b>Teléfono:</b> (4) 448 02 01</small>
+                                                    <div class="col-md-6 text-right">                                           
+                                                        <small class="text-uppercase">gerencia@chasesoresenseguros.com</small>
                                                         <br>
-                                                        <small>gerencia@chasesoresenseguros.com</small>
+                                                        <small class="text-uppercase">Cll 43a # 58-40 int(201) Bello - Antioquia</small>
+                                                        <br>
+                                                        <small><b class="text-uppercase">PBX:</b> (4) 448 02 01</small>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

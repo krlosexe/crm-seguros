@@ -12,6 +12,7 @@ use App\PoliciesInfoPayments;
 use App\PoliciesBind;
 use App\RecibosCobranza;
 use App\PoliciesAnnexes;
+use App\PolicesVehicles;
 use Illuminate\Http\Request;
 
 class PoliciesController extends Controller
@@ -43,6 +44,10 @@ class PoliciesController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
                                 ->with("policies_bind")
+
+                                ->with("vehicules")
+
+                                
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
@@ -102,6 +107,13 @@ class PoliciesController extends Controller
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
                 PoliciesNotifications::create($request->all());
+            }
+
+
+            foreach($request->placas as $value){
+                $data["placa"]      = $value;
+                $data["id_policie"] = $store->id_policies;
+                PolicesVehicles::create($data);
             }
 
            $request["amount"] = $request["total"];

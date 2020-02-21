@@ -236,10 +236,10 @@
 
                 getData()
 
-				$("#collapse_Clientes").addClass("show");
-				$("#nav_li_Clientes").addClass("open");
-				$("#nav_users, #modulo_Clientes").addClass("active");
-				$("#nav_company").addClass("active");
+				$("#collapse_Perfiles").addClass("show");
+				$("#nav_li_Perfiles").addClass("open");
+				$("#nav_users, #modulo_Perfiles").addClass("active");
+				$("#nav_profile").addClass("active");
 				verifyPersmisos(id_user, tokens, "modules");
 			});
 

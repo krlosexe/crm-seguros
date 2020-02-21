@@ -567,6 +567,16 @@
 					
 					showPays(data.id_policies, "#table-simulation-view")
 
+					var html = ""
+					$.map(data.vehicules, function (item, key) {
+						html += "<tr>"
+							html +="<td><a href='#'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
+							html +="<td></td>"
+						html += "</tr>"
+					});
+
+					$("#table-placas-view").html(html)
+
 
 					var url = "policies/annexes/"+data.id_policies+"/0"
 					$('#iframeAnnexesView').attr('src', url);
@@ -666,6 +676,18 @@
 					
 
 					showPays(data.id_policies, "#table-simulation-edit")
+
+
+					var html = ""
+					$.map(data.vehicules, function (item, key) {
+						html += "<tr>"
+							html +="<td><a href='#'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
+							html +="<td></td>"
+						html += "</tr>"
+					});
+
+					$("#table-placas-edit").html(html)
+
 
 
 
@@ -1088,6 +1110,20 @@
 			  $("#age_bind").val(calcularEdad($(this).val()))
 		  	});
 
+
+
+
+			$("#add-vehicle").click(function (e) { 
+				var placa = $("#placa").val()
+				var html = ""
+
+				html += "<tr>"
+					html +="<td>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></td>"
+					html +="<td></td>"
+				html += "</tr>"
+
+				$("#table-placas").append(html)
+			});
 
 
 		

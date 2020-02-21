@@ -20,6 +20,9 @@ Route::get('/compare', function () {
 });
 
 Route::post('auth', 'Login@Auth');
+
+
+
 Route::get('logout/{id}', 'Login@Logout');
 
 Route::get('/dashboard', function () {

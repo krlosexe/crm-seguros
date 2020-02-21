@@ -17,11 +17,14 @@
             </li>
 
             <li class="nav-item">
-                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Polizas</a>
+                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Pólizas</a>
             </li>
 
             <li class="nav-item">
                 <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+            </li>
+             <li class="nav-item">
+                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Siniestros</a>
             </li>
 
 

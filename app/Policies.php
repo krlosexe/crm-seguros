@@ -19,4 +19,13 @@ class Policies extends Model
       return $this->hasMany('App\PoliciesBind', 'id_policie');
     }
 
+
+    public function vehicules()
+    {
+      return $this->hasMany('App\PolicesVehicles', 'id_policie');
+    }
+
+
+
+
 }

@@ -406,6 +406,54 @@
               </div>
             </div>
 
+      <div class="row remove">
+
+              <div class="col-md-12">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Vehículos asociados</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-8">
+                          <label for=""><b>Placa del vehículo *</b></label>
+                            <div class="form-group valid-required">
+                              <input type="text" name="placa" class="form-control form-control-user" id="placa" placeholder="FHP803" style="text-align: left" required>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-4">
+                              <label for=""><b>Añadir nuevo *</b></label>
+                              <div class="form-group valid-required">
+                              <button type="button" class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle">
+                                                  <i class="fa fa-plus" ></i>
+                                              </button>
+                                                 </div>
+                        </div>
+
+                    </div>   
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Placas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="table-placas"></tbody>
+                    </table>
+
+
+
+                    <br>                 
+         
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="row remove">
             

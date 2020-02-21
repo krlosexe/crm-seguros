@@ -110,7 +110,7 @@ class ChargeAccountController extends Controller
                                         "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
                                         "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
                                         "clients_company_contact.department","clients_company_contact.city",
-                                        "auditoria.*", "user_registro.email as email_regis,", "clients_company.business_name")
+                                        "auditoria.*", "user_registro.email as email_regis,", "clients_company.business_name", "clients_company.nit as number_document")
 
                                 ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
                                 ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
