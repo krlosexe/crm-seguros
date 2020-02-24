@@ -231,8 +231,8 @@ Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
 
-Route::get('vehicles/{plate}', function ($plate) {
-    return view('vehicles.show', ["plate", $plate]);
+Route::get('vehicles/{placa}', function ($placa) {
+    return view('vehicles.show', ["placa"=> $placa]);
 });
 
 

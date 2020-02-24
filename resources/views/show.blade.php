@@ -1,235 +1,533 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="es">
 
-	@section('content')
-			
-		 <!-- Content Wrapper START -->
-		 <div class="main-content">
-			<div class="container-fluid" id="cuadro1">
-				<div class="page-title">
-					<h4>Gestión de Vehículos</h4>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>App</title>
+
+  <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/datatables/media/css/jquery.dataTables.css" />
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/sweetalert/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
+    <link href="<?= url('/') ?>/css/ei-icon.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/themify-icons.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/animate.min.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/app.css" rel="stylesheet">
+    <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
+    <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
+
+  
+   @if(Request::path() != '/')
+
+    <script>
+      $(document).ready(function(){
+		var url = $(location).attr('href').split("/").splice(-2);
+		
+        validAuth(false, url[0]);
+      });
+    </script>
+
+  @endif
+
+</head>
+
+<body class="{{ Request::path() != '/' ? 'dasboard-body' : ''}} bg-gradient-primary">
+  <div id="page-loader"  ><span class="preloader-interior"></span></div>
+
+  <div id="wrapper" class="app">
+    <div id="content-wrapper" class="layout">
+		@include('layouts.sidebar')
+
+
+       <div class="page-container" >
+	   		@include('layouts.topBar') 
+			<div class="main-content">
+
+			<div class="card shadow mb-4" id="cuadro3">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Consulta de Vehiculo.</h6>
 				</div>
-				<div class="row">
+				<div class="card-body">
+					<form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
 					
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-block">
-								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-										<i class="ti-user"></i>
-										<span>Nuevo</span>
-									</button>
-									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
-										<thead>
-											<tr>
+						@csrf
+
+
+						<ul class="nav nav-pills" role="tablist">
+							<li class="nav-item">
+								<a href="#default-tab-1-store" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+							</li>
+							<li class="nav-item">
+								<a href="#default-tab-2-store" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+							</li>
+						</ul>
+
+						<br><br>
+
+
+						<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-store">
+
+							<div class="row">
+							<div class="col-md-6">
+
+								<div class="row">
+
+								<div class="col-md-12">
+
+									<div class="card shadow mb-4">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-primary">Datos Principales</h6>
+									</div>
+									<div class="card-body">
+
+										<div class="row">
+										<div class="col-md-4">
+											<label for=""><b>Número de placa*</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="placa" class="form-control form-control-user" id="placa_view" placeholder="EJ: FHP823" required>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<label for=""><b>Tipo de Vehículo*</b></label>
+											<select name="type_vehicule" class="form-control" id="type_vehicule_view" required>
+											<option value="">Seleccione</option>
 											
-											<th>Número de placa</th>
-											<th>Tipo de vehículo</th>
-											<th>Marca</th>
-											<th>Valor Fasecolda</th>
-											<th>Fecha de registro</th>
-											<th>Acciones</th>
-											</tr>
-										</thead>
-										<tbody>
+											</select>
+										</div>
+											<div class="col-sm-4">
+											<label for=""><b>Marca*</b></label>
+											<select name="marca" class="selectized" id="marca_view" required>
+											<option value="">Seleccione</option>
+												
+											</select>
+											</div>
+
+										</div>
+
+
+										<div class="row">
+										
+										
+
+											<div class="col-sm-4">
+											<label for=""><b>Linea*</b></label>
+											<select name="line" class="selectized" id="line_view" required>
+											<option value="">Seleccione</option>
+												
+											</select>
+											</div>
 											
-										</tbody>
-									</table>
+											<div class="col-sm-4">
+											<label for=""><b>Referencia 2*</b></label>
+											<select name="refer2" class="selectized" id="refer2_view" required>
+											<option value="">Seleccione</option>
+												
+											</select>
+											</div>
+
+											<div class="col-sm-4">
+											<label for=""><b>Referencia 3*</b></label>
+											<select name="refer3" class="selectized" id="refer3_view" required>
+											<option value="">Seleccione</option>
+												
+											</select>
+											</div>
+
+
+
+											
+										</div>
+
+										<br>
+										
+
+										<div class="row">
+										<div class="col-sm-4">
+											<label for=""><b>Modelo*</b></label>
+											<input type="number" name="model" class="form-control form-control-user" id="model_view" placeholder="EJ: 2007" required>
+											</div>
+										<div class="col-sm-4">
+											<label for=""><b>Color*</b></label>
+											<input type="text" name="color" class="form-control form-control-user" id="color_view" placeholder="Color del vehículo" required>
+									
+										</div>
+
+
+											<div class="col-sm-4">
+											<label for=""><b>Servicio*</b></label>
+											<input type="text" name="service" class="form-control form-control-user" id="service_view" placeholder="Tipo de servicio" readonly>
+										</div>
+
+
+										
+										</div>
+
+									</div>
+										<br>
+										<br>
+									</div>
+								</div>
+								</div>
+
+
+								<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow mb-4">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-primary">Característica</h6>
+									</div>
+									<div class="card-body">
+
+										<div class="row">
+										<div class="col-md-4">
+											<label for=""><b>Cilindraje*</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="cc" class="form-control form-control-user" id="cc_view" placeholder="Cilindraje" required>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<label for=""><b>Número de Motor*</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="number_motor" class="form-control form-control-user" id="number_motor_view" placeholder="Número de motor" required>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<label for=""><b>Número de Chasis*</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="number_chassis" class="form-control form-control-user" id="number_chassis_view" placeholder="Número de chasis" required>
+											</div>
+										</div>
+										</div>
+
+										<br>
+
+										<div class="row">
+										<div class="form-group col-md-12">
+											<div class="row">
+												<div class="col-md-4">
+													<label for=""><b>Número de pasajeros*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="number_passengers" class="form-control form-control-user" id="number_passengers_view" placeholder="Número pasajeros" required>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label for=""><b>Puertas*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="doors" class="form-control form-control-user" id="doors_view" placeholder="Número de puertas" required>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label for=""><b>Peso de vehículo*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="vehicle_weight" class="form-control form-control-user" id="vehicle_weight_view" placeholder="Peso en KG" required>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												
+
+
+												<div class="col-md-4">
+													<label for=""><b>Ejes*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="axes" class="form-control form-control-user" id="axes_view" placeholder="Número de ejes" required>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<label for=""><b>Tipo de caja*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="type_drop" class="form-control form-control-user" id="type_drop_view" placeholder="Tipo de caja" required>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label for=""><b>Tipo de combustible*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="type_fuel" class="form-control form-control-user" id="type_fuel_view" placeholder="Tipo de combustible" required>
+													</div>
+												</div>
+
+											</div>
+											<br>
+											<div class="row">
+												
+
+												<div class="col-md-4">
+													<label for=""><b>Transmisión*</b></label>
+													<div class="form-group valid-required">
+														<input type="text" name="transmission" class="form-control form-control-user" id="transmission_view" placeholder="Mecánica/Automatica" required>
+													</div>
+												</div>
+
+											
+											</div>
+										</div>
+										</div>
+										<br>
+
+									</div>
+									</div>
+								</div>
+
+								</div>
+
+
+							</div>
+
+
+
+
+							<div class="col-md-6">
+
+								<div class="row">
+
+								<div class="col-md-12">
+									<div class="card shadow mb-4">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-primary">Informacion adicional</h6>
+									</div>
+									<div class="card-body">
+										<div class="row">
+										<div class="col-md-6">
+											<label for=""><b>Fecha de vencimiento de técnico mecánica</b></label>
+											<div class="form-group valid-required">
+												<input type="date" name="due_date_techno_mechanics" class="form-control form-control-user" id="due_date_techno_mechanics_view" >
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<label for=""><b>Valor Fasecolda*</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="value_fasecolda" class="form-control form-control-user" id="value_fasecolda_view" placeholder="Valor en pesos" >
+											</div>
+										</div>
+										
+										</div>
+
+
+										<br>
+									<div class="row">
+										<div class="col-md-12">
+											<label for=""><b>Código Fasecolda</b></label>
+											<div class="form-group valid-required">
+												<input type="text" name="code" class="form-control form-control-user" id="code_view" >
+											</div>
+										</div>
+										<div class="card-header py-3">
+										<center> <a href="https://fasecolda.com/guia-de-valores/index.php" target="_blank"><h6 class="m-0 font-weight-bold text-primary">Para buscar información más detallada haz clic aquí</h6></a></center>
+										</div>
+										</div>
+
+									
+										</div>
+
+									</div>
+									</div>
+								</div>
+								</div>
+
+
+
+
+							
+							
+							</div>
+
+						<!---END ROW-->
+						</div>
+
+
+
+						<div role="tabpanel" class="tab-pane fade in" id="default-tab-2-store">
+							<div class="col-md-12" >
+							
+
+							<div class="row">
+								<div class="col-md-6">
+								<button type="button" id="add-file" class="btn btn-success btn-user" >
+									<i class="ti-image"></i>
+									Agregar
+								</button>
 								</div>
 							</div>
+
+							<br>
+
+							<div id="content-file" class="row">
+
+								
+							</div>
+
+							
+							</div>
 						</div>
+						</div>
+
+
+						
+
+
+						<input type="hidden" name="id_user" class="id_user">
+						<input type="hidden" name="token" class="token">
+						<br>
+						<br>
+						</div>
+						<center>
+							<button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro3')">
+								Cancelar
+							</button>
+						</center>
+						<br>
+						<br>
+					</form>
+					
 					</div>
-				</div>
-			</div>
-
-			@include('vehicles.store')
-			@include('vehicles.view')
-			@include('vehicles.edit')
-
-		</div>
-                <!-- Content Wrapper END -->
-	@endsection
 
 
 
 
 
-	@section('CustomJs')
+      </div>
+    </div>
+    <!-- End of Content Wrapper -->
 
-		<script>
+<input type="hidden" id="ruta" value="<?= url('/') ?>">
+
+
+
+
+
+      <script src="<?= url('/') ?>/vendors/popper.js/dist/umd/popper.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap/dist/js/bootstrap.js"></script>
+      <script src="<?= url('/') ?>/vendors/PACE/pace.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+      <script src="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+      <script src="<?= url('/') ?>/js/maps/jquery-jvectormap-us-aea.js"></script>
+      <script src="<?= url('/') ?>/vendors/d3/d3.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/jquery.sparkline/index.js"></script>
+      <script src="<?= url('/') ?>/vendors/chart.js/dist/Chart.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/datatables/media/js/jquery.dataTables.js"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/numeral/min/numeral.min.js"></script>
+      <script src="<?= url('/') ?>/js/app.js"></script>
+      <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
+      <script src="<?= url('/') ?>/js/funciones.js"></script>
+      <script src="<?= url('/') ?>/js/table/data-table.js"></script>
+  <script>
+    var user_id = localStorage.getItem('user_id');
+    $("#logout").attr("href", "logout/"+user_id)
+  </script>
+
+<script>
 			$(document).ready(function(){
-				store();
-				list();
-				update();
-
-				$("#collapse_Vehículos").addClass("show");
-				$("#nav_li_Vehículos").addClass("open");
-				$("#nav_people").addClass("active");
-
-				$("#nav_users, #modulo_Vehículos").addClass("active");
+			
+				getData();
+				$("#collapse_Polizas").addClass("show");
+				$("#nav_li_Polizas").addClass("open");
+				$("#nav_users, #modulo_Polizas").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "modules");
 
-
-				$(".selectized").selectize({
-					//sortField: 'text'
-				});
+				// $(".selectized").selectize({
+				// 	//sortField: 'text'
+				// });
 
 
 			});
 
 
-
-			function update(){
-				enviarFormularioPut("#form-update", 'api/vehicle', '#cuadro4', false, "#avatar-edit");
-			}
-
-
-			function store(){
-				enviarFormulario("#store", 'api/vehicle', '#cuadro2');
-			}
-
-
-
-
-			function list(cuadro) {
-				var data = {
-					"id_user": id_user,
-					"token"  : tokens,
-				};
-				$('#table tbody').off('click');
+			function getData(){
+				var placa = "{{$placa}}"
 				var url=document.getElementById('ruta').value; 
-				cuadros(cuadro, "#cuadro1");
-
-				var table=$("#table").DataTable({
-					"destroy":true,
-					
-					"stateSave": true,
-					"serverSide":false,
-					"ajax":{
-						"method":"GET",
-						 "url":''+url+'/api/vehicle',
-						 "data": {
-							"id_user": id_user,
-							"token"  : tokens,
-						},
-						"dataSrc":""
+				$.ajax({
+					url:''+url+'/api/vehicle/'+placa,
+					type:'GET',
+					data: {
+						"id_user": id_user,
+						"token"  : tokens,
 					},
-					"columns":[
+					dataType:'JSON',
+					async: false,
+					beforeSend: function(){
+					// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+					},
+					error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+					},
+					success: function(data){
+
+						ShowTypeVehicule("#type_vehicule_view", data.clase, false)
+
+						$("#placa_view").val(data.placa).attr("disabled", "disabled")
+						$("#type_vehicule_view").attr("disabled", "disabled")
+
+						changeTypeVehicule("#type_vehicule_view", "#marca_view", data.marca)
+						$("#type_vehicule_view").trigger("change");
+
 						
-						{"data":"placa"},
-						{"data":"clase"},
-						{"data":"marca"},
-						{"data":"valor_fasecolda", 
-							render: function(data, type, row){
-								return number_format(data, 2)
-							}
-						},
-						{"data": "fec_regins"},
-						{"data": null,
-							render : function(data, type, row) {
-								var botones = "";
-								if(consultar == 1)
-									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
-								if(actualizar == 1)
-									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
-								if(data.status == 1 && actualizar == 1)
-									botones += "<span class='desactivar btn btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
-								else if(data.status == 2 && actualizar == 1)
-									botones += "<span class='activar btn btn-warning waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
-								if(borrar == 1)
-									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
-								return botones;
-							}
-						}
+						 changeMarca("#marca_view", "#line_view", data.referencia1)
+						 $("#marca_view").trigger("change");
 						
-					],
-					"language": idioma_espanol,
-					"dom": 'Bfrtip',
-					"ordering": false,
-					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
-				});
+
+						ChangeRefer1("#line_view", "#refer2_view", data.referencia2)
+						$("#line_view").trigger("change");
+
+						ChangeRefer2("#refer2_view", "#refer3_view", data.referencia3)
+						$("#refer2_view").trigger("change");
+
+						changeRefer3("#refer3_view", "view")
+						$("#refer3_view").trigger("change");
 
 
-				ver("#table tbody", table)
-				edit("#table tbody", table)
-				activar("#table tbody", table)
-				desactivar("#table tbody", table)
-				eliminar("#table tbody", table)
+						$("#marca_view").attr("disabled", "disabled")
+						$("#line_view").attr("disabled", "disabled")
+						$("#refer2_view").attr("disabled", "disabled")
+						$("#refer3_view").attr("disabled", "disabled")
 
+						
+						$("#model_view").val(data.model).attr("disabled", "disabled")
+						$("#color_view").val(data.color).attr("disabled", "disabled")
+						$("#due_date_techno_mechanics_view").val(data.due_date_techno_mechanics).attr("disabled", "disabled")
 
-			}
+						$("#number_motor_view").val(data.number_motor).attr("disabled", "disabled")
+						$("#number_chassis_view").val(data.number_chassis).attr("disabled", "disabled")
 
-
-
-			function nuevo() {
-				$("#alertas").css("display", "none");
-				$("#store")[0].reset();
-				$(".container-datos-adicionales-hijo").css("display", "none");
-				$(".container-datos-adicionales-vehicle").css("display", "none");
-
-				ShowTypeVehicule("#type_vehicule")
-
-				cuadros("#cuadro1", "#cuadro2");
-			}
-
-
-			
-
-			/* ------------------------------------------------------------------------------- */
-			/* 
-				Funcion que muestra el cuadro3 para la consulta del banco.
-			*/
-			function ver(tbody, table){
-				$(tbody).on("click", "span.consultar", function(){
-					$("#alertas").css("display", "none");
-					var data = table.row( $(this).parents("tr") ).data();
-
-
-					cuadros('#cuadro1', '#cuadro3');
-
-					ShowTypeVehicule("#type_vehicule_view", data.clase, false)
-
-					$("#placa_view").val(data.placa).attr("disabled", "disabled")
-					$("#type_vehicule_view").attr("disabled", "disabled")
-
-					changeTypeVehicule("#type_vehicule_view", "#marca_view", data.marca)
-					$("#type_vehicule_view").trigger("change");
-
-					
-					changeMarca("#marca_view", "#line_view", data.referencia1)
-					$("#marca_view").trigger("change");
-					
-
-					ChangeRefer1("#line_view", "#refer2_view", data.referencia2)
-					$("#line_view").trigger("change");
-
-					ChangeRefer2("#refer2_view", "#refer3_view", data.referencia3)
-					$("#refer2_view").trigger("change");
-
-					changeRefer3("#refer3_view", "view")
-					$("#refer3_view").trigger("change");
-
-
-					$("#marca_view").attr("disabled", "disabled")
-					$("#line_view").attr("disabled", "disabled")
-					$("#refer2_view").attr("disabled", "disabled")
-					$("#refer3_view").attr("disabled", "disabled")
-
-					
-					$("#model_view").val(data.model).attr("disabled", "disabled")
-					$("#color_view").val(data.color).attr("disabled", "disabled")
-					$("#due_date_techno_mechanics_view").val(data.due_date_techno_mechanics).attr("disabled", "disabled")
-
-					$("#number_motor_view").val(data.number_motor).attr("disabled", "disabled")
-					$("#number_chassis_view").val(data.number_chassis).attr("disabled", "disabled")
-
-					$("#value_fasecolda_view").val(number_format(data.valor_fasecolda ,2)).attr("disabled", "disabled")
-					
-					$("#service_view").val(data.servicio)
-					
+						$("#value_fasecolda_view").val(number_format(data.valor_fasecolda ,2)).attr("disabled", "disabled")
+						
+						$("#service_view").val(data.servicio)
+					}
 				});
 			}
 
@@ -287,55 +585,9 @@
 
 
 
-			/* ------------------------------------------------------------------------------- */
-			/* 
-				Funcion que muestra el cuadro3 para la consulta del banco.
-			*/
-			function edit(tbody, table){
-				$(tbody).on("click", "span.editar", function(){
-					$("#alertas").css("display", "none");
-					var data = table.row( $(this).parents("tr") ).data();
-					
-			
-					ShowTypeVehicule("#type_vehicule_edit", data.clase, false)
 
-					$("#placa_edit").val(data.placa)
-				
 
-					changeTypeVehicule("#type_vehicule_edit", "#marca_edit", data.marca)
-					$("#type_vehicule_edit").trigger("change");
 
-					
-					changeMarca("#marca_edit", "#line_edit", data.referencia1)
-					$("#marca_edit").trigger("change");
-					
-
-					ChangeRefer1("#line_edit", "#refer2_edit", data.referencia2)
-					$("#line_edit").trigger("change");
-
-					ChangeRefer2("#refer2_edit", "#refer3_edit", data.referencia3)
-					$("#refer2_edit").trigger("change");
-
-					changeRefer3("#refer3_edit", "edit")
-					$("#refer3_edit").trigger("change");
-
-					
-					$("#model_edit").val(data.model)
-					$("#color_edit").val(data.color)
-					$("#due_date_techno_mechanics_edit").val(data.due_date_techno_mechanics)
-
-					$("#number_motor_edit").val(data.number_motor)
-					$("#number_chassis_edit").val(data.number_chassis)
-
-					$("#value_fasecolda_edit").val(number_format(data.valor_fasecolda ,2))
-					$("#service_edit").val(data.servicio)
-
-					$("#id_edit").val(data.id_vehicules)
-
-					cuadros('#cuadro1', '#cuadro4');
-				});
-			}
-			
 
 
 			function ShowTypeVehicule(select, select_default = false, asinc = true){
@@ -994,39 +1246,10 @@
 			  });
 
 
-			  
 
 
-		/* ------------------------------------------------------------------------------- */
-			/*
-				Funcion que capta y envia los datos a desactivar
-			*/
-			function desactivar(tbody, table){
-				$(tbody).on("click", "span.desactivar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
-				});
-			}
-		/* ------------------------------------------------------------------------------- */
-
-		/* ------------------------------------------------------------------------------- */
-			/*
-				Funcion que capta y envia los datos a desactivar
-			*/
-			function activar(tbody, table){
-				$(tbody).on("click", "span.activar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
-				});
-			}
-	
-			function eliminar(tbody, table){
-				$(tbody).on("click", "span.eliminar", function(){
-					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/vehicle/status/'+data.id_vehicules+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
-				});
-			}
 		</script>
-	@endsection
 
+</body>
 
+</html>

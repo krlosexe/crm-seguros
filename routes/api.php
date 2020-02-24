@@ -187,6 +187,8 @@ Route::get('fasecolda/value', 'FasecoldaController@value');
 Route::get('fasecolda/get/{codigo}', 'FasecoldaController@Get');
 
 
+Route::get('vehicle/{placa}', 'VehicleController@show');
 
 Route::resource('vehicle', 'VehicleController');
+
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');

@@ -102,7 +102,7 @@
                         <div class="row">
                           <div class="col-sm-4">
                               <label for=""><b>Modelo*</b></label>
-                              <input type="number" name="model" class="form-control form-control-user" id="model" placeholder="EJ: 2007" required>
+                              <input type="number" name="model" class="form-control form-control-user" id="model" placeholder="EJ: 2007" required min="1970">
                             </div>
                           <div class="col-sm-4">
                             <label for=""><b>Color*</b></label>
