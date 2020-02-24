@@ -479,13 +479,74 @@
 
 				StartSimulation(".start_simulation", "#payment_method", "#payment_period", "#payment_terms","#payment_date", "#total", "#table-simulation")
 
-
+				GetPlacas("#placa")
 
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
 
 				cuadros("#cuadro1", "#cuadro2");
+			}	
+
+
+
+
+			
+
+
+			function GetPlacas(select){
+				
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/vehicle',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$(select).each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					  if (item.status == 1) {
+						$(select).append($('<option>',
+						{
+						  value: item.placa,
+						  text : item.placa
+						}));
+					  }
+					});
+			  
+					$(select).selectize({
+					  //sortField: 'text'
+					});
+				  }
+				});
 			}
+
+			  
+
+
 
 			/* ------------------------------------------------------------------------------- */
 			/* 

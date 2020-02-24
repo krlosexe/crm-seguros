@@ -147,19 +147,22 @@
                           <div class="col-md-4">
                             <label for=""><b>Número de Motor*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="number_motor" class="form-control form-control-user" id="number_motor" placeholder="Número de motor" required>
+                                <input type="text" name="number_motor" class="form-control form-control-user" id="number_motor" placeholder="Número de motor">
                               </div>
                           </div>
 
                           <div class="col-md-4">
                             <label for=""><b>Número de Chasis*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="number_chassis" class="form-control form-control-user" id="number_chassis" placeholder="Número de chasis" required>
+                                <input type="text" name="number_chassis" class="form-control form-control-user" id="number_chassis" placeholder="Número de chasis">
                               </div>
                           </div>
                         </div>
 
-                        <br>
+
+                        
+
+                        <br><br><br>
 
                         <div class="row">
                           <div class="form-group col-md-12">

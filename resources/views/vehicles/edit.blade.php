@@ -86,7 +86,6 @@
                               <label for=""><b>Referencia 3*</b></label>
                               <select name="refer3" class="selectized" id="refer3_edit" required>
                                <option value="">Seleccione</option>
-                                
                               </select>
                             </div>
 

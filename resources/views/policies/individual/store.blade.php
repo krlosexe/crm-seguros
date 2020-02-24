@@ -419,7 +419,9 @@
                         <div class="col-md-8">
                           <label for=""><b>Placa del vehículo *</b></label>
                             <div class="form-group valid-required">
-                              <input type="text" name="placa" class="form-control form-control-user" id="placa" placeholder="FHP803" style="text-align: left" required>
+                              <select name="placa" class="selectized"  id="placa" required>
+                               <option value="">Seleccione</option>
+                              </select>
                             </div>
                             
                         </div>
