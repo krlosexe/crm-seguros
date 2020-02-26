@@ -607,7 +607,15 @@ class PoliciesController extends Controller
 
     public function GetVehicule($placa){
 
-        $data = PolicesVehicles::where("placa", $placa)->first();
+        $data = PolicesVehicles::select("policies_vehicle.*", "fasecolda.clase", "fasecolda.marca", "fasecolda.referencia1", 
+                                        "fasecolda.referencia2", "fasecolda.referencia3", "insurers.name as name_insurers", "insurers.phone")
+                                    
+                                    ->join("policies", "policies.id_policies", "=", "policies_vehicle.id_policie")
+                                    ->join("vehicules", "vehicules.placa", "=", "policies_vehicle.placa")
+                                    ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
+                                    ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                                    ->where("policies_vehicle.placa", $placa)
+                                    ->first();
         if($data){
             return response()->json($data)->setStatusCode(200);
         }else{

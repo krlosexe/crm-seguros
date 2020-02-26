@@ -16,7 +16,7 @@ use App\Policies;
 use App\PoliciesAnnexes;
 use App\ChargeAccount;
 use App\Departamentos;
-
+use App\Municipios;
 use Illuminate\Http\Request;
 
 class ClientsPeopleController extends Controller
@@ -395,8 +395,12 @@ class ClientsPeopleController extends Controller
         foreach($data as $client){
             
             $departamentos = Departamentos::where("nombre", $client["department"])->first();
-            echo \json_encode($client["department"])."<br>";
-            echo \json_encode($departamentos["id"])."<br><br>";
+            $municipios    = Municipios::where("nombre", $client["city"])->first();
+
+            ClientsPeopleContact::where("id_clients_people_contact", $client["id_clients_people_contact"])->update(["id_department" => $departamentos["id"], "id_city" => $departamentos["id"]]);
+         //   echo \json_encode($client["id_clients_people_contact"])."<br>";
+           // echo \json_encode($departamentos["id"])."<br><br>";
+           echo \json_encode($municipios["nombre"])."<br><br>";
         }
     }
 }
