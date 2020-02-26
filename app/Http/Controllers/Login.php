@@ -29,7 +29,7 @@ class Login extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }else{
 
-            $users = User::join("auditoria", "auditoria.cod_reg", "=", "users.id", "datos_personales.nombres", "datos_personales.apellido_p")
+            $users = User::join("auditoria", "auditoria.cod_reg", "=", "users.id")
                          ->where("email", $request["email"])
                          ->where("password", md5($request["password"]))
                          ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
