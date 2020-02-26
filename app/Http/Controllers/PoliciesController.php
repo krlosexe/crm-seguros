@@ -131,9 +131,8 @@ class PoliciesController extends Controller
               
            }
 
-           RecibosCobranza::insert($data_plan);
+            RecibosCobranza::insert($data_plan);
             
-
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "policies";
             $auditoria->cod_reg     = $store->id_policies;
@@ -148,7 +147,6 @@ class PoliciesController extends Controller
                 return response()->json("A ocurrido un error")->setStatusCode(400);
             }
 
-            
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
@@ -606,6 +604,17 @@ class PoliciesController extends Controller
         }
     }
 
+
+    public function GetVehicule($placa){
+
+        $data = PolicesVehicles::where("placa", $placa)->first();
+        if($data){
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("La Placa no se encuentra asegurada")->setStatusCode(400);
+        }
+        
+    }
 
 
     /**
