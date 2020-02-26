@@ -29,9 +29,10 @@ class Login extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }else{
 
-            $users = User::join("auditoria", "auditoria.cod_reg", "=", "users.id")
+            $users = User::join("auditoria", "auditoria.cod_reg", "=", "users.id", "datos_personales.nombres", "datos_personales.apellido_p")
                          ->where("email", $request["email"])
                          ->where("password", md5($request["password"]))
+                         ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
                          ->where("auditoria.tabla", "users")
                          ->where("auditoria.status", "!=", "0")
 	    				 ->get();
@@ -54,10 +55,12 @@ class Login extends Controller
 
 
 
-	    		$data = array('user_id'  => $users[0]->id,
-	    			          'email'    => $users[0]->email,
-	    					  'token'    => $token,
-	    					  'mensagge' => "Ha iniciado sesión exitosamente"
+	    		$data = array('user_id'    => $users[0]->id,
+	    			          'email'      => $users[0]->email,
+                              'token'      => $token,
+                              'nombre'     => $users[0]->nombres,
+                              'apellido'   => $users[0]->apellido_p,
+	    					  'mensagge'   => "Ha iniciado sesión exitosamente"
 	    		);
 
 	    		return response()->json($data)->setStatusCode(200);

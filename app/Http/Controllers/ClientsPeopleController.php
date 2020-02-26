@@ -15,6 +15,8 @@ use App\ClientsWorkingInformation;
 use App\Policies;
 use App\PoliciesAnnexes;
 use App\ChargeAccount;
+use App\Departamentos;
+
 use Illuminate\Http\Request;
 
 class ClientsPeopleController extends Controller
@@ -382,5 +384,19 @@ class ClientsPeopleController extends Controller
     public function destroy(ClientsPeople $clientsPeople)
     {
         //
+    }
+
+
+    public function UpdateLocation(){
+        $data = ClientsPeopleContact::get();
+
+       // 
+      //  echo \json_encode($departamentos);
+        foreach($data as $client){
+            
+            $departamentos = Departamentos::where("nombre", $client["department"])->first();
+            echo \json_encode($client["department"])."<br>";
+            echo \json_encode($departamentos["id"])."<br><br>";
+        }
     }
 }

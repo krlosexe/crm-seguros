@@ -192,3 +192,7 @@ Route::get('vehicle/{placa}', 'VehicleController@show');
 Route::resource('vehicle', 'VehicleController');
 
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
+
+
+
+Route::get('client/update/location', 'ClientsPeopleController@UpdateLocation');
