@@ -195,8 +195,9 @@ class TasksController extends Controller
      * @param  \App\Tasks  $tasks
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tasks $tasks)
+    public function destroy($tasks)
     {
-        //
+        $update = Tasks::find($tasks)->delete();
+        return response()->json("ok")->setStatusCode(200);
     }
 }

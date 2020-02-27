@@ -88,6 +88,11 @@ class FootersController extends Controller
     }
 
 
+    public function Delete(Request $request){
+        Footers::where('name', $request["name"])->where('content', $request["content"])->delete();
+        return response()->json("ok")->setStatusCode(200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -55,7 +55,7 @@
 				$("#nav_li_Administración").addClass("open");
 				$("#nav_users, #modulo_Administración").addClass("active");
 				$("#nav_payment").addClass("active");
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "payment");
 			});
 
 

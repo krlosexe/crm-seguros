@@ -152,10 +152,9 @@
                                                 <label>Descripcion</label>
                                                 <textarea name="description" id="description" class="form-control"></textarea>
                                             </div>
-                                            <div class="text-right">
-                                                <button type="submit" class="btn btn-success">Guardar</button>
-                                                
-                                            </div>
+                                         
+                                            <button type="button" id="btn-delete" class="btn btn-danger">Borrar</button>
+                                            <button type="submit" class="btn btn-success">Guardar</button>
                                         </form>
                                     </div>
                                 </div>
@@ -242,6 +241,14 @@
                         $("#responsable").selectize({});
 
                         $("#calendar-edit").modal("show")
+
+
+                        if((calEvent.responsable == id_user) || id_rol == 6){
+                            $("#btn-delete").removeAttr("disabled")
+                        }else{
+                            $("#btn-delete").attr("disabled", "disabled")
+                        }
+                        DeleteTasks(calEvent.id_tasks)
                     }
                         
 
@@ -250,6 +257,35 @@
                 $('.start-date').datepicker();
                 $('.end-date').datepicker();
 
+            }
+
+
+
+
+            function DeleteTasks(id){
+              
+                $("#btn-delete").unbind().click(function (e) { 
+                    e.preventDefault();
+                    var url=document.getElementById('ruta').value;
+                    $.ajax({
+                        url:''+url+'/api/tasks/delete/'+id,
+                        type:'GET',
+                        dataType:'JSON',
+                        async: false,
+                        beforeSend: function(){
+                        
+                        },
+                        error: function (data) {
+                            
+                        },
+                        success: function(data){
+                            initCalendar()
+                            ListTasksToday("#list-today")
+
+                            $("#calendar-edit").modal("hide")
+                        }
+                    });
+                });
             }
 
             

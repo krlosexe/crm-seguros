@@ -63,7 +63,7 @@
 				$("#nav_li_Clientes").addClass("open");
 				$("#nav_users, #modulo_Clientes").addClass("active");
 				$("#nav_company").addClass("active");
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "company");
 			});
 
 

@@ -67,7 +67,7 @@
 
 				$("#nav_users, #modulo_Clientes").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "people");
 			});
 
 

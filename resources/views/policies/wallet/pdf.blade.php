@@ -521,6 +521,8 @@
                                                 <i class="fa fa-file-pdf-o text-danger pdd-right-5"></i>
                                                 <b>Exportar PDF</b>
                                             </a>
+                                            <a onclick="this.href='data:application/pdf;charset=UTF-8,'+encodeURIComponent(document.documentElement.outerHTML)" href="#" download="page.pdf">Download</a>
+
                                         </li>
                                     </ul>
                                 </div>

@@ -62,7 +62,7 @@
 				$("#nav_li_Configuraciones").addClass("open");
 				$("#nav_users, #modulo_Configuraciones").addClass("active");
 				$("#nav_branch").addClass("active");
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "branch");
 			});
 
 

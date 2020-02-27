@@ -133,7 +133,7 @@ Route::resource('tasks', 'TasksController');
 Route::post('tasks/update/{id}', 'TasksController@update');
 Route::post('tasks/status/{id}/{status}', 'TasksController@status');
 Route::get('tasks-today', 'CalendarController@Today');
-
+Route::get('tasks/delete/{id}', 'TasksController@destroy');
 
 Route::resource('charge/account', 'ChargeAccountController');
 Route::get('charge/account/{id_policie}', 'ChargeAccountController@index');
@@ -159,7 +159,7 @@ Route::resource('footers', 'FootersController');
 
 
 Route::post('footers/update', 'FootersController@updateFooter');
-
+Route::post('footers/delete', 'FootersController@Delete');
 
 Route::get('calendar/tasks/', 'CalendarController@getTask');
 

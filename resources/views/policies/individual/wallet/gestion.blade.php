@@ -153,7 +153,7 @@
 				$("#nav_li_Polizas").addClass("open");
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "policies");
 			});
 
 
@@ -259,6 +259,7 @@
 
 
 			var api = "/api/footers";
+			var api2 = "/api/footers";
 			$("#add-pie").click(function (e) { 
 				$("#default-modal").modal("show")
 				getFooters()
@@ -276,13 +277,46 @@
 
 			$("#footers").change(function (e) { 
 				$(".btn-save-pie").removeAttr("disabled")
+				$(".btn-delete-pie").removeAttr("disabled")
 				$("#name-footer").val($("#footers option:selected").text())
 				$("#content-footer").val($(this).val())
 				$(".remove-pie").css("display", "block")
-				api = "/api/footers/update";
+				api  = "/api/footers/update";
+				api2 = "/api/footers/delete";
 			});
 
+			$("#btn-delete-pie").click(function (e) { 
+				e.preventDefault();
 
+				e.preventDefault();
+				
+				if(($("#name-footer").val() == "") || ($("#content-footer").val() == "")){
+					alert("Los Campos son requeridos")
+				}else{
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+api2,
+						type:'POST',
+						data: {
+							"name"     : $("#name-footer").val(),
+							"content"  : $("#content-footer").val()
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						
+						},
+						error: function (data) {
+						
+						},
+						success: function(data){
+							getFooters()
+						}
+
+					});
+				}
+				
+			});
 			$("#btn-select-pie").click(function (e) { 
 				$("#footer-store").val($("#content-footer").val())
 				

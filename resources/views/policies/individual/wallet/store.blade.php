@@ -127,6 +127,14 @@
                       </div>
 
 
+
+                      <div class="text-right">
+                        <button type="button" id="btn-delete-pie" data-dismiss="modal" class="btn btn-danger btn-delete-pie" disabled>Borrar</button>
+                      </div>
+
+
+
+
                   </div>
                 </div>
               </div>
