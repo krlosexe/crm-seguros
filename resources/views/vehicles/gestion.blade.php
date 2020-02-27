@@ -170,6 +170,7 @@
 				$(".container-datos-adicionales-hijo").css("display", "none");
 				$(".container-datos-adicionales-vehicle").css("display", "none");
 
+				$("#type_vehicule, #code").removeAttr("disabled").removeAttr("readonly")
 				ShowTypeVehicule("#type_vehicule")
 
 				cuadros("#cuadro1", "#cuadro2");
