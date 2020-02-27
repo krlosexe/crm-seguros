@@ -251,3 +251,5 @@ Route::get('policies/wallet/collection/pdf/{id}/1', function ($id) {
 
 
 Route::get("fasecolda/import", "FasecoldaController@Import");
+Route::get("client/create/users", "ClientsController@CreateUser");
+
