@@ -197,3 +197,4 @@ Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
 
 Route::get('client/update/location', 'ClientsPeopleController@UpdateLocation');
 Route::get('policie/vehicule/{placa}', 'PoliciesController@GetVehicule');
+Route::get('client/policie/soat/{cedula}', 'PoliciesController@GetCLientSoat');

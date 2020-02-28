@@ -72,7 +72,7 @@ class ClientsController extends Controller
 
             $User              = new User;
             $User->email       = $value["number_document"];
-            $User->password    = $value["number_document"];
+            $User->password    = md5($value["number_document"]);
             $User->id_rol      = 18;
             
             $User->save();

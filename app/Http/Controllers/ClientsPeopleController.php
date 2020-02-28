@@ -403,4 +403,8 @@ class ClientsPeopleController extends Controller
            echo \json_encode($municipios["nombre"])."<br><br>";
         }
     }
+
+
+
+    
 }

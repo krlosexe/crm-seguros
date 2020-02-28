@@ -625,6 +625,20 @@ class PoliciesController extends Controller
     }
 
 
+
+    public function GetCLientSoat($cedula){
+        $data = Policies::select("policies.number_policies","policies.start_date", "policies.end_date", "clients_people.type_document", "clients_people.number_document")
+                            ->join("branchs", "branchs.id_branchs", "=", "policies.branch")
+                            ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients")
+                            ->where("clients_people.number_document", $cedula)
+                            ->where('branchs.name', 'like', '%SOAT%')
+                            ->get();
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
      * @param  \App\Policies  $policies
