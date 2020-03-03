@@ -7,6 +7,7 @@ use App\Tasks;
 use App\Queries;
 use App\Surgeries;
 use App\Valuations;
+use App\TasksComments;
 use App\Preanesthesia;
 use App\RevisionAppointment;
 use Illuminate\Http\Request;
@@ -22,14 +23,14 @@ class CalendarController extends Controller
                             ->join("datos_personales", "datos_personales.id_usuario", "=", "tasks.responsable")
                             ->join("users as user_responsable", "user_responsable.id", "=", "tasks.responsable")
 
+                            ->with("comments")
 
+                            
                             ->where(function ($query) use ($today) {
                                 if($today != false){
                                     $query->where("tasks.delivery_date", $today);
                                 }
-                            })
-                            
-                            ->get();
+                            })->get();
 
 
         foreach($data as $key => $value){
@@ -79,6 +80,19 @@ class CalendarController extends Controller
         }
         $array = array_values($temp_array);
         return $array;
+     }
+
+
+
+     public function DeleteComment(Request $request){
+         
+        $data["state"]       = 0;
+        $data["user_delete"] = $request["id_user"];
+
+        TasksComments::where("id_tasks_comments", $request["id"])->update($data);
+
+        
+        return response()->json("Ok")->setStatusCode(200);
      }
 
 }

@@ -33,7 +33,25 @@ class UsuariosController extends Controller
         }
     }
 
-
+    public function GetUsersTasks(Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])) {
+            $User = User::select("users.*", "datos_personales.*", "roles.nombre_rol", "auditoria.status", "auditoria.fec_regins", "user_registro.email as user_registro")
+                          ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
+                          ->join("auditoria", "auditoria.cod_reg", "=", "users.id")
+                          ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                          ->join("roles", "roles.id_rol", "=", "users.id_rol")
+                          ->where("auditoria.tabla", "users")
+                          ->where("users.id_rol", "!=", 18)
+                          ->where("auditoria.status", "!=", "0")
+                          ->orderBy("users.id", "desc")
+                          ->get();
+            
+            return response()->json($User)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
 
     public function GetAsesoras(Request $request)
     {

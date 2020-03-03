@@ -33,6 +33,29 @@ class SinistersController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
+
+
+    public function GetByClient($id_client){
+
+
+        $data = Sinisters::select("sinisters.*", "policies.number_policies",  "auditoria.*", "user_registro.email as email_regis")
+
+                                    ->join("policies", "policies.id_policies", "=", "sinisters.policie")
+
+                                    ->join("auditoria", "auditoria.cod_reg", "=", "sinisters.id_sinister")
+                                    ->where("auditoria.tabla", "sinisters")
+                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                    ->with("sinister_amparos_affected")
+
+                                    ->where("policies.clients", $id_client)
+                                    ->where("auditoria.status", "!=", "0")
+                                    ->orderBy("sinisters.id_sinister", "DESC")
+                                    ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+
+    }
     /**
      * Show the form for creating a new resource.
      *

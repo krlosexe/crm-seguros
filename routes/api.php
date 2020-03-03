@@ -117,6 +117,7 @@ Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 
 Route::resource('sinister', 'SinistersController');
+Route::get('sinister/client/{id_client}', 'SinistersController@GetByClient');
 Route::get('status-sinister/{id}/{status}', 'SinistersController@status');
 
 Route::get('payment', 'PaymentController@get');
@@ -198,3 +199,7 @@ Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
 Route::get('client/update/location', 'ClientsPeopleController@UpdateLocation');
 Route::get('policie/vehicule/{placa}', 'PoliciesController@GetVehicule');
 Route::get('client/policie/soat/{cedula}', 'PoliciesController@GetCLientSoat');
+
+Route::get('users/task', 'UsuariosController@GetUsersTasks');
+
+Route::get('task/comment/delete', 'CalendarController@DeleteComment');

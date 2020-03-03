@@ -37,8 +37,7 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-5);
-
-		console.log(url)
+		//alert(url[0])
         validAuth(false, url[0]);
       });
     </script>
@@ -58,7 +57,7 @@
 
 				<div class="container-fluid" id="cuadro1">
 					<div class="page-title">
-						<h4>Gestión de Digitales.</h4>
+						<h4>Gestión de Recaudos.</h4>
 					</div>
 					<div class="row">
 	  
@@ -69,7 +68,7 @@
 
 									@if($management == 1)
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-											<i class="ti-image"></i>
+											<i class="ti-user"></i>
 											<span>Nuevo</span>
 										</button>
 									@endif
@@ -77,7 +76,8 @@
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Nombre</th>
+													<th>Forma de Pago</th>
+													<th>Monto</th>
 													<th>Fecha de registro</th>
 													<th>Acciones</th>
 												</tr>
@@ -95,9 +95,9 @@
 				</div>
 
 
-				@include('policies.grouped.files.store')
-				@include('policies.grouped.files.view')
-				@include('policies.grouped.files.edit')
+				@include('policies.individual.wallet.files.store')
+				@include('policies.individual.wallet.files.view')
+				@include('policies.individual.wallet.files.edit')
 
 
 
@@ -155,12 +155,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/files', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/wallet/collections', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/files/', '#cuadro2');
+				enviarFormulario("#store", 'api/wallet/collections', '#cuadro2');
 			}
 
 
@@ -182,7 +182,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						"url":''+url+'/api/files/policies_grouped/'+{{$id_client}},
+						"url":''+url+'/api/wallet/collections/'+{{$id_charge}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -192,6 +192,12 @@
 					"columns":[
 						
 						{"data":"title"},
+						{"data":"amount",
+							render: function (data, type, row) { 
+
+								return number_format(data, 2)
+							 }
+						},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -246,6 +252,7 @@
 
 
 				$('#input-file-store').fileinput('destroy');
+				
 				$("#input-file-store").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
@@ -281,7 +288,7 @@
 					var data = table.row( $(this).parents("tr") ).data();
 					
 					$("#titles_view").val(data.title).attr("disabled", "disabled")
-					$("#descriptions_view").val(data.descripcion).attr("disabled", "disabled")
+					$("#amount_view").val(data.amount).attr("disabled", "disabled")
 				
 					$('#input-file-view').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
@@ -318,13 +325,13 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
+							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
 					
 						],
 
 					});
 
-
+					$("#btn-print-view").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
 
 
 					
@@ -346,7 +353,7 @@
 					var data = table.row( $(this).parents("tr") ).data();
 					
 					$("#titles_edit").val(data.title)
-					$("#descriptions_edit").val(data.descripcion)
+					$("#amount_edit").val(data.amount)
 				
 					$('#input-file-edit').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
@@ -359,7 +366,8 @@
 						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
-					
+					$("#btn-print").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
+
 					$("#input-file-edit").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
@@ -382,120 +390,18 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
+							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
 					
 						],
 
 					});
 
-					$("#id_edit").val(data.id_files)
+					$("#id_edit").val(data.id_collections)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
 			
-
-			function GetBranchByInsurers(select_insurers, select_branch, value_default = false){
-
-				$(select_branch).selectize({
-					sortField: 'text'
-				});
-
-				$(select_insurers).change(function (e) { 
-				
-					var url=document.getElementById('ruta').value;
-					$.ajax({
-						url:''+url+'/api/insurers/'+$(this).val(),
-						type:'GET',
-						data: {
-							"id_user": id_user,
-							"token"  : tokens,
-						},
-						dataType:'JSON',
-						async: false,
-						beforeSend: function(){
-						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
-						},
-						error: function (data) {
-						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
-						},
-						success: function(data){
-							$(select_branch)[0].selectize.destroy()
-							$(select_branch+" option").remove();
-							$(select_branch).append($('<option>',
-							{
-								value: "null",
-								text : "Seleccione"
-							}));
-							
-							$.each(data.branchs, function (key, item) { 
-								
-								$(select_branch).append($('<option>',
-								{
-									value: item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage,
-									text : item.name,
-									selected: value_default == item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage ? true : false
-								}));
-							});
-
-							$(select_branch).selectize({
-								//sortField: 'text'
-							});
-						}
-					});
-				});
-			}
-
-
-			function ChangeSelectBranch(select, option = ""){
-				$(select).change(function (e) { 
-					var array = $(this).val().split("|")
-
-					var percentage_vat_cousin = array[1]
-					var commission_percentage = array[2]
-
-					$("#percentage_vat_cousin"+option).val(percentage_vat_cousin)
-					$("#commission_percentage"+option).val(commission_percentage)
-					
-					calc("#cousin"+option, "#xpenses"+option, "#total"+option, "#percentage_vat_cousin"+option, "#vat"+option, "#commission_percentage"+option, "#agency_commission"+option, "#participation"+option)
-
-				});
-			}
-
-
-
-			$("#cousin, #xpenses, #commission_percentage, #percentage_vat_cousin").keyup(function (e) { 
-				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
-			});
-
-
-			$("#cousin_edit, #xpenses_edit, #commission_percentage_edit, #percentage_vat_cousin_edit").keyup(function (e) { 
-				calc("#cousin_edit", "#xpenses_edit", "#total_edit", "#percentage_vat_cousin_edit", "#vat_edit", "#commission_percentage_edit", "#agency_commission_edit", "#participation_edit")
-			});
-
-
-
-
-			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission, participation){
-				
-				var value_cousin                      = inNum($(input_cousin).val())
-				var value_xpenses                     = inNum($(input_xpenses).val())
-				var value_percentage_vat_cousin       = inNum($(input_percentage_vat_cousin).val())
-				var value_input_commission_percentage = inNum($(input_commission_percentage).val())
-				var participation                     = inNum($(participation).val())
-				
-				var result_percentage_vat_cousin = inNum(((value_cousin + value_xpenses)/100) * value_percentage_vat_cousin)
-				var result_commission_percentage = inNum(((value_cousin - (value_cousin*value_percentage_vat_cousin/100)) /100) * value_input_commission_percentage)
-				
-				var comission_total =  inNum(result_commission_percentage)
-
-				
-				var total = result_percentage_vat_cousin + value_cousin + value_xpenses
-
-				$(input_vat).val(number_format(result_percentage_vat_cousin, 2))
-				$(agency_commission).val(number_format(comission_total ,2))
-				$(input_total).val(number_format(total, 2))
-			}
 
 	
 
@@ -506,7 +412,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/files/status/'+data.id_files+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/wallet/collections/status/'+data.id_collections+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -518,14 +424,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/files/status/'+data.id_files+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/wallet/collections/status/'+data.id_collections+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/files/status/'+data.id_files+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/wallet/collections/status/'+data.id_collections+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 

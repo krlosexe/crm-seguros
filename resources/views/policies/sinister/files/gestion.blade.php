@@ -318,7 +318,7 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
+							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
 					
 						],
 
@@ -382,7 +382,7 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
+							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
 					
 						],
 

@@ -108,51 +108,83 @@
 
 
                         <div class="modal fade" id="calendar-edit">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog  modal-lg" role="document" style="max-width: 1224px;">
                                 <div class="modal-content">
                                     <div class="border btm padding-15">
                                         <h4 class="no-mrg" id="title-modal">Tarea</h4>
                                     </div>
                                     <div class="modal-body">
                                         <form method="post" id="form-store">
-                                            <div class="form-group">
-                                                <label>Responsable</label>
-                                                <select class="selectized" name="responsable" id="responsable" required>
-                                                    <option value="">Seleccione</option>
-                                                </select>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label>Asunto</label>
-                                                <input  name="issue" id="issue" class="form-control" required>
-                                            </div>
+                                            
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Fecha de Entrega</label>
-                                                    <div class="timepicker-input input-icon form-group">
-                                                        <i class="ti-calendar"></i>
-                                                        <input type="text" autocomplete="off" id="delivery_date" name="delivery_date" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
+                                                
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Responsable</label>
+                                                        <select class="selectized" name="responsable" id="responsable" required>
+                                                            <option value="">Seleccione</option>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label>Asunto</label>
+                                                        <input  name="issue" id="issue" class="form-control" required>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Fecha de Entrega</label>
+                                                            <div class="timepicker-input input-icon form-group">
+                                                                <i class="ti-calendar"></i>
+                                                                <input type="text" autocomplete="off" id="delivery_date" name="delivery_date" class="form-control start-date" placeholder="Datepicker" data-provide="datepicker" required>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6">
+                                                            <label>Estado</label>
+                                                            <select class="form-control" name="state" id="state" required>
+                                                                <option value="Abierta">Abierta</option>
+                                                                <option value="Finalizada">Finalizada</option>
+                                                                <option value="Cancelada">Cancelada</option>
+                                                            </select>
+                                                        </div>
+
+
                                                     </div>
                                                 </div>
+                                                <div class="col-md-7">
 
 
-                                                <div class="col-md-6">
-                                                    <label>Estado</label>
-                                                    <select class="form-control" name="state" id="state" required>
-                                                        <option value="Abierta">Abierta</option>
-                                                        <option value="Finalizada">Finalizada</option>
-                                                        <option value="Cancelada">Cancelada</option>
-                                                    </select>
+                                                    <div class="row" id="comments_content">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Comentarios</label>
+                                                                <textarea id="comments" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <button type="button" id="add-comments"  class="btn btn-primary">
+                                                                Comentar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
-
-
                                             </div>
-                                            <div class="form-group">
-                                                <label>Descripcion</label>
-                                                <textarea name="description" id="description" class="form-control"></textarea>
-                                            </div>
-                                         
+                                            <input type="hidden" name="id_user" id="id_user_task">
                                             <button type="button" id="btn-delete" class="btn btn-danger">Borrar</button>
                                             <button type="submit" class="btn btn-success">Guardar</button>
                                         </form>
@@ -179,7 +211,8 @@
 
 	@section('CustomJs')
 
-
+    <link href="<?= url('/') ?>/vendors/summernote-master/dist/summernote.min.css" rel="stylesheet">
+    <script src="<?= url('/') ?>/vendors/summernote-master/dist/summernote.min.js"></script>
 		<script>
             
 			$(document).ready(function(){
@@ -189,17 +222,137 @@
                 $("#nav_users, #modulo_Tareas").addClass("active");
 
                 verifyPersmisos(id_user, tokens, "modules");
-                GetUsers("#responsable")
+                GetUsersTasks("#responsable")
 
 
                 initCalendar()
 
                 ListTasksToday("#list-today")
 
+                $('#comments').summernote({
+                    height: 145, 
+                })
 
-
+                $("#id_user_task").val(id_user)
             });
             
+
+
+            function GetUsersTasks(select, select_default = false){
+				
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                  url:''+url+'/api/users/task',
+                  type:'GET',
+                  data: {
+                      "id_user": id_user,
+                      "token"  : tokens,
+                    },
+                  dataType:'JSON',
+                  async: false,
+                  beforeSend: function(){
+                  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+                  },
+                  error: function (data) {
+                    //mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+                  },
+                  success: function(data){
+              
+                    $(select).each(function() {
+                      if (this.selectize) {
+                        this.selectize.destroy();
+                      }
+                   });
+                   
+                    $(select+" option").remove();
+                    $(select).append($('<option>',
+                    {
+                      value: "null",
+                      text : "Seleccione"
+                    }));
+              
+                    $.each(data, function(i, item){
+                      
+                      if (item.status == 1) {
+                        $(select).append($('<option>',
+                        {
+                          value: item.id,
+                          text : item.nombres+" "+item.apellido_p,
+                          selected: select_default == item.id_type_sub_company ? true : false
+                        }));
+                      }
+                    });
+              
+                    $(select).selectize({
+                      //sortField: 'text'
+                    });
+                  }
+                });
+              }
+
+              var count = 0;
+              $("#add-comments").click(function (e) { 
+				
+				var html = ""
+                count++
+
+				html += '<div class="col-md-12" style="margin-bottom: 15px" id="comments_create_'+count+'">'
+					html += "<input type='hidden' name='comments[]' value='"+$("#comments").val()+"'>"
+					html += '<div class="row">'
+						html += '<div class="col-md-2">'
+							//html += "<img class='rounded' src='/img/usuarios/profile/"+item.img_profile+"' style='height: 4rem;width: 4rem; margin: 1%; border-radius: 50%!important;' title='"+item.name_follower+" "+item.last_name_follower+"'>"
+							
+						html += '</div>'
+                        html += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;">'
+                             html += '<div class="row">'
+                                html += '<div class="col-md-10">'
+                                    html += '<div>'+$("#comments").val()+'</div>'
+                                html += '</div>'
+
+                                html += '<div class="col-md-2">'
+                                    html += "<div><a href='#' style='color: red' onclick='DeleteComment(\"" + "#comments_create_" + count +"\")'>Borrar</a></div>"
+                                html += '</div>'
+                            html += '</div>'
+							html += '<div><b></b> <span style="float: right">Ahora Mismo</span></div>'
+
+						html += '</div>'
+					html += '</div>'
+				html += '</div>'
+
+				$("#comments_content").append(html)
+			});
+
+
+            function DeleteComment(comment, ajax = false, id = 0){
+                $(comment).remove()
+
+                if(ajax){
+
+                    var url=document.getElementById('ruta').value;
+                    $.ajax({
+                        url:''+url+'/api/task/comment/delete',
+                        type:'GET',
+                        dataType:'JSON',
+                        data: {
+                            id      : id,
+                            id_user : id_user
+                        },
+
+                        async: false,
+
+                        beforeSend: function(){
+                        
+                        },
+                        error: function (data) {
+                            
+                        },
+                        success: function(data){
+                            initCalendar()
+                        }
+                    });
+
+                }
+            }
 
             function initCalendar(){
                 $('#full-calendar').fullCalendar("destroy")
@@ -248,6 +401,47 @@
                         }else{
                             $("#btn-delete").attr("disabled", "disabled")
                         }
+
+
+
+                        var url=document.getElementById('ruta').value; 
+                        var html = "";
+
+                        var count_view = 0
+                        $.map(calEvent.comments, function (item, key) {
+
+                            count_view++
+                            html += '<div class="col-md-12" style="margin-bottom: 15px" id="comments_view_'+count_view+'">'
+                                html += '<div class="row">'
+                                    html += '<div class="col-md-2">'
+                                        html += "<img class='rounded' src='"+url+"/img/usuarios/profile/"+item.img_profile+"' style='height: 4rem;width: 4rem; margin: 1%; border-radius: 50%!important;' title='"+item.name_follower+" "+item.last_name_follower+"'>"
+                                        
+                                        html += '</div>'
+                                                html += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;">'
+                                                html += '<div class="row">'
+                                            html += '<div class="col-md-10">'
+                                                html += '<div>'+item.comments+'</div>'
+                                            html += '</div>'
+
+                                            html += '<div class="col-md-2">'
+                                                html += "<div><a href='javascript:void(0)' style='color: red' onclick='DeleteComment(\"" + "#comments_view_" + count_view +"\", true, "+item.id_tasks_comments+")'>Borrar</a></div>"
+                                            html += '</div>'
+                                        html += '</div>'
+
+                                        html += '<div><b>'+item.name_user+" "+item.last_name_user+'</b> <span style="float: right">'+item.create_at+'</span></div>'
+
+
+                                    html += '</div>'
+                                html += '</div>'
+                            html += '</div>'
+                            
+                        });
+
+                        $("#comments_content").html(html)
+                    
+
+
+
                         DeleteTasks(calEvent.id_tasks)
                     }
                         

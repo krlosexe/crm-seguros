@@ -280,6 +280,11 @@
 					$('#iframeCarteraView').attr('src', url);
 
 
+					var url = "clients/people/sinister/"+data.id_clients_people+"/1"
+					$('#iframeSinisterView').attr('src', url);
+
+
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
 			}
@@ -386,6 +391,12 @@
 
 					var url = "clients/people/wallet/"+data.id_clients_people+"/1"
 					$('#iframeCarteraEdit').attr('src', url);
+
+
+					var url = "clients/people/sinister/"+data.id_clients_people+"/1"
+					$('#iframeSinisterEdit').attr('src', url);
+
+
 
 					cuadros('#cuadro1', '#cuadro4');
 				});

@@ -253,3 +253,6 @@ Route::get('policies/wallet/collection/pdf/{id}/1', function ($id) {
 Route::get("fasecolda/import", "FasecoldaController@Import");
 Route::get("client/create/users", "ClientsController@CreateUser");
 
+Route::get('clients/people/sinister/{id_client}/{management}', function ($id_client, $management ) {
+    return view('clients.people.sinisters.gestion', ["id_client" => $id_client, "management" => $management]);
+});

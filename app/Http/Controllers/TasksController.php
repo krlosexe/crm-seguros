@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tasks;
 use App\Auditoria;
 use App\TasksFollowers;
+use App\TasksComments;
 use Illuminate\Http\Request;
 
 use DateTime;
@@ -34,49 +35,12 @@ class TasksController extends Controller
                                 ->join("users as responsable", "responsable.id", "=", "tasks.responsable")
                                 ->join("datos_personales", "datos_personales.id_usuario", "=", "responsable.id")
 
-                                ->with("followers")
-
-
-                                ->where(function ($query) use ($rol, $id_user) {
-                                    if($rol == "Asesor"){
-                                        $query->where("tasks.responsable", $id_user);
-                                    }
-                                })
-
+                                ->with("comments")
 
                                 ->where("auditoria.tabla", "tasks")
                                 ->where("auditoria.status", "!=", "0")
                                 ->orderBy("tasks.id_tasks", "DESC")
                                 ->get();
-
-
-            if($rol == "Asesor"){
-
-                $tasks_follow = Tasks::select("tasks.*", "responsable.email as email_responsable", "datos_personales.nombres as name_responsable", 
-                                "datos_personales.apellido_p as last_name_responsable", "auditoria.*", "users.email as email_regis")
-
-                                ->join("auditoria", "auditoria.cod_reg", "=", "tasks.id_tasks")
-                                ->join("users", "users.id", "=", "auditoria.usr_regins")
-
-                                ->join("users as responsable", "responsable.id", "=", "tasks.responsable")
-                                ->join("datos_personales", "datos_personales.id_usuario", "=", "responsable.id")
-
-                                ->join("tasks_followers", "tasks_followers.id_task", "=", "tasks.id_tasks")
-
-                                ->with("followers")
-                                
-                                ->where("tasks_followers.id_follower", $id_user)
-                                ->where("auditoria.tabla", "tasks")
-                                ->where("auditoria.status", "!=", "0")
-                                ->orderBy("tasks.id_tasks", "DESC")
-                                ->get();
-
-
-                foreach($tasks_follow as $key => $value){
-                  $tasks[] = $value;
-                }
-            }
-            
                              
             echo json_encode($tasks);
 
@@ -101,12 +65,24 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-
         $fecha = $request["delivery_date"];
 
         $dt = new DateTime($fecha);
         $request["delivery_date"] = $dt->format('Y-m-d');
         $store = Tasks::create($request->all());
+        $id_task = $store->id_tasks;
+
+        if(isset($request["comments"])){
+            $comments = [];
+            foreach($request["comments"] as $key => $value){
+                $array = [];
+                $array["id_task"]     = $id_task;
+                $array["id_user"]     = $request["id_user"];
+                $array["comments"]    = $value;
+                array_push($comments, $array);
+            }
+            TasksComments::insert($comments);
+        }
 
 
         if ($store) {
@@ -154,6 +130,21 @@ class TasksController extends Controller
         $request["delivery_date"] = $dt->format('Y-m-d');
             
         $update = Tasks::find($tasks)->update($request->all());
+
+
+        if(isset($request["comments"])){
+            $comments = [];
+            foreach($request["comments"] as $key => $value){
+                $array = [];
+                $array["id_task"]     = $tasks;
+                $array["id_user"]     = $request["id_user"];
+                $array["comments"]    = $value;
+                array_push($comments, $array);
+            }
+
+            TasksComments::insert($comments);
+        }
+
 
         if ($update) {
             $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    

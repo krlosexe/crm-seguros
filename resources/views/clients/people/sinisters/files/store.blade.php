@@ -1,40 +1,38 @@
-<div class="card shadow mb-4 hidden" id="cuadro3">
+<div class="card shadow mb-4 hidden" id="cuadro2">
 
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Consulta de Digitales.</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Registro de Recaudos</h6>
   </div>
   <div class="card-body">
-      <form class="user" autocomplete="off" method="post" enctype="multipart/form-data">
+      <form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
       
         @csrf
-
 
         <div class="row">
           <div class="col-md-12" id="file-'+count+'">
               <div class="row">
                 <div class="col-md-6">
-                  <label for=""><b>Titulo *</b></label>
+                  <label for=""><b>Forma de Pago *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="titles" id="titles_view" class="form-control form-control-user" required>
+                    <input type="text" name="title" id="titles_store" class="form-control form-control-user" required>
                   </div>
                 </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Descripción *</b></label>
+                  <label for=""><b>Monto *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="descriptions" id="descriptions_view" class="form-control form-control-user" id="description" required>
+                    <input type="text" name="amount" id="amount_store" class="form-control form-control-user" required>
                   </div>
                 </div>
 
               </div>
               <br>
 
-
               <div class="row">
                 <div class="col-md-12 text-center">
                   <div class="kv-avatar">
                     <div class="file-loading">
-                      <input id="input-file-view" name="file" type="file">
+                      <input id="input-file-store" name="file" type="file" required>
                     </div>
                   </div>
 
@@ -49,25 +47,28 @@
           </div>
         </div>
 
-
-
         <!---END ROW-->
-
-
+        <input type="hidden" name="tabla" value="policies">
+        <input type="hidden" name="id_charge_accounts" value="{{$id_charge}}">
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
           <br>
           <br>
-        
+   
           <center>
-            <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro3')">
+
+            <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro2')">
                 Cancelar
             </button>
+            <button type="submit" class="btn btn-success btn-user">
+                Registrar
+            </button>
+
           </center>
           <br>
           <br>
       </form>
       
-    </div>
-  </div>
+      </div>
+ </div>
 

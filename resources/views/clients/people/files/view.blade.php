@@ -34,7 +34,7 @@
                 <div class="col-md-12 text-center">
                   <div class="kv-avatar">
                     <div class="file-loading">
-                      <input id="input-file-view" name="file" type="file" disabled>
+                      <input id="input-file-view" name="file" type="file">
                     </div>
                   </div>
 

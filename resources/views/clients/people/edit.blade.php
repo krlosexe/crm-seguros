@@ -24,9 +24,8 @@
                 <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
              <li class="nav-item">
-                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Siniestros</a>
+                <a href="#default-tab-5-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Siniestros</a>
             </li>
-
 
 
 
@@ -694,6 +693,18 @@
               </iframe>
             </div>
           </div>
+
+
+          <div role="tabpanel" class="tab-pane fade in " id="default-tab-5-edit">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframeSinisterEdit" allowfullscreen>
+
+              </iframe>
+            </div>
+          </div>
+
+
+
 
 
 

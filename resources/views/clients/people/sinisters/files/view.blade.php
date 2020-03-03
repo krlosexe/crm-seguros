@@ -13,16 +13,16 @@
           <div class="col-md-12" id="file-'+count+'">
               <div class="row">
                 <div class="col-md-6">
-                  <label for=""><b>Titulo *</b></label>
+                  <label for=""><b>Forma de Pago *</b></label>
                   <div class="form-group valid-required">
                     <input type="text" name="titles" id="titles_view" class="form-control form-control-user" required>
                   </div>
                 </div>
 
                 <div class="col-md-6">
-                  <label for=""><b>Descripción *</b></label>
+                  <label for=""><b>Monto *</b></label>
                   <div class="form-group valid-required">
-                    <input type="text" name="descriptions" id="descriptions_view" class="form-control form-control-user" id="description" required>
+                    <input type="text" name="amount" id="amount_view" class="form-control form-control-user" required>
                   </div>
                 </div>
 
@@ -34,7 +34,7 @@
                 <div class="col-md-12 text-center">
                   <div class="kv-avatar">
                     <div class="file-loading">
-                      <input id="input-file-view" name="file" type="file">
+                      <input id="input-file-view" name="file" type="file" disabled>
                     </div>
                   </div>
 
@@ -63,6 +63,13 @@
             <button type="button"  class="btn btn-danger btn-user" onclick="prev('#cuadro3')">
                 Cancelar
             </button>
+
+            <a href="/policies/wallet/pdf" id="btn-print-view" target="_blanck" class="btn btn-danger btn-user" >
+              <i class="ti-printer"></i>
+                Imprimir
+            </a>
+
+
           </center>
           <br>
           <br>
