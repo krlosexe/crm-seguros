@@ -203,3 +203,12 @@ Route::get('client/policie/soat/{cedula}', 'PoliciesController@GetCLientSoat');
 Route::get('users/task', 'UsuariosController@GetUsersTasks');
 
 Route::get('task/comment/delete', 'CalendarController@DeleteComment');
+Route::get('departamentos', 'DepartamentosController@get');
+Route::get('departamentos/municipios/{id}', 'DepartamentosController@getMunicipios');
+
+Route::post('tasks/note/create', 'TasksController@CreateNote');
+Route::get('tasks/note/list/{id_user}', 'TasksController@ListNote');
+
+Route::post('tasks/note/update/{id}', 'TasksController@UpdateNote');
+
+Route::post('tasks/note/delete/{id}', 'TasksController@DeleteNote');

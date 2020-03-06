@@ -17,7 +17,7 @@ class CalendarController extends Controller
     function getTask(Request $request, $today = false){
 
         $data = Tasks::select("tasks.id_tasks", "tasks.responsable","tasks.issue as title", "tasks.delivery_date", "tasks.description", "tasks.delivery_date as start",
-                             "tasks.description", "tasks.state", "datos_personales.nombres", "datos_personales.apellido_p", 
+                             "tasks.description", "tasks.state", "tasks.file", "tasks.id_client", "datos_personales.nombres", "datos_personales.apellido_p", 
                              "user_responsable.img_profile")
                            
                             ->join("datos_personales", "datos_personales.id_usuario", "=", "tasks.responsable")

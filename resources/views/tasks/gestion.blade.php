@@ -114,8 +114,7 @@
                                         <h4 class="no-mrg" id="title-modal">Tarea</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="post" id="form-store">
-                                            
+                                        <form method="post" id="form-store" enctype="multipart/form-data">
                                             <div class="row">
                                                 
                                                 <div class="col-md-5">
@@ -126,11 +125,38 @@
                                                         </select>
                                                     </div>
 
+                                                    <div class="form-group">
+                                                        <label for=""><b>Cliente</b></label>
+                                                        <select class="selectized" name="id_client" id="clients_select" >
+                                                            <option value="">Seleccione</option>
+                                                        </select>
+                                                    </div>
+
+
+
+
 
                                                     <div class="form-group">
                                                         <label>Asunto</label>
                                                         <input  name="issue" id="issue" class="form-control" required>
                                                     </div>
+
+
+                                                    <div class="form-group">
+                                                        <label>Adjuntar</label>
+                                                        <input type="file"  name="adjunto" id="adjunto" class="form-control" required>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <a href="#" target="_blank" id="dowload-adjunto" style="display: none">Descargar adjunto</a>
+                                                    </div>
+
+
+
+
+
+
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <label>Fecha de Entrega</label>
@@ -224,7 +250,7 @@
                 verifyPersmisos(id_user, tokens, "modules");
                 GetUsersTasks("#responsable")
 
-
+                GetClients("#clients_select");
                 initCalendar()
 
                 ListTasksToday("#list-today")
@@ -379,10 +405,23 @@
 
 
 
+                        $("#clients_select").each(function() {
+                            if (this.selectize) {
+                            this.selectize.destroy();
+                            }
+                        });
+                        
+
                          $("#issue").val(calEvent.title)
                          $("#delivery_date").val(calEvent.delivery_date)
+                         $("#clients_select").val(calEvent.id_client+"|0")
                          $("#description").val(calEvent.description)
                          $("#state").val(calEvent.state)
+                        
+                         $("#clients_select").selectize({
+                            //sortField: 'text'
+                         });
+
                         $("#responsable").each(function() {
                             if (this.selectize) {
                             this.selectize.destroy();
@@ -403,8 +442,20 @@
                         }
 
 
-
                         var url=document.getElementById('ruta').value; 
+
+
+                        if(calEvent.file != ""){
+                            $("#dowload-adjunto").css("display", "block")
+                            $("#dowload-adjunto").attr("href", "/img/tasks/"+calEvent.file)
+                        }else{
+                            $("#dowload-adjunto").css("display", "none")
+                        }
+                       
+
+
+
+                        
                         var html = "";
 
                         var count_view = 0

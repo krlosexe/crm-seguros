@@ -142,10 +142,7 @@
                                   <label for="data_treatment"></label>
                               </div>
                           </div>
-
-
                         </div>
-
 
                         <br>
 
@@ -175,15 +172,19 @@
                           <div class="col-md-6">
                             <label for=""><b>Departamento*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="department" class="form-control form-control-user" id="department" placeholder="Departamento" required>
+                                <select name="departament"  id="departament" required>
+                                  <option value="">Seleccione</option>
+                                </select>
                               </div>
                           </div>
 
                           <div class="col-md-6">
-                            <label for=""><b>Ciudad*</b></label>
-                              <div class="form-group valid-required">
-                                <input type="text" name="city" class="form-control form-control-user" id="city" placeholder="Ciudad" required>
-                              </div>
+                            <label for=""><b>Municipios*</b></label>
+                               <div class="form-group valid-required">
+                                  <select name="municipios" class="selectized"  id="municipios" required>
+                                    <option value="">Seleccione</option>
+                                  </select>
+                                </div>
                           </div>
                         </div>
 

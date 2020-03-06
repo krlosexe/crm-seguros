@@ -279,28 +279,152 @@ a:focus {
 var noteTemp =  '<div class="note">'
                 +   '<a href="javascript:;" class="button remove">X</a>'
                 +   '<div class="note_cnt">'
-                +       '<textarea class="title" placeholder="Añade un titulo"></textarea>'
+                +       '<textarea class="title" placeholder="Añade un titulo" onchange="saveTitle()" ></textarea>'
                 +       '<textarea class="cnt" placeholder="Descripción..."></textarea>'
                 +   '</div> '
                 +'</div>';
 
 var noteZindex = 1;
-function deleteNote(){
-    $(this).parent('.note').hide("puff",{ percent: 133}, 250);
+
+
+function saveTitle(value, id){
+
+  var url=document.getElementById('ruta').value;
+
+  $.ajax({
+      url:''+url+'/api/tasks/note/update/'+id,
+      type:'POST',
+      dataType:'JSON',
+      data: {
+        "title" : value
+      },
+      success: function(data){
+        
+      }
+  });
+
+}
+
+function saveContent(value, id){
+
+  var url=document.getElementById('ruta').value;
+
+  $.ajax({
+      url:''+url+'/api/tasks/note/update/'+id,
+      type:'POST',
+      dataType:'JSON',
+      data: {
+        "content" : value
+      },
+      success: function(data){
+        
+      }
+  });
+
+}
+
+
+
+function deleteNote(note, id){
+   
+    $(note).parent('.note').hide("puff",{ percent: 133}, 250);
+    var url=document.getElementById('ruta').value;
+    $.ajax({
+      url:''+url+'/api/tasks/note/delete/'+id,
+      type:'POST',
+      dataType:'JSON',
+      success: function(data){
+        
+      }
+  });
+
+
+
 };
 
 function newNote() {
-  $(noteTemp).hide().appendTo("#board").show("fade", 300).draggable().on('dragstart',
-    function(){
-       $(this).zIndex(++noteZindex);
-    });
- 
-    $('.remove').click(deleteNote);
-    $('textarea').autogrow();
+
+    saveNote()
+    
     
   $('.note')
     return false; 
 };
+
+
+
+
+function list(){
+
+  $("#board").html("")
+  var url=document.getElementById('ruta').value;
+  $.ajax({
+      url:''+url+'/api/tasks/note/list/'+id_user,
+      type:'GET',
+      dataType:'JSON',
+      
+      beforeSend: function(){
+      
+      },
+      error: function (data) {
+          
+      },
+      success: function(data){
+        
+        $.map(data, function (item, key) {
+
+           var noteZindex = 1
+           var noteTemp = ""
+           noteTemp =  '<div class="note">'
+                      +   '<a href="javascript:;" onclick="deleteNote(this, '+item.id_note+')" class="button remove">X</a>'
+                      +   '<div class="note_cnt">'
+                      +       '<textarea class="title" onchange="saveTitle(this.value, '+item.id_note+')"  placeholder="Añade un titulo">'+item.title+'</textarea>'
+                      +       '<textarea class="cnt" onchange="saveContent(this.value, '+item.id_note+')"  placeholder="Descripción...">'+item.content+'</textarea>'
+                      +   '</div> '
+                      +'</div>';
+
+            $(noteTemp).hide().appendTo("#board").show("fade", 300).draggable().on('dragstart',
+              function(){
+                $(this).zIndex(++noteZindex);
+                
+              });
+
+            //  $('.remove').click(deleteNote);
+              $('textarea').autogrow();
+
+
+        });
+      }
+  });
+}
+
+
+  
+
+function saveNote(){
+  var url=document.getElementById('ruta').value;
+  $.ajax({
+      url:''+url+'/api/tasks/note/create/',
+      type:'POST',
+      data: {
+        'id_user' : id_user
+      },
+      dataType:'JSON',
+      beforeSend: function(){
+      
+      },
+      error: function (data) {
+          
+      },
+      success: function(data){
+        list()
+      }
+  });
+}
+
+
+
+
 
 
 
@@ -310,8 +434,12 @@ $(document).ready(function() {
     
     $("#add_new").click(newNote);
     
-    $('.remove').click(deleteNote);
-    newNote();
+  //  $('.remove').click(deleteNote);
+
+    list()
+
+
+    //newNote();
       
     return false;
 });
@@ -357,196 +485,6 @@ $(document).ready(function() {
             });
             
 
-            function initCalendar(){
-                $('#full-calendar').fullCalendar("destroy")
-
-                $('#full-calendar').fullCalendar({
-                    lang: 'es',
-                    height: 800,
-                    editable: true,
-                    header:{
-                        left: 'month,agendaWeek,agendaDay',
-                        center: 'title',
-                        right: 'today prev,next'
-                    },
-                    eventSources: [
-							{
-								url: 'api/calendar/tasks', 
-                            }
-                    ],
-
-
-                    eventClick: function(calEvent, jsEvent, view) {
-
-                        enviarFormularioTask("#form-store", 'api/tasks/update/'+calEvent.id_tasks, '#cuadro2');
-
-
-
-                         $("#issue").val(calEvent.title)
-                         $("#delivery_date").val(calEvent.delivery_date)
-                         $("#description").val(calEvent.description)
-                         $("#state").val(calEvent.state)
-                        $("#responsable").each(function() {
-                            if (this.selectize) {
-                            this.selectize.destroy();
-                            }
-                        });
-
-                        $("#responsable").val(calEvent.responsable);
-                         
-                        $("#responsable").selectize({});
-
-                        $("#calendar-edit").modal("show")
-                    }
-                        
-
-                })
-
-                $('.start-date').datepicker();
-                $('.end-date').datepicker();
-
-            }
-
-            
-            
-
-
-            function enviarFormularioTask(form, controlador, cuadro, auth = false){
-                $(form).unbind().submit(function(e){
-                    e.preventDefault(); //previene el comportamiento por defecto del formulario al darle click al input submit
-                    var url=document.getElementById('ruta').value; 
-                    var formData=new FormData($(form)[0]); //obtiene todos los datos de los inputs del formulario pasado por parametros
-                    var method = $(this).attr('method'); //obtiene el method del formulario
-                    $('input[type="submit"]').attr('disabled','disabled'); //desactiva el input submit
-                    $.ajax({
-                        url:''+url+'/'+controlador+'',
-                        type:method,
-                        dataType:'JSON',
-                        data:formData,
-                        cache:false,
-                        contentType:false,
-                        processData:false,
-                        beforeSend: function(){
-                        showNoty('info', "topLeft",'<span>Espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>', 1000);
-                        },
-                        error: function (repuesta) {
-                            $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-                            var errores=repuesta.responseText;
-                            if(errores!="")
-                                showNoty("error", "topRight", errores, 3000)
-                            else
-                                showNoty("error", "topRight","<span>Ha ocurrido un error, por favor intentelo de nuevo.</span>", 3000)
-                        },
-                        success: function(respuesta){
-                            if (respuesta.success == false) {
-                                showNoty('error', "topRight", respuesta.message, 3000);
-                                $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-                            }else{
-                                $('input[type="submit"]').removeAttr('disabled'); //activa el input submit
-                                showNoty('success', "topRight", respuesta.mensagge, 3000);
-                               
-                            }
-
-                            initCalendar()
-                            ListTasksToday("#list-today")
-
-                            $("#calendar-edit").modal("hide")
-
-                        }
-
-                    });
-                });
-            }
-
-
-
-            $("#new-tasks").click(function (e) { 
-                $("#calendar-edit").modal("show")
-                $("#form-store")[0].reset()
-
-                enviarFormularioTask("#form-store", 'api/tasks', '#cuadro2');
-
-            });
-
-
-
-
-
-            function ListTasksToday(list){
-                var url=document.getElementById('ruta').value;
-                $.ajax({
-                    url:''+url+'/api/tasks-today',
-                    type:'GET',
-                    dataType:'JSON',
-                    async: false,
-                    beforeSend: function(){
-                    
-                    },
-                    error: function (data) {
-                        
-                    },
-                    success: function(data){
-                        var html = ""
-
-                        var array = []
-                        $.each(data, function (key, event) { 
-                            array.push(event)
-                        });	
-
-
-                        array.sort(function(a,b){
-                            return  new Date(a.start) - new Date(b.start);
-                        });
-
-                        $.each(array, function (key, event) { 
-                            html += '<li class="event-items">'
-                                    html += '<a href="javascript:void(0);" data-event=\''+JSON.stringify(event)+'\' onclick="showEvent(this)">'
-                                        html += '<span class="bullet success"></span>'
-                                        html += '<span class="event-name">'+event.title+'</span>'
-                                        html += '<div class="event-detail">'
-                                            html += '<span>'+event.delivery_date+' - </span>'
-                                            html += '<i>'+event.nombres+' '+event.apellido_p+'</i>'
-                                        html += '</div>'
-                                    html += '</a>'
-                                    
-                                html += '</li>'
-                        });
-
-                        $(list).html(html)
-
-
-                    }
-                });
-
-            }
-
-
-
-            function showEvent(data){
-
-                var data = JSON.parse($(data).attr("data-event"));
-
-                
-                enviarFormularioTask("#form-store", 'api/tasks/update/'+data.id_tasks, '#cuadro2');
-
-                $("#issue").val(data.title)
-                $("#delivery_date").val(data.delivery_date)
-                $("#description").val(data.description)
-                $("#state").val(data.state)
-                $("#responsable").each(function() {
-                    if (this.selectize) {
-                    this.selectize.destroy();
-                    }
-                });
-
-                $("#responsable").val(data.responsable);
-                    
-                $("#responsable").selectize({});
-
-                $("#calendar-edit").modal('show');
-
-            }
-		
 		</script>
 	@endsection
 

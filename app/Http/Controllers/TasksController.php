@@ -6,6 +6,7 @@ use App\Tasks;
 use App\Auditoria;
 use App\TasksFollowers;
 use App\TasksComments;
+use App\Note;
 use Illuminate\Http\Request;
 
 use DateTime;
@@ -66,6 +67,17 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $fecha = $request["delivery_date"];
+
+
+        
+
+
+        $file = $request->file('adjunto');
+
+        $destinationPath = 'img/tasks';
+        $file->move($destinationPath,$file->getClientOriginalName());
+        $request["file"] = $file->getClientOriginalName();
+
 
         $dt = new DateTime($fecha);
         $request["delivery_date"] = $dt->format('Y-m-d');
@@ -157,6 +169,9 @@ class TasksController extends Controller
     }
 
 
+
+    
+
     public function status($id, $status, Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
@@ -178,7 +193,33 @@ class TasksController extends Controller
     }
 
 
+    public function CreateNote(Request $request){
+        $data = Note::create($request->all());
+        return response()->json("Ok")->setStatusCode(200);
+    }
+
+
+
+
+    public function ListNote($user){
+        
+        $data = Note::where("id_user", $user)->get();
+        return response()->json($data)->setStatusCode(200);
+
+    }
+
+
     
+    public function UpdateNote(Request $request, $id){
+        $update = Note::find($id)->update($request->all());
+        return response()->json("Ok")->setStatusCode(200);
+    }
+
+
+    public function DeleteNote($id){
+        $update = Note::find($id)->delete();
+        return response()->json("Ok")->setStatusCode(200);
+    }
 
     /**
      * Remove the specified resource from storage.

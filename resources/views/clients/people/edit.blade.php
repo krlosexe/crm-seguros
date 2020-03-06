@@ -73,7 +73,7 @@
                         
                           <div class="col-sm-4">
                               <label for=""><b>Tipo de documento*</b></label>
-                              <select name="type_document" class="form-control selectized" id="type_document_edit" required>
+                              <select name="type_document" class="selectized" id="type_document_edit" required>
                                 <option value="">Seleccione</option>
                                 <option value="CÉDULA">CÉDULA</option>
                                 <option value="CÉDULA DE EXTRANJERÍA">CÉDULA DE EXTRANJERÍA</option>
@@ -193,21 +193,25 @@
                       </div>
                       <div class="card-body">
 
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label for=""><b>Departamento*</b></label>
-                              <div class="form-group valid-required">
-                                <input type="text" name="department" class="form-control form-control-user" id="department_edit" placeholder="Departamento" required>
-                              </div>
-                          </div>
+                      <div class="row">
+                            <div class="col-md-6">
+                              <label for=""><b>Departamento*</b></label>
+                                <div class="form-group valid-required">
+                                  <select name="departament"  id="departament_edit" required>
+                                    <option value="">Seleccione</option>
+                                  </select>
+                                </div>
+                            </div>
 
-                          <div class="col-md-6">
-                            <label for=""><b>Ciudad*</b></label>
-                              <div class="form-group valid-required">
-                                <input type="text" name="city" class="form-control form-control-user" id="city_edit" placeholder="Ciudad" required>
-                              </div>
+                            <div class="col-md-6">
+                              <label for=""><b>Municipios*</b></label>
+                                <div class="form-group valid-required">
+                                    <select name="municipios" class="selectized"  id="municipios_edit" required>
+                                      <option value="">Seleccione</option>
+                                    </select>
+                                  </div>
+                            </div>
                           </div>
-                        </div>
 
                         <br>
 

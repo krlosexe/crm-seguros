@@ -68,6 +68,12 @@
 				$("#nav_users, #modulo_Clientes").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "people");
+
+
+				$(".selectized").selectize({
+					  //sortField: 'text'
+					});
+
 			});
 
 
@@ -154,6 +160,7 @@
 
 
 			function nuevo() {
+
 				$("#alertas").css("display", "none");
 				$("#store")[0].reset();
 				$(".container-datos-adicionales-hijo").css("display", "none");
@@ -170,9 +177,10 @@
 				showVehicle("#vehicle", ".container-datos-adicionales-vehicle")
 				AddVehicle("#add-vehicle", "#dato-extra-vehicle-container")
 
-				
+				GetDepartament("#departament")
 
 				cuadros("#cuadro1", "#cuadro2");
+
 			}
 
 
@@ -187,9 +195,32 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
+
+					GetDepartament("#departament_view", data.id_department)
+
+					ChangeDepartament("#departament_view", "#municipios_view", data.id_city)
+
+
+					$("#type_document_view").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+
+
+
+
 					$("#names_view").val(data.names).attr("disabled", "disabled")
 					$("#last_names_view").val(data.last_names).attr("disabled", "disabled")
 					$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
+
+
+					$("#type_document_view").selectize({
+					  //sortField: 'text'
+					});
+
+
+
 					$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
 					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
 					$("#weight_view").val(data.weight).attr("disabled", "disabled")
@@ -203,10 +234,8 @@
 
 					data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
 					$("#data_treatment_view").attr("disabled", "disabled")
+					
 					$("#observations_view").val(data.observations).attr("disabled", "disabled")
-
-
-					$("#department_view").val(data.department).attr("disabled", "disabled")
 					$("#city_view").val(data.city).attr("disabled", "disabled")
 
 					$("#address1_view").val(data.address1).attr("disabled", "disabled")
@@ -224,6 +253,9 @@
 					$("#marital_status_view").val(data.marital_status).attr("disabled", "disabled")
 					$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
 					$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
+
+					$("#departament_view").trigger("change");
+
 
 					data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
 					$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
@@ -303,9 +335,33 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
+
+					GetDepartament("#departament_edit", data.id_department)
+
+					ChangeDepartament("#departament_edit", "#municipios_edit", data.id_city)
+
+					$("#departament_edit").trigger("change");
+
+
+					$("#type_document_edit").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+
+
+
+
+
 					$("#names_edit").val(data.names)
 					$("#last_names_edit").val(data.last_names)
 					$("#type_document_edit").val(data.type_document)
+
+					$("#type_document_edit").selectize({
+					  //sortField: 'text'
+					});
+
+
 					$("#number_document_edit").val(data.number_document)
 					$("#expedition_date_edit").val(data.expedition_date)
 					$("#weight_edit").val(data.weight)
@@ -652,6 +708,164 @@
 				$("#age_edit").val(calcularEdad($(this).val()))
 				});
 
+
+
+
+			$("#departament").change(function (e) { 
+				
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/departamentos/municipios/'+$(this).val(),
+				  type:'GET',
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$("#municipios").each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$("#municipios option").remove();
+					$("#municipios").append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					 
+						$("#municipios").append($('<option>',
+						{
+						  value: item.id,
+						  text : item.nombre
+						}));
+					  
+					});
+			  
+					$("#municipios").selectize({
+					  //sortField: 'text'
+					});
+				  }
+				});
+				
+			});
+
+
+
+			function ChangeDepartament(select, municipios, select_default = false){
+				$(select).change(function (e) { 
+					
+					console.log(select_default)
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+					url:''+url+'/api/departamentos/municipios/'+$(this).val(),
+					type:'GET',
+					dataType:'JSON',
+					async: false,
+					beforeSend: function(){
+					// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+					},
+					error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+					},
+					success: function(data){
+				
+						$(municipios).each(function() {
+						if (this.selectize) {
+							this.selectize.destroy();
+						}
+					});
+					
+						$(municipios+" option").remove();
+						$(municipios).append($('<option>',
+						{
+						value: "null",
+						text : "Seleccione"
+						}));
+				
+						$.each(data, function(i, item){
+						
+							$(municipios).append($('<option>',
+							{
+								value: item.id,
+								text : item.nombre,
+								selected: select_default == item.id ? true : false
+							}));
+						
+						});
+				
+						$(municipios).selectize({
+						//sortField: 'text'
+						});
+					}
+					});
+					
+				});
+			}
+
+			
+
+
+				
+			function GetDepartament(select, select_default = false){	
+
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/departamentos',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$(select).each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					 
+						$(select).append($('<option>',
+						{
+						  value: item.id,
+						  text : item.nombre,
+						  selected: select_default == item.id ? true : false
+						}));
+					  
+					});
+			  
+					$(select).selectize({
+					  //sortField: 'text'
+					});
+				  }
+				});
+			}
 
 
 
