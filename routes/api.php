@@ -212,3 +212,5 @@ Route::get('tasks/note/list/{id_user}', 'TasksController@ListNote');
 Route::post('tasks/note/update/{id}', 'TasksController@UpdateNote');
 
 Route::post('tasks/note/delete/{id}', 'TasksController@DeleteNote');
+
+Route::get('stadist/client', 'Estadists@Clients');

@@ -6,8 +6,31 @@
 	  	<form class="user" autocomplete="off" method="post" id="store" enctype="multipart/form-data">
 			<div class="page-title">
 	  
-
+			<ul class="nav nav-pills" role="tablist">
+				<li class="nav-item">
+					<a href="#default-tab-1-0" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+				</li>
+			
+				<li class="nav-item remove-pay">
+					<a href="#default-tab-3-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Oficinas</a>
+				</li>
+			</ul>
 			@csrf
+
+
+			<div class="tab-content">
+        
+           		<div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-0">
+				   
+				   	aa
+				</div>
+
+
+				   
+				<div role="tabpanel" class="tab-pane fade in" id="default-tab-2-0">bbb</div>
+			</div>
+
+			
 
 			<br><br>	<center><h4>Actualizar información de la Empresa</h4></center> 	</div><br><br>	<br><br>
 

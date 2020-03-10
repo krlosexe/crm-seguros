@@ -16,7 +16,7 @@
                                     <div class="card-block">
                                         <div class="inline-block">
                                             <h1 class="no-mrg-vertical">$968.900</h1>
-                                            <p>Ganancias del mes</p>
+                                            <p>Ganancias de la semana</p>
                                         </div>
                                         <div class="pdd-top-25 inline-block pull-right">
                                             <span class="label label-success label-lg mrg-left-5">+18%</span>
@@ -29,11 +29,11 @@
                                 <div class="card">
                                     <div class="card-block">
                                         <p class="mrg-btm-5">Estadisticas de pólizas</p>
-                                        <h1 class="no-mrg-vertical font-size-35">1200<b class="font-size-16">Pólizas registradas</b></h1>
-                                        <p class="text-semibold">Último mes</p>
+                                        <h1 class="no-mrg-vertical font-size-35">1200<b class="font-size-16"></b></h1>
+                                        <p class="text-semibold">Pólizas vendidas</p>
                                         <div class="mrg-top-10">
                                             <h2 class="no-mrg-btm">88</h2>
-                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Nuevas renovaciones</span>
+                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Renovaciones</span>
                                             <span class="pull-right pdd-right-10 font-size-13">70%</span>
                                             <div class="progress progress-success">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="mrg-top-10">
                                             <h2 class="no-mrg-btm">69</h2>
-                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Sin renovar</span>
+                                            <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Pendientes de renovar</span>
                                             <span class="pull-right pdd-right-10 font-size-13">50%</span>
                                             <div class="progress progress-warning">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="maps map-500 padding-20">
-                                                <div id="monthly-target">
+                                                <div id="map">
                                                 </div>
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@
                                                         <canvas height="230" id="allocation-chart"></canvas>
                                                     </div>
                                                 </div>
-                                                <div class="widget-legends mrg-top-30">
+                                                <div class="widget-legends mrg-top-30" id="legends-allocation">
                                                     <div class="relative mrg-top-15">
                                                         <span class="status info"> </span>
                                                         <span class="pdd-left-20 font-size-16"><b class="text-dark">25%</b> Bógota</span>
@@ -95,26 +95,22 @@
                                             <div class="row">
                                                 <div class="col-md-10 ml-auto mr-auto">
                                                     <div class="row">
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">968</b> Customers</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Aseguradora MP:</b> Suramericana en seguros SA</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">1.8k</b> Orders</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Ramo MP:</b> Vida</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">30k</b> Stock Left</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Vendedor MP: </b> chseguros.com ltda</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">1.7k</b> Pending</p>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,41 +121,127 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-7 col-md-12">
-                                <div class="widget card">
-                                    <div class="card-block">
-                                        <h5 class="card-title">Monthly Overview</h5>
-                                        <div class="row mrg-top-30">
-                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
-                                                <div class="text-center pdd-vertical-10">
-                                                    <h2 class="font-primary no-mrg-top">8%</h2>
-                                                    <p class="no-mrg-btm">APPL</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
-                                                <div class="text-center pdd-vertical-10">
-                                                    <h2 class="font-primary no-mrg-top">$1,730</h2>
-                                                    <p class="no-mrg-btm">M.AVG</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6 col-6 border right border-hide-md">
-                                                <div class="text-center pdd-vertical-10">
-                                                    <h2 class="font-primary no-mrg-top">77%</h2>
-                                                    <p class="no-mrg-btm">Increment</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-sm-6 col-6">
-                                                <div class="text-center pdd-vertical-10">
-                                                    <h2 class="font-primary no-mrg-top">18%</h2>
-                                                    <p class="no-mrg-btm">Profit</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mrg-top-35">
-                                            <div class="col-md-12">
-                                                <div>
-                                                    <canvas id="line-chart" height="220"></canvas>
-                                                </div>
-                                            </div>
+                              <div class="card">
+                                    <div class="card-heading">
+                                        <h4 class="card-title inline-block pdd-top-5">Pólizas próximas a renovar</h4>
+                                        <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a>
+                                    </div>
+                                    <div class="pdd-horizon-20 pdd-vertical-5">
+                                        <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
+                                            <table class="table table-lg table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <img class="thumb-img" src="assets/images/avatars/thumb-1.jpg" alt="">
+                                                                <div class="info">
+                                                                    <span class="title">Jordan Hurst</span>
+                                                                    <span class="sub-title">ID 863</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>8 May</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="status online"> </span>
+                                                                <span class="pdd-left-20">Confirmed</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <img class="thumb-img" src="assets/images/avatars/thumb-4.jpg" alt="">
+                                                                <div class="info">
+                                                                    <span class="title">Samuel Field</span>
+                                                                    <span class="sub-title">ID 868</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>8 May</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="status away"> </span>
+                                                                <span class="pdd-left-20">Pendding</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <img class="thumb-img" src="assets/images/avatars/thumb-5.jpg" alt="">
+                                                                <div class="info">
+                                                                    <span class="title">Jennifer Watkins</span>
+                                                                    <span class="sub-title">ID 860</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>8 May</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="status online"> </span>
+                                                                <span class="pdd-left-20">Confirmed</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <img class="thumb-img" src="assets/images/avatars/thumb-6.jpg" alt="">
+                                                                <div class="info">
+                                                                    <span class="title">Michael Birch</span>
+                                                                    <span class="sub-title">ID 861</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>8 May</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="status no-disturb"> </span>
+                                                                <span class="pdd-left-20">Rejected</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="list-info">
+                                                                <img class="thumb-img" src="assets/images/avatars/thumb-7.jpg" alt="">
+                                                                <div class="info">
+                                                                    <span class="title">Jordan Hurst</span>
+                                                                    <span class="sub-title">ID 862</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mrg-top-10">
+                                                                <span>8 May</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="relative mrg-top-10">
+                                                                <span class="status away"> </span>
+                                                                <span class="pdd-left-20">Pendding</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -167,8 +249,8 @@
                             <div class="col-lg-5 col-md-12">
                                 <div class="card">
                                     <div class="card-heading">
-                                        <h4 class="card-title inline-block pdd-top-5">Latest Transaction</h4>
-                                        <a href="" class="btn btn-default pull-right no-mrg">All Trasaction</a>
+                                        <h4 class="card-title inline-block pdd-top-5">Cartera por cobrar</h4>
+                                        <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a>
                                     </div>
                                     <div class="pdd-horizon-20 pdd-vertical-5">
                                         <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
@@ -582,12 +664,126 @@
         
 		<script>
 			$(document).ready(function(){
-				login();
+				login()
+                Clients()
+
+
+                var primary = '#7774e7',
+                success = '#37c936',
+                info = '#0f9aee',
+                warning = '#ffcc00',
+                danger = '#ff3c7e',
+                primaryInverse = 'rgba(119, 116, 231, 0.1)',
+                successInverse = 'rgba(55, 201, 54, 0.1)',
+                infoInverse = 'rgba(15, 154, 238, 0.1)',
+                warningInverse = 'rgba(255, 204, 0, 0.1)',
+                dangerInverse = 'rgba(255, 60, 126, 0.1)',
+                gray = '#f6f7fb',
+                white = '#fff',
+                dark = '#515365'
+
+
+
+
+
 			});
 
 			function login(){
 				enviarFormulario("#login", 'auth', '#cuadro2', true);
 			}
+
+
+            function Clients(){
+                
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/client/',
+                    type:'GET',
+                    dataType:'JSON',
+                    async: false,
+                    beforeSend: function(){
+                    
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+                       
+                       var labels = []
+                       var colors = []
+                       var counts = []
+
+
+                       var countries = []
+                       
+                       var html = ""
+                       $.map(data.data, function (item, key) {
+                            labels.push(item.nombre)
+                            colors.push(item.color)
+                            counts.push(item.count)
+                            
+                            countries = {
+                                ...countries,
+                                [item.cod] : item.color
+                            }
+
+                            html += '<div class="relative mrg-top-15">'
+                                    + '<span style="border-color: '+item.color+';" class="status info"> </span>'
+                                    + '<span class="pdd-left-20 font-size-16"><b class="text-dark">'+item.porcentaje+'%</b> '+item.nombre+'</span>'
+                                    + '</div>'
+                            
+                       });
+
+                       console.log(countries)
+
+                       $("#legends-allocation").html(html)
+
+
+                       var allocationChart = document.getElementById("allocation-chart");
+                        var allocationCtx = allocationChart.getContext('2d');
+                        var allocationData = {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    fill: true,
+                                    backgroundColor: colors,
+                                    data: counts
+                                }
+                            ]
+                        };
+
+                        var allocationConfig = new Chart(allocationCtx, {
+                            type: 'doughnut',
+                            data: allocationData,
+                            options: {
+                                maintainAspectRatio: false,
+                                legend: {
+                                    display: false
+                                },
+                                cutoutPercentage: 75
+                            }
+                        });
+
+
+
+
+                        $('#map').vectorMap({
+                            map: 'co_merc',
+                            backgroundColor: '#999',
+                            
+                            series: {
+                                regions: [{
+                                values: countries
+                                }]
+                            }
+                        });
+
+
+
+
+                    }
+                });
+            }
 
 
 		</script>

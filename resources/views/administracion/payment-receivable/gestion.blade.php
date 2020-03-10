@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 	@section('content')
-			
 		 <!-- Content Wrapper START -->
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">

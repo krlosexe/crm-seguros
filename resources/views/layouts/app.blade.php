@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
-    <link rel="stylesheet" href="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/vectorMap/jquery-jvectormap-2.0.5.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/datatables/media/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.css" />
@@ -93,7 +93,7 @@
       <script src="<?= url('/') ?>/vendors/bootstrap/dist/js/bootstrap.js"></script>
       <script src="<?= url('/') ?>/vendors/PACE/pace.min.js"></script>
       <script src="<?= url('/') ?>/vendors/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-      <script src="<?= url('/') ?>/vendors/bower-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/vectorMap/jquery-jvectormap-2.0.5.min.js"></script>
       <script src="<?= url('/') ?>/js/maps/jquery-jvectormap-us-aea.js"></script>
       <script src="<?= url('/') ?>/vendors/d3/d3.min.js"></script>
       <script src="<?= url('/') ?>/vendors/nvd3/build/nv.d3.min.js"></script>
@@ -113,7 +113,7 @@
       <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
       <script src="<?= url('/') ?>/vendors/numeral/min/numeral.min.js"></script>
-     
+
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
@@ -127,7 +127,7 @@
         
 
 
-
+    <script src="https://jvectormap.com/js/jquery-jvectormap-co-merc.js"></script>
         <!-- <link href='<?= url('/') ?>/vendors/fullcalendar/packages/core/main.css' rel='stylesheet' />
         <link href='<?= url('/') ?>/vendors/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
         <link href='<?= url('/') ?>/vendors/fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
@@ -148,6 +148,11 @@
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)
+
+
+    
+
+
   </script>
 
   @yield('CustomJs')
