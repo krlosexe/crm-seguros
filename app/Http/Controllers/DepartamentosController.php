@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Departamentos;
 use App\Municipios;
+
 class DepartamentosController extends Controller
 {
     public function get(){

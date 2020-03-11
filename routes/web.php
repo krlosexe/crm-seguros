@@ -226,7 +226,6 @@ Route::get('profile', function () {
     return view('profile.gestion');
 });
 
-
 Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });

@@ -15,7 +15,7 @@
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="inline-block">
-                                            <h1 class="no-mrg-vertical">$968.900</h1>
+                                            <h1 class="no-mrg-vertical" id="balance">$968.900</h1>
                                             <p>Ganancias de la semana</p>
                                         </div>
                                         <div class="pdd-top-25 inline-block pull-right">
@@ -666,8 +666,6 @@
 			$(document).ready(function(){
 				login()
                 Clients()
-
-
                 var primary = '#7774e7',
                 success = '#37c936',
                 info = '#0f9aee',
@@ -683,6 +681,9 @@
                 dark = '#515365'
 
 
+                ganancias()
+
+
 
 
 
@@ -691,6 +692,31 @@
 			function login(){
 				enviarFormulario("#login", 'auth', '#cuadro2', true);
 			}
+
+
+            function ganancias(){
+
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/ganancias',
+                    type:'GET',
+                    dataType:'JSON',
+                    async: false,
+                    beforeSend: function(){
+                    
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+                       
+                        $("#balance").text(number_format(data.total, 2))
+                        console.log(data)
+
+                    }
+                });
+
+            }
 
 
             function Clients(){
@@ -769,13 +795,19 @@
 
                         $('#map').vectorMap({
                             map: 'co_merc',
-                            backgroundColor: '#999',
-                            
+                            backgroundColor: '#fff',
+                            scaleColors: ['#C8EEFF', '#0071A4'],
+                            regionStyle: {
+                                initial: {
+                                    fill: '#323251'
+                                }
+                            },
                             series: {
                                 regions: [{
                                 values: countries
                                 }]
                             }
+                            
                         });
 
 

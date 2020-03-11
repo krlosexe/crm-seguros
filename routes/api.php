@@ -195,7 +195,6 @@ Route::resource('vehicle', 'VehicleController');
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
 
 
-
 Route::get('client/update/location', 'ClientsPeopleController@UpdateLocation');
 Route::get('policie/vehicule/{placa}', 'PoliciesController@GetVehicule');
 Route::get('client/policie/soat/{cedula}', 'PoliciesController@GetCLientSoat');
@@ -214,3 +213,4 @@ Route::post('tasks/note/update/{id}', 'TasksController@UpdateNote');
 Route::post('tasks/note/delete/{id}', 'TasksController@DeleteNote');
 
 Route::get('stadist/client', 'Estadists@Clients');
+Route::get('stadist/ganancias', 'Estadists@Ganancias');

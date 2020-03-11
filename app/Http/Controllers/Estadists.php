@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ClientsPeople;
+use App\Policies;
 class Estadists extends Controller
 {
     public function Clients(){
@@ -33,8 +34,19 @@ class Estadists extends Controller
             $value["porcentaje"] = round($porcentaje);
         }
 
-
-
         return response()->json(["data" => $data, "total" => $total])->setStatusCode(200);
+    }
+
+
+    public function Ganancias(){
+        $data = Policies::selectRaw("SUM(policies_cousins_commissions.agency_commission) as total")
+                            ->join("policies_cousins_commissions", "policies_cousins_commissions.id_policies", "=", "policies.id_policies", "left")
+                            ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                          
+                            ->where("auditoria.tabla", "policies")
+                            ->where("auditoria.status", "!=", "0")
+                            ->whereRaw('YEARWEEK(`fec_regins`, 1) = YEARWEEK(CURDATE(), 1)')
+                            ->first();
+        return response()->json($data)->setStatusCode(200);
     }
 }
