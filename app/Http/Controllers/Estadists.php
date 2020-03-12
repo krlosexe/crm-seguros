@@ -73,7 +73,7 @@ class Estadists extends Controller
         $array = array(
             "sold"        => array("total"   => sizeof($total),   "porcentaje" => 100),
             "renovations" => array("total"   => 0,                "porcentaje" => 0),
-            "expired"     => array("expired" => sizeof($expired), "porcentaje" => $porcentaje_expired)
+            "expired"     => array("total" => sizeof($expired), "porcentaje" => $porcentaje_expired)
         );
 
         return response()->json($array)->setStatusCode(200);
