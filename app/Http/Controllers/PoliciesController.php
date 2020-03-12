@@ -47,8 +47,6 @@ class PoliciesController extends Controller
 
                                 ->with("vehicules")
 
-                                
-
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->orderBy("policies.id_policies", "DESC")

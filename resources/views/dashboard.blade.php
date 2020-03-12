@@ -29,23 +29,23 @@
                                 <div class="card">
                                     <div class="card-block">
                                         <p class="mrg-btm-5">Estadisticas de pólizas</p>
-                                        <h1 class="no-mrg-vertical font-size-35">1200<b class="font-size-16"></b></h1>
+                                        <h1 class="no-mrg-vertical font-size-35" id="sold">1200<b class="font-size-16"></b></h1>
                                         <p class="text-semibold">Pólizas vendidas</p>
                                         <div class="mrg-top-10">
-                                            <h2 class="no-mrg-btm">88</h2>
+                                            <h2 class="no-mrg-btm" id="renovations">88</h2>
                                             <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Renovaciones</span>
-                                            <span class="pull-right pdd-right-10 font-size-13">70%</span>
+                                            <span class="pull-right pdd-right-10 font-size-13" id="renovations_porcentaje">70%</span>
                                             <div class="progress progress-success">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                                <div class="progress-bar" id="progressbar_renovations" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mrg-top-10">
-                                            <h2 class="no-mrg-btm">69</h2>
+                                            <h2 class="no-mrg-btm" id="expired">69</h2>
                                             <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Pendientes de renovar</span>
-                                            <span class="pull-right pdd-right-10 font-size-13">50%</span>
+                                            <span class="pull-right pdd-right-10 font-size-13" id="expired_porcentaje">50%</span>
                                             <div class="progress progress-warning">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                                <div class="progress-bar" role="progressbar" id="progressbar_expired"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                                                 </div>
                                             </div>
                                         </div>
@@ -682,6 +682,7 @@
 
 
                 ganancias()
+                policies()
 
 
 
@@ -709,14 +710,53 @@
                         
                     },
                     success: function(data){
-                       
                         $("#balance").text(number_format(data.total, 2))
-                        console.log(data)
+                    }
+                });
+
+            }
+
+
+
+
+            function policies(){
+
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/policies',
+                    type:'GET',
+                    dataType:'JSON',
+                    async: false,
+                    beforeSend: function(){
+                    
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+                
+                        $("#sold").text(data.sold.total)
+                        $("#renovations").text(data.renovations.total)
+                        $("#renovations_porcentaje").text(data.renovations.porcentaje+" %")
+                        $("#progressbar_renovations").attr("aria-valuenow", data.renovations.porcentaje)
+                        $("#progressbar_renovations").attr("aria-valuemax", data.renovations.porcentaje)
+                        $("#progressbar_renovations").css("width", data.renovations.porcentaje+"%")
+
+                        $("#expired").text(data.expired.total)
+                        $("#expired_porcentaje").text(data.expired.porcentaje+" %")
+                        $("#progressbar_expired").attr("aria-valuenow", data.expired.porcentaje)
+                        $("#progressbar_expired").attr("aria-valuemax", data.expired.porcentaje)
+                        $("#progressbar_expired").css("width", data.expired.porcentaje+"%")
+
+                        
 
                     }
                 });
 
             }
+
+
+
 
 
             function Clients(){
@@ -760,8 +800,6 @@
                             
                        });
 
-                       console.log(countries)
-
                        $("#legends-allocation").html(html)
 
 
@@ -799,7 +837,7 @@
                             scaleColors: ['#C8EEFF', '#0071A4'],
                             regionStyle: {
                                 initial: {
-                                    fill: '#323251'
+                                    fill: '#19212e87'
                                 }
                             },
                             series: {

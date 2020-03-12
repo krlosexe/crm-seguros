@@ -183,8 +183,6 @@ Route::get('fasecolda/get/by/clase/marca/refer1/refer2/refer3', 'FasecoldaContro
 
 Route::get('fasecolda/value', 'FasecoldaController@value');
 
-
-
 Route::get('fasecolda/get/{codigo}', 'FasecoldaController@Get');
 
 
@@ -214,3 +212,6 @@ Route::post('tasks/note/delete/{id}', 'TasksController@DeleteNote');
 
 Route::get('stadist/client', 'Estadists@Clients');
 Route::get('stadist/ganancias', 'Estadists@Ganancias');
+
+Route::get('stadist/policies', 'Estadists@Policies');
+

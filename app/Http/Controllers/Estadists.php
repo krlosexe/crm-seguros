@@ -37,7 +37,6 @@ class Estadists extends Controller
         return response()->json(["data" => $data, "total" => $total])->setStatusCode(200);
     }
 
-
     public function Ganancias(){
         $data = Policies::selectRaw("SUM(policies_cousins_commissions.agency_commission) as total")
                             ->join("policies_cousins_commissions", "policies_cousins_commissions.id_policies", "=", "policies.id_policies", "left")
@@ -48,5 +47,36 @@ class Estadists extends Controller
                             ->whereRaw('YEARWEEK(`fec_regins`, 1) = YEARWEEK(CURDATE(), 1)')
                             ->first();
         return response()->json($data)->setStatusCode(200);
+    }
+
+
+    public function Policies(){
+
+        $total = Policies::join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                            ->where("auditoria.tabla", "policies")
+                            ->where("auditoria.status", "!=", "0")
+                            ->get();
+
+        
+        $expired = Policies::join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                            ->where("auditoria.tabla", "policies")
+                            ->where("policies.state_policies", "Vencida")
+                            ->where("auditoria.status", "!=", "0")
+                            ->get();
+
+
+
+
+        $porcentaje_expired = round((sizeof($expired) * 100) / sizeof($total));
+
+
+        $array = array(
+            "sold"        => array("total"   => sizeof($total),   "porcentaje" => 100),
+            "renovations" => array("total"   => 0,                "porcentaje" => 0),
+            "expired"     => array("expired" => sizeof($expired), "porcentaje" => $porcentaje_expired)
+        );
+
+        return response()->json($array)->setStatusCode(200);
+
     }
 }
