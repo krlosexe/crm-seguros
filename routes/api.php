@@ -215,3 +215,6 @@ Route::get('stadist/ganancias', 'Estadists@Ganancias');
 
 Route::get('stadist/policies', 'Estadists@Policies');
 
+
+Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
+

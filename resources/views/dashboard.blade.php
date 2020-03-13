@@ -26,31 +26,34 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="card">
                                     <div class="card-block">
                                         <p class="mrg-btm-5">Estadisticas de pólizas</p>
-                                        <h1 class="no-mrg-vertical font-size-35" id="sold">1200<b class="font-size-16"></b></h1>
+                                        <h1 class="no-mrg-vertical font-size-35" id="sold"><b class="font-size-16"></b></h1>
                                         <p class="text-semibold">Pólizas vendidas</p>
                                         <div class="mrg-top-10">
-                                            <h2 class="no-mrg-btm" id="renovations">88</h2>
+                                            <h2 class="no-mrg-btm" id="renovations"></h2>
                                             <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Renovaciones</span>
-                                            <span class="pull-right pdd-right-10 font-size-13" id="renovations_porcentaje">70%</span>
+                                            <span class="pull-right pdd-right-10 font-size-13" id="renovations_porcentaje"></span>
                                             <div class="progress progress-success">
-                                                <div class="progress-bar" id="progressbar_renovations" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                                <div class="progress-bar" id="progressbar_renovations" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width:0%">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mrg-top-10">
-                                            <h2 class="no-mrg-btm" id="expired">69</h2>
+                                            <h2 class="no-mrg-btm" id="expired"></h2>
                                             <span class="inline-block mrg-btm-10 font-size-13 text-semibold">Pendientes de renovar</span>
-                                            <span class="pull-right pdd-right-10 font-size-13" id="expired_porcentaje">50%</span>
+                                            <span class="pull-right pdd-right-10 font-size-13" id="expired_porcentaje"></span>
                                             <div class="progress progress-warning">
-                                                <div class="progress-bar" role="progressbar" id="progressbar_expired"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                                <div class="progress-bar" role="progressbar" id="progressbar_expired"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width:0%">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                             <div class="col-lg-9">
                                 <div class="card">
@@ -128,118 +131,9 @@
                                     </div>
                                     <div class="pdd-horizon-20 pdd-vertical-5">
                                         <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
-                                            <table class="table table-lg table-hover">
+                                            <table class="table table-lg table-hover" id="table_policies_next_expired">
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="list-info">
-                                                                <img class="thumb-img" src="assets/images/avatars/thumb-1.jpg" alt="">
-                                                                <div class="info">
-                                                                    <span class="title">Jordan Hurst</span>
-                                                                    <span class="sub-title">ID 863</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="mrg-top-10">
-                                                                <span>8 May</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="relative mrg-top-10">
-                                                                <span class="status online"> </span>
-                                                                <span class="pdd-left-20">Confirmed</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="list-info">
-                                                                <img class="thumb-img" src="assets/images/avatars/thumb-4.jpg" alt="">
-                                                                <div class="info">
-                                                                    <span class="title">Samuel Field</span>
-                                                                    <span class="sub-title">ID 868</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="mrg-top-10">
-                                                                <span>8 May</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="relative mrg-top-10">
-                                                                <span class="status away"> </span>
-                                                                <span class="pdd-left-20">Pendding</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="list-info">
-                                                                <img class="thumb-img" src="assets/images/avatars/thumb-5.jpg" alt="">
-                                                                <div class="info">
-                                                                    <span class="title">Jennifer Watkins</span>
-                                                                    <span class="sub-title">ID 860</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="mrg-top-10">
-                                                                <span>8 May</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="relative mrg-top-10">
-                                                                <span class="status online"> </span>
-                                                                <span class="pdd-left-20">Confirmed</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="list-info">
-                                                                <img class="thumb-img" src="assets/images/avatars/thumb-6.jpg" alt="">
-                                                                <div class="info">
-                                                                    <span class="title">Michael Birch</span>
-                                                                    <span class="sub-title">ID 861</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="mrg-top-10">
-                                                                <span>8 May</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="relative mrg-top-10">
-                                                                <span class="status no-disturb"> </span>
-                                                                <span class="pdd-left-20">Rejected</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="list-info">
-                                                                <img class="thumb-img" src="assets/images/avatars/thumb-7.jpg" alt="">
-                                                                <div class="info">
-                                                                    <span class="title">Jordan Hurst</span>
-                                                                    <span class="sub-title">ID 862</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="mrg-top-10">
-                                                                <span>8 May</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="relative mrg-top-10">
-                                                                <span class="status away"> </span>
-                                                                <span class="pdd-left-20">Pendding</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                   
                                                 </tbody>
                                             </table>
                                         </div>
@@ -683,6 +577,7 @@
 
                 ganancias()
                 policies()
+                policiesExpired()
 
 
 
@@ -702,7 +597,7 @@
                     url:''+url+'/api/stadist/ganancias',
                     type:'GET',
                     dataType:'JSON',
-                    async: false,
+                   
                     beforeSend: function(){
                     
                     },
@@ -719,6 +614,59 @@
 
 
 
+            function policiesExpired(){
+
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/policies/next/expired',
+                    type:'GET',
+                    dataType:'JSON',
+                   
+                    beforeSend: function(){
+                    
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+
+                        var html = ""
+
+                        $.map(data, function (item, key) {
+                            console.log(item)
+
+                           html += '<tr>'
+                                +'<td>'
+                                    +'<div class="list-info">'
+                                       +' <img class="thumb-img" src="assets/images/avatars/thumb-1.jpg" alt="">'
+                                       + '<div class="info">'
+                                          +  '<span class="title">'+item.names+' '+item.last_names+'</span>'
+                                           + '<span class="sub-title"># '+item.number_policies+'</span>'
+                                        +'</div>'
+                                    +'</div>'
+                               + '</td>'
+                              + ' <td>'
+                                   + '<div class="mrg-top-10">'
+                                       + '<span>'+item.end_date+'</span>'
+                                    +'</div>'
+                               + '</td>'
+                               + '<td>'
+                                  +  '<div class="relative mrg-top-10">'
+                                      + '<span class="status online"> </span>'
+                                        +'<span class="pdd-left-20">Confirmed</span>'
+                                    +'</div>'
+                                +'</td>'
+                           + '</tr>'
+
+                        });
+
+                        $("#table_policies_next_expired").html(html)
+                    }
+                });
+
+            }
+
+
             function policies(){
 
                 var url=document.getElementById('ruta').value;
@@ -726,7 +674,7 @@
                     url:''+url+'/api/stadist/policies',
                     type:'GET',
                     dataType:'JSON',
-                    async: false,
+                   
                     beforeSend: function(){
                     
                     },
@@ -766,7 +714,7 @@
                     url:''+url+'/api/stadist/client/',
                     type:'GET',
                     dataType:'JSON',
-                    async: false,
+                   
                     beforeSend: function(){
                     
                     },

@@ -79,4 +79,16 @@ class Estadists extends Controller
         return response()->json($array)->setStatusCode(200);
 
     }
+
+    public function PoliciesExpired(){
+        
+        $data = Policies::select("policies.*","clients_people.names", "clients_people.last_names",  "clients_company.business_name")
+                          ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                          ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                          ->whereRaw("end_date between curdate() and date_add(curdate(), interval 7 day)")
+                          ->get();
+
+        return response()->json($data)->setStatusCode(200);
+                        
+    }
 }
