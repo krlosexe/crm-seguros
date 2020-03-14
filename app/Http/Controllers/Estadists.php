@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ClientsPeople;
 use App\Policies;
+use App\ChargeAccount;
 class Estadists extends Controller
 {
     public function Clients(){
@@ -82,7 +83,7 @@ class Estadists extends Controller
 
     public function PoliciesExpired(){
         
-        $data = Policies::select("policies.*","clients_people.names", "clients_people.last_names",  "clients_company.business_name")
+        $data = Policies::select("policies.*", "clients_people.names", "clients_people.last_names",  "clients_company.business_name")
                           ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
                           ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
                           ->whereRaw("end_date between curdate() and date_add(curdate(), interval 7 day)")
@@ -90,5 +91,19 @@ class Estadists extends Controller
 
         return response()->json($data)->setStatusCode(200);
                         
+    }
+
+
+    public function ChargeAccounPending(){
+        
+        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","clients_people.names", "clients_people.last_names",  "clients_company.business_name")
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                                ->get();
+
+        return response()->json($data)->setStatusCode(200);
+
+
     }
 }
