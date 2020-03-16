@@ -23,6 +23,11 @@
             </li>
 
 
+            <li class="nav-item remove-pay">
+              <a href="#default-tab-4-1" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+
+
 
         </ul>
 
@@ -241,6 +246,15 @@
 
               </iframe>
 
+            </div>
+          </div>
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-4-1">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframeDigitalesView" allowfullscreen>
+
+              </iframe>
             </div>
           </div>
 

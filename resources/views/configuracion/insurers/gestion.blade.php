@@ -203,6 +203,11 @@
 					$('#iframeOficinasView').attr('src', urlOficce);
 
 
+					var url = "insurers/files/"+data.id_insurers+"/0"
+					$('#iframeDigitalesView').attr('src', url);
+
+
+
 					
 					cuadros('#cuadro1', '#cuadro3');
 				});

@@ -21,8 +21,8 @@
 
 
             <li class="nav-item remove-pay">
-					<a href="#default-tab-4-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
-				</li>
+              <a href="#default-tab-4-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
 
 
         </ul>
