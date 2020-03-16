@@ -83,7 +83,7 @@
 
 					
 
-					url_imagen = '/img/my_company/'
+					url_imagen = url+'/img/my_company/'
 
 					if(data.logo != ""){
 						img = '<img src="'+url_imagen+data.logo+'" class="file-preview-image kv-preview-data">'

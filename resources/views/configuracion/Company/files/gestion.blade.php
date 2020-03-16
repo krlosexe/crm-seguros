@@ -282,7 +282,7 @@
 				
 					$('#input-file-view').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
+					url_imagen = url+'/img/clients/peopple/'
 
 
 
@@ -347,7 +347,7 @@
 				
 					$('#input-file-edit').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
+					url_imagen = url+'/img/clients/peopple/'
 
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
