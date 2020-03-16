@@ -18,6 +18,13 @@
             <li class="nav-item remove-pay">
                 <a href="#default-tab-3-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Oficinas</a>
             </li>
+
+
+            <li class="nav-item remove-pay">
+					<a href="#default-tab-4-0" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+				</li>
+
+
         </ul>
 <br>
 <br>
@@ -232,6 +239,18 @@
 
             </div>
           </div>
+
+
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-4-0">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframeDigitalesEdit" allowfullscreen>
+
+              </iframe>
+            </div>
+          </div>
+
+
+
 
 
 

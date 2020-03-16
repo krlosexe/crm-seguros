@@ -262,3 +262,10 @@ Route::get('Company/files', function () {
 });
 
 
+
+
+Route::get('insurers/files/{id_client}/{management}', function ($id_insurers, $management) {
+    return view('configuracion.insurers.files.gestion', ["id_insurers" => $id_insurers, "management" => $management]);
+});
+
+

@@ -242,6 +242,9 @@
 					var urlOficce = "insurers/oficce/"+data.id_insurers+"/1"
 					$('#iframeOficinasEdit').attr('src', urlOficce);
 
+					var url = "insurers/files/"+data.id_insurers+"/1"
+					$('#iframeDigitalesEdit').attr('src', url);
+
 					$("#id_edit").val(data.id_insurers)
 					cuadros('#cuadro1', '#cuadro4');
 				});

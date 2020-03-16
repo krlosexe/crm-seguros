@@ -83,39 +83,39 @@
 
 					
 
-					url_imagen = url+'/img/my_company/'
+						url_imagen = url+'/img/my_company/'
 
-					if(data.logo != ""){
-						img = '<img src="'+url_imagen+data.logo+'" class="file-preview-image kv-preview-data">'
-					}else{rfc2c = ""}
-					
-					$("#avatar-1").fileinput({
-						theme: "fas",
-						overwriteInitial: true,
-						maxFileSize: 1500,
-						showClose: false,
-						showCaption: false,
-						browseLabel: '',
-						removeLabel: '',
-						browseIcon: '<i class="fa fa-folder-open"></i>',
-						removeIcon: '<i class="fas fa-trash-alt"></i>',
-						previewFileIcon: '<i class="fas fa-file"></i>',
-						removeTitle: 'Cancel or reset changes',
-						elErrorContainer: '#kv-avatar-errors-1',
-						msgErrorClass: 'alert alert-block alert-danger',
-						defaultPreviewContent: '<img src="img/default-user.png" width="150" alt="Your Avatar">',
-						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-						allowedFileExtensions: ["jpg", "png", "gif"],
-						initialPreview: [ 
-							img
-						],
-						initialPreviewConfig: [
-								
-							{caption: data.logo , downloadUrl: url_imagen+data.logo  ,url: url+"uploads/delete", key: data.logo}
-					
-						],
+						if(data.logo != ""){
+							img = '<img src="'+url_imagen+data.logo+'" class="file-preview-image kv-preview-data">'
+						}else{rfc2c = ""}
+						
+						$("#avatar-1").fileinput({
+							theme: "fas",
+							overwriteInitial: true,
+							maxFileSize: 1500,
+							showClose: false,
+							showCaption: false,
+							browseLabel: '',
+							removeLabel: '',
+							browseIcon: '<i class="fa fa-folder-open"></i>',
+							removeIcon: '<i class="fas fa-trash-alt"></i>',
+							previewFileIcon: '<i class="fas fa-file"></i>',
+							removeTitle: 'Cancel or reset changes',
+							elErrorContainer: '#kv-avatar-errors-1',
+							msgErrorClass: 'alert alert-block alert-danger',
+							defaultPreviewContent: '<img src="img/default-user.png" width="150" alt="Your Avatar">',
+							layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+							allowedFileExtensions: ["jpg", "png", "gif"],
+							initialPreview: [ 
+								img
+							],
+							initialPreviewConfig: [
+									
+								{caption: data.logo , downloadUrl: url_imagen+data.logo  ,url: url+"uploads/delete", key: data.logo}
+						
+							],
 
-					});
+						});
 
 
 
