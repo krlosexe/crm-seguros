@@ -95,6 +95,10 @@ class MyCompanyController extends Controller
 
     }
 
+    public function Files(){
+        echo "adasdsad";
+    }
+
     /**
      * Remove the specified resource from storage.
      *

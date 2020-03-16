@@ -219,3 +219,10 @@ Route::get('stadist/policies', 'Estadists@Policies');
 Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
 
 Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
+
+
+Route::get('my/companie/files', 'MyCompanyController@Files');
+
+
+
+Route::post('my/companie/files', 'MyCompanyController@StoreFiles');

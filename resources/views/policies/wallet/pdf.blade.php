@@ -622,8 +622,8 @@
                                                         <div class="border top bottom pdd-vertical-20">
                                                             <span><b class="text-dark text-uppercase">Agradecemos la atención prestada</b></span> <br>
                                                             <span class="text-opacity text-uppercase">Atentamente,</span> <br>                       
-                                                                 <img class="img-responsive text-opacity mrg-top-5" width="150" src="https://upload.wikimedia.org/wikipedia/commons/1/14/Firma_Ildefonso_Leal.jpg" alt=""> <br>
-                                                            <span><b class="text-dark text-uppercase">JUAN FERNANDO RIVERA QUEVEDO</b></span> <br>
+                                                                 <img id="firm_agent" class="img-responsive text-opacity mrg-top-5" width="150" src="https://upload.wikimedia.org/wikipedia/commons/1/14/Firma_Ildefonso_Leal.jpg" alt=""> <br>
+                                                            <span><b class="text-dark text-uppercase" id="name_agent">JUAN FERNANDO RIVERA QUEVEDO</b></span> <br>
                                                             <span class="text-opacity text-uppercase" >Asistente en seguros</span>
                                                         </div>
                                                     </div>
@@ -709,6 +709,8 @@
                 $("#ivasubtotal").text(number_format(data.vat, 2))
                 $("#totalpagar").text(number_format(data.vat + (data.cousin + data.xpenses), 2))
 
+                $("#name_agent").text(data.nombres+" "+data.apellido_p)
+                $("#firm_agent").attr("src", "/img/usuarios/firms/"+data.firm)
 
                 if(data.type_clients == 1){
                     $("#name_client").text(data.business_name)

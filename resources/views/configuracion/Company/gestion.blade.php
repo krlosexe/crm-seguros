@@ -50,6 +50,8 @@
 				$("#nav_li_Perfiles").addClass("open");
 				$("#nav_users, #modulo_Perfiles").addClass("active");
 
+				var url = "Company/files"
+				$('#iframeEdit').attr('src', url);
 				
 			});
 
