@@ -5,8 +5,8 @@
   <div class="side-nav-inner">
       <div class="side-nav-logo">
           <a href="#">
-              <div class="logo logo-dark" style="background-image: url('https://chseguros.com.co/wp-content/uploads/2020/02/nuevologo.svg')"></div>
-              <div class="logo logo-white" style="background-image: url('https://chseguros.com.co/wp-content/uploads/2020/02/nuevologo.svg'); padding: 10px !important; width: 130px;"></div>
+              <div class="logo logo-dark" style="background-image: url('https://chseguros.com.co/wp-content/uploads/2020/03/LOGO-FINAL-SKYSEGUROS-e1585688075335.png')"></div>
+              <div class="logo logo-white" style="background-image: url('https://chseguros.com.co/wp-content/uploads/2020/03/LOGO-FINAL-SKYSEGUROS-e1585688075335.png'); padding: 10px !important; width: 150px;"></div>
           </a>
           <div class="mobile-toggle side-nav-toggle">
               <a href="">

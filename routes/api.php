@@ -17,7 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::post('auth', 'Login@Auth');
 
 Route::post('verify-token', 'Login@VerifyToken');
@@ -59,7 +58,6 @@ Route::get('status-consortium/{id}/{status}', 'ClientsConsortiumController@statu
 Route::get('clients', 'ClientsController@GetClients');
 
 
-
 Route::resource('insurers', 'InsurersController');
 Route::get('status-insurers/{id}/{status}', 'InsurersController@status');
 Route::post('insurers/sub/company', 'InsurersController@StoreSubCompany');
@@ -78,8 +76,6 @@ Route::get('status-branchs/{id}/{status}', 'BranchsController@status');
 
 Route::resource('sub/company', 'TypeSubCompanyController');
 Route::get('status/sub/company/{id}/{status}', 'TypeSubCompanyController@status');
-
-
 
 
 Route::resource('policies', 'PoliciesController');
@@ -114,8 +110,6 @@ Route::get('policies/grouped/annexes/status/{id}/{status}', 'PoliciesGroupedCont
 Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
 
-
-
 Route::resource('sinister', 'SinistersController');
 Route::get('sinister/client/{id_client}', 'SinistersController@GetByClient');
 Route::get('status-sinister/{id}/{status}', 'SinistersController@status');
@@ -124,6 +118,7 @@ Route::get('payment', 'PaymentController@get');
 Route::post('payment', 'PaymentController@GetByPolicie');
 Route::post('payment/fee/pending', 'PaymentController@FeePending');
 Route::post('payment/fee', 'PaymentController@PaymentFee');
+Route::get('payment/expired', 'ChargeAccountController@Expired');
 
 Route::get('payments/receivable', 'PaymentController@paymentsReceivable');
 Route::get('payments/beaten', 'PaymentController@paymentsBeaten');
@@ -220,9 +215,5 @@ Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
 
 Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 
-
 Route::get('my/companie/files', 'MyCompanyController@Files');
-
-
-
 Route::post('my/companie/files', 'MyCompanyController@StoreFiles');

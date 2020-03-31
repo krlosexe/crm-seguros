@@ -140,6 +140,47 @@ class ChargeAccountController extends Controller
     }
 
 
+    public function Expired(){
+        $data = ChargeAccount::select("charge_accounts.*","policies.type_clients", "policies.number_policies","policies_annexes.number_annexed", 
+                                        "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
+                                        "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
+                                        "clients_company_contact.department","clients_company_contact.city","datos_personales.*", 
+                                        "auditoria.*", "user_registro.email as email_regis", "user_registro.firm", "clients_company.business_name", "clients_company.nit as number_document")
+
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
+                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+
+                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                                ->join("clients_company_contact", "clients_company_contact.id_clients_company", "=", "clients_company.id_clients_company", "left")
+
+
+                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people", "left")
+                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch", "left")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
+                                ->where("auditoria.tabla", "charge_accounts")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->join('datos_personales', 'datos_personales.id_usuario', '=', 'user_registro.id')
+                                ->where("auditoria.status", "!=", "0")
+
+
+                                ->join("auditoria as ap", "ap.cod_reg", "=", "policies.id_policies")
+                                ->where("ap.tabla", "policies")
+
+                                ->where("ap.status", "!=", "0")
+
+                                ->with("collections")
+                                
+                                ->where("charge_accounts.limit_date", "<=", date("Y-m-d"))
+
+                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
+                                ->get();
+           
+            return response()->json($data)->setStatusCode(200);
+    }
+
+
 
     /**
      * Update the specified resource in storage.
