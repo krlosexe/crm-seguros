@@ -21,8 +21,6 @@ Route::get('/compare', function () {
 
 Route::post('auth', 'Login@Auth');
 
-
-
 Route::get('logout/{id}', 'Login@Logout');
 
 Route::get('/dashboard', function () {
@@ -215,6 +213,8 @@ Route::get('policies/wallet/files/{id_charge}/{management}', function ($id_charg
 
 
 Route::get('import', 'ImportController@import');
+Route::get('import-policies', 'ImportController@policies');
+Route::get('import-files', 'ImportController@files');
 
 
 
