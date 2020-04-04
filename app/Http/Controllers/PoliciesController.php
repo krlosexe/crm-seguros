@@ -24,6 +24,10 @@ class PoliciesController extends Controller
      */
     public function index()
     {
+
+        ini_set('memory_limit', '-1'); 
+
+        
         $data = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
                                     "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
                                     "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
