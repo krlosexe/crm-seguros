@@ -230,6 +230,11 @@ Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
 
+Route::get('vehicles/files/{id_vehicules}/{management}', function ($id_vehicules, $management) {
+    return view('vehicles.files.gestion', ["id_vehicules" => $id_vehicules, "management" => $management]);
+});
+
+
 Route::get('vehicles/{placa}', function ($placa) {
     return view('vehicles.show', ["placa"=> $placa]);
 });

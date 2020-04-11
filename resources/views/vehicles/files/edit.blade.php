@@ -52,10 +52,10 @@
         <!---END ROW-->
 
 
-        <input type="hidden" name="tabla" value="clients_people">
+        <input type="hidden" name="tabla" value="vehicules">
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">
-
+        <input type="hidden" name="destinationPath" value="img/vehicles/">
         <input type="hidden" name="id_user_edit" id="id_edit">
 
 

@@ -49,6 +49,10 @@ Route::post('files', 'FilesController@store');
 Route::put('files/{id_file}', 'FilesController@update');
 Route::get('files/status/{id}/{status}', 'FilesController@status');
 
+Route::post('filesCustom', 'FilesController@storeCustom');
+Route::put('filesCustom/{id_file}', 'FilesController@updateCustom');
+
+
 Route::resource('company', 'ClientsCompanyController');
 Route::get('status-company/{id}/{status}', 'ClientsCompanyController@status');
 

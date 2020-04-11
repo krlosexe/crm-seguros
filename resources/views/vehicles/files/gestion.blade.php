@@ -93,9 +93,9 @@
 				</div>
 
 
-				@include('clients.people.files.store')
-				@include('clients.people.files.view')
-				@include('clients.people.files.edit')
+				@include('vehicles.files.store')
+				@include('vehicles.files.view')
+				@include('vehicles.files.edit')
 
 
 
@@ -139,6 +139,7 @@
 
 <script>
 			$(document).ready(function(){
+				verifyPersmisos(id_user, tokens, "modules");
 				store();
 				list();
 				update();
@@ -147,30 +148,33 @@
 				$("#nav_li_Polizas").addClass("open");
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
 			});
 
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/files', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/filesCustom', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/files/', '#cuadro2');
+				enviarFormulario("#store", 'api/filesCustom', '#cuadro2');
 			}
 
 
 			function list(cuadro) {
 
-				var management = {{ $management }}
+				var management = {{ $management }};
+
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,
 				};
+
 				$('#table tbody').off('click');
+
 				var url=document.getElementById('ruta').value; 
+
 				cuadros(cuadro, "#cuadro1");
 
 				var table=$("#table").DataTable({
@@ -180,7 +184,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/files/clients_people/'+{{$id_client}},
+						 "url":''+url+'/api/files/vehicules/'+{{$id_vehicules}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -283,7 +287,7 @@
 				
 					$('#input-file-view').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
+					url_imagen = `${ruta.value}/img/vehicles/`
 
 
 
@@ -348,8 +352,7 @@
 				
 					$('#input-file-edit').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
-
+					url_imagen = `${ruta.value}/img/vehicles/`
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
 						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'

@@ -230,7 +230,83 @@
 					$("#value_fasecolda_view").val(number_format(data.valor_fasecolda ,2)).attr("disabled", "disabled")
 					
 					$("#service_view").val(data.servicio)
+
+					var url = "vehicles/files/"+data.id_vehicules+"/1"
+					$('#iframeEdit').attr('src', url);
+
 					
+				});
+			}
+
+			var count = 0;
+
+			$("#add-file").click(function (e) { 
+				
+				var html = "";
+				count++
+
+				html += '<div class="col-md-6" id="file-'+count+'">'
+					html += '<div class="row">'
+						html += '<div class="col-md-6">'
+							html += ' <label for=""><b>Titulo *</b></label>'
+							html += '<div class="form-group valid-required">'
+								html += '<input type="text" name="titles[]" class="form-control form-control-user" required>'
+							html += '</div>'
+						html += '</div>'
+
+
+						html += '<div class="col-md-6">'
+							html += ' <label for=""><b>Descripcion *</b></label>'
+							html += '<div class="form-group valid-required">'
+								html += '<input type="text" name="descriptions[]" class="form-control form-control-user" id="description" required>'
+							html += '</div>'
+						html += '</div>'
+
+					html += '</div>'
+					html += '<br>'
+
+
+					html += '<div class="row">'
+						html += '<div class="col-md-12 text-center">'
+							html += '<div class="kv-avatar">'
+								html += '<div class="file-loading">'
+									html += '<input id="input-file-'+count+'" name="file[]" type="file" required>'
+								html += '</div>'
+							html += '</div>'
+
+							html += '<div class="kv-avatar-hintss">'
+								html += '<small>Seleccione una foto</small>'
+							html += '</div>'
+
+						html += '</div>'
+					html += '</div>'
+					html += '<br>'
+					html += '<br>'
+				html += '</div>'
+
+
+				$("#content-file").append(html);
+				CreateInputFile("#input-file-"+count)
+			});
+
+
+			function CreateInputFile(input){
+				$(input).fileinput({
+					theme: "fas",
+					overwriteInitial: true,
+					maxFileSize: 1500,
+					showClose: false,
+					showCaption: false,
+					browseLabel: '',
+					removeLabel: '',
+					browseIcon: '<i class="fa fa-folder-open"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
+					previewFileIcon: '<i class="fas fa-file"></i>',
+					removeTitle: 'Cancel or reset changes',
+					elErrorContainer: '#kv-avatar-errors-1',
+					msgErrorClass: 'alert alert-block alert-danger',
+					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
 				});
 			}
 
@@ -334,6 +410,10 @@
 					$("#id_edit").val(data.id_vehicules)
 
 					cuadros('#cuadro1', '#cuadro4');
+
+					let url = "vehicles/files/"+data.id_vehicules+"/1"
+					$('#iframeEdit').attr('src', url);
+
 				});
 			}
 			

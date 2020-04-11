@@ -14,9 +14,7 @@ class FilesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function GetFiles(Request $request,  $tabla, $id_client){
-        
         $files = Files::select("files.*","auditoria.*", "user_registro.email as email_regis")
-
                         ->join("auditoria", "auditoria.cod_reg", "=", "files.id_files")
                         ->where("auditoria.tabla", "files")
                         ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
@@ -74,7 +72,33 @@ class FilesController extends Controller
         }
     }
 
+    public function storeCustom(Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
+            $destinationPath  = $request->destinationPath;
+
+            $file = $request->file('file');
+            $file->move($destinationPath,$file->getClientOriginalName());
+    
+            $request["name"] = $file->getClientOriginalName();
+
+            $store_file = Files::create($request->all());
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "files";
+            $auditoria->cod_reg     = $store_file["id_files"];
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
 
 
     public function status($id, $status, Request $request)
@@ -152,6 +176,31 @@ class FilesController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+    public function updateCustom(Request $request, $files)
+    {
+
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $destinationPath  = $request->destinationPath; 
+            $file = $request->file('file');
+           
+            if($file != null){
+                $file->move($destinationPath,$file->getClientOriginalName());
+                $request["name"] = $file->getClientOriginalName();
+            }
+
+            $update = Files::find($files)->update($request->all());
+
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

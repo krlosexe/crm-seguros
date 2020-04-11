@@ -6,6 +6,7 @@ use App\Vehicle;
 use App\Auditoria;
 use App\Fasecolda;
 use Illuminate\Http\Request;
+use App\Files;
 
 class VehicleController extends Controller
 {
@@ -66,6 +67,30 @@ class VehicleController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
           
             $store = Vehicle::create($request->all());
+
+            $destinationPath        = 'img/vehicles';
+            $request["tabla"]       = "vehicules";
+            $request["id_register"] = $store["id_vehicules"];
+
+            if($request->file('file')){
+                foreach($request->file('file') as $key => $value){
+                    $value->move($destinationPath,$value->getClientOriginalName());
+    
+                    $request["name"] = $value->getClientOriginalName();
+    
+                    $request["title"]       = $request["titles"][$key];
+                    $request["descripcion"] = $request["descriptions"][$key];
+    
+                    $store_file = Files::create($request->all());
+    
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "files";
+                    $auditoria->cod_reg     = $store_file["id_files"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
+                }
+            }
 
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "vehicules";
