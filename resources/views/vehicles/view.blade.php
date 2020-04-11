@@ -10,10 +10,10 @@
 
         <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
-                <a href="#default-tab-1-store" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+                <a href="#default-tab-1-info" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
             <li class="nav-item">
-                <a href="#default-tab-2-store" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+                <a href="#default-tab-2-info" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
         </ul>
 
@@ -21,7 +21,7 @@
 
 
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-store">
+          <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-info">
 
             <div class="row">
               <div class="col-md-6">
@@ -298,27 +298,11 @@
 
 
 
-          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-store">
-            <div class="col-md-12" >
-             
+          <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-info">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframeInfo" allowfullscreen>
 
-              <div class="row">
-                <div class="col-md-6">
-                  <button type="button" id="add-file" class="btn btn-success btn-user" >
-                    <i class="ti-image"></i>
-                    Agregar
-                  </button>
-                </div>
-              </div>
-
-              <br>
-
-              <div id="content-file" class="row">
-
-                
-              </div>
-
-              
+              </iframe>
             </div>
           </div>
         </div>

@@ -231,9 +231,8 @@
 					
 					$("#service_view").val(data.servicio)
 
-					var url = "vehicles/files/"+data.id_vehicules+"/1"
-					$('#iframeEdit').attr('src', url);
-
+					var url = "vehicles/files/"+data.id_vehicules+"/0"
+					$('#iframeInfo').attr('src', url);
 					
 				});
 			}
