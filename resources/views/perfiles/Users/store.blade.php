@@ -8,16 +8,16 @@
 			@csrf
 	  		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li  class="nav-item">
-			    <a id="tab0" class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cuenta de Usuario</a>
+			    <a id="tab0" class="nav-link active" id="home-tab" data-toggle="tab" href="#hometabpane" role="tab" aria-controls="home" aria-selected="true">Cuenta de Usuario</a>
 			  </li>
 			  <li  class="nav-item">
-			    <a id="tab1" class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Datos Personales</a>
+			    <a id="tab1" class="nav-link" id="profile-tab" data-toggle="tab" href="#profiletabpane" role="tab" aria-controls="profile" aria-selected="false">Datos Personales</a>
 			  </li>
 			</ul>
 
 			<br><br>
 			<div class="tab-content" id="myTabContent">
-			  <div class="tab-pane fade show active tab_content0" id="home" role="tabpanel" aria-labelledby="home-tab">
+			  <div class="tab-pane fade show active tab_content0" id="hometabpane" role="tabpanel" aria-labelledby="home-tab">
 				
 				<div class="row">
 					
@@ -71,7 +71,7 @@
 
 
 
-			  <div class="tab-pane fade tab_content1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			  <div class="tab-pane fade tab_content1" id="profiletabpane" role="tabpanel" aria-labelledby="profile-tab">
 
 			  		<div class="row">
 			  			<div class="col-sm-4 text-center valid-required">

@@ -291,7 +291,7 @@ class ImportController extends Controller
 
        $fila = 0;
        $noEncontrados = array();
-
+/*
         if (($gestor = fopen("policies-files202004.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
                 if($fila == 0){
@@ -332,7 +332,7 @@ class ImportController extends Controller
             }
             fclose($gestor);
         }
-
+*/
         $fila = 0;
         $noEncontrados[] = [''];
 
@@ -347,7 +347,7 @@ class ImportController extends Controller
                 $type_clients = 'clients_people';
 
                 if($clientePeople == null){
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', trim($datos[1]))->first();
+                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', 'like','%'.trim($datos[1]).'%')->first();
     
                     $type_clients = 'clients_company';
                 }
@@ -362,24 +362,27 @@ class ImportController extends Controller
                     continue;
                 }
 
-                $array = [
-                  "id_register"  => $clientePeople->id,
-                  "name"         => $datos[3] == 'NULL'? '' : trim($datos[3]),
-                  "title"        => $datos[4] == 'NULL'? '' : trim($datos[4]),
-                  "descripcion"  => $datos[5] == 'NULL'? '' : trim($datos[5]),
-                  "tabla"        => $type_clients,
-                ];
+                if($datos[0] == 'NIT'){
+                  $array = [
+                    "id_register"  => $clientePeople->id,
+                    "name"         => $datos[3] == 'NULL'? '' : trim($datos[3]),
+                    "title"        => $datos[4] == 'NULL'? '' : trim($datos[4]),
+                    "descripcion"  => $datos[5] == 'NULL'? '' : trim($datos[5]),
+                    "tabla"        => $type_clients,
+                  ];
 
-                $store_file = Files::create($array);
+                  $store_file = Files::create($array);
 
-                $auditoria              = new Auditoria;
-                $auditoria->tabla       = "files";
-                $auditoria->cod_reg     = $store_file["id_files"];
-                $auditoria->status      = 1;
-                $auditoria->usr_regins  = 68;
-                $auditoria->save();
+                  $auditoria              = new Auditoria;
+                  $auditoria->tabla       = "files";
+                  $auditoria->cod_reg     = $store_file["id_files"];
+                  $auditoria->status      = 1;
+                  $auditoria->usr_regins  = 68;
+                  $auditoria->save();
 
-                $fila++;
+                  $fila++;
+
+                }
             }
             fclose($gestor);
         }

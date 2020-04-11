@@ -172,6 +172,7 @@
 			function list(cuadro) {
 
 				var management = {{ $management }}
+
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,

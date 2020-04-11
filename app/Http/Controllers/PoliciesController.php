@@ -109,13 +109,45 @@ class PoliciesController extends Controller
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
                 PoliciesNotifications::create($request->all());
+
+
+                foreach($request->placas as $value){
+                    $data["placa"]      = $value;
+                    $data["id_policie"] = $store->id_policies;
+                    PolicesVehicles::create($data);
+                }
+
             }
+            else{
+                // Cuando es poliza collective, se almacenan los vinculados
+                
+                $all = $request->all();
 
+                $binds = array();
 
-            foreach($request->placas as $value){
-                $data["placa"]      = $value;
-                $data["id_policie"] = $store->id_policies;
-                PolicesVehicles::create($data);
+                foreach ($all as $key => $item) {
+                    if(strpos($key, '_bind')){
+                        $str = preg_replace('/_bind/', '', $key);
+  
+                        foreach ($item as $index => $value) {
+                             $binds[$index][$str] = $value;
+                             $binds[$index]['id_policie'] = $store->id_policies;
+                        }
+                    }
+                }
+
+                foreach ($binds as $bind) {
+
+                   $bindStore = PoliciesBind::create($bind);
+
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "binds";
+                    $auditoria->cod_reg     = $bindStore->id_policies_bind;
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
+                }
+
             }
 
            $request["amount"] = $request["total"];

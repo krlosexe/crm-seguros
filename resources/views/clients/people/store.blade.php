@@ -58,7 +58,7 @@
                         
                           <div class="col-sm-4">
                               <label for=""><b>Tipo de documento*</b></label>
-                              <select name="type_document" class="form-control selectized" id="type_document" required>
+                              <select name="type_document" class="selectized" id="type_document" required>
                                <option value="">Seleccione</option>
                                 <option value="CÉDULA">CÉDULA</option>
                                 <option value="CÉDULA DE EXTRANJERÍA">CÉDULA DE EXTRANJERÍA</option>
@@ -117,7 +117,7 @@
                           </div>
 
                           <div class="col-sm-4">
-                            <label for=""><b>Altura*</b></label>
+                            <label for=""><b>Altura</b></label>
                             <input type="number" name="height" class="form-control form-control-user" id="height">
                           </div>
 
@@ -331,7 +331,7 @@
                                 <option value="Casado">Casado</option>
                                 <option value="Divorciado">Divorciado</option>
                                 <option value="Unión Libre">Unión Libre</option>
-                                <option value="Seperado">Seperado</option>
+                                <option value="Separado">Separado</option>
                                 <option value="Viudo">Viudo</option>
                             </select>
                           </div>

@@ -58,6 +58,8 @@
 						<div class="modal-body">
 							<form action="" id="form-bind">
 								<div class="row">
+									 
+									 <input id="count_fila" hidden value="nuevo">
 
 									<div class="col-md-6">
 										<label for=""><b>No. Anexo</b></label>
@@ -296,7 +298,7 @@
 											<input type="checkbox" name="beneficairy_onerous_bind" id="beneficairy_onerous_bind" checked="checked">
 											<label for="beneficairy_onerous_bind"></label>
 
-											<input type="hidden" id="beneficairy_onerous_input_bind">
+											<input type="hidden" id="beneficairy_onerous_input_bind" value="1">
 										</div>
 									</div>
 
@@ -1047,7 +1049,11 @@
 			}
 
 			$("#btn-bind-policies").click(function (e) { 
+				$('#count_fila').val('nuevo');
+				$('#modal-lg input').removeAttr('disabled')
+				$('#modal-lg select').removeAttr('disabled')
 				$("#form-bind")[0].reset()
+				$('#modal-lg #btn-add-bind').show();
 			});
 
 
@@ -1063,36 +1069,51 @@
 			var count = 0
 			$("#form-bind").submit(function(e){
 				e.preventDefault();
-				var number_annexed                  = $("#number_anexo_bind").val()
-				var number_affiliate_bind           = $("#number_affiliate_bind").val()
-				var date_init_bind                  = $("#date_init_bind").val()
-				var insured_object_bind             = $("#insured_object_bind").val()
-				var cousin_bind                     = $("#cousin_bind").val()
-				var name_affiliate_bind             = $("#name_affiliate_bind").val()
-				var document_affiliate_bind         = $("#document_affiliate_bind").val()
-				var relationship_bind               = $("#relationship_bind").val()
-				var birthdate_bind                  = $("#birthdate_bind").val()
-				var gender_bind                     = $("#gender_bind").val()
-				var phone_bind                      = $("#phone_bind").val()
-				var email_bind                      = $("#email_bind").val()
-				var address_bind                    = $("#address_bind").val()
-				var plan_bind                       = $("#plan_bind").val()
-				var type_rate_bind                  = $("#type_rate_bind").val()
-				var type_membership_bind            = $("#type_membership_bind").val()
-				var percentage_vat_bind             = $("#percentage_vat_bind").val()
-				var expenses_bind                   = $("#expenses_bind").val()
-				var vat_bind                        = $("#vat_bind").val()
-				var total_bind                      = $("#total_bind").val()
-				var company_bind                    = $("#company_bind").val()
-				var employee_bind                   = $("#employee_bind").val()
-				var internal_observations_bind      = $("#internal_observations_bind").val()
-				var observations_bind               = $("#observations_bind").val()
-				var beneficairy_onerous_bind        = $("#beneficairy_onerous_input_bind").val()
-				var beneficairy_name_bind           = $("#beneficairy_name_bind").val()
-				var beneficairy_identification_bind = $("#beneficairy_identification_bind").val()
+
+				var count_fila                  = $("#count_fila").val()
+					var number_annexed                  = $("#number_anexo_bind").val()
+					var number_affiliate_bind           = $("#number_affiliate_bind").val()
+					var date_init_bind                  = $("#date_init_bind").val()
+					var insured_object_bind             = $("#insured_object_bind").val()
+					var cousin_bind                     = $("#cousin_bind").val()
+					var name_affiliate_bind             = $("#name_affiliate_bind").val()
+					var document_affiliate_bind         = $("#document_affiliate_bind").val()
+					var relationship_bind               = $("#relationship_bind").val()
+					var birthdate_bind                  = $("#birthdate_bind").val()
+					var gender_bind                     = $("#gender_bind").val()
+					var phone_bind                      = $("#phone_bind").val()
+					var email_bind                      = $("#email_bind").val()
+					var address_bind                    = $("#address_bind").val()
+					var plan_bind                       = $("#plan_bind").val()
+					var type_rate_bind                  = $("#type_rate_bind").val()
+					var type_membership_bind            = $("#type_membership_bind").val()
+					var percentage_vat_bind             = $("#percentage_vat_bind").val()
+					var expenses_bind                   = $("#expenses_bind").val()
+					var vat_bind                        = $("#vat_bind").val()
+					var total_bind                      = $("#total_bind").val()
+					var company_bind                    = $("#company_bind").val()
+					var employee_bind                   = $("#employee_bind").val()
+					var internal_observations_bind      = $("#internal_observations_bind").val()
+					var observations_bind               = $("#observations_bind").val()
+					var beneficairy_onerous_bind        = $("#beneficairy_onerous_input_bind").val()
+					var beneficairy_name_bind           = $("#beneficairy_name_bind").val()
+					var beneficairy_identification_bind = $("#beneficairy_identification_bind").val()
 
 
-				var btn_delete = "<button type='button' onclick='DeleteTr(\"" + "#tr_bind_" + count +"\")' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> <i class='fa fa-trash'  aria-hidden='true'></i></button>"
+				var btn_delete = `
+						<button type='button' onclick='editVinculacion("#tr_bind_${count}", ${count}, true)' class='btn btn-info btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
+								<i class='ei-preview' aria-hidden='true'></i>
+						</button>
+
+						<button type='button' onclick='editVinculacion("#tr_bind_${count}", ${count})' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
+								<i class='ei-save-edit' aria-hidden='true'></i>
+						</button>
+
+						<button type='button' onclick='DeleteTr("#tr_bind_${count}")' class='btn btn-danger btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
+								<i class='fa fa-trash' aria-hidden='true'></i>
+						</button>
+
+				`
 				
 				var values = "<input type='hidden'  name='number_annexed_bind[]' value='"+number_annexed+"'>"
 				    values += "<input type='hidden' name='number_affiliate_bind[]' value='"+number_affiliate_bind+"'>"
@@ -1130,13 +1151,92 @@
 					html += "<td>"+btn_delete+values+"</td>"
 				html += "</tr>"
 
+				if(count_fila != 'nuevo'){
+					$('#tr_bind_'+count_fila).remove();
+				}
+
 				$("#table-bind tbody").append(html);
 
 				$("#modal-lg").modal("hide")
 				count++
         	});
 
+			function editVinculacion(tr, countId, isinfo = false){
+				let number_annexed_bind = document.querySelector(`${tr} input[name="number_annexed_bind[]"]`).value;
+				let number_affiliate_bind = document.querySelector(`${tr} input[name="number_affiliate_bind[]"]`).value;
+				let date_init_bind = document.querySelector(`${tr} input[name="date_init_bind[]"]`).value;
+				let insured_object_bind = document.querySelector(`${tr} input[name="insured_object_bind[]"]`).value;
+				let cousin_bind = document.querySelector(`${tr} input[name="cousin_bind[]"]`).value;
+				let name_affiliate_bind = document.querySelector(`${tr} input[name="name_affiliate_bind[]"]`).value;
+				let document_affiliate_bind = document.querySelector(`${tr} input[name="document_affiliate_bind[]"]`).value;
+				let relationship_bind = document.querySelector(`${tr} input[name="relationship_bind[]"]`).value;
+				let birthdate_bind = document.querySelector(`${tr} input[name="birthdate_bind[]"]`).value;
+				let gender_bind = document.querySelector(`${tr} input[name="gender_bind[]"]`).value;
+				let phone_bind = document.querySelector(`${tr} input[name="phone_bind[]"]`).value;
+				let email_bind = document.querySelector(`${tr} input[name="email_bind[]"]`).value;
+				let address_bind = document.querySelector(`${tr} input[name="address_bind[]"]`).value;
+				let plan_bind = document.querySelector(`${tr} input[name="plan_bind[]"]`).value;
+				let type_rate_bind = document.querySelector(`${tr} input[name="type_rate_bind[]"]`).value;
+				let type_membership_bind = document.querySelector(`${tr} input[name="type_membership_bind[]"]`).value;
+				let percentage_vat_bind = document.querySelector(`${tr} input[name="percentage_vat_bind[]"]`).value;
+				let expenses_bind = document.querySelector(`${tr} input[name="expenses_bind[]"]`).value;
+				let vat_bind = document.querySelector(`${tr} input[name="vat_bind[]"]`).value;
+				let total_bind = document.querySelector(`${tr} input[name="total_bind[]"]`).value;
+				let company_bind = document.querySelector(`${tr} input[name="company_bind[]"]`).value;
+				let employee_bind = document.querySelector(`${tr} input[name="employee_bind[]"]`).value;
+				let internal_observations_bind = document.querySelector(`${tr} input[name="internal_observations_bind[]"]`).value;
+				let observations_bind = document.querySelector(`${tr} input[name="observations_bind[]"]`).value;
+				let beneficairy_onerous_bind = document.querySelector(`${tr} input[name="beneficairy_onerous_bind[]"]`).value;
+				let beneficairy_name_bind = document.querySelector(`${tr} input[name="beneficairy_name_bind[]"]`).value;
+				let beneficairy_identification_bind = document.querySelector(`${tr} input[name="beneficairy_identification_bind[]"]`).value
 
+				$("#btn-bind-policies").click();
+
+				$('#count_fila').val(countId);
+				$("#number_anexo_bind").val(number_annexed_bind)
+				$("#number_affiliate_bind").val(number_affiliate_bind)
+				$("#date_init_bind").val(date_init_bind)
+				$("#insured_object_bind").val(insured_object_bind)
+				$("#cousin_bind").val(cousin_bind)
+				$("#name_affiliate_bind").val(name_affiliate_bind)
+				$("#document_affiliate_bind").val(document_affiliate_bind)
+				$("#relationship_bind").val(relationship_bind)
+				$("#birthdate_bind").val(birthdate_bind)
+				$("#gender_bind").val(gender_bind)
+				$("#phone_bind").val(phone_bind)
+				$("#email_bind").val(email_bind)
+				$("#address_bind").val(address_bind)
+				$("#plan_bind").val(plan_bind)
+				$("#type_rate_bind").val(type_rate_bind)
+				$("#type_membership_bind").val(type_membership_bind)
+				$("#percentage_vat_bind").val(percentage_vat_bind)
+				$("#expenses_bind").val(expenses_bind)
+				$("#vat_bind").val(vat_bind)
+				$("#total_bind").val(total_bind)
+				$("#company_bind").val(company_bind)
+				$("#employee_bind").val(employee_bind)
+				$("#internal_observations_bind").val(internal_observations_bind)
+				$("#observations_bind").val(observations_bind)
+
+				if(beneficairy_onerous_bind == '1'){
+					$("#beneficairy_onerous_bind").attr('checked', true);
+				}
+				else{
+					$("#beneficairy_onerous_bind").attr('checked', false);
+				}
+
+				$("#beneficairy_onerous_input_bind").val(beneficairy_onerous_bind)
+
+				$("#beneficairy_name_bind").val(beneficairy_name_bind)
+				$("#beneficairy_identification_bind").val(beneficairy_identification_bind)
+
+				if(isinfo){
+					$('#modal-lg input').attr('disabled', true)
+					$('#modal-lg select').attr('disabled', true)
+					$('#modal-lg #btn-add-bind').hide();
+				}
+
+			}
 
 			$("#clients_select").change(function (e) { 
 				var arrayClient = $(this).val().split("|")
