@@ -241,8 +241,8 @@
 				$("#store")[0].reset();
 				GetTypeSubCompany("#type_sub_company")
 
-				changeCheck("#turn_check", "#to_name")
-				changeCheck("#ica", "#percentage_ica")
+				//changeCheck("#turn_check", "#to_name")
+				//changeCheck("#ica", "#percentage_ica")
 
 
 				cuadros("#cuadro1", "#cuadro2");
