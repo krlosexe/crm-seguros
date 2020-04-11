@@ -31,7 +31,6 @@ class VehicleController extends Controller
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->orderBy("vehicules.id_vehicules", "DESC")
-                                ->limit(10)
                                 ->get();
 
 
