@@ -394,9 +394,9 @@
 
 				var table=$("#table").DataTable({
 					"destroy":true,
-					
 					"stateSave": true,
-					"serverSide":false,
+					"serverSide":true,
+          			"processing": true,
 					"ajax":{
 						"method":"GET",
 						 "url":''+url+'/api/policies',
@@ -404,27 +404,26 @@
 							"id_user": id_user,
 							"token"  : tokens,
 						},
-						"dataSrc":""
 					},
-					"columns":[
+					"columnDefs":[
 						
-						{"data":"number_policies"},
-						{"data":null,
+						{targets: 0, "data":"number_policies"},
+						{targets: 1, "data":null,
 							render : function(data, type, row) {
 								if(row.type_clients == 0){
-									return row.names+" "+row.last_names
+									return row.fullname
 								}else{
 									return row.business_name
 								}
 									
 							}
 						},
-						{"data":"name_insurers"},
-						{"data":"name_branchs"},
-						{"data":"type_poliza"},
-						{"data":"state_policies"},
-						{"data": "fec_regins"},
-						{"data": null,
+						{targets: 2, "data":"name_insurers"},
+						{targets: 3, "data":"name_branchs"},
+						{targets: 4, "data":"type_poliza"},
+						{targets: 5, "data":"state_policies"},
+						{targets: 6, "data": "fec_regins"},
+						{targets: 7, "data": null,
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)

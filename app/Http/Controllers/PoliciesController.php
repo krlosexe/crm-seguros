@@ -15,6 +15,8 @@ use App\PoliciesAnnexes;
 use App\PolicesVehicles;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class PoliciesController extends Controller
 {
     /**
@@ -22,13 +24,19 @@ class PoliciesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         ini_set('memory_limit', '-1'); 
-
         
-        $data = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
+        $searchValue = $request->search['value']; // value
+        $start       = $request->start;
+        $length      = $request->length;
+        $draw        = $request->draw;
+
+        $policiesQuery = Policies::select("policies.*", 
+                                         "policies_info_taker_insured_beneficiary.*", 
+                                         DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
                                     "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
                                     "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
                                     "auditoria.*", "user_registro.email as email_regis")
@@ -53,10 +61,29 @@ class PoliciesController extends Controller
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
-                                ->orderBy("policies.id_policies", "DESC")
-                                ->get();
-           
-        return response()->json($data)->setStatusCode(200);
+                                ->orderBy("policies.id_policies", "DESC");
+
+            // se cuentan todos los registros hasta este punto de la consulta
+
+            $dbTemp = Clone $policiesQuery;
+            $recordsTotal = $dbTemp->get()->count();
+
+            // se aplica el filtro y se cuentan los registros filtrados
+
+            $policiesQuery->search($searchValue);
+
+            $dbFiltered = Clone $policiesQuery;
+            $recordsFiltered = $dbFiltered->get()->count();
+
+            // se obtienen los registros paginados
+            $data = $policiesQuery->paginar($start, $length)->get();
+
+        return response()->json([
+            "draw"            => intval($draw),
+            "recordsTotal"    => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data"            => $data
+        ])->setStatusCode(200);
     }
 
     /**
