@@ -34,14 +34,7 @@ class PoliciesController extends Controller
         $length      = $request->length;
         $draw        = $request->draw;
 
-        $policiesQuery = Policies::select("policies.*", 
-                                         "policies_info_taker_insured_beneficiary.*", 
-                                         DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
-                                    "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
-                                    "policies_observations.*","policies_notifications.*", "policies_info_payments.*",
-                                    "auditoria.*", "user_registro.email as email_regis")
-
-                                ->join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
+        $policiesQuery = Policies::join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
                                 ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
                                 ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
                                 ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
@@ -63,17 +56,34 @@ class PoliciesController extends Controller
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->orderBy("policies.id_policies", "DESC");
 
-            // se cuentan todos los registros hasta este punto de la consulta
+            // se cuentan todos los registros hasta este punto de la consulta con un select simple 
+            // para evitar que demore
 
             $dbTemp = Clone $policiesQuery;
-            $recordsTotal = $dbTemp->get()->count();
+            $recordsTotal = $dbTemp->select('policies.id_policies')->get()->count();
 
             // se aplica el filtro y se cuentan los registros filtrados
 
             $policiesQuery->search($searchValue);
 
             $dbFiltered = Clone $policiesQuery;
-            $recordsFiltered = $dbFiltered->get()->count();
+            $recordsFiltered = $dbFiltered->select('policies.id_policies')->get()->count();
+
+            // Select completo final 
+            $policiesQuery->select(
+                                  "policies.*", 
+                                  "policies_info_taker_insured_beneficiary.*", 
+                                   DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
+                                    "clients_company.business_name",  
+                                    "insurers.name as name_insurers", 
+                                    "branchs.name as name_branchs",
+                                    "policies_cousins_commissions.*",
+                                    "policies_observations.*",
+                                    "policies_notifications.*", 
+                                    "policies_info_payments.*",
+                                    "auditoria.*", 
+                                    "user_registro.email as email_regis"
+                                );
 
             // se obtienen los registros paginados
             $data = $policiesQuery->paginar($start, $length)->get();
