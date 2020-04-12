@@ -38,7 +38,10 @@ class PoliciesController extends Controller
 
         $policiesQuery = Policies::where("auditoria.status", "!=", "0")
                                    ->where("policies.id_policies_grouped", "=", null)
-                                   ->orderBy("policies.id_policies", "DESC");
+                                   ->where("auditoria.tabla", "policies")
+                                   ->orderBy("policies.id_policies", "DESC")
+                                   ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies");
+
 
             // se cuentan todos
 
@@ -78,8 +81,6 @@ class PoliciesController extends Controller
                                 ->join("policies_notifications", "policies_notifications.id_policies", "=", "policies.id_policies", "left")
                                 ->join("policies_info_payments", "policies_info_payments.id_policies", "=", "policies.id_policies")
                                 
-                                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
-                                ->where("auditoria.tabla", "policies")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
                                 ->with("policies_bind")
