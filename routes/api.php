@@ -83,6 +83,7 @@ Route::get('status/sub/company/{id}/{status}', 'TypeSubCompanyController@status'
 
 
 Route::resource('policies', 'PoliciesController');
+Route::post('policies/paginate', 'PoliciesController@paginate');
 Route::get('status-policies/{id}/{status}', 'PoliciesController@status');
 Route::post('policies/simulation/pay', 'PoliciesController@SimulationPay');
 

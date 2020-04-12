@@ -398,8 +398,8 @@
 					"serverSide":true,
           			"processing": true,
 					"ajax":{
-						"method":"GET",
-						 "url":''+url+'/api/policies',
+						"method":"POST",
+						 "url":''+url+'/api/policies/paginate',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
