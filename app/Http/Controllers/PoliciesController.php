@@ -79,7 +79,8 @@ class PoliciesController extends Controller
                                     "clients_company.business_name",  
                                     "insurers.name as name_insurers", 
                                     "branchs.name as name_branchs",
-                                    "fec_regins"
+                                    "fec_regins",
+                                    "auditoria.status"
                                    )
                                    ->where("auditoria.status", "!=", "0")
                                    ->where("policies.id_policies_grouped", "=", null)
