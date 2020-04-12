@@ -46,6 +46,63 @@ class VehicleController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
+
+    public function paginate(Request $request)
+    {
+
+        ini_set('memory_limit', '-1'); 
+        
+        $searchValue = $request->search['value']; // value
+        $start       = $request->start;
+        $length      = $request->length;
+        $draw        = $request->draw;
+
+        $query = Vehicle::select(
+                                         "auditoria.fec_regins", 
+                                         "auditoria.status", 
+                                         "vehicules.placa", 
+                                         "vehicules.model", 
+                                         "fasecolda.marca", 
+                                         "fasecolda.clase", 
+                                     )
+                                ->join("auditoria", "auditoria.cod_reg", "=", "vehicules.id_vehicules")
+                                ->where("auditoria.tabla", "vehicules")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
+                                ->where("auditoria.status", "!=", "0")
+                                ->orderBy("vehicules.id_vehicules", "DESC");
+
+            // se cuentan todos
+
+            $dbTemp = Clone $query;
+            $recordsTotal = $dbTemp->get()->count();
+            // se aplica el filtro y se cuentan los registros filtrados
+
+            $query->search($searchValue);
+
+            $dbFiltered = Clone $query;
+            $recordsFiltered = $dbFiltered->get()->count();
+
+            // Select completo final con relaciones 
+
+            $data = $query->paginar($start, $length)->get();
+
+            foreach($data as $value){
+                $fasecolda = Fasecolda::select("fasecolda.year_".$value["model"]."")
+                                ->where("codigo", $value["code"])
+                                ->first();
+
+                $value->valor_fasecolda = $fasecolda["year_".$value["model"].""] * 1000;
+            }
+
+        return response()->json([
+            "draw"            => intval($draw),
+            "recordsTotal"    => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data"            => $data
+        ])->setStatusCode(200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

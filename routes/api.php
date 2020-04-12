@@ -190,6 +190,8 @@ Route::get('vehicle/{placa}', 'VehicleController@show');
 
 Route::resource('vehicle', 'VehicleController');
 
+Route::post('vehicle/paginate', 'VehicleController@paginate');
+
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
 
 

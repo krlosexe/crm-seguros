@@ -102,30 +102,29 @@
 
 				var table=$("#table").DataTable({
 					"destroy":true,
-					
 					"stateSave": true,
-					"serverSide":false,
+					"serverSide":true,
+          			"processing": true,
 					"ajax":{
-						"method":"GET",
-						 "url":''+url+'/api/vehicle',
+						"method":"post",
+						 "url":''+url+'/api/vehicle/paginate',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
 						},
-						"dataSrc":""
 					},
-					"columns":[
+					"columnDefs":[
 						
-						{"data":"placa"},
-						{"data":"clase"},
-						{"data":"marca"},
-						{"data":"valor_fasecolda", 
+						{targets: 0, "data":"placa"},
+						{targets: 1, "data":"clase"},
+						{targets: 2, "data":"marca"},
+						{targets: 3, "data":"valor_fasecolda", 
 							render: function(data, type, row){
 								return number_format(data, 2)
 							}
 						},
-						{"data": "fec_regins"},
-						{"data": null,
+						{targets: 4, "data": "fec_regins"},
+						{targets: 5, "data": null,
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)
