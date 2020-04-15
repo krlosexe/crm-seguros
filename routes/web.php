@@ -212,6 +212,8 @@ Route::get('policies/wallet/files/{id_charge}/{management}', function ($id_charg
 });
 
 
+Route::get('reprocesar', 'ImportController@reprocesar');
+
 Route::get('import', 'ImportController@import');
 Route::get('import-policies', 'ImportController@policies');
 Route::get('import-files', 'ImportController@files');

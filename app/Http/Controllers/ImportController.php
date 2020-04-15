@@ -20,6 +20,8 @@ use App\PoliciesNotifications;
 use App\PoliciesInfoPayments;
 use App\PolicesVehicles;
 
+use App\InsurersBranchs;
+
 use App\Insurers;
 use App\Branchs;
 use App\ClientsCompany;
@@ -27,6 +29,33 @@ use App\Files;
 
 class ImportController extends Controller
 {
+
+   function reprocesar(){
+      $policies = Policies::all();
+
+      foreach ($policies as $item) {
+        
+        $perc = PoliciesCousinsCommissions::find($item->id_policies);
+
+        if($perc != null){
+
+          if($perc->percentage_vat_cousin == 0 && $perc->commission_percentage == 0){
+            $originalInsure = InsurersBranchs::find($item->branch);
+
+            dump($perc);
+
+            $perc->percentage_vat_cousin = $originalInsure->vat_percentage;
+            $perc->commission_percentage = $originalInsure->commission_percentage;
+
+            dd($perc);
+            //$perc->save();
+          }
+          
+        }
+
+      }
+   }
+
     //csv clientes
     public function import()
     {
