@@ -37,21 +37,21 @@ class ImportController extends Controller
         
         $perc = PoliciesCousinsCommissions::find($item->id_policies);
 
-        if($perc != null){
+        if($perc == null)
+          continue;
 
           if($perc->percentage_vat_cousin == 0 && $perc->commission_percentage == 0){
-            $originalInsure = InsurersBranchs::find($item->branch);
+            $originalInsure = InsurersBranchs::where('id_branch', $item->branch)->where('id_insurers', $item->insurers)->first();
 
-            dump($perc);
+            if($originalInsure == null)
+              continue;
 
             $perc->percentage_vat_cousin = $originalInsure->vat_percentage;
             $perc->commission_percentage = $originalInsure->commission_percentage;
 
-            dd($perc);
-            //$perc->save();
+            $perc->save();
           }
           
-        }
 
       }
    }
