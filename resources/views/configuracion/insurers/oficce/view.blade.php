@@ -18,7 +18,7 @@
 
 
             <div class="col-md-3">
-              <label for=""><b>Telefono Oficina</b></label>
+              <label for=""><b>Teléfono Oficina</b></label>
               <div class="form-group valid-required">
                 <input name="phone" type="text" class="form-control" id="phone_view">
               </div>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-md-3">
-              <label for="headquarters_default"><b>Es la cede por defecto ?</b></label>
+              <label for="headquarters_default"><b>¿Es la sede por defecto?</b></label>
                 <div class="checkbox"><input type="checkbox" name="headquarters_default" id="headquarters_default_view" value="1"><label for="headquarters_default"></label></div>
             </div>
 
@@ -51,7 +51,7 @@
 
 
             <div class="col-md-3">
-              <label for=""><b>Telefono del contacto</b></label>
+              <label for=""><b>Teléfono del contacto</b></label>
               <div class="form-group valid-required">
                 <input name="phone_contact" type="text" class="form-control" id="phone_contact_view">
               </div>

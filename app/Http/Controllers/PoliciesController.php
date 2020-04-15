@@ -70,28 +70,31 @@ class PoliciesController extends Controller
         $start       = $request->start;
         $length      = $request->length;
         $draw        = $request->draw;
-
+        
         $policiesQuery = Policies::select(
-                                  "policies.number_policies", 
-                                  "policies.type_poliza", 
-                                  "policies.state_policies", 
-                                   DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
-                                    "clients_company.business_name",  
-                                    "insurers.name as name_insurers", 
-                                    "branchs.name as name_branchs",
-                                    "fec_regins",
-                                    "auditoria.status"
+                                    "policies.id_policies"
                                    )
-                                   ->where("auditoria.status", "!=", "0")
-                                   ->where("policies.id_policies_grouped", "=", null)
-                                   ->where("auditoria.tabla", "policies")
-                                   ->orderBy("policies.id_policies", "DESC")
-                                   ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
-                                   ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
-                                   ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
-                                   ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
-                                   ->join("branchs", "branchs.id_branchs", "=", "policies.branch");
-                                   
+                                ->join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
+                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+                                ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch")
+                                ->join("policies_cousins_commissions", "policies_cousins_commissions.id_policies", "=", "policies.id_policies", "left")
+                                ->join("policies_observations", "policies_observations.id_policies", "=", "policies.id_policies")
+                                ->join("policies_notifications", "policies_notifications.id_policies", "=", "policies.id_policies", "left")
+                                ->join("policies_info_payments", "policies_info_payments.id_policies", "=", "policies.id_policies")
+                                
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                                ->where("auditoria.tabla", "policies")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->with("policies_bind")
+
+                                ->with("vehicules")
+
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("policies.id_policies_grouped", "=", null)
+                                ->orderBy("policies.id_policies", "DESC");    
 
             // se cuentan todos
 
@@ -106,6 +109,22 @@ class PoliciesController extends Controller
             $recordsFiltered = $dbFiltered->get()->count();
 
             // Select completo final con relaciones 
+
+            $policiesQuery->select(
+                                    "policies.*", 
+                                    "policies_info_taker_insured_beneficiary.*", 
+                                    "clients_people.names", 
+                                    "clients_people.last_names", 
+                                    "clients_company.business_name",  
+                                    "insurers.name as name_insurers", 
+                                    "branchs.name as name_branchs",
+                                    "policies_cousins_commissions.*",
+                                    "policies_observations.*",
+                                    "policies_notifications.*", 
+                                    "policies_info_payments.*",
+                                    "auditoria.*", "user_registro.email as email_regis",
+                                    DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
+                                );
 
             $data = $policiesQuery->paginar($start, $length)->get();
 

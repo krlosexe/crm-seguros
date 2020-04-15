@@ -57,14 +57,7 @@ class VehicleController extends Controller
         $length      = $request->length;
         $draw        = $request->draw;
 
-        $query = Vehicle::select(
-                                         "auditoria.fec_regins", 
-                                         "auditoria.status", 
-                                         "vehicules.placa", 
-                                         "vehicules.model", 
-                                         "fasecolda.marca", 
-                                         "fasecolda.clase", 
-                                     )
+        $query = Vehicle::select("fasecolda.clase")
                                 ->join("auditoria", "auditoria.cod_reg", "=", "vehicules.id_vehicules")
                                 ->where("auditoria.tabla", "vehicules")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
@@ -84,6 +77,36 @@ class VehicleController extends Controller
             $recordsFiltered = $dbFiltered->get()->count();
 
             // Select completo final con relaciones 
+
+            $query->select(
+                        "vehicules.*", 
+                        "fasecolda.marca", 
+                        "fasecolda.clase",
+                        "fasecolda.codigo",
+                        "fasecolda.homologocodigo",
+                        "fasecolda.referencia1",
+                        "fasecolda.referencia2",
+                        "fasecolda.referencia3",
+                        "fasecolda.peso",
+                        "fasecolda.servicio",
+                        "fasecolda.bcpp",
+                        "fasecolda.importado",
+                        "fasecolda.potencia",
+                        "fasecolda.tipo_caja",
+                        "fasecolda.cilindraje",
+                        "fasecolda.nacionalidad",
+                        "fasecolda.capacidad_pasajeros",
+                        "fasecolda.capacidad_carga",
+                        "fasecolda.puertas",
+                        "fasecolda.a/i",
+                        "fasecolda.ejes",
+                        "fasecolda.estado",
+                        "fasecolda.combustible",
+                        "fasecolda.transmision",
+                        "fasecolda.um" ,                     
+                        "auditoria.*", 
+                        "user_registro.email as email_regis"
+            );
 
             $data = $query->paginar($start, $length)->get();
 
