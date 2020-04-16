@@ -72,7 +72,7 @@
                                                         <canvas height="230" id="allocation-chart"></canvas>
                                                     </div>
                                                 </div>
-                                                <div class="widget-legends mrg-top-30" id="legends-allocation">
+                                                <div class="mrg-top-30" id="legends-allocation">
                                                     <div class="relative mrg-top-15">
                                                         <span class="status info"> </span>
                                                         <span class="pdd-left-20 font-size-16"><b class="text-dark">25%</b> Bógota</span>
@@ -100,17 +100,17 @@
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Aseguradora MP:</b> Suramericana en seguros SA</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Aseguradora MP:</b> <br>Suramericana en seguros SA</p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Ramo MP:</b> Vida</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Ramo MP:</b><br> Vida</p>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
-                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Vendedor MP: </b> chseguros.com ltda</p>
+                                                                <p class="no-mrg-btm"><b class="text-dark font-size-16">Vendedor MP: </b><br> chseguros.com ltda</p>
                                                             </div>
                                                         </div>
                                                         
@@ -127,7 +127,7 @@
                               <div class="card">
                                     <div class="card-heading">
                                         <h4 class="card-title inline-block pdd-top-5">Pólizas próximas a renovar</h4>
-                                        <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a>
+                                        {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
                                     </div>
                                     <div class="pdd-horizon-20 pdd-vertical-5">
                                         <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
@@ -144,7 +144,7 @@
                                 <div class="card">
                                     <div class="card-heading">
                                         <h4 class="card-title inline-block pdd-top-5">Cartera por cobrar</h4>
-                                        <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a>
+                                        {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
                                     </div>
                                     <div class="pdd-horizon-20 pdd-vertical-5">
                                         <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
@@ -246,30 +246,34 @@
 
                         var html = ""
 
-                        $.map(data, function (item, key) {
-                           
+                        if(data.length == 0){
+                            html = `
+                                <tr>
+                                    <td>
+                                        <div class="list-info text-center">
+                                            <span>Sin datos que mostrar</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        }
 
+                        $.map(data, function (item, key) {
                             html += '<tr>'
                                     +'<td>'
                                         +'<div class="list-info">'
-                                        +' <img class="thumb-img" src="assets/images/avatars/thumb-1.jpg" alt="">'
+                                        +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
                                             + '<div class="info">'
-                                            +  '<span class="title">'+item.names+' '+item.last_names+'</span>'
+                                            +  '<span class="title">'+item.fullname+'</span>'
                                             + '<span class="sub-title"># '+item.number_policies+'</span>'
                                             +'</div>'
                                         +'</div>'
                                 + '</td>'
                                 + ' <td>'
                                     + '<div class="mrg-top-10">'
-                                        + '<span>'+item.limit_date+'</span>'
+                                        + '<span>'+item.end_date+'</span>'
                                         +'</div>'
                                 + '</td>'
-                                + '<td>'
-                                    +  '<div class="relative mrg-top-10">'
-                                        + '<span class="status online"> </span>'
-                                            +'<span class="pdd-left-20">Confirmed</span>'
-                                        +'</div>'
-                                    +'</td>'
                             + '</tr>'
 
                         });
@@ -301,15 +305,27 @@
 
                         var html = ""
 
+                        if(data.length == 0){
+                            html = `
+                                <tr>
+                                    <td>
+                                        <div class="list-info text-center">
+                                            <span>Sin datos que mostrar</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+
                         $.map(data, function (item, key) {
                            
 
                            html += '<tr>'
                                 +'<td>'
                                     +'<div class="list-info">'
-                                       +' <img class="thumb-img" src="assets/images/avatars/thumb-1.jpg" alt="">'
+                                        +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
                                        + '<div class="info">'
-                                          +  '<span class="title">'+item.names+' '+item.last_names+'</span>'
+                                          +  '<span class="title">'+item.fullname+'</span>'
                                            + '<span class="sub-title"># '+item.number_policies+'</span>'
                                         +'</div>'
                                     +'</div>'
@@ -319,12 +335,6 @@
                                        + '<span>'+item.end_date+'</span>'
                                     +'</div>'
                                + '</td>'
-                               + '<td>'
-                                  +  '<div class="relative mrg-top-10">'
-                                      + '<span class="status online"> </span>'
-                                        +'<span class="pdd-left-20">Confirmed</span>'
-                                    +'</div>'
-                                +'</td>'
                            + '</tr>'
 
                         });
@@ -419,7 +429,6 @@
 
                        $("#legends-allocation").html(html)
 
-
                        var allocationChart = document.getElementById("allocation-chart");
                         var allocationCtx = allocationChart.getContext('2d');
                         var allocationData = {
@@ -444,8 +453,6 @@
                                 cutoutPercentage: 75
                             }
                         });
-
-
 
 
                         $('#map').vectorMap({
