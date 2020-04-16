@@ -48,7 +48,6 @@ class ChargeAccountController extends Controller
             $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
 
-
             $store = ChargeAccount::create($request->all());
 
             $auditoria              = new Auditoria;
@@ -69,6 +68,47 @@ class ChargeAccountController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+    public function storeMultiple(Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            foreach ($request->cousin as $key => $value) {
+                $item = $request->all();
+
+                $item["id_policie"]            = $item['id_policie'][$key];
+                $item["cousin"]                = (float) str_replace(',', '', $item["cousin"][$key]);
+                $item["xpenses"]               = (float) str_replace(',', '', $item["xpenses"][$key]);
+                $item["vat"]                   = (float) str_replace(',', '', $item["vat"][$key]);
+                $item["percentage_vat_cousin"] = (float) str_replace(',', '', $item["percentage_vat_cousin"][$key]);
+                $item["commission_percentage"] = (float) str_replace(',', '', $item["commission_percentage"][$key]);
+                $item["agency_commission"]     = (float) str_replace(',', '', $item["agency_commission"][$key]);
+                $item["total"]                 = (float) str_replace(',', '', $item["total"][$key]);
+
+                $store = ChargeAccount::create($item);
+
+                $auditoria              = new Auditoria;
+                $auditoria->tabla       = "charge_accounts";
+                $auditoria->cod_reg     = $store["id_charge_accounts"];
+                $auditoria->status      = 1;
+                $auditoria->usr_regins  = $request["id_user"];
+                $auditoria->save();
+
+                if(!$store){
+                    return response()->json("Ha ocurrido un error al guardar alguno de los registros, por favor revise los movimientos antes de continuar")->setStatusCode(400);
+                    
+                }
+            }
+
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+    
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
     /**
      * @param  \App\ChargeAccount  $chargeAccount
      * @return \Illuminate\Http\Response

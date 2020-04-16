@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/multiple-select/css/bootstrap-multiselect.css" />
     <!-- page plugins css -->
     <!-- <link rel="stylesheet" href="<?= url('/') ?>/vendors/dragula-master/dist/dragula.min.css" /> -->
 
@@ -113,6 +115,7 @@
       <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>
       <script src="<?= url('/') ?>/vendors/numeral/min/numeral.min.js"></script>
+      <script src="<?= url('/') ?>/vendors/multiple-select/js/bootstrap-multiselect.js"></script>
 
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>

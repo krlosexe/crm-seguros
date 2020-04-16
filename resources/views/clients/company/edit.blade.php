@@ -13,6 +13,10 @@
             <li class="nav-item">
                 <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
+
+            <li class="nav-item">
+                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+            </li>
         </ul>
 
 
@@ -368,8 +372,15 @@
               </iframe>
             </div>
           </div>
+          
 
+          <div role="tabpanel" class="tab-pane fade in " id="default-tab-4-edit">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item " id="iframeCarteraEdit" allowfullscreen>
 
+              </iframe>
+            </div>
+          </div>
 
         </div>
 

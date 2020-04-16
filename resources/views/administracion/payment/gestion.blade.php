@@ -102,7 +102,7 @@
 							render : function(data, type, row){
 
 								if(row.type_clients == 0){
-									return "<a href='people/"+row.clients+"' target='_blank' class=''>"+data+"</a>"
+									return "<a href='people/"+row.id_clients_people+"' target='_blank' class=''>"+row.name_client+" "+row.last_names+"</a>"
 								}else{
 									return "<a href='people/"+row.clients+"' target='_blank' class=''>"+row.business_name+"</a>"
 								}

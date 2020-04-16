@@ -29,6 +29,23 @@
     <link href="<?= url('/') ?>/css/animate.min.css" rel="stylesheet">
     <link href="<?= url('/') ?>/css/app.css" rel="stylesheet">
     <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= url('/') ?>/vendors/multiple-select/css/bootstrap-multiselect.css" />
+
+
+    <style type="text/css">
+/*	    .multiselect-native-select .btn-group{
+	    	display: block; 
+	    }
+*/
+
+    	.multiselect.dropdown-toggle.btn.btn-default, .multiselect-container.dropdown-menu.show, .multiselect-container.dropdown-menu.show label{
+    		width: 100% !important;
+    	}
+    	.multiselect-native-select .active{
+    		background: aliceblue;
+    	}
+    </style>
+
     <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
 
   
@@ -72,6 +89,10 @@
 											<i class="ti-plus"></i>
 											<span>Nuevo</span>
 										</button>
+										<button onclick="nuevoMultiple()" id="btn-new" class="btn btn-info" style="float: left;">
+											<i class="ti-plus"></i>
+											<span>Polizas multiples</span>
+										</button>
 									@endif
 										
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
@@ -97,6 +118,7 @@
 				</div>
 
 
+				@include('clients.people.wallet.store_multiple')
 				@include('clients.people.wallet.store')
 				@include('clients.people.wallet.view')
 				@include('clients.people.wallet.edit')
@@ -138,14 +160,19 @@
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
+      <script src="<?= url('/') ?>/vendors/multiple-select/js/bootstrap-multiselect.js"></script>
+
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)
   </script>
 
 	<script>
+		var multiselect;
+
 			$(document).ready(function(){
 				store();
+				storeMultiple();
 				list();
 				update();
 
@@ -154,6 +181,11 @@
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "modules");
+
+				$('.multiselect').multiselect({
+				      selectAllText: true,
+				      buttonWidth: '100%'
+				});
 			});
 
 
@@ -166,6 +198,11 @@
 			function store(){
 				enviarFormulario("#store", 'api/charge/account', '#cuadro2');
 			}
+
+			function storeMultiple(){
+				enviarFormulario("#store-multiple", 'api/charge/account/multiple', '#cuadro5');
+			}
+
 
 
 			function list(cuadro) {
@@ -186,7 +223,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/client/charge/account/'+{{$id_client}},
+						 "url":''+url+'/api/client/charge/account/'+{{$id_client}}+'/'+{{$type_client}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -257,6 +294,32 @@
 				cuadros("#cuadro1", "#cuadro2");
 			}
 
+			function nuevoMultiple() {
+
+				$("#alertas").css("display", "none");
+				$("#store-multiple")[0].reset();
+				$(".container-datos-adicionales-hijo").css("display", "none");
+				$(".container-datos-adicionales-vehicle").css("display", "none");
+
+				$("#beneficairy_onerous_input_bind").val(1)
+
+				$(".remove").css("display", "block")
+				$(".remove-pay").css("display", "none")
+
+				$("#number-multiple option").remove();
+
+			    $('.multiselect').multiselect('destroy');
+
+				$('.multiselect').multiselect({
+				      selectAllText: true,
+				      buttonWidth: '100%'
+				});
+
+				$('#number-multiple').change();
+
+				cuadros("#cuadro1", "#cuadro5");
+			}
+
 
 			var api = "/api/footers";
 			$("#add-pie").click(function (e) { 
@@ -318,7 +381,39 @@
 				});
 			}
 
+			$('#submit-registrar-multiple').click(function(e){
+				e.preventDefault();
 
+				let tbody = document.querySelector('#table_multiple_poliza tbody');
+				let valid = true;
+
+				if(tbody.children[0].childElementCount == 1){
+					return alert("Debe seleccionar al menos una poliza")
+				}
+
+				Array.from(tbody.children).forEach(tr => {
+					let cousin = tr.querySelector("input[name='cousin[]']").value;
+					let xpense = tr.querySelector("input[name='xpenses[]']").value;
+
+					if(cousin == '' && valid){
+						valid = false;
+						alert("El campo prima es requeridos en cada fila");
+						tr.querySelector("input[name='cousin[]']").focus();
+						return 
+					}
+
+					if(xpenses == '' && valid){
+						valid = false;
+						alert("El campo gastos es requeridos en cada fila");
+						tr.querySelector("input[name='xpenses[]']").focus();
+						return 
+					}
+				})
+
+				if(valid){
+					$('#store-multiple').submit();
+				}
+			})
 
 			$("#btn-save-pie").click(function (e) { 
 				e.preventDefault();
@@ -543,13 +638,15 @@
 				});
 			}
 
-			$("#policie_annexes-store").change(function (e) { 
+			$("#policie_annexes-store, #policie_annexes-multiple").change(function (e) { 
 				
 				var type = $(this).val();
+				const idElement = $(this).attr('id');
+
 				if($(this).val() == "Poliza"){
-					var route = '/api/clients/people/policies/'+{{$id_client}};
+					var route = '/api/clients/people/policies/'+{{$id_client}}+'/'+{{$type_client}};
 				}else{
-					var route = '/api/client/policies/annexes/'+{{$id_client}};
+					var route = '/api/client/policies/annexes/'+{{$id_client}}+'/'+{{$type_client}};
 				}
 				var url=document.getElementById('ruta').value;
 					$.ajax({
@@ -568,16 +665,48 @@
 						
 						},
 						success: function(data){
+							
+							if(idElement != 'policie_annexes-multiple'){
 
-							$("#number-store option").remove();
-							$("#number-store").append($('<option>',
-							{
-								value: "",
-								text : "Seleccione",
-								
-							}));
+								$("#number-store option").remove();
+								$("#number-store").append($('<option>',
+								{
+									value: "",
+									text : "Seleccione",
+									
+								}));
+						    }
+							
 							if(type == "Poliza"){
 
+								// bloque solo se encarga del form de polizas multiples
+
+								if(idElement == 'policie_annexes-multiple'){
+									$("#number-multiple option").remove();
+
+								    $('.multiselect').multiselect('destroy');
+
+									$.map(data, function (item, key) {
+										if (item.status == 1) {
+											$("#number-multiple").append($('<option>',
+											{
+												value: item.id_policies,
+												text : item.number_policies,
+												json: JSON.stringify(item)
+											}));
+
+										}
+									});
+
+									$('.multiselect').multiselect({
+									      selectAllText: true,
+									      buttonWidth: '100%'
+									});
+
+									return;
+								}
+
+								// fin acá
 
 								$.map(data, function (item, key) {
 									if (item.status == 1) {
@@ -589,16 +718,15 @@
 										}));
 									}
 								});
-								
 
-								// $("#cousin").val(number_format(data.cousin, 2))
-								// $("#xpenses").val(number_format(data.xpenses, 2))
-								// $("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-								// $("#percentage_vat_cousin").val(data.percentage_vat_cousin)
-								// $("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-								// $("#participation").val(data.participation).attr("readonly", "readonly")
-								// $("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-								// $("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
+								$("#cousin").val(number_format(data.cousin, 2))
+								$("#xpenses").val(number_format(data.xpenses, 2))
+								$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
+								$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
+								$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
+								$("#participation").val(data.participation).attr("readonly", "readonly")
+								$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
+								$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
 
 							}else{
 
@@ -623,6 +751,88 @@
 			});
 
 
+			$('#number-multiple').change(function(){
+				const values = $(this).val();
+
+				const tdContent = `
+                  <td>
+                  	<input class="form-control text-right form-control-user monto_formato_decimales" name="cousin[]" value="" required>
+                  	<input name="id_policie[]" hidden>
+                  </td>
+                  <td>
+                  	<input class="form-control text-right form-control-user monto_formato_decimales" name="xpenses[]" value="" required>
+                  </td>
+                  <td>
+                  	<input name="vat[]" readonly="readonly" class="form-control text-right  form-control-user" value="">
+                  </td>
+                  <td>
+                  	<input name="percentage_vat_cousin[]" class="form-control text-right  form-control-user" value="">
+                  </td>
+                  <td>
+                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input  name="total[]" value="" readonly="readonly" class="form-control text-right form-control-user">
+                  </td>
+				`
+
+				let tbody = document.querySelector('#table_multiple_poliza tbody');
+
+				if(values == null){
+					tbody.innerHTML = '<tr><td colspan="8" class="text-center">Sin datos</td></tr>';
+					return;
+				}
+				else{
+					if(tbody.children[0].childElementCount == 1){
+						tbody.innerHTML = '';
+					}
+					else{
+						Array.from(tbody.children).forEach(tr => {
+							let encontered = values.find(id =>  id == tr.children[0].getAttribute('id'));
+
+							if(encontered == undefined){
+								tr.remove();
+							}
+						});
+
+					}
+
+					values.forEach(id => {
+						
+						let rowExist = tbody.querySelector(`td[id="${id}"]`)
+
+						if(rowExist != null){
+							return;
+						}
+
+						const json = JSON.parse($(`#number-multiple option[value="${id}"]`).attr('json'));
+						let row = tbody.insertRow();
+						row.innerHTML = tdContent;
+
+						row.querySelector("input[name='id_policie[]']").value = id;
+						row.querySelector("input[name='cousin[]']").value = json.cousin == null? 0 : json.cousin;
+						row.querySelector("input[name='xpenses[]']").value = json.xpenses == null? 0 : json.xpenses;
+						row.querySelector("input[name='total[]']").value = json.vat == null? 0 : json.vat;
+						row.querySelector("input[name='percentage_vat_cousin[]']").value = json.percentage_vat_cousin == null? 0 : json.percentage_vat_cousin;
+						row.querySelector("input[name='vat[]']").value = json.commission_percentage == null? 100 : json.commission_percentage;
+						row.querySelector("input[name='commission_percentage[]']").value = json.participation == null? 100 : json.participation;
+						row.querySelector("input[name='agency_commission[]']").value = json.agency_commission == null? 0 : json.agency_commission;
+						row.querySelector("input[name='participation[]']").value = json.total == null? 0 : json.total;
+
+						$(row).find('.form-control').change();
+						row.children[0].setAttribute('id', id);
+
+					})
+
+
+				}
+			})
 
 			$("#number-store").change(function (e) { 
 				
@@ -702,6 +912,22 @@
 			$("#cousin, #xpenses, #commission_percentage, #percentage_vat_cousin").keyup(function (e) { 
 				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
 			});
+
+			$('body').on('keyup', "input[name='cousin[]'], input[name='xpenses[]'], input[name='commission_percentage[]'], input[name='percentage_vat_cousin[]']", function (e) { 
+				let row = this.closest('tr');
+
+				calc(
+					row.querySelector("input[name='cousin[]']"), 
+					row.querySelector("input[name='xpenses[]']"), 
+					row.querySelector("input[name='total[]']"), 
+					row.querySelector("input[name='percentage_vat_cousin[]']"), 
+					row.querySelector("input[name='vat[]']"), 
+					row.querySelector("input[name='commission_percentage[]']"), 
+					row.querySelector("input[name='agency_commission[]']"), 
+					row.querySelector("input[name='participation[]']"), 
+				)
+			});
+
 
 
 			$("#cousin-edit, #xpenses-edit, #commission_percentage-edit, #percentage_vat_cousin-edit").keyup(function (e) { 

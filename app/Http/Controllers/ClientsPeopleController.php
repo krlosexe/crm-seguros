@@ -299,7 +299,7 @@ class ClientsPeopleController extends Controller
     }
 
 
-    public function Policies($id_client){
+    public function Policies($id_client, $type_cliente = 0){
 
         $data = Policies::select("policies.*", "policies_info_taker_insured_beneficiary.*", "clients_people.names", "clients_people.last_names", 
                                     "clients_company.business_name",  "insurers.name as name_insurers", "branchs.name as name_branchs","policies_cousins_commissions.*",
@@ -323,6 +323,7 @@ class ClientsPeopleController extends Controller
                                 ->with("policies_bind")
 
                                 ->where("policies.clients", $id_client)
+                                ->where("policies.type_clients", $type_cliente)
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
@@ -335,7 +336,7 @@ class ClientsPeopleController extends Controller
 
 
 
-    public function Annexes($id_client){
+    public function Annexes($id_client, $type_cliente = 0){
 
         $data = PoliciesAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
 
@@ -347,6 +348,7 @@ class ClientsPeopleController extends Controller
 
 
                                             ->where("policies.clients", $id_client)
+                                            ->where("policies.type_clients", $type_cliente)
 
                                             ->where("auditoria.status", "!=", "0")
                                             ->orderBy("policies_annexes.id_policies_annexes", "DESC")
@@ -356,7 +358,7 @@ class ClientsPeopleController extends Controller
     }
 
 
-    public function Wallet($id_client){
+    public function Wallet($id_client, $type_cliente = 0){
 
         $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
                                 ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
@@ -369,6 +371,8 @@ class ClientsPeopleController extends Controller
                                 ->with("collections")
                                 
                                 ->where("policies.clients", $id_client)
+                                ->where("policies.type_clients", $type_cliente)
+
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
                                 ->get();
            

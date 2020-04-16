@@ -58,7 +58,7 @@ Route::get('clients/people/policies/{id_client}', function ($id_client) {
 
 
 Route::get('clients/people/wallet/{id_client}/{management}', function ($id_client, $management) {
-    return view('clients.people.wallet.gestion',["id_client" => $id_client, "management" => $management]);
+    return view('clients.people.wallet.gestion',["id_client" => $id_client, "management" => $management, "type_client" => 0]);
 });
 
 
@@ -70,6 +70,9 @@ Route::get('clients/consortium/files/{id_client}/{management}', function ($id_cl
     return view('clients.consortium.files.gestion', ["id_client" => $id_client, "management" => $management]);
 });
 
+Route::get('clients/company/wallet/{id_client}/{management}', function ($id_client, $management) {
+    return view('clients.people.wallet.gestion',["id_client" => $id_client, "management" => $management, "type_client" => 1]);
+});
 
 Route::get('policies/files/{id_client}/{management}', function ($id_client, $management) {
     return view('policies.individual.files.gestion', ["id_client" => $id_client, "management" => $management]);

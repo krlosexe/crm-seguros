@@ -293,8 +293,10 @@
 					var url = "clients/company/files/"+data.id_clients_company+"/1"
 					$('#iframeEdit').attr('src', url);
 
+					var url = "clients/company/wallet/"+data.id_clients_company+"/1"
+					$('#iframeCarteraEdit').attr('src', url);
 
-
+					
 				});
 			}
 

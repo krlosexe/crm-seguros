@@ -12,6 +12,7 @@ class PaymentController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
             $data = ChargeAccount::select("charge_accounts.*","policies.type_clients", "policies.number_policies","policies_annexes.number_annexed", 
+                    "clients_people.id_clients_people",
                                         "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
                                         "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
                                         "clients_company_contact.department","clients_company_contact.city","datos_personales.*", 

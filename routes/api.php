@@ -137,6 +137,7 @@ Route::get('tasks-today', 'CalendarController@Today');
 Route::get('tasks/delete/{id}', 'TasksController@destroy');
 
 Route::resource('charge/account', 'ChargeAccountController');
+Route::post('charge/account/multiple', 'ChargeAccountController@storeMultiple');
 Route::get('charge/account/{id_policie}', 'ChargeAccountController@index');
 Route::get('charge/account/status/{id}/{status}', 'ChargeAccountController@status');
 
@@ -165,13 +166,13 @@ Route::post('footers/delete', 'FootersController@Delete');
 Route::get('calendar/tasks/', 'CalendarController@getTask');
 
 
-Route::get('clients/people/policies/{id_client}', 'ClientsPeopleController@Policies');
+Route::get('clients/people/policies/{id_client}/{type_cliente}', 'ClientsPeopleController@Policies');
 
 
-Route::get('client/policies/annexes/{id_client}', 'ClientsPeopleController@Annexes');
+Route::get('client/policies/annexes/{id_client}/{type_cliente}', 'ClientsPeopleController@Annexes');
 
 
-Route::get('client/charge/account/{id_client}', 'ClientsPeopleController@Wallet');
+Route::get('client/charge/account/{id_client}/{type_cliente}', 'ClientsPeopleController@Wallet');
 
 Route::get('fasecolda/typevehicule', 'FasecoldaController@typeVehicule');
 Route::get('fasecolda/typevehicule/trademark/', 'FasecoldaController@typeVehiculeTrademark');
