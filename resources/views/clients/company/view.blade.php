@@ -19,7 +19,7 @@
 
 
             <li class="nav-item">
-                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+                <a href="#default-tab-4-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
 
 
@@ -379,9 +379,9 @@
           </div>
 
 
-          <div role="tabpanel" class="tab-pane fade in " id="default-tab-4-edit">
+          <div role="tabpanel" class="tab-pane fade in " id="default-tab-4-info">
             <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item " id="iframeCarteraEdit" allowfullscreen>
+              <iframe class="embed-responsive-item " id="iframeCarteraInfo" allowfullscreen>
 
               </iframe>
             </div>

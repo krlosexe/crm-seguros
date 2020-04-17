@@ -231,7 +231,7 @@
 					$('#iframeView').attr('src', url);
 
 					var url = "clients/company/wallet/"+data.id_clients_company+"/0"
-					$('#iframeCarteraEdit').attr('src', url);
+					$('#iframeCarteraInfo').attr('src', url);
 
 				});
 			}
