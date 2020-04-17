@@ -19,7 +19,7 @@
 
 
             <li class="nav-item">
-                <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Polizas</a>
+                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
 
 
@@ -379,10 +379,9 @@
           </div>
 
 
-
-          <div role="tabpanel" class="tab-pane fade in" id="default-tab-3-view">
+          <div role="tabpanel" class="tab-pane fade in " id="default-tab-4-edit">
             <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item " id="iframePoliciesView" allowfullscreen>
+              <iframe class="embed-responsive-item " id="iframeCarteraEdit" allowfullscreen>
 
               </iframe>
             </div>

@@ -176,7 +176,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/clients/people/policies/'+{{$id_client}},
+						 "url":''+url+'/api/clients/people/policies/'+{{$id_client}}+'/0',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
