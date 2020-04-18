@@ -52,8 +52,8 @@ Route::get('clients/people/files/{id_client}/{management}', function ($id_client
 });
 
 
-Route::get('clients/people/policies/{id_client}', function ($id_client) {
-    return view('clients.people.policies.gestion', ["id_client" => $id_client]);
+Route::get('clients/people/policies/{id_client}/{type_client}', function ($id_client, $type_client) {
+    return view('clients.people.policies.gestion', ["id_client" => $id_client, 'type_client' => $type_client]);
 });
 
 

@@ -230,6 +230,9 @@
 					var url = "clients/company/files/"+data.id_clients_company+"/0"
 					$('#iframeView').attr('src', url);
 
+					var url = "clients/people/policies/"+data.id_clients_company+"/1"
+					$('#iframePoliciesView').attr('src', url);
+
 					var url = "clients/company/wallet/"+data.id_clients_company+"/0"
 					$('#iframeCarteraInfo').attr('src', url);
 
@@ -294,6 +297,9 @@
 
 					var url = "clients/company/files/"+data.id_clients_company+"/1"
 					$('#iframeEdit').attr('src', url);
+
+					var url = "clients/people/policies/"+data.id_clients_company+"/1"
+					$('#iframePoliciesEdit').attr('src', url);
 
 					var url = "clients/company/wallet/"+data.id_clients_company+"/1"
 					$('#iframeCarteraEdit').attr('src', url);

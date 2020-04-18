@@ -305,7 +305,7 @@
 					$('#iframeView').attr('src', url);
 
 
-					var url = "clients/people/policies/"+data.id_clients_people+""
+					var url = "clients/people/policies/"+data.id_clients_people+"/0"
 					$('#iframePoliciesView').attr('src', url);
 
 					var url = "clients/people/wallet/"+data.id_clients_people+"/0"
@@ -441,7 +441,7 @@
 					$('#iframeEdit').attr('src', url);
 
 
-					var url = "clients/people/policies/"+data.id_clients_people+""
+					var url = "clients/people/policies/"+data.id_clients_people+"/0"
 					$('#iframePolizasEdit').attr('src', url);
 
 

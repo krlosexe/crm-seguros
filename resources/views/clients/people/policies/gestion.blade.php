@@ -37,7 +37,7 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-3);
-        validAuth(false, url[1]);
+        validAuth(false, url[0]);
       });
     </script>
 
@@ -176,7 +176,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/clients/people/policies/'+{{$id_client}}+'/0',
+						 "url":''+url+'/api/clients/people/policies/'+{{$id_client}}+'/'+{{ $type_client }},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
