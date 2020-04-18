@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <link rel="shortcut icon" href="https://chseguros.com.co/wp-content/uploads/2020/01/cropped-Captura-de-pantalla-2020-01-16-a-las-4.11.15-p.-m.-32x32.png">
 
   <title>App</title>
 
