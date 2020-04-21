@@ -48,6 +48,28 @@ class Policies extends Model
     }
 
 
+    // Obtener datos con otras tablas
+
+    public function policies_info_taker_insured_beneficiary(){
+        return $this->hasOne('App\PoliciesInfoTakerInsuredBeneficiary', 'id_policies');
+    }
+
+    public function policies_cousins_commissions(){
+        return $this->hasOne('App\PoliciesCousinsCommissions', 'id_policies');
+    }
+
+    public function policies_observations(){
+        return $this->hasOne('App\PoliciesObservations', 'id_policies');
+    }
+
+    public function policies_notifications(){
+        return $this->hasOne('App\PoliciesNotifications', 'id_policies');
+    }
+    
+    public function policies_info_payments(){
+        return $this->hasOne('App\PoliciesInfoPayments', 'id_policies');
+    }
+
 
 
 }

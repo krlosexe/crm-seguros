@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Policies;
 use App\Auditoria;
+use App\ChargeManagement;
 use App\ChargeAccount;
 use App\Collections;
 use Illuminate\Http\Request;
@@ -39,6 +41,11 @@ class ChargeAccountController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
+            $policies = Policies::find($request->number);
+
+            $request['id_client'] = $policies->clients;
+            $request['type_client'] = $policies->type_clients;
+
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
             $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
@@ -47,6 +54,17 @@ class ChargeAccountController extends Controller
             $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
             $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
+
+            $storeManagement = ChargeManagement::create($request->all());
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "charge_accounts_management";
+            $auditoria->cod_reg     = $storeManagement["id"];
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
+            $request['management_id'] = $storeManagement['id'];
 
             $store = ChargeAccount::create($request->all());
 
@@ -73,6 +91,22 @@ class ChargeAccountController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
+            $chargeManagement = $request->all();
+
+            $chargeManagement['total'] = array_reduce($chargeManagement['total'], function($carry, $item){
+                $carry += (float) str_replace(',', '', $item);
+                return $carry;
+            });
+
+            $storeManagement = ChargeManagement::create($chargeManagement);
+            
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "charge_accounts_management";
+            $auditoria->cod_reg     = $storeManagement->id;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = $request["id_user"];
+            $auditoria->save();
+
             foreach ($request->cousin as $key => $value) {
                 $item = $request->all();
 
@@ -84,6 +118,8 @@ class ChargeAccountController extends Controller
                 $item["commission_percentage"] = (float) str_replace(',', '', $item["commission_percentage"][$key]);
                 $item["agency_commission"]     = (float) str_replace(',', '', $item["agency_commission"][$key]);
                 $item["total"]                 = (float) str_replace(',', '', $item["total"][$key]);
+                $item['management_id']         = $storeManagement->id;
+                $item["participation"]         = $item["participation"][$key];
 
                 $store = ChargeAccount::create($item);
 
@@ -108,6 +144,64 @@ class ChargeAccountController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+    public function updateMultiple(Request $request, $charge)
+    {
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $chargeManagement = $request->all();
+
+            $chargeManagement['total'] = array_reduce($chargeManagement['total'], function($carry, $item){
+                $carry += (float) str_replace(',', '', $item);
+                return $carry;
+            });
+
+            $storeManagement = ChargeManagement::find($charge)->update($chargeManagement);
+            
+            foreach ($request->cousin as $key => $value) {
+                $item = $request->all();
+
+                $item["id_policie"]            = $item['id_policie'][$key];
+                $item["cousin"]                = (float) str_replace(',', '', $item["cousin"][$key]);
+                $item["xpenses"]               = (float) str_replace(',', '', $item["xpenses"][$key]);
+                $item["vat"]                   = (float) str_replace(',', '', $item["vat"][$key]);
+                $item["percentage_vat_cousin"] = (float) str_replace(',', '', $item["percentage_vat_cousin"][$key]);
+                $item["commission_percentage"] = (float) str_replace(',', '', $item["commission_percentage"][$key]);
+                $item["agency_commission"]     = (float) str_replace(',', '', $item["agency_commission"][$key]);
+                $item["total"]                 = (float) str_replace(',', '', $item["total"][$key]);
+                $item["participation"]         = $item["participation"][$key];
+                $item['management_id']         = $charge;
+
+                if($item['charge_account_id'][$key] == 0){
+                    $store = ChargeAccount::create($item);
+
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "charge_accounts";
+                    $auditoria->cod_reg     = $store["id_charge_accounts"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
+                }
+                else{
+                    $store = ChargeAccount::find($item['charge_account_id'][$key])->update($item);
+                }
+
+                if(!$store){
+                    return response()->json("Ha ocurrido un error al guardar alguno de los registros, por favor revise los movimientos antes de continuar")->setStatusCode(400);
+                    
+                }
+            }
+
+            $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+    
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
 
     /**
      * @param  \App\ChargeAccount  $chargeAccount
@@ -232,16 +326,21 @@ class ChargeAccountController extends Controller
     public function update(Request $request, $chargeAccount)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-            $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
-            $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
-            $request["vat"]                   = (float) str_replace(',', '', $request["vat"]);
-            $request["percentage_vat_cousin"] = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
-            $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
-            $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
-            $request["total"]                 = (float) str_replace(',', '', $request["total"]);
 
-            
-            $update = ChargeAccount::find($chargeAccount)->update($request->all());
+            $chargeAccount = ChargeAccount::find($chargeAccount);
+
+            $storeManagement = ChargeManagement::find($chargeAccount->management_id);
+            $storeManagement->total               = (float) str_replace(',', '', $request["total"]);
+            $storeManagement->save();
+
+            $chargeAccount->cousin                = (float) str_replace(',', '', $request["cousin"]);
+            $chargeAccount->xpenses               = (float) str_replace(',', '', $request["xpenses"]);
+            $chargeAccount->vat                   = (float) str_replace(',', '', $request["vat"]);
+            $chargeAccount->percentage_vat_cousin = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $chargeAccount->commission_percentage = (float) str_replace(',', '', $request["commission_percentage"]);
+            $chargeAccount->agency_commission     = (float) str_replace(',', '', $request["agency_commission"]);
+            $chargeAccount->total                 = (float) str_replace(',', '', $request["total"]);
+            $chargeAccount->save();
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
@@ -259,8 +358,48 @@ class ChargeAccountController extends Controller
     public function status($id, $status, Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-            $auditoria =  Auditoria::where("cod_reg", $id)
-                                     ->where("tabla", "charge_accounts")->first();
+
+            $auditoria =  Auditoria::where("cod_reg", $id)->where("tabla", "charge_accounts_management")->first();
+            
+            $auditoria->status = $status;
+
+            if($status == 0){
+                $auditoria->usr_regmod = $request["id_user"];
+                $auditoria->fec_regmod = date("Y-m-d");
+            }
+
+            $auditoria->save();
+
+            $chargeManagement = ChargeManagement::find($id);
+
+            $chargeAccounts = ChargeAccount::where('management_id', $chargeManagement->id)->get();
+            
+            foreach ($chargeAccounts as $charge) {
+
+                $auditoriaDetalle =  Auditoria::where("cod_reg", $charge->id_charge_accounts)->where("tabla", "charge_accounts")->first();
+                $auditoriaDetalle->status = $status;
+
+                if($status == 0){
+                    $auditoriaDetalle->usr_regmod = $request["id_user"];
+                    $auditoriaDetalle->fec_regmod = date("Y-m-d");
+                }
+
+                $auditoriaDetalle->save();
+
+            }
+
+            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+    public function statusChangeAccount($id, $status, Request $request)
+    {
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $auditoria =  Auditoria::where("cod_reg", $id)->where("tabla", "charge_accounts")->first();
 
             $auditoria->status = $status;
 
@@ -276,7 +415,6 @@ class ChargeAccountController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
-
 
 
     public function getCollection($id){

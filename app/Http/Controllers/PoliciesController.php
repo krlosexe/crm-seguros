@@ -15,6 +15,9 @@ use App\PoliciesAnnexes;
 use App\PolicesVehicles;
 use Illuminate\Http\Request;
 
+use App\ClientsPeople;
+use App\ClientsCompany;
+
 use Illuminate\Support\Facades\DB;
 
 class PoliciesController extends Controller
@@ -297,10 +300,23 @@ class PoliciesController extends Controller
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->orderBy("policies.id_policies", "DESC")
-                                ->get();
+                                ->first();
            
-        return response()->json($policie[0])->setStatusCode(200);
+        return response()->json($policie)->setStatusCode(200);
     }
+
+    // Endpoint para consultar con la ID de un cliente, sus polizas
+
+    public function PoliciesByClients($client_id, $type_client){
+
+         $model = $type_client == 0? new ClientsPeople : new ClientsCompany;
+
+         $data = $model->with('policies')->find($client_id);
+            
+         return response()->json($data)->setStatusCode(200);
+ 
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

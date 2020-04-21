@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ChargeAccount;
+use App\ChargeManagement;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -11,46 +12,27 @@ class PaymentController extends Controller
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
-            $data = ChargeAccount::select("charge_accounts.*","policies.type_clients", "policies.number_policies","policies_annexes.number_annexed", 
-                    "clients_people.id_clients_people",
-                                        "clients_people.names as name_client", "clients_people.last_names", "clients_people.number_document",
-                                        "clients_people_contact.department","clients_people_contact.city", "branchs.name as name_branch",
-                                        "clients_company_contact.department","clients_company_contact.city","datos_personales.*", 
-                                        "auditoria.*", "user_registro.email as email_regis", "user_registro.firm", "clients_company.business_name", "clients_company.nit as number_document")
+            $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        "clients_people.id_clients_people",
+                                        "clients_people.names as name_client", 
+                                        "clients_people.last_names", 
+                                        "clients_people.number_document",
+                                        "clients_company.id_clients_company",
+                                        "clients_company.business_name",
+                                      )
+                                    ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
+                                    ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
+                                    ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
 
-                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
-                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
-                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
-
-                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
-                                ->join("clients_company_contact", "clients_company_contact.id_clients_company", "=", "clients_company.id_clients_company", "left")
-
-
-                                ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people", "left")
-                                ->join("branchs", "branchs.id_branchs", "=", "policies.branch", "left")
-
-                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
-                                ->where("auditoria.tabla", "charge_accounts")
-                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
-                                ->join('datos_personales', 'datos_personales.id_usuario', '=', 'user_registro.id')
-                                ->where("auditoria.status", "!=", "0")
+                                    ->where("audi.tabla", "=", "charge_accounts_management")
+                                    ->where("audi.status", "!=", "0")
+                                
+                                    ->with('chargeAccount')
+                                    ->orderBy("charge_accounts_management.id", "DESC")
+                                    ->get();
 
 
-
-                                ->join("auditoria as ap", "ap.cod_reg", "=", "policies.id_policies")
-                                ->where("ap.tabla", "policies")
-
-                                ->where("ap.status", "!=", "0")
-
-
-
-
-
-                                ->with("collections")
-                              
-                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
-                                ->get();
-           
             return response()->json($data)->setStatusCode(200);
 
         return response()->json($data)->setStatusCode(200);

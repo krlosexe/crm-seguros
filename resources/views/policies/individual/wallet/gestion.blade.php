@@ -318,6 +318,7 @@
 				
 			});
 			$("#btn-select-pie").click(function (e) { 
+				$("#issue-store").val($("#name-footer").val())
 				$("#footer-store").val($("#content-footer").val())
 				
 			});
@@ -608,7 +609,7 @@
 						success: function(data){
 
 							$("#number-store option").remove();
-							
+
 							if(type == "Poliza"){
 
 								if (data.status == 1) {
@@ -733,7 +734,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/charge/account/statusChangeAccount/'+data.id_charge_accounts+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -745,14 +746,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/charge/account/statusChangeAccount/'+data.id_charge_accounts+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/charge/account/statusChangeAccount/'+data.id_charge_accounts+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 

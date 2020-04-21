@@ -20,7 +20,7 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Número de Poliza</th>
+												<th>Motivo</th>
 												<th>Cliente</th>
 												<th>Acciones</th>
 											</tr>
@@ -89,22 +89,18 @@
 					},
 					"columns":[
 						
-						{"data":"id_charge_accounts"},
+						{"data":"id"},
 
 
-						{"data":"number_policies",
-							render : function(data, type, row){
-								return "<a href='policies/"+row.id_policie+"' target='_blank' class=''>"+data+"</a>"
-							}
-						},
+						{"data":"issue"},
 
-						{"data":"names",
+						{"data":"name_client",
 							render : function(data, type, row){
 
-								if(row.type_clients == 0){
-									return "<a href='people/"+row.id_clients_people+"' target='_blank' class=''>"+row.name_client+" "+row.last_names+"</a>"
+								if(row.type_client == 0){
+									return "<a href='people/"+row.id_client+"' target='_blank' class=''>"+row.name_client+" "+row.last_names+"</a>"
 								}else{
-									return "<a href='people/"+row.clients+"' target='_blank' class=''>"+row.business_name+"</a>"
+									return "<a href='company/"+row.id_client+"' target='_blank' class=''>"+row.business_name+"</a>"
 								}
 								
 							}
@@ -307,6 +303,8 @@
 			}
 
 
+			var ClientSelected = 0;
+			var TypeClientSelected= 0;
 
 			/* ---------------------------------------------------------------------------------- */
 			/* 
@@ -316,59 +314,61 @@
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
+
+					ClientSelected = data.id_client;
+					TypeClientSelected = data.type_client;
+
+					$("#policie_annexes-multiple-view").val(data.policie_annexes).trigger('change');
+					$("#policie_annexes-multiple-view").attr("readonly", "readonly");
+
+					setTimeout(() => {
+
+
+				   	   $('.multiselect').multiselect('destroy');
+
+
+						data.charge_account.forEach(item => {
+
+							let chargeSelected = data.policie_annexes == "Poliza" ? 
+														item.policie_data.id_policies : 
+														item.policie_anexes_data.id_policies_annexes;
+
+							let optionSelected = $(`.multiselect option[value="${chargeSelected}"]`);
+
+							let jsonOption = JSON.parse(optionSelected.attr('json'));
+
+							jsonOption.charge_account_id = item.id_charge_accounts;
+							jsonOption.cousin = item.cousin;
+							jsonOption.xpenses = item.xpenses;
+							jsonOption.vat = item.vat;
+							jsonOption.percentage_vat_cousin = item.percentage_vat_cousin;
+							jsonOption.commission_percentage = item.commission_percentage;
+							jsonOption.participation = item.participation;
+							jsonOption.agency_commission = item.agency_commission;
+							jsonOption.total = item.total;
+
+							optionSelected.attr('json', JSON.stringify(jsonOption)).attr('selected', 'selected');
+
+
+						})
+
+
+						$('.multiselect').multiselect({
+						      selectAllText: true,
+						      buttonWidth: '100%'
+						});
+
+						$('#number-multiple-view').change();
+
+						$('#cuadro4').find('input, select, textarea').attr('disabled', 'disabled')
+
+					}, 1500)
+
+					$("#init_date-multiple-view").val(data.init_date)
+					$("#limit_date-multiple-view").val(data.limit_date)
+					$("#issue-multiple-view").val(data.issue)
+					$("#footer-multiple-view").val(data.observations)
 					
-					$("#policie_annexes-edit").val(data.policie_annexes).attr("disabled", "disabled")
-					$("#number-edit").val(data.number_policies).attr("disabled", "disabled")
-					$("#number-edit option").remove();
-					$("#number-edit").append($('<option>',
-					{
-						value: data.policie_annexes == "Poliza" ? data.id_policie : data.number,
-						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
-						
-					}));
-
-					$("#init_date-edit").val(data.init_date)
-					$("#limit_date-edit").val(data.limit_date)
-					$("#issue-edit").val(data.issue)
-					$("#observations-edit").val(data.observations)
-
-					$("#cousin-edit").val(number_format(data.cousin, 2))
-					$("#xpenses-edit").val(number_format(data.xpenses, 2))
-					$("#vat-edit").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-					$("#percentage_vat_cousin-edit").val(data.percentage_vat_cousin)
-					$("#commission_percentage-edit").val(data.commission_percentage).attr("readonly", "readonly")
-					$("#participation-edit").val(data.participation).attr("readonly", "readonly")
-					$("#agency_commission-edit").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-					$("#total-edit").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
-					$("#id_edit").val(data.id_charge_accounts)
-
-					$("#btn-print").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
-
-					ShowCollections(data.collections)
-
-
-
-
-					$('#input-file-store').fileinput('destroy');
-				
-					$("#input-file-store").fileinput({
-						theme: "fas",
-						overwriteInitial: true,
-						maxFileSize: 1500,
-						showClose: false,
-						showCaption: false,
-						browseLabel: '',
-						removeLabel: '',
-						browseIcon: '<i class="fa fa-folder-open"></i>',
-						removeIcon: '<i class="ei-delete-alt"></i>',
-						previewFileIcon: '<i class="fas fa-file"></i>',
-						removeTitle: 'Cancel or reset changes',
-						elErrorContainer: '#kv-avatar-errors-1',
-						msgErrorClass: 'alert alert-block alert-danger',
-						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
-					});
 
 					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/1"
 					$('#iframeDigitalesEdit').attr('src', url);
@@ -456,13 +456,16 @@
 				});
 			}
 
-			$("#policie_annexes-store").change(function (e) { 
-				
+
+			$("#policie_annexes-store, #policie_annexes-multiple, #policie_annexes-multiple-edit, #policie_annexes-multiple-view").change(function (e) { 
+
 				var type = $(this).val();
+				const idElement = $(this).attr('id');
+
 				if($(this).val() == "Poliza"){
-					var route = '/api/policies/';
+					var route = '/api/clients/people/policies/'+ClientSelected+'/'+TypeClientSelected;
 				}else{
-					var route = '/api/policies/annexes/';
+					var route = '/api/client/policies/annexes/'+ClientSelected+'/'+TypeClientSelected;
 				}
 				var url=document.getElementById('ruta').value;
 					$.ajax({
@@ -481,19 +484,68 @@
 						
 						},
 						success: function(data){
+							
+							if(idElement != 'policie_annexes-multiple' && idElement != 'policie_annexes-multiple-edit' && idElement != 'policie_annexes-multiple-view'){
 
-							$("#number-store option").remove();
+								$("#number-store option").remove();
+								$("#number-store").append($('<option>',
+								{
+									value: "",
+									text : "Seleccione",
+									
+								}));
+						    }
+
 							
 							if(type == "Poliza"){
 
-								if (data.status == 1) {
-									$("#number-store").append($('<option>',
-									{
-										value: data.id_policies,
-										text : data.number_policies,
-										
-									}));
+								// bloque solo se encarga del form de polizas multiples
+
+								if(idElement == 'policie_annexes-multiple' || idElement == 'policie_annexes-multiple-edit' || idElement == 'policie_annexes-multiple-view'){
+
+									$(".multiselect option").remove();
+
+									$('#number-multiple').change();
+									$('#number-multiple-edit').change();
+									$('#number-multiple-view').change();
+
+								    $('.multiselect').multiselect('destroy');
+
+									$.map(data, function (item, key) {
+										if (item.status == 1) {
+											
+											item.charge_account_id = 0;
+
+											$(".multiselect").append($('<option>',
+											{
+												value: item.id_policies,
+												text : item.number_policies,
+												json: JSON.stringify(item)
+											}));
+
+										}
+									});
+
+									$('.multiselect').multiselect({
+									      selectAllText: true,
+									      buttonWidth: '100%'
+									});
+
+									return;
 								}
+
+								// fin acá
+
+								$.map(data, function (item, key) {
+									if (item.status == 1) {
+										$("#number-store").append($('<option>',
+										{
+											value: item.id_policies,
+											text : item.number_policies,
+											
+										}));
+									}
+								});
 
 								$("#cousin").val(number_format(data.cousin, 2))
 								$("#xpenses").val(number_format(data.xpenses, 2))
@@ -527,55 +579,107 @@
 			});
 
 
+			$('#number-multiple-view').change(function(){
+				const values = $(this).val();
 
-			$("#number-store").change(function (e) { 
-				
-				if($("#policie_annexes-store").val() != "Poliza"){
-					
-					var route = '/api/annexes/'+$(this).val();
-					var url=document.getElementById('ruta').value;
-					$.ajax({
-						url:''+url+route,
-						type:'GET',
-						data: {
-							"id_user": id_user,
-							"token"  : tokens,
-						},
-						dataType:'JSON',
-						async: false,
-						beforeSend: function(){
+				const tdContent = `
+                  <td>
+                  	<input class="form-control text-right form-control-user monto_formato_decimales" name="cousin[]" value="" required>
+                  	<input name="id_policie[]" hidden>
+                  	<input name="charge_account_id[]" hidden>
+                  </td>
+                  <td>
+                  	<input class="form-control text-right form-control-user monto_formato_decimales" name="xpenses[]" value="" required>
+                  </td>
+                  <td>
+                  	<input name="vat[]" readonly="readonly" class="form-control text-right  form-control-user" value="">
+                  </td>
+                  <td>
+                  	<input name="percentage_vat_cousin[]" class="form-control text-right  form-control-user" value="">
+                  </td>
+                  <td>
+                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
+                  </td>
+                  <td>
+                  	<input  name="total[]" value="" readonly="readonly" class="form-control text-right form-control-user">
+                  </td>
+				`
+
+				let tbody = document.querySelector(`.${this.id} tbody`);
+
+				if(values == null){
+					tbody.innerHTML = '<tr><td colspan="8" class="text-center">Sin datos</td></tr>';
+					return;
+				}
+				else{
+					if(tbody.children[0].childElementCount == 1){
+						tbody.innerHTML = '';
+					}
+					else{
+						Array.from(tbody.children).forEach(tr => {
+							let encontered = values.find(id =>  id == tr.children[0].getAttribute('id'));
+
+							if(encontered == undefined){
+								tr.remove();
+							}
+						});
+
+					}
+
+					values.forEach(id => {
 						
-						},
-						error: function (data) {
-						
-						},
-						success: function(data){
+						let rowExist = tbody.querySelector(`td[id="${id}"]`)
 
-							$("#cousin").val(number_format(data.cousin, 2))
-							$("#xpenses").val(number_format(data.xpenses, 2))
-							$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-							$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
-							$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-							$("#participation").val(data.participation).attr("readonly", "readonly")
-							$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-							$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
+						if(rowExist != null){
+							return;
 						}
 
-					});
+						const json = JSON.parse($(`#number-multiple-view option[value="${id}"]`).attr('json'));
+
+						let row = tbody.insertRow();
+						row.innerHTML = tdContent;
+
+						row.querySelector("input[name='id_policie[]']").value = id;
+						row.querySelector("input[name='charge_account_id[]']").value = json.charge_account_id;
+						row.querySelector("input[name='cousin[]']").value = json.cousin == null? 0 : json.cousin;
+						row.querySelector("input[name='xpenses[]']").value = json.xpenses == null? 0 : json.xpenses;
+						row.querySelector("input[name='vat[]']").value = json.vat == null? 0 : json.vat;
+						row.querySelector("input[name='percentage_vat_cousin[]']").value = json.percentage_vat_cousin == null? 0 : json.percentage_vat_cousin;
+						row.querySelector("input[name='commission_percentage[]']").value = json.commission_percentage == null? 100 : json.commission_percentage;
+						row.querySelector("input[name='participation[]']").value = json.participation == null? 100 : json.participation;
+						row.querySelector("input[name='agency_commission[]']").value = json.agency_commission == null? 0 : json.agency_commission;
+						row.querySelector("input[name='total[]']").value = json.total == null? 0 : json.total;
+
+						$(row).find('.form-control').change();
+						row.children[0].setAttribute('id', id);
+
+					})
+
+
 				}
-				
+			})
+
+			$('body').on('keyup', "input[name='cousin[]'], input[name='xpenses[]'], input[name='commission_percentage[]'], input[name='percentage_vat_cousin[]']", function (e) { 
+				let row = this.closest('tr');
+
+				calc(
+					row.querySelector("input[name='cousin[]']"), 
+					row.querySelector("input[name='xpenses[]']"), 
+					row.querySelector("input[name='total[]']"), 
+					row.querySelector("input[name='percentage_vat_cousin[]']"), 
+					row.querySelector("input[name='vat[]']"), 
+					row.querySelector("input[name='commission_percentage[]']"), 
+					row.querySelector("input[name='agency_commission[]']"), 
+					row.querySelector("input[name='participation[]']"), 
+				)
 			});
 
-
-			$("#cousin, #xpenses, #commission_percentage, #percentage_vat_cousin").keyup(function (e) { 
-				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
-			});
-
-
-			$("#cousin-edit, #xpenses-edit, #commission_percentage-edit, #percentage_vat_cousin-edit").keyup(function (e) { 
-				calc("#cousin-edit", "#xpenses-edit", "#total-edit", "#percentage_vat_cousin-edit", "#vat-edit", "#commission_percentage-edit", "#agency_commission-edit", "#participation-edit")
-			});
 
 			function calc(input_cousin, input_xpenses, input_total, input_percentage_vat_cousin, input_vat, input_commission_percentage, agency_commission, participation){
 				
@@ -597,6 +701,7 @@
 				$(agency_commission).val(number_format(comission_total ,2))
 				$(input_total).val(number_format(total, 2))
 			}
+
 
 		</script>
 

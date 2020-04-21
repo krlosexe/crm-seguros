@@ -12,5 +12,5 @@ class PoliciesInfoPayments extends Model
 
     protected $table         = 'policies_info_payments';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_policies';
+    protected $primaryKey    = 'id_policies_info_payments';
 }

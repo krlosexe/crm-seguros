@@ -138,8 +138,11 @@ Route::get('tasks/delete/{id}', 'TasksController@destroy');
 
 Route::resource('charge/account', 'ChargeAccountController');
 Route::post('charge/account/multiple', 'ChargeAccountController@storeMultiple');
+Route::post('charge/account/multiple/{id}', 'ChargeAccountController@updateMultiple');
+
 Route::get('charge/account/{id_policie}', 'ChargeAccountController@index');
 Route::get('charge/account/status/{id}/{status}', 'ChargeAccountController@status');
+Route::get('charge/account/statusChangeAccount/{id}/{status}', 'ChargeAccountController@statusChangeAccount');
 
 Route::post('wallet/collections', 'CollectionsController@store');
 Route::get('wallet/collections/{id}', 'CollectionsController@get');
@@ -167,6 +170,8 @@ Route::get('calendar/tasks/', 'CalendarController@getTask');
 
 
 Route::get('clients/people/policies/{id_client}/{type_cliente}', 'ClientsPeopleController@Policies');
+
+Route::get('clients/policies/{id_client}/{type_cliente}', 'PoliciesController@PoliciesByClients');
 
 
 Route::get('client/policies/annexes/{id_client}/{type_cliente}', 'ClientsPeopleController@Annexes');

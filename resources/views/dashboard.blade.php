@@ -326,7 +326,7 @@
                                         +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
                                        + '<div class="info">'
                                           +  '<span class="title">'+item.fullname+'</span>'
-                                           + '<span class="sub-title"># '+item.number_policies+'</span>'
+                                           + '<a target="_blank" href="policies/'+item.id_policies+'" class="sub-title"># '+item.number_policies+'</a>'
                                         +'</div>'
                                     +'</div>'
                                + '</td>'

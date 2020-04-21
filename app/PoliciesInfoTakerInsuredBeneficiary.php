@@ -12,5 +12,5 @@ class PoliciesInfoTakerInsuredBeneficiary extends Model
 
     protected $table         = 'policies_info_taker_insured_beneficiary';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_policies';
+    protected $primaryKey    = 'id_policies_info_taker_insured_beneficiary';
 }

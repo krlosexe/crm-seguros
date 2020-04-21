@@ -14,4 +14,17 @@ class ClientsCompany extends Model
     public    $timestamps    = false;
     protected $primaryKey    = 'id_clients_company';
 
+    public function policies(){
+        return $this->hasMany('App\Policies', 'clients')
+                    ->with([
+                        'policies_info_taker_insured_beneficiary',
+                        'policies_cousins_commissions',
+                        'policies_observations',
+                        'policies_notifications',
+                        'policies_info_payments',
+                    ])
+                    ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                    ->where("auditoria.tabla", "policies")
+                    ->where("auditoria.status", "!=", "0");
+    }
 }

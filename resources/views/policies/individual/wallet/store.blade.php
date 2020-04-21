@@ -161,6 +161,7 @@
 
         <input type="hidden" name="id_policie" value="{{$id_policie}}">
         <input type="hidden" name="id_user" class="id_user">
+
         <input type="hidden" name="token" class="token">
           <br>
           <br>

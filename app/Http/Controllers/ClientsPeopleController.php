@@ -15,6 +15,7 @@ use App\ClientsWorkingInformation;
 use App\Policies;
 use App\PoliciesAnnexes;
 use App\ChargeAccount;
+use App\ChargeManagement;
 use App\Departamentos;
 use App\Municipios;
 use Illuminate\Http\Request;
@@ -359,21 +360,19 @@ class ClientsPeopleController extends Controller
 
 
     public function Wallet($id_client, $type_cliente = 0){
-
-        $data = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
-                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
-                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.number", "left")
-                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
-                                ->where("auditoria.tabla", "charge_accounts")
+        $data = ChargeManagement::select("charge_accounts_management.*", "auditoria.*", "user_registro.email as email_regis")
+                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts_management.id")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->where("auditoria.tabla", "charge_accounts_management")
                                 ->where("auditoria.status", "!=", "0")
-
-                                ->with("collections")
                                 
-                                ->where("policies.clients", $id_client)
-                                ->where("policies.type_clients", $type_cliente)
+                                ->where("charge_accounts_management.id_client", $id_client)
+                                ->where("charge_accounts_management.type_client", $type_cliente)
 
-                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
+                                ->with('chargeAccount')
+
+                                ->orderBy("charge_accounts_management.id", "DESC")
                                 ->get();
            
         return response()->json($data)->setStatusCode(200);

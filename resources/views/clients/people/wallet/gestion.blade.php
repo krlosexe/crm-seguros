@@ -85,15 +85,15 @@
 									<div class="table-overflow">
 
 									@if($management == 1)
-										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+										<button onclick="nuevoMultiple()" id="btn-new" class="btn btn-success" style="float: left;">
 											<i class="ti-plus"></i>
 											<span>Nuevo</span>
 										</button>
-										<button onclick="nuevoMultiple()" id="btn-new" class="btn btn-info" style="float: left;">
+									{{-- 	<button onclick="nuevoMultiple()" id="btn-new" class="btn btn-info" style="float: left;">
 											<i class="ti-plus"></i>
 											<span>Polizas multiples</span>
 										</button>
-									@endif
+ --}}									@endif
 										
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
@@ -119,16 +119,76 @@
 
 
 				@include('clients.people.wallet.store_multiple')
+				@include('clients.people.wallet.edit_multiple')
 				@include('clients.people.wallet.store')
 				@include('clients.people.wallet.view')
-				@include('clients.people.wallet.edit')
-
+				{{-- @include('clients.people.wallet.edit') --}}
 
 
       </div>
 
 	  
     </div>
+
+
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="default-modal" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                <h4>Pie de página</h4></div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <label for=""><b>Seleccione</b></label>
+                        <select name="" id="footers" class="form-control footers">
+                          <option value="">Seleccione</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-4">
+                        <button type="button" id="new-pie" class="btn btn-success">Nuevo</button>
+                      </div>
+                    </div>
+                    
+
+
+                    <div id="content-pie" class="remove-pie" style="display:none">
+                      <div class="row">
+                        <div class="col-md-12">
+                        <label for=""><b>Nombre</b></label>
+                          <div class="form-group valid-required">
+                          <input type="text" name="issue" class="form-control form-control-user" id="name-footer">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                        <label for=""><b>Contenido</b></label>
+                          <div class="form-group valid-required">
+                            <textarea class="form-control" name="" id="content-footer" cols="30" rows="10"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="modal-footer no-border">
+                      <div class="text-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btn-save-pie" class="btn btn-success btn-save-pie" disabled>Guardar</button>
+                      </div>
+
+
+                      <div class="text-right">
+                        <button type="button" id="btn-select-pie" data-dismiss="modal" class="btn btn-success btn-save-pie" disabled>Seleccionar</button>
+                      </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
     <!-- End of Content Wrapper -->
 
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
@@ -173,6 +233,7 @@
 			$(document).ready(function(){
 				store();
 				storeMultiple();
+				updateMultiple();
 				list();
 				update();
 
@@ -199,9 +260,14 @@
 				enviarFormulario("#store", 'api/charge/account', '#cuadro2');
 			}
 
+			function updateMultiple(){
+				enviarFormularioPut("#edit-multiple", 'api/charge/account/multiple', '#cuadro6', false, '#avatar-edit');
+			}
+
 			function storeMultiple(){
 				enviarFormulario("#store-multiple", 'api/charge/account/multiple', '#cuadro5');
 			}
+
 
 
 
@@ -322,7 +388,7 @@
 
 
 			var api = "/api/footers";
-			$("#add-pie").click(function (e) { 
+			$("body #add-pie").click(function (e) { 
 				$("#default-modal").modal("show")
 				getFooters()
 			});
@@ -347,7 +413,10 @@
 
 
 			$("#btn-select-pie").click(function (e) { 
+				$("#issue-multiple").val($("#name-footer").val())
+				$("#issue-store").val($("#name-footer").val())
 				$("#footer-store").val($("#content-footer").val())
+				$("#footer-multiple").val($("#name-footer").val())
 				
 			});
 
@@ -384,7 +453,7 @@
 			$('#submit-registrar-multiple').click(function(e){
 				e.preventDefault();
 
-				let tbody = document.querySelector('#table_multiple_poliza tbody');
+				let tbody = document.querySelector('.number-multiple tbody');
 				let valid = true;
 
 				if(tbody.children[0].childElementCount == 1){
@@ -414,6 +483,41 @@
 					$('#store-multiple').submit();
 				}
 			})
+
+			$('#submit-registrar-multiple-edit').click(function(e){
+				e.preventDefault();
+
+				let tbody = document.querySelector('.number-multiple-edit tbody');
+				let valid = true;
+
+				if(tbody.children[0].childElementCount == 1){
+					return alert("Debe seleccionar al menos una poliza")
+				}
+
+				Array.from(tbody.children).forEach(tr => {
+					let cousin = tr.querySelector("input[name='cousin[]']").value;
+					let xpense = tr.querySelector("input[name='xpenses[]']").value;
+
+					if(cousin == '' && valid){
+						valid = false;
+						alert("El campo prima es requeridos en cada fila");
+						tr.querySelector("input[name='cousin[]']").focus();
+						return 
+					}
+
+					if(xpenses == '' && valid){
+						valid = false;
+						alert("El campo gastos es requeridos en cada fila");
+						tr.querySelector("input[name='xpenses[]']").focus();
+						return 
+					}
+				})
+
+				if(valid){
+					$('#edit-multiple').submit();
+				}
+			})
+
 
 			$("#btn-save-pie").click(function (e) { 
 				e.preventDefault();
@@ -454,37 +558,62 @@
 				$(tbody).on("click", "span.consultar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
-					
-					$("#policie_annexes-view").val(data.policie_annexes).attr("disabled", "disabled")
-					$("#number-view").val(data.number_policies).attr("disabled", "disabled")
-					$("#number-view option").remove();
-					$("#number-view").append($('<option>',
-					{
-						value: data.policie_annexes == "Poliza" ? data.id_policie : data.number,
-						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
-						
-					}));
 
-					$("#init_date-view").val(data.init_date).attr("disabled", "disabled")
-					$("#limit_date-view").val(data.limit_date).attr("disabled", "disabled")
-					$("#issue-view").val(data.issue).attr("disabled", "disabled")
-					$("#observations-view").val(data.observations).attr("disabled", "disabled")
+					$("#policie_annexes-multiple-view").val(data.policie_annexes).trigger('change');
+					$("#policie_annexes-multiple-view").attr("readonly", "readonly");
 
-					$("#cousin-view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
-					$("#xpenses-view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
-					$("#vat-view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
-					$("#percentage_vat_cousin-view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
-					$("#commission_percentage-view").val(data.commission_percentage).attr("disabled", "disabled")
-					$("#participation-view").val(data.participation).attr("disabled", "disabled")
-					$("#agency_commission-view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
-					$("#total-view").val(number_format(data.total, 2)).attr("disabled", "disabled")
-					
-					$("#btn-print-view").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
-					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/0"
-					$('#iframCarteraView').attr('src', url);
-					
+					setTimeout(() => {
+
+
+				   	   $('.multiselect').multiselect('destroy');
+
+
+						data.charge_account.forEach(item => {
+
+							let chargeSelected = data.policie_annexes == "Poliza" ? 
+														item.policie_data.id_policies : 
+														item.policie_anexes_data.id_policies_annexes;
+
+							let optionSelected = $(`.multiselect option[value="${chargeSelected}"]`);
+
+							let jsonOption = JSON.parse(optionSelected.attr('json'));
+
+							jsonOption.charge_account_id = item.id_charge_accounts;
+							jsonOption.cousin = item.cousin;
+							jsonOption.xpenses = item.xpenses;
+							jsonOption.vat = item.vat;
+							jsonOption.percentage_vat_cousin = item.percentage_vat_cousin;
+							jsonOption.commission_percentage = item.commission_percentage;
+							jsonOption.participation = item.participation;
+							jsonOption.agency_commission = item.agency_commission;
+							jsonOption.total = item.total;
+
+							optionSelected.attr('json', JSON.stringify(jsonOption)).attr('selected', 'selected');
+
+
+						})
+
+
+						$('.multiselect').multiselect({
+						      selectAllText: true,
+						      buttonWidth: '100%'
+						});
+
+						$('#number-multiple-view').change();
+
+						$('#cuadro3').find('input, select, textarea').attr('disabled', 'disabled')
+
+					}, 2000)
+
+					$("#init_date-multiple-view").val(data.init_date)
+					$("#limit_date-multiple-view").val(data.limit_date)
+					$("#issue-multiple-view").val(data.issue)
+					$("#footer-multiple-view").val(data.observations)
+
+
 					cuadros('#cuadro1', '#cuadro3');
 				});
+				
 
 			}
 
@@ -498,65 +627,63 @@
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
-					
-					$("#policie_annexes-edit").val(data.policie_annexes).attr("disabled", "disabled")
-					$("#number-edit").val(data.number_policies).attr("disabled", "disabled")
-					$("#number-edit option").remove();
-					$("#number-edit").append($('<option>',
-					{
-						value: data.policie_annexes == "Poliza" ? data.id_policie : data.number,
-						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
-						
-					}));
 
-					$("#init_date-edit").val(data.init_date)
-					$("#limit_date-edit").val(data.limit_date)
-					$("#issue-edit").val(data.issue)
-					$("#observations-edit").val(data.observations)
-
-					$("#cousin-edit").val(number_format(data.cousin, 2))
-					$("#xpenses-edit").val(number_format(data.xpenses, 2))
-					$("#vat-edit").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-					$("#percentage_vat_cousin-edit").val(data.percentage_vat_cousin)
-					$("#commission_percentage-edit").val(data.commission_percentage).attr("readonly", "readonly")
-					$("#participation-edit").val(data.participation).attr("readonly", "readonly")
-					$("#agency_commission-edit").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-					$("#total-edit").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
-					$("#id_edit").val(data.id_charge_accounts)
-
-					$("#btn-print").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
-
-					ShowCollections(data.collections)
+					$("#policie_annexes-multiple-edit").val(data.policie_annexes).trigger('change');
+					$("#policie_annexes-multiple-edit").attr("readonly", "readonly");
 
 
+					setTimeout(() => {
 
 
-					$('#input-file-store').fileinput('destroy');
-				
-					$("#input-file-store").fileinput({
-						theme: "fas",
-						overwriteInitial: true,
-						maxFileSize: 1500,
-						showClose: false,
-						showCaption: false,
-						browseLabel: '',
-						removeLabel: '',
-						browseIcon: '<i class="fa fa-folder-open"></i>',
-						removeIcon: '<i class="ei-delete-alt"></i>',
-						previewFileIcon: '<i class="fas fa-file"></i>',
-						removeTitle: 'Cancel or reset changes',
-						elErrorContainer: '#kv-avatar-errors-1',
-						msgErrorClass: 'alert alert-block alert-danger',
-						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
-					});
+				   	   $('.multiselect').multiselect('destroy');
 
-					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/1"
-					$('#iframeDigitalesEdit').attr('src', url);
 
-					cuadros('#cuadro1', '#cuadro4');
+						data.charge_account.forEach(item => {
+
+							let chargeSelected = data.policie_annexes == "Poliza" ? 
+														item.policie_data.id_policies : 
+														item.policie_anexes_data.id_policies_annexes;
+
+							let optionSelected = $(`.multiselect option[value="${chargeSelected}"]`);
+
+							let jsonOption = JSON.parse(optionSelected.attr('json'));
+
+							jsonOption.charge_account_id = item.id_charge_accounts;
+							jsonOption.cousin = item.cousin;
+							jsonOption.xpenses = item.xpenses;
+							jsonOption.vat = item.vat;
+							jsonOption.percentage_vat_cousin = item.percentage_vat_cousin;
+							jsonOption.commission_percentage = item.commission_percentage;
+							jsonOption.participation = item.participation;
+							jsonOption.agency_commission = item.agency_commission;
+							jsonOption.total = item.total;
+
+							optionSelected.attr('json', JSON.stringify(jsonOption)).attr('selected', 'selected');
+
+
+						})
+
+
+						$('.multiselect').multiselect({
+						      selectAllText: true,
+						      buttonWidth: '100%'
+						});
+
+						$('#number-multiple-edit').change();
+
+					}, 2000)
+
+					$("#init_date-multiple-edit").val(data.init_date)
+					$("#limit_date-multiple-edit").val(data.limit_date)
+					$("#issue-multiple-edit").val(data.issue)
+					$("#footer-multiple-edit").val(data.observations)
+
+
+					$("#id_edit").val(data.id)
+
+					cuadros('#cuadro1', '#cuadro6');
 				});
+
 			}
 			
 
@@ -638,8 +765,8 @@
 				});
 			}
 
-			$("#policie_annexes-store, #policie_annexes-multiple").change(function (e) { 
-				
+			$("#policie_annexes-store, #policie_annexes-multiple, #policie_annexes-multiple-edit, #policie_annexes-multiple-view").change(function (e) { 
+
 				var type = $(this).val();
 				const idElement = $(this).attr('id');
 
@@ -666,7 +793,7 @@
 						},
 						success: function(data){
 							
-							if(idElement != 'policie_annexes-multiple'){
+							if(idElement != 'policie_annexes-multiple' && idElement != 'policie_annexes-multiple-edit' && idElement != 'policie_annexes-multiple-view'){
 
 								$("#number-store option").remove();
 								$("#number-store").append($('<option>',
@@ -676,19 +803,28 @@
 									
 								}));
 						    }
+
 							
 							if(type == "Poliza"){
 
 								// bloque solo se encarga del form de polizas multiples
 
-								if(idElement == 'policie_annexes-multiple'){
-									$("#number-multiple option").remove();
+								if(idElement == 'policie_annexes-multiple' || idElement == 'policie_annexes-multiple-edit' || idElement == 'policie_annexes-multiple-view'){
+
+									$(".multiselect option").remove();
+
+									$('#number-multiple').change();
+									$('#number-multiple-edit').change();
+									$('#number-multiple-view').change();
 
 								    $('.multiselect').multiselect('destroy');
 
 									$.map(data, function (item, key) {
 										if (item.status == 1) {
-											$("#number-multiple").append($('<option>',
+											
+											item.charge_account_id = 0;
+
+											$(".multiselect").append($('<option>',
 											{
 												value: item.id_policies,
 												text : item.number_policies,
@@ -751,13 +887,14 @@
 			});
 
 
-			$('#number-multiple').change(function(){
+			$('#number-multiple, #number-multiple-edit, #number-multiple-view').change(function(){
 				const values = $(this).val();
 
 				const tdContent = `
                   <td>
                   	<input class="form-control text-right form-control-user monto_formato_decimales" name="cousin[]" value="" required>
                   	<input name="id_policie[]" hidden>
+                  	<input name="charge_account_id[]" hidden>
                   </td>
                   <td>
                   	<input class="form-control text-right form-control-user monto_formato_decimales" name="xpenses[]" value="" required>
@@ -782,7 +919,7 @@
                   </td>
 				`
 
-				let tbody = document.querySelector('#table_multiple_poliza tbody');
+				let tbody = document.querySelector(`.${this.id} tbody`);
 
 				if(values == null){
 					tbody.innerHTML = '<tr><td colspan="8" class="text-center">Sin datos</td></tr>';
@@ -816,14 +953,15 @@
 						row.innerHTML = tdContent;
 
 						row.querySelector("input[name='id_policie[]']").value = id;
+						row.querySelector("input[name='charge_account_id[]']").value = json.charge_account_id;
 						row.querySelector("input[name='cousin[]']").value = json.cousin == null? 0 : json.cousin;
 						row.querySelector("input[name='xpenses[]']").value = json.xpenses == null? 0 : json.xpenses;
-						row.querySelector("input[name='total[]']").value = json.vat == null? 0 : json.vat;
+						row.querySelector("input[name='vat[]']").value = json.vat == null? 0 : json.vat;
 						row.querySelector("input[name='percentage_vat_cousin[]']").value = json.percentage_vat_cousin == null? 0 : json.percentage_vat_cousin;
-						row.querySelector("input[name='vat[]']").value = json.commission_percentage == null? 100 : json.commission_percentage;
-						row.querySelector("input[name='commission_percentage[]']").value = json.participation == null? 100 : json.participation;
+						row.querySelector("input[name='commission_percentage[]']").value = json.commission_percentage == null? 100 : json.commission_percentage;
+						row.querySelector("input[name='participation[]']").value = json.participation == null? 100 : json.participation;
 						row.querySelector("input[name='agency_commission[]']").value = json.agency_commission == null? 0 : json.agency_commission;
-						row.querySelector("input[name='participation[]']").value = json.total == null? 0 : json.total;
+						row.querySelector("input[name='total[]']").value = json.total == null? 0 : json.total;
 
 						$(row).find('.form-control').change();
 						row.children[0].setAttribute('id', id);
@@ -965,7 +1103,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/charge/account/status/'+data.id+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -977,14 +1115,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/charge/account/status/'+data.id+"/"+1,"¿Está seguro de activar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/charge/account/status/'+data.id_charge_accounts+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/charge/account/status/'+data.id+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 
