@@ -368,13 +368,46 @@ class PoliciesController extends Controller
             
             
             $update = Policies::find($policies)->update($request->all());
-            PoliciesInfoTakerInsuredBeneficiary::find($policies)->update($request->all());
-            PoliciesObservations::find($policies)->update($request->all());
-            PoliciesInfoPayments::find($policies)->update($request->all());
+
+            $infoTaker = PoliciesInfoTakerInsuredBeneficiary::find($policies);
+
+            if($infoTaker != null)
+                $infoTaker->update($request->all());
+
+            $obs = PoliciesObservations::find($policies);
+
+            if($obs != null)
+                $obs->update($request->all());
+
+            $infoPay = PoliciesInfoPayments::find($policies);
+            
+            if($infoPay != null)
+                $infoPay->update($request->all());
+
+
+            $policie = Policies::find($policies);
+
+            if($request->placas != null){
+                PolicesVehicles::where('id_policie', $policie->id_policies)->delete();
+
+                foreach($request->placas as $value){
+                    $data["placa"]      = $value;
+                    $data["id_policie"] = $policie->id_policies;
+                    PolicesVehicles::create($data);
+                }
+                
+            }
 
             if($request["type_poliza"] != "Collective"){
-                PoliciesCousinsCommissions::find($policies)->update($request->all());
-                PoliciesNotifications::find($policies)->update($request->all());
+                $comision =  PoliciesCousinsCommissions::find($policies);
+
+                if($comision != null)
+                    $comision->update($request->all());
+
+                $notify = PoliciesNotifications::find($policies);
+
+                if($notify != null)
+                    $notify->update($request->all());
             }
 
             

@@ -513,19 +513,22 @@
 					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
 				  },
 				  success: function(data){
-			  
+			  		console.log(data)
 					$(select).each(function() {
 					  if (this.selectize) {
 						this.selectize.destroy();
 					  }
 				   });
+
 				   
 					$(select+" option").remove();
+
 					$(select).append($('<option>',
 					{
 					  value: "null",
 					  text : "Seleccione"
 					}));
+
 			  
 					$.each(data, function(i, item){
 					  
@@ -535,12 +538,14 @@
 						  value: item.placa,
 						  text : item.placa
 						}));
+
 					  }
 					});
 			  
 					$(select).selectize({
 					  //sortField: 'text'
 					});
+
 				  }
 				});
 			}
@@ -667,6 +672,7 @@
 			function edit(tbody, table){
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
+
 					var data = table.row( $(this).parents("tr") ).data();
 					
 					
@@ -674,6 +680,8 @@
 
 					GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza)
 					GetClients("#clients_select_edit", data.clients+"|"+data.type_clients);
+
+					GetPlacas("#placa-edit")
 
 					ChangeSelectBranch("#branch_edit", "_edit")
 
@@ -1271,8 +1279,6 @@
 		  	});
 
 
-
-
 			$("#add-vehicle").click(function (e) { 
 				var placa = $("#placa").val()
 				var html = ""
@@ -1284,6 +1290,19 @@
 
 				$("#table-placas").append(html)
 			});
+			
+			$("#add-vehicle-edit").click(function (e) { 
+				var placa = $("#placa-edit").val()
+				var html = ""
+
+				html += "<tr>"
+					html +="<td>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></td>"
+					html +="<td></td>"
+				html += "</tr>"
+
+				$("#table-placas-edit").append(html)
+			});
+
 
 
 		

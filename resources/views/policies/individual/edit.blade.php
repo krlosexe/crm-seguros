@@ -446,21 +446,23 @@
                         <div class="card-body">
 
                           <div class="row">
-                              <!-- <div class="col-md-8">
-                                <label for=""><b>Placa del vehículo *</b></label>
-                                  <div class="form-group valid-required">
-                                    <input type="text" name="placa" class="form-control form-control-user" id="placa" placeholder="FHP803" style="text-align: left" required>
-                                  </div>
-                                  
+                              <div class="col-md-8">
+                                <label for=""><b>Placa del vehículo</b></label>
+                                 <div class="form-group valid-required">
+                                  <select name="placa" class="selectized"  id="placa-edit">
+                                   <option value="">Seleccione</option>
+                                  </select>
+                                </div>
+                                      
                               </div>
                               <div class="col-md-4">
                                     <label for=""><b>Añadir nuevo *</b></label>
                                     <div class="form-group valid-required">
-                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle">
+                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn" id="add-vehicle-edit">
                                                         <i class="fa fa-plus" ></i>
                                                     </button>
                                                       </div>
-                              </div> -->
+                              </div>
 
                           </div>   
 
