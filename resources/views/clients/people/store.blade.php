@@ -172,7 +172,7 @@
                           <div class="col-md-6">
                             <label for=""><b>Departamento*</b></label>
                               <div class="form-group valid-required">
-                                <select name="departament"  id="departament" required>
+                                <select name="departament"  class="selectized" id="departament" required>
                                   <option value="">Seleccione</option>
                                 </select>
                               </div>
@@ -193,9 +193,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
+                                <label for="address1" class="col-md-2 control-label">Dirección 1</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="address1" name="address1" placeholder="Direccion 1" required>
+                                    <input type="text" class="form-control" id="address1" name="address1" placeholder="Direccion 1">
                                 </div>
 
                                 <div class="col-md-4">
@@ -241,9 +241,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Telefono 1*</label>
+                                <label for="address1" class="col-md-2 control-label">Telefono 1</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" id="phone1" name="phone1" placeholder="Telefono 1" required="">
+                                    <input type="number" class="form-control" id="phone1" name="phone1" placeholder="Telefono 1">
                                 </div>
 
                                 <div class="col-md-4">
@@ -289,9 +289,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Email*</label>
+                                <label for="address1" class="col-md-2 control-label">Email</label>
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                                 </div>
                               </div>
                           </div>

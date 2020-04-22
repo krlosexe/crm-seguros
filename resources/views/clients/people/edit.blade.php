@@ -197,7 +197,7 @@
                             <div class="col-md-6">
                               <label for=""><b>Departamento*</b></label>
                                 <div class="form-group valid-required">
-                                  <select name="departament"  id="departament_edit" required>
+                                  <select name="departament" class="selectized"  id="departament_edit" required>
                                     <option value="">Seleccione</option>
                                   </select>
                                 </div>
@@ -218,9 +218,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Dirección 1*</label>
+                                <label for="address1" class="col-md-2 control-label">Dirección 1</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="address1_edit" name="address1" placeholder="Direccion 1" require>
+                                    <input type="text" class="form-control" id="address1_edit" name="address1" placeholder="Direccion 1">
                                 </div>
 
                                 <div class="col-md-4">
@@ -266,9 +266,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Teléfono 1*</label>
+                                <label for="address1" class="col-md-2 control-label">Teléfono 1</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1" require>
+                                    <input type="text" class="form-control" id="phone1_edit" name="phone1" placeholder="Telefono 1">
                                 </div>
 
                                 <div class="col-md-4">
@@ -314,9 +314,9 @@
                         <div class="row">
                           <div class="form-group col-md-12">
                               <div class="row">
-                                <label for="address1" class="col-md-2 control-label">Email*</label>
+                                <label for="address1" class="col-md-2 control-label">Email</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="email_edit" name="email" placeholder="Email" require>
+                                    <input type="text" class="form-control" id="email_edit" name="email" placeholder="Email">
                                 </div>
                               </div>
                           </div>
