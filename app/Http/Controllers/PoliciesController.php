@@ -192,11 +192,14 @@ class PoliciesController extends Controller
                 PoliciesCousinsCommissions::create($request->all());
                 PoliciesNotifications::create($request->all());
 
+                if($request->placas != null){
 
-                foreach($request->placas as $value){
-                    $data["placa"]      = $value;
-                    $data["id_policie"] = $store->id_policies;
-                    PolicesVehicles::create($data);
+                    foreach($request->placas as $value){
+                        $data["placa"]      = $value;
+                        $data["id_policie"] = $store->id_policies;
+                        PolicesVehicles::create($data);
+                    }
+                    
                 }
 
             }
