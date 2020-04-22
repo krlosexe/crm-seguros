@@ -36,10 +36,8 @@
 
     <script>
       $(document).ready(function(){
-
 		var url = $(location).attr('href').split("/").splice(-4);
-		console.log(url)
-        validAuth(false, url[0]);
+        validAuth(false, 'modules');
       });
     </script>
 
@@ -58,7 +56,7 @@
 
 				<div class="container-fluid" id="cuadro1">
 					<div class="page-title">
-						<h4>Gestión de Anexos.</h4>
+						<h4>Gestión de Digitales.</h4>
 					</div>
 					<div class="row">
 	  
@@ -69,7 +67,7 @@
 
 									@if($management == 1)
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-											<i class="ti-plus"></i>
+											<i class="ti-image"></i>
 											<span>Nuevo</span>
 										</button>
 									@endif
@@ -77,10 +75,7 @@
 										<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 											<thead>
 												<tr>
-													<th>Numero de Anexo</th>
-													<th>Motivo</th>
-													<th>Total</th>
-													<th>Estatus</th>
+													<th>Nombre</th>
 													<th>Fecha de registro</th>
 													<th>Acciones</th>
 												</tr>
@@ -98,9 +93,9 @@
 				</div>
 
 
-				@include('policies.individual.annexes.store')
-				@include('policies.individual.annexes.view')
-				@include('policies.individual.annexes.edit')
+				@include('policies.individual.annexes.files.store')
+				@include('policies.individual.annexes.files.view')
+				@include('policies.individual.annexes.files.edit')
 
 
 
@@ -158,12 +153,12 @@
 
 
 			function update(){
-				enviarFormularioPut("#form-update", 'api/policies/annexes', '#cuadro4', false, "#avatar-edit");
+				enviarFormularioPut("#form-update", 'api/filesCustom', '#cuadro4', false, "#avatar-edit");
 			}
 
 
 			function store(){
-				enviarFormulario("#store", 'api/policies/annexes', '#cuadro2');
+				enviarFormulario("#store", 'api/filesCustom', '#cuadro2');
 			}
 
 
@@ -185,7 +180,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/policies/annexes/'+{{$id_policies}},
+						"url":''+url+'/api/files/policies_annexes/'+{{$id_policies_annexes}},
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -194,14 +189,7 @@
 					},
 					"columns":[
 						
-						{"data":"number_annexed"},
-						{"data":"reason"},
-						{"data":"total", 
-							render : function(data, type, row){
-								return number_format(data, 2)
-							}
-						},
-						{"data":"state"},
+						{"data":"title"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -240,60 +228,24 @@
 
 			}
 
-			var count = 0
 
-			$("#add-file").click(function (e) { 
+
+			function nuevo() {
+
+				$("#alertas").css("display", "none");
+				$("#store")[0].reset();
+				$(".container-datos-adicionales-hijo").css("display", "none");
+				$(".container-datos-adicionales-vehicle").css("display", "none");
+
+				$("#beneficairy_onerous_input_bind").val(1)
+
+				$(".remove").css("display", "block")
+				$(".remove-pay").css("display", "none")
+
+
+				$('#input-file-store').fileinput('destroy');
 				
-				var html = "";
-				count++
-
-				html += '<div class="col-md-6" id="file-'+count+'">'
-					html += '<div class="row">'
-						html += '<div class="col-md-6">'
-							html += ' <label for=""><b>Titulo *</b></label>'
-							html += '<div class="form-group valid-required">'
-								html += '<input type="text" name="titles[]" class="form-control form-control-user" required>'
-							html += '</div>'
-						html += '</div>'
-
-
-						html += '<div class="col-md-6">'
-							html += ' <label for=""><b>Descripcion *</b></label>'
-							html += '<div class="form-group valid-required">'
-								html += '<input type="text" name="descriptions[]" class="form-control form-control-user" id="description" required>'
-							html += '</div>'
-						html += '</div>'
-
-					html += '</div>'
-					html += '<br>'
-
-
-					html += '<div class="row">'
-						html += '<div class="col-md-12 text-center">'
-							html += '<div class="kv-avatar">'
-								html += '<div class="file-loading">'
-									html += '<input id="input-file-'+count+'" name="file[]" type="file" required>'
-								html += '</div>'
-							html += '</div>'
-
-							html += '<div class="kv-avatar-hintss">'
-								html += '<small>Seleccione una foto</small>'
-							html += '</div>'
-
-						html += '</div>'
-					html += '</div>'
-					html += '<br>'
-					html += '<br>'
-				html += '</div>'
-
-
-				$("#content-file").append(html);
-				CreateInputFile("#input-file-"+count)
-			});
-
-
-			function CreateInputFile(input){
-				$(input).fileinput({
+				$("#input-file-store").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
 					maxFileSize: 1500,
@@ -310,20 +262,9 @@
 					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
 					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
 				});
-			}
 
 
-			function nuevo() {
 
-				$("#alertas").css("display", "none");
-				$("#store")[0].reset();
-				$(".container-datos-adicionales-hijo").css("display", "none");
-				$(".container-datos-adicionales-vehicle").css("display", "none");
-
-				$("#beneficairy_onerous_input_bind").val(1)
-
-				$(".remove").css("display", "block")
-				$(".remove-pay").css("display", "none")
 
 				cuadros("#cuadro1", "#cuadro2");
 			}
@@ -338,31 +279,54 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#number_annexed_view").val(data.number_annexed).attr("disabled", "disabled")
-					$("#state_view").val(data.state).attr("disabled", "disabled")
-					$("#risk_view").val(data.risk).attr("disabled", "disabled")
-					$("#reason_view").val(data.reason).attr("disabled", "disabled")
-					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
-					$("#start_date_view").val(data.start_date).attr("disabled", "disabled")
-					$("#end_date_view").val(data.end_date).attr("disabled", "disabled")
-					$("#reception_date_view").val(data.reception_date).attr("disabled", "disabled")
-					$("#cousin_view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
-					$("#xpenses_view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
-					$("#vat_view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
-					$("#percentage_vat_cousin_view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
-					$("#commission_percentage_view").val(data.commission_percentage).attr("disabled", "disabled")
-					$("#agency_commission_view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
-					$("#total_view").val(number_format(data.total, 2)).attr("disabled", "disabled")
-					$("#payment_method_view").val(data.payment_method).attr("disabled", "disabled")
-					$("#observations_view").val(data.observations).attr("disabled", "disabled")
-					$("#accessories_view").val(data.accessories).attr("disabled", "disabled")
+					$("#titles_view").val(data.title).attr("disabled", "disabled")
+					$("#descriptions_view").val(data.descripcion).attr("disabled", "disabled")
 				
-					data.is_renewable   == 1 ? $("#is_renewable_view").prop("checked", true)   : $("#is_renewable_view").prop("checked", false) 
+					$('#input-file-view').fileinput('destroy');
+					var url=document.getElementById('ruta').value; 
+					url_imagen =  url + '/img/policies/annexes/'
+
+
+
+					var ext = data.name.split('.');
+					if (ext[1] == "pdf") {
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+					}else{
+						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+					}
 					
-					var url = document.querySelector('#ruta').value + "/policies_annexes/files/"+data.id_policies_annexes+"/0"
+					
+					$("#input-file-view").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 1500,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="fas fa-trash-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+						initialPreview: [ 
+							img
+						],
+						initialPreviewConfig: [
+								
+							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
+					
+						],
 
-					$('#iframeView').attr('src', url);
+					});
 
+
+
+
+					
 					cuadros('#cuadro1', '#cuadro3');
 				});
 
@@ -375,36 +339,55 @@
 				Funcion que muestra el cuadro3 para la consulta del banco.
 			*/
 			function edit(tbody, table){
+
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#number_annexed_edit").val(data.number_annexed)
-					$("#state_edit").val(data.state)
-					$("#risk_edit").val(data.risk)
-					$("#reason_edit").val(data.reason)
-					$("#expedition_date_edit").val(data.expedition_date)
-					$("#start_date_edit").val(data.start_date)
-					$("#end_date_edit").val(data.end_date)
-					$("#reception_date_edit").val(data.reception_date)
-					$("#cousin_edit").val(number_format(data.cousin, 2))
-					$("#xpenses_edit").val(number_format(data.xpenses, 2))
-					$("#vat_edit").val(number_format(data.vat, 2))
-					$("#percentage_vat_cousin_edit").val(data.percentage_vat_cousin)
-					$("#commission_percentage_edit").val(data.commission_percentage)
-					$("#agency_commission_edit").val(number_format(data.agency_commission, 2))
-					$("#total_edit").val(number_format(data.total, 2))
-					$("#payment_method_edit").val(data.payment_method)
-					$("#observations_edit").val(data.observations)
-					$("#accessories_edit").val(data.accessories)
+					$("#titles_edit").val(data.title)
+					$("#descriptions_edit").val(data.descripcion)
 				
-					data.is_renewable   == 1 ? $("#is_renewable_edit").prop("checked", true)   : $("#is_renewable_view").prop("checked", false) 
+					$('#input-file-edit').fileinput('destroy');
+					var url=document.getElementById('ruta').value; 
+					url_imagen = url + '/img/policies/annexes/'
 
-					$("#id_edit").val(data.id_policies_annexes)
+					var ext = data.name.split('.');
+					if (ext[1] == "pdf") {
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+					}else{
+						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+					}
+					
+					
+					$("#input-file-edit").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 1500,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="fas fa-trash-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						defaultPreviewContent: '<img src="/img/default-user.png" width="150" alt="Your Avatar">',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+						initialPreview: [ 
+							img
+						],
+						initialPreviewConfig: [
+								
+							{caption: data.name , downloadUrl: url_imagen+data.name  ,url: url+"uploads/delete", key: data.name}
+					
+						],
 
-					var url = document.querySelector('#ruta').value + "/policies_annexes/files/"+data.id_policies_annexes+"/1"
+					});
 
-					$('#iframeEdit').attr('src', url);
+					$("#id_edit").val(data.id_files)
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
@@ -513,7 +496,6 @@
 				$(input_total).val(number_format(total, 2))
 			}
 
-
 	
 
 		/* ------------------------------------------------------------------------------- */
@@ -523,7 +505,7 @@
 			function desactivar(tbody, table){
 				$(tbody).on("click", "span.desactivar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/policies/annexes/status/'+data.id_policies_annexes+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
+					statusConfirmacion('api/files/status/'+data.id_files+"/"+2,"¿Está seguro de desactivar el registro?", 'desactivar');
 				});
 			}
 		/* ------------------------------------------------------------------------------- */
@@ -535,14 +517,14 @@
 			function activar(tbody, table){
 				$(tbody).on("click", "span.activar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/policies/annexes/status/'+data.id_policies_annexes+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
+					statusConfirmacion('api/files/status/'+data.id_files+"/"+1,"¿Está seguro de desactivar el registro?", 'activar');
 				});
 			}
 	
 			function eliminar(tbody, table){
 				$(tbody).on("click", "span.eliminar", function(){
 					var data=table.row($(this).parents("tr")).data();
-					statusConfirmacion('api/policies/annexes/status/'+data.id_policies_annexes+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
+					statusConfirmacion('api/files/status/'+data.id_files+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
 

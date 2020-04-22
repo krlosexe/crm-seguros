@@ -8,6 +8,19 @@
       
         @csrf
 
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a href="#default-tab-1-store" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+            </li>
+            <li class="nav-item">
+                <a href="#default-tab-2-store" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+        </ul>
+
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-store">
+        <br>
         <div class="row">
             <div class="col-md-6">
               <label for=""><b>Numero</b></label>
@@ -188,6 +201,30 @@
 
         </div>
 
+      </div>
+        <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-store">
+          <div class="col-md-12" >
+           
+
+            <div class="row">
+              <div class="col-md-6">
+                <button type="button" id="add-file" class="btn btn-primary btn-user" >
+                  Agregar
+                </button>
+              </div>
+            </div>
+
+            <br>
+
+            <div id="content-file" class="row">
+
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
         <!---END ROW-->
 
         <input type="hidden" name="id_policie" value="{{$id_policies}}">
@@ -195,6 +232,8 @@
         <input type="hidden" name="token" class="token">
           <br>
           <br>
+
+
    
           <center>
 

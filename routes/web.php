@@ -148,10 +148,17 @@ Route::get('policies/{number_policie}', function ($number_policie) {
     return view('policies.show.gestion', ["number_policie" => $number_policie]);
 });
 
+Route::get('policies_annexes/files/{id_policies_annexes}/{management}', function ($id_policies_annexes, $management) {
+    
+    return view('policies.individual.annexes.files.gestion', ["id_policies_annexes" => $id_policies_annexes, "management" => $management]);
+});
 
 Route::get('policies/annexes/{id_policies}/{management}', function ($id_policies, $management) {
     return view('policies.individual.annexes.gestion', ["id_policies" => $id_policies, "management" => $management]);
 });
+
+
+
 
 
 Route::get('binds/{id_policies}/{management}', function ($id_policies, $management) {

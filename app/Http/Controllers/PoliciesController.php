@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 
 use App\ClientsPeople;
 use App\ClientsCompany;
+use App\Files;
 
 use Illuminate\Support\Facades\DB;
 
@@ -617,6 +618,29 @@ class PoliciesController extends Controller
             $store                  = PoliciesAnnexes::create($request->all());
             $request["id_policies_annexes"] = $store->id_policies_annexes;
  
+            $destinationPath        = 'img/policies/annexes';
+            $request["tabla"]       = "policies_annexes";
+            $request["id_register"] = $store["id_policies_annexes"];
+
+            if($request->file('file')){
+                foreach($request->file('file') as $key => $value){
+                    $value->move($destinationPath,$value->getClientOriginalName());
+    
+                    $request["name"] = $value->getClientOriginalName();
+    
+                    $request["title"]       = $request["titles"][$key];
+                    $request["descripcion"] = $request["descriptions"][$key];
+    
+                    $store_file = Files::create($request->all());
+    
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "files";
+                    $auditoria->cod_reg     = $store_file["id_files"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = $request["id_user"];
+                    $auditoria->save();
+                }
+            }
 
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "policies_annexes";

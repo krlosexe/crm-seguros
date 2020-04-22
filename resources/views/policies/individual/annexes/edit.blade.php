@@ -1,6 +1,6 @@
 <div class="card shadow mb-4 hidden" id="cuadro4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Editar Vinculados</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Editar Anexos</h6>
   </div>
   <div class="card-body">
       <form class="user" autocomplete="off" method="post" id="form-update" enctype="multipart/form-data">
@@ -9,7 +9,19 @@
 
         <input type="hidden" name="_method" value="put">
         
-		<div class="row">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
+            </li>
+            <li class="nav-item">
+                <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+            </li>
+        </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active show" id="default-tab-1-edit">
+        <br>
+		       <div class="row">
             <div class="col-md-6">
               <label for=""><b>Número</b></label>
               <div class="form-group valid-required">
@@ -195,8 +207,15 @@
         <input type="hidden" name="token" class="token">
 
         <input type="hidden" name="id_user_edit" id="id_edit">
+     </div>
+      <div role="tabpanel" class="tab-pane fade in" id="default-tab-2-edit">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item " id="iframeEdit" allowfullscreen>
 
-
+            </iframe>
+          </div>
+      </div>
+  </div>
           <br>
           <br>
    
