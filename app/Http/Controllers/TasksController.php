@@ -69,14 +69,15 @@ class TasksController extends Controller
         $fecha = $request["delivery_date"];
 
 
-        
+        if($request->file('file')){
 
+            $file = $request->file('adjunto');
 
-        $file = $request->file('adjunto');
+            $destinationPath = 'img/tasks';
+            $file->move($destinationPath,$file->getClientOriginalName());
+            $request["file"] = $file->getClientOriginalName();
 
-        $destinationPath = 'img/tasks';
-        $file->move($destinationPath,$file->getClientOriginalName());
-        $request["file"] = $file->getClientOriginalName();
+        }
 
 
         $dt = new DateTime($fecha);

@@ -144,7 +144,7 @@
 
                                                     <div class="form-group">
                                                         <label>Adjuntar</label>
-                                                        <input type="file"  name="adjunto" id="adjunto" class="form-control" required>
+                                                        <input type="file"  name="adjunto" id="adjunto" class="form-control">
                                                     </div>
 
 
