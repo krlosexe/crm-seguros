@@ -26,6 +26,7 @@ use App\Insurers;
 use App\Branchs;
 use App\ClientsCompany;
 use App\Files;
+use DateTime;
 
 class ImportController extends Controller
 {
@@ -60,7 +61,7 @@ class ImportController extends Controller
     public function import()
     {
         ini_set("default_charset", "UTF-8");
-       $fila = 1;
+       $fila = 0;
 
        $data = [];
        $data_contact = [];
@@ -69,12 +70,18 @@ class ImportController extends Controller
        $data_notifications = [];
        $data_auditoria = [];
 
-        if (($gestor = fopen("data202004.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
+        if (($gestor = fopen("clients.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+                
+                $datos = array_map("utf8_encode", $datos);
 
-                $numero = count($datos);
-                echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
-                $fila++;
+                if($fila == 0){
+                  $fila++;
+                  continue;
+                }
+
+                 $fecha = DateTime::createFromFormat('d/m/Y', $datos[7]);
+                 $fecha = $fecha == false? null : $fecha->format('Y-m-d');
 
                  $row = array(
                     "names"           => $datos[1],
@@ -83,15 +90,12 @@ class ImportController extends Controller
                     "number_document" => $datos[4],
                     "expedition_date" => null,
                     "gender"          => $datos[6],
-                    "birthdate"       => $datos[7],
+                    "birthdate"       => $fecha,
                     "stratum"         => null,
                     "data_treatment"  => 1,
                     "observations"    => null,
                  );
 
-                 
-
-                 $data[] = $row;
                  $store = ClientsPeople::create($row);
 
                  $auditoria = array(
@@ -100,12 +104,15 @@ class ImportController extends Controller
                     "status"     => 1,
                     "usr_regins" => 68
                  );
+                 
 
+                 $pais = DB::table('departamentos')->where('nombre', trim($datos[18]))->first();
+                 $city = DB::table('municipios')->where('nombre', trim($datos[19]))->first();
 
                  $contact = array(
                     "id_clients_people" => $store["id_clients_people"],
-                    "department"        => $datos[18],
-                    "city"              => $datos[19],
+                    "id_department"     => $pais == null? null : $pais->id,
+                    "id_city"           => $city == null? null : $city->id,
                     "address1"          => $datos[20],
                     "type_address1"     => $datos[21],
                     "address2"          => $datos[22],
@@ -152,10 +159,8 @@ class ImportController extends Controller
                  $data_notifications[] = $notifications;
                  $data_auditoria[]     = $auditoria;
 
-
-                 echo json_encode($auditoria);
             }
-        //     echo "asd";
+
             $store_clients_people               = ClientsPeopleContact::insert($data_contact);
             $store_clients_people_info_crm      = ClientsPeopleInfoCrm::insert($data_info);
             $store_clients_notification         = ClientsNotifications::insert($data_notifications);

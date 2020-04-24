@@ -197,6 +197,11 @@ Route::get('payment', function () {
     return view('administracion.payment.gestion');
 });
 
+Route::get('payment/{id}', function ($id) {
+    return view('administracion.payment.show.gestion', compact('id'));
+});
+
+
 
 
 Route::get('payments-receivable', function () {

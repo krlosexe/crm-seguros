@@ -100,7 +100,7 @@
 
 <script>
 			$(document).ready(function(){
-
+				$('#cuadro3').show()
 				showDataPolicie()
 
 
@@ -132,12 +132,37 @@
 						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
 					},
 					success: function(data){
-						
+
+						GetDepartament("#departament_view", data.id_department)
+
+						ChangeDepartament("#departament_view", "#municipios_view", data.id_city)
+
+
+						$("#type_document_view").each(function() {
+						  if (this.selectize) {
+							this.selectize.destroy();
+						  }
+					   });
+
+
+
+
 						$("#names_view").val(data.names).attr("disabled", "disabled")
 						$("#last_names_view").val(data.last_names).attr("disabled", "disabled")
 						$("#type_document_view").val(data.type_document).attr("disabled", "disabled")
+
+
+						$("#type_document_view").selectize({
+						  //sortField: 'text'
+						});
+
+
+
 						$("#number_document_view").val(data.number_document).attr("disabled", "disabled")
 						$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
+						$("#weight_view").val(data.weight).attr("disabled", "disabled")
+						$("#height_view").val(data.height).attr("disabled", "disabled")
+						$("#eps_view").val(data.eps).attr("disabled", "disabled")
 						$("#gender_view").val(data.gender).attr("disabled", "disabled")
 						$("#birthdate_view").val(data.birthdate).attr("disabled", "disabled")
 						$("#stratum_view").val(data.stratum).attr("disabled", "disabled")
@@ -145,10 +170,9 @@
 						$("#age_view").val(calcularEdad(data.birthdate)).attr("disabled", "disabled")
 
 						data.data_treatment == 1 ? $("#data_treatment_view").prop("checked", true) : $("#data_treatment_view").prop("checked", false) 
+						$("#data_treatment_view").attr("disabled", "disabled")
+						
 						$("#observations_view").val(data.observations).attr("disabled", "disabled")
-
-
-						$("#department_view").val(data.department).attr("disabled", "disabled")
 						$("#city_view").val(data.city).attr("disabled", "disabled")
 
 						$("#address1_view").val(data.address1).attr("disabled", "disabled")
@@ -167,9 +191,14 @@
 						$("#monthly_income_view").val(data.monthly_income).attr("disabled", "disabled")
 						$("#heritage_view").val(data.heritage).attr("disabled", "disabled")
 
+						$("#departament_view").trigger("change");
+
+
 						data.own_house == 1 ? $("#own_house_view").prop("checked", true) : $("#own_house_view").prop("checked", false) 
 						$("#number_house_view").val(data.number_house).attr("disabled", "disabled")
-
+						$("#own_house_view").prop("checked", true).attr("disabled", "disabled")
+						$("#children_view").attr("disabled", "disabled")
+						$("#vehicle_view").attr("disabled", "disabled")
 						if(data.childrens.length > 0){
 							$("#children_view").prop("checked", true)
 							$(".container-datos-adicionales-hijo-view").css("display", "block");
@@ -195,6 +224,15 @@
 						data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_view").prop("checked", true)    : $("#send_policies_for_expire_sms_view").prop("checked", false) 
 						data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_view").prop("checked", true)   : $("#send_portfolio_for_expire_sms_view").prop("checked", false) 
 						data.send_birthday_card              == 1 ? $("#send_birthday_card_view").prop("checked", true)              : $("#send_birthday_card_view").prop("checked", false) 
+
+
+
+						$("#send_policies_for_expire_email_view").attr("disabled", "disabled")
+						$("#send_portfolio_for_expire_email_view").attr("disabled", "disabled")
+						$("#send_policies_for_expire_sms_view").attr("disabled", "disabled")
+						$("#send_portfolio_for_expire_sms_view").attr("disabled", "disabled")
+						$("#send_birthday_card_view").attr("disabled", "disabled")       
+
 
 						$("#occupation_view").val(data.occupation).attr("disabled", "disabled")
 						$("#company_view").val(data.company).attr("disabled", "disabled")
@@ -297,6 +335,110 @@
 				$(table).html(html)
 			}
 
+
+			function ChangeDepartament(select, municipios, select_default = false){
+				$(select).change(function (e) { 
+					
+					console.log(select_default)
+					var url=document.getElementById('ruta').value;
+					$.ajax({
+					url:''+url+'/api/departamentos/municipios/'+$(this).val(),
+					type:'GET',
+					dataType:'JSON',
+					async: false,
+					beforeSend: function(){
+					// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+					},
+					error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+					},
+					success: function(data){
+				
+						$(municipios).each(function() {
+						if (this.selectize) {
+							this.selectize.destroy();
+						}
+					});
+					
+						$(municipios+" option").remove();
+						$(municipios).append($('<option>',
+						{
+						value: "null",
+						text : "Seleccione"
+						}));
+				
+						$.each(data, function(i, item){
+						
+							$(municipios).append($('<option>',
+							{
+								value: item.id,
+								text : item.nombre,
+								selected: select_default == item.id ? true : false
+							}));
+						
+						});
+				
+						$(municipios).selectize({
+						//sortField: 'text'
+						});
+					}
+					});
+					
+				});
+			}
+
+
+			function GetDepartament(select, select_default = false){	
+
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/departamentos',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$(select).each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: "null",
+					  text : "Seleccione"
+					}));
+			  
+					$.each(data, function(i, item){
+					  
+					 
+						$(select).append($('<option>',
+						{
+						  value: item.id,
+						  text : item.nombre,
+						  selected: select_default == item.id ? true : false
+						}));
+					  
+					});
+			  
+					$(select).selectize({
+					  //sortField: 'text'
+					});
+				  }
+				});
+			}
 
 
 

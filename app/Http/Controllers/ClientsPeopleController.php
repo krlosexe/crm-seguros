@@ -79,7 +79,6 @@ class ClientsPeopleController extends Controller
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
             isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
 
-
             $store = ClientsPeople::create($request->all());
 
 
@@ -199,6 +198,7 @@ class ClientsPeopleController extends Controller
                                 ->orderBy("clients_people.id_clients_people", "DESC")
                                 ->get();
            
+
         return response()->json($modulos[0])->setStatusCode(200);
     }
 

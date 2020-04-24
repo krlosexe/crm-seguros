@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ClientsPeople;
 use App\Policies;
 use App\ChargeAccount;
+use App\ChargeManagement;
 
 use Illuminate\Support\Facades\DB;
 
@@ -88,7 +89,7 @@ class Estadists extends Controller
         
         $data = Policies::select("policies.*", 
                                  DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
-                                 "clients_company.business_name AS fullname")
+                                 "clients_company.business_name")
                           ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
                           ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
 
@@ -110,29 +111,7 @@ class Estadists extends Controller
 
 
     public function ChargeAccounPending(){
-        
-        $data = ChargeAccount::select("charge_accounts.*", 
-                                 DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
-                                 "clients_company.business_name AS fullname")
-                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
-                                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
-                                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
-
-                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
-                                ->where("auditoria.tabla", "charge_accounts")
-                                 ->where("auditoria.status", "!=", "0")
-
-                                ->join("auditoria as ap", "ap.cod_reg", "=", "policies.id_policies")
-                                ->where("ap.tabla", "policies")
-                                ->where("ap.status", "!=", "0")
-
-                                ->limit(10)
-
-                                ->where("auditoria.tabla", "charge_accounts")
-
-                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
-
-                                ->get();
+        $data = ChargeManagement::allWithAuditoria()->with(['client', 'company'])->get();
 
         return response()->json($data)->setStatusCode(200);
 

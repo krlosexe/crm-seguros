@@ -42,6 +42,41 @@ class PaymentController extends Controller
         }
     }
 
+    function getId(Request $request, $id){
+
+        if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+            $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        "clients_people.id_clients_people",
+                                        "clients_people.names as name_client", 
+                                        "clients_people.last_names", 
+                                        "clients_people.number_document",
+                                        "clients_company.id_clients_company",
+                                        "clients_company.business_name",
+                                      )
+                                    ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
+                                    ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
+                                    ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
+
+                                    ->where("audi.tabla", "=", "charge_accounts_management")
+                                    ->where("audi.status", "!=", "0")
+                                    ->where('charge_accounts_management.id', $id)
+                                    ->with('chargeAccount')
+                                    ->orderBy("charge_accounts_management.id", "DESC")
+                                    ->first();
+
+
+            return response()->json($data)->setStatusCode(200);
+
+        return response()->json($data)->setStatusCode(200);
+
+        }else{
+            return response()->json("No esta autorizado")->setStatusCode(400);
+        }
+    }
+
+
 
 
     function paymentsReceivable(Request $request){

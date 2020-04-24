@@ -120,6 +120,8 @@ Route::get('sinister/client/{id_client}', 'SinistersController@GetByClient');
 Route::get('status-sinister/{id}/{status}', 'SinistersController@status');
 
 Route::get('payment', 'PaymentController@get');
+Route::get('payment/{id}', 'PaymentController@getId');
+
 Route::post('payment', 'PaymentController@GetByPolicie');
 Route::post('payment/fee/pending', 'PaymentController@FeePending');
 Route::post('payment/fee', 'PaymentController@PaymentFee');

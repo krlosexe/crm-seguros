@@ -259,19 +259,21 @@
                         }
 
                         $.map(data, function (item, key) {
+                            let name = item.type_clients == 1? item.company.business_name : item.client.fullname;
+
                             html += '<tr>'
                                     +'<td>'
                                         +'<div class="list-info">'
                                         +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
                                             + '<div class="info">'
-                                            +  '<span class="title">'+item.fullname+'</span>'
-                                            + '<span class="sub-title"># '+item.number_policies+'</span>'
+                                            +  '<span class="title">'+name+'</span>'
+                                            + '<a target="_blank" href="payment/'+item.id+'" class="sub-title"># '+item.issue+'</a>'
                                             +'</div>'
                                         +'</div>'
                                 + '</td>'
                                 + ' <td>'
                                     + '<div class="mrg-top-10">'
-                                        + '<span>'+item.end_date+'</span>'
+                                        + '<span>'+item.limit_date+'</span>'
                                         +'</div>'
                                 + '</td>'
                             + '</tr>'
@@ -318,14 +320,14 @@
                         }
 
                         $.map(data, function (item, key) {
-                           
+                           let name = item.type_clients == 1? item.business_name : item.fullname
 
                            html += '<tr>'
                                 +'<td>'
                                     +'<div class="list-info">'
                                         +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
                                        + '<div class="info">'
-                                          +  '<span class="title">'+item.fullname+'</span>'
+                                          +  '<span class="title">'+name+'</span>'
                                            + '<a target="_blank" href="policies/'+item.id_policies+'" class="sub-title"># '+item.number_policies+'</a>'
                                         +'</div>'
                                     +'</div>'

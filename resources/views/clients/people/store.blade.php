@@ -172,7 +172,7 @@
                           <div class="col-md-6">
                             <label for=""><b>Departamento*</b></label>
                               <div class="form-group valid-required">
-                                <select name="departament"  class="selectized" id="departament" required>
+                                <select name="id_department"  class="selectized" id="departament" required>
                                   <option value="">Seleccione</option>
                                 </select>
                               </div>
@@ -181,7 +181,7 @@
                           <div class="col-md-6">
                             <label for=""><b>Municipios*</b></label>
                                <div class="form-group valid-required">
-                                  <select name="municipios" class="selectized"  id="municipios" required>
+                                  <select name="id_city" class="selectized"  id="municipios" required>
                                     <option value="">Seleccione</option>
                                   </select>
                                 </div>
