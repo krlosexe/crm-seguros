@@ -365,6 +365,13 @@
 				$("#nav_users, #modulo_Pólizas").addClass("active");
 				$("#nav_policies").addClass("active");
 				verifyPersmisos(id_user, tokens, "policies");
+				
+				// ocultar comision y participacion cuando es diferente de administrador
+
+				if(name_rol != 'Administrador'){
+					$('.row-participacion').hide()
+				}
+
 			});
 
 
@@ -751,7 +758,7 @@
 					var html = ""
 					$.map(data.vehicules, function (item, key) {
 						html += "<tr>"
-							html +="<td><a href='#'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
+							html +="<td><a target='_blank' href='vehicles/"+item.placa+"'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
 							html +="<td></td>"
 						html += "</tr>"
 					});
@@ -1284,7 +1291,7 @@
 				var html = ""
 
 				html += "<tr>"
-					html +="<td>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></td>"
+					html +="<td><a target='_blank' href='vehicles/"+placa+"'>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></a></td>"
 					html +="<td></td>"
 				html += "</tr>"
 
@@ -1296,7 +1303,7 @@
 				var html = ""
 
 				html += "<tr>"
-					html +="<td>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></td>"
+					html +="<td><a target='_blank' href='vehicles/"+placa+"'>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></a></td>"
 					html +="<td></td>"
 				html += "</tr>"
 

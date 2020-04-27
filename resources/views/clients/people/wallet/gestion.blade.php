@@ -575,7 +575,7 @@
 														item.policie_anexes_data.id_policies_annexes;
 
 							let optionSelected = $(`.multiselect option[value="${chargeSelected}"]`);
-
+							console.log(optionSelected)
 							let jsonOption = JSON.parse(optionSelected.attr('json'));
 
 							jsonOption.charge_account_id = item.id_charge_accounts;
@@ -631,18 +631,19 @@
 					$("#policie_annexes-multiple-edit").val(data.policie_annexes).trigger('change');
 					$("#policie_annexes-multiple-edit").attr("readonly", "readonly");
 
+					console.log(data)
 
 					setTimeout(() => {
 
 
 				   	   $('.multiselect').multiselect('destroy');
 
-
 						data.charge_account.forEach(item => {
 
 							let chargeSelected = data.policie_annexes == "Poliza" ? 
 														item.policie_data.id_policies : 
 														item.policie_anexes_data.id_policies_annexes;
+
 
 							let optionSelected = $(`.multiselect option[value="${chargeSelected}"]`);
 
@@ -805,8 +806,6 @@
 						    }
 
 							
-							if(type == "Poliza"){
-
 								// bloque solo se encarga del form de polizas multiples
 
 								if(idElement == 'policie_annexes-multiple' || idElement == 'policie_annexes-multiple-edit' || idElement == 'policie_annexes-multiple-view'){
@@ -820,14 +819,23 @@
 								    $('.multiselect').multiselect('destroy');
 
 									$.map(data, function (item, key) {
+							
+										if(type == "Poliza"){
+											var number_policies = item.number_policies;
+											var id_policies = item.id_policies;
+										}else{
+											var number_policies = item.number_annexed;
+											var id_policies = item.id_policies_annexes;
+										}
+
 										if (item.status == 1) {
 											
 											item.charge_account_id = 0;
 
 											$(".multiselect").append($('<option>',
 											{
-												value: item.id_policies,
-												text : item.number_policies,
+												value: id_policies,
+												text : number_policies,
 												json: JSON.stringify(item)
 											}));
 
@@ -839,47 +847,8 @@
 									      buttonWidth: '100%'
 									});
 
-									return;
 								}
 
-								// fin acá
-
-								$.map(data, function (item, key) {
-									if (item.status == 1) {
-										$("#number-store").append($('<option>',
-										{
-											value: item.id_policies,
-											text : item.number_policies,
-											
-										}));
-									}
-								});
-
-								$("#cousin").val(number_format(data.cousin, 2))
-								$("#xpenses").val(number_format(data.xpenses, 2))
-								$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-								$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
-								$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-								$("#participation").val(data.participation).attr("readonly", "readonly")
-								$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-								$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
-							}else{
-
-								$.each(data, function (key, item) { 
-									if (item.status == 1) {
-										$("#number-store").append($('<option>',
-										{
-											value: item.id_policies_annexes,
-											text : item.number_annexed,
-											
-										}));
-									} 
-								});
-								$("#number-store").trigger("change");
-							}
-
-							
 
 						}
 

@@ -198,6 +198,37 @@ class VehicleController extends Controller
      * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
+
+    public function vehiclePlaca($placa){
+        $data = Vehicle::select("vehicules.*", "fasecolda.marca", "fasecolda.clase","fasecolda.codigo","fasecolda.homologocodigo","fasecolda.referencia1","fasecolda.referencia2",
+                                "fasecolda.referencia3","fasecolda.peso","fasecolda.servicio","fasecolda.bcpp","fasecolda.importado","fasecolda.potencia","fasecolda.tipo_caja","fasecolda.cilindraje",
+                                "fasecolda.nacionalidad","fasecolda.capacidad_pasajeros","fasecolda.capacidad_carga","fasecolda.puertas","fasecolda.a/i","fasecolda.ejes","fasecolda.estado",
+                                "fasecolda.combustible","fasecolda.transmision","fasecolda.um" ,                     
+                                "auditoria.*", "user_registro.email as email_regis")
+
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "vehicules.id_vehicules")
+                                ->where("auditoria.tabla", "vehicules")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
+                                ->where('vehicules.placa', $placa)
+                                ->where("auditoria.status", "!=", "0")
+                                ->orderBy("vehicules.id_vehicules", "DESC")
+                                ->first();
+
+
+        foreach($data as $value){
+            $fasecolda = Fasecolda::select("fasecolda.year_".$value["model"]."")
+                            ->where("codigo", $value["code"])
+                            ->first();
+
+            $value["valor_fasecolda"] = $fasecolda["year_".$value["model"].""] * 1000;
+        }
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
     public function show($placa)
     {
         $data = Vehicle::select("vehicules.*", "fasecolda.marca", "fasecolda.clase","fasecolda.codigo","fasecolda.homologocodigo","fasecolda.referencia1","fasecolda.referencia2",

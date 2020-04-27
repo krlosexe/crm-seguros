@@ -35,7 +35,7 @@
 					</div>
 				</div>
 			</div>
-			@include('administracion.payment.admin')
+			@include('administracion.payment-receivable.admin')
 
 		</div>
                 <!-- Content Wrapper END -->
@@ -80,7 +80,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/payment',
+						 "url":''+url+'/api/payments/receivable',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -89,7 +89,7 @@
 					},
 					"columns":[
 						
-						{"data":"id_charge_accounts"},
+						{"data":"id_recibos_cobranza"},
 
 
 						{"data":"number_policies",
@@ -312,6 +312,7 @@
 			/* 
 				Funcion que muestra el cuadro3 para la consulta del banco.
 			*/
+
 			function edit(tbody, table){
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
@@ -326,12 +327,10 @@
 						text : data.policie_annexes == "Poliza" ? data.number_policies : data.number_annexed,
 						
 					}));
-
 					$("#init_date-edit").val(data.init_date)
 					$("#limit_date-edit").val(data.limit_date)
 					$("#issue-edit").val(data.issue)
 					$("#observations-edit").val(data.observations)
-
 					$("#cousin-edit").val(number_format(data.cousin, 2))
 					$("#xpenses-edit").val(number_format(data.xpenses, 2))
 					$("#vat-edit").val(number_format(data.vat, 2)).attr("readonly", "readonly")
@@ -340,16 +339,9 @@
 					$("#participation-edit").val(data.participation).attr("readonly", "readonly")
 					$("#agency_commission-edit").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
 					$("#total-edit").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
 					$("#id_edit").val(data.id_charge_accounts)
-
 					$("#btn-print").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
-
 					ShowCollections(data.collections)
-
-
-
-
 					$('#input-file-store').fileinput('destroy');
 				
 					$("#input-file-store").fileinput({
@@ -369,14 +361,11 @@
 						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
 						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
 					});
-
 					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/1"
 					$('#iframeDigitalesEdit').attr('src', url);
-
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}
-			
 
 			
 			function ShowCollections(data){

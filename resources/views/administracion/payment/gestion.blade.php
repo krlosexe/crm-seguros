@@ -9,6 +9,28 @@
 					<h4>Gestión de Cartera.</h4>
 				</div>
 				<div class="row">
+					<div class="col-md-12">
+						
+						<div class="card">
+							<div class="card-block">
+							  <div class="row">
+							  	
+								<div class="col-md-3">
+									<label>Fecha desde</label>
+									<input type="date" id="fecha_desde" class="form-control" value="{{ date('Y-m-01') }}" onchange="filtrarFecha()">
+								</div>
+								<div class="col-md-3">
+									<label>Fecha hasta</label>
+									<input type="date" id="fecha_hasta" class="form-control" value="{{ date('Y-m-d') }}" onchange="filtrarFecha()">
+								</div>
+
+							  </div>	 	
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="row">
 					
 					<div class="col-md-12">
 						<div class="card">
@@ -19,6 +41,7 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
+												<th style="display: none"></th>
 												<th>#</th>
 												<th>Motivo</th>
 												<th>Cliente</th>
@@ -48,6 +71,7 @@
 	@section('CustomJs')
 
 		<script>
+
 			$(document).ready(function(){
 				list();
 				update();
@@ -58,6 +82,9 @@
 				verifyPersmisos(id_user, tokens, "payment");
 			});
 
+			function filtrarFecha(){
+				$(table).DataTable().draw();
+			}
 
 
 			function update(){
@@ -89,6 +116,8 @@
 					},
 					"columns":[
 						
+						{"data":"fec_regins", visible: false},
+
 						{"data":"id"},
 
 
@@ -124,6 +153,36 @@
 						'copy', 'csv', 'excel', 'pdf', 'print'
 					]
 				});
+
+			$.fn.dataTableExt.afnFiltering.push(
+				function( oSettings, aData, iDataIndex ) {
+
+					var iFini = document.getElementById('fecha_desde').value;
+					var iFfin = document.getElementById('fecha_hasta').value;
+					var iStartDateCol = 0;
+
+					var datofini=aData[iStartDateCol]
+					var datoffin=aData[iStartDateCol]
+				
+					if ( iFini === "" && iFfin === "" )
+					{
+						return true;
+					}
+					else if ( iFini <= datofini && iFfin === "")
+					{
+						return true;
+					}
+					else if ( iFfin >= datoffin && iFini === "")
+					{
+						return true;
+					}
+					else if (iFini <= datofini && iFfin >= datoffin)
+					{
+						return true;
+					}
+					return false;
+				}
+			);
 			
 				edit("#table tbody", table)
 
@@ -496,11 +555,6 @@
 								}));
 						    }
 
-							
-							if(type == "Poliza"){
-
-								// bloque solo se encarga del form de polizas multiples
-
 								if(idElement == 'policie_annexes-multiple' || idElement == 'policie_annexes-multiple-edit' || idElement == 'policie_annexes-multiple-view'){
 
 									$(".multiselect option").remove();
@@ -512,14 +566,23 @@
 								    $('.multiselect').multiselect('destroy');
 
 									$.map(data, function (item, key) {
+							
+										if(type == "Poliza"){
+											var number_policies = item.number_policies;
+											var id_policies = item.id_policies;
+										}else{
+											var number_policies = item.number_annexed;
+											var id_policies = item.id_policies_annexes;
+										}
+
 										if (item.status == 1) {
 											
 											item.charge_account_id = 0;
 
 											$(".multiselect").append($('<option>',
 											{
-												value: item.id_policies,
-												text : item.number_policies,
+												value: id_policies,
+												text : number_policies,
 												json: JSON.stringify(item)
 											}));
 
@@ -531,45 +594,7 @@
 									      buttonWidth: '100%'
 									});
 
-									return;
 								}
-
-								// fin acá
-
-								$.map(data, function (item, key) {
-									if (item.status == 1) {
-										$("#number-store").append($('<option>',
-										{
-											value: item.id_policies,
-											text : item.number_policies,
-											
-										}));
-									}
-								});
-
-								$("#cousin").val(number_format(data.cousin, 2))
-								$("#xpenses").val(number_format(data.xpenses, 2))
-								$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
-								$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
-								$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-								$("#participation").val(data.participation).attr("readonly", "readonly")
-								$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
-								$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
-
-							}else{
-
-								$.each(data, function (key, item) { 
-									if (item.status == 1) {
-										$("#number-store").append($('<option>',
-										{
-											value: item.id_policies_annexes,
-											text : item.number_annexed,
-											
-										}));
-									} 
-								});
-								$("#number-store").trigger("change");
-							}
 
 							
 

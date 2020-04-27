@@ -47,6 +47,18 @@ class Policies extends Model
       return $this->hasMany('App\PolicesVehicles', 'id_policie');
     }
 
+    public function clientPeople()
+    {
+      return $this->hasOne('App\ClientsPeople', 'id_clients_people', 'clients');
+    }
+
+    public function clientCompany()
+    {
+      return $this->hasOne('App\ClientsCompany', 'id_clients_company', 'clients');
+    }
+
+
+
 
     // Obtener datos con otras tablas
 

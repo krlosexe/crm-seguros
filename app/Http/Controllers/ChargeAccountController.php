@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Policies;
+use App\PoliciesAnnexes;
 use App\Auditoria;
 use App\ChargeManagement;
 use App\ChargeAccount;
@@ -41,11 +42,24 @@ class ChargeAccountController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
-            $policies = Policies::find($request->number);
+            $request['id_policie'] = $request->number;
 
-            $request['id_client'] = $policies->clients;
-            $request['type_client'] = $policies->type_clients;
+            if($request->policie_annexes == 'Poliza'){
+                $policies = Policies::find($request->number);
 
+                $request['id_client'] = $policies->clients;
+                $request['type_client'] = $policies->type_clients;
+                $request['number'] = $policies->number_policies;
+
+            }
+            else{
+                $policies = PoliciesAnnexes::find($request->number);
+
+                $request['id_client'] = $policies->policie->clients;
+                $request['type_client'] = $policies->policie->type_clients;
+                $request['number'] = $policies->number_annexed;
+
+            }
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
             $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);
@@ -98,6 +112,7 @@ class ChargeAccountController extends Controller
                 return $carry;
             });
 
+
             $storeManagement = ChargeManagement::create($chargeManagement);
             
             $auditoria              = new Auditoria;
@@ -109,6 +124,16 @@ class ChargeAccountController extends Controller
 
             foreach ($request->cousin as $key => $value) {
                 $item = $request->all();
+
+               if($request->policie_annexes == 'Poliza'){
+                    $policies = Policies::find($item['id_policie'][$key]);
+                    $item['number'] = $policies->number_policies;
+                }
+                else{
+                    $policies = PoliciesAnnexes::find($item['id_policie'][$key]);
+
+                    $item['number'] = $policies->number_annexed;
+                }
 
                 $item["id_policie"]            = $item['id_policie'][$key];
                 $item["cousin"]                = (float) str_replace(',', '', $item["cousin"][$key]);
@@ -161,6 +186,16 @@ class ChargeAccountController extends Controller
             
             foreach ($request->cousin as $key => $value) {
                 $item = $request->all();
+
+               if($request->policie_annexes == 'Poliza'){
+                    $policies = Policies::find($item['id_policie'][$key]);
+                    $item['number'] = $policies->number_policies;
+                }
+                else{
+                    $policies = PoliciesAnnexes::find($item['id_policie'][$key]);
+
+                    $item['number'] = $policies->number_annexed;
+                }
 
                 $item["id_policie"]            = $item['id_policie'][$key];
                 $item["cousin"]                = (float) str_replace(',', '', $item["cousin"][$key]);
@@ -222,8 +257,24 @@ class ChargeAccountController extends Controller
                                 
                                 ->where("charge_accounts.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
-                                ->get();
-           
+                                ->get()->toArray();
+
+        $data2 = ChargeAccount::select("charge_accounts.*", "policies.number_policies","policies_annexes.number_annexed", "auditoria.*", "user_registro.email as email_regis")
+                                ->join("policies", "policies.id_policies", "=", "charge_accounts.id_policie", "left")
+                                ->join("policies_annexes", "policies_annexes.id_policies_annexes", "=", "charge_accounts.id_policie", "left")
+                                ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts.id_charge_accounts")
+                                ->where("auditoria.tabla", "charge_accounts")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->where("auditoria.status", "!=", "0")
+
+                                ->with("collections")
+                                
+                                ->where("policies_annexes.id_policie", $id_policie)
+                                ->orderBy("charge_accounts.id_charge_accounts", "DESC")
+                                ->get()->toArray();
+
+        $data = array_merge($data, $data2);
+
         return response()->json($data)->setStatusCode(200);
     }
     /**
@@ -326,21 +377,37 @@ class ChargeAccountController extends Controller
     public function update(Request $request, $chargeAccount)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-
+            
             $chargeAccount = ChargeAccount::find($chargeAccount);
 
-            $storeManagement = ChargeManagement::find($chargeAccount->management_id);
-            $storeManagement->total               = (float) str_replace(',', '', $request["total"]);
-            $storeManagement->save();
+            $request['id_policie'] = $chargeAccount->id_policie;
 
-            $chargeAccount->cousin                = (float) str_replace(',', '', $request["cousin"]);
-            $chargeAccount->xpenses               = (float) str_replace(',', '', $request["xpenses"]);
-            $chargeAccount->vat                   = (float) str_replace(',', '', $request["vat"]);
-            $chargeAccount->percentage_vat_cousin = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
-            $chargeAccount->commission_percentage = (float) str_replace(',', '', $request["commission_percentage"]);
-            $chargeAccount->agency_commission     = (float) str_replace(',', '', $request["agency_commission"]);
-            $chargeAccount->total                 = (float) str_replace(',', '', $request["total"]);
-            $chargeAccount->save();
+            if($request->policie_annexes == 'Poliza'){
+                $policies = Policies::find($chargeAccount->id_policie);
+                $request['number'] = $policies->number_policies;
+
+            }
+            else{
+                $policies = PoliciesAnnexes::find($chargeAccount->id_policie);
+
+                $request['number'] = $policies->number_annexed;
+
+            }
+
+
+            $request->cousin                = (float) str_replace(',', '', $request["cousin"]);
+            $request->participation         = $request["participation"];
+            $request->xpenses               = (float) str_replace(',', '', $request["xpenses"]);
+            $request->vat                   = (float) str_replace(',', '', $request["vat"]);
+            $request->percentage_vat_cousin = (float) str_replace(',', '', $request["percentage_vat_cousin"]);
+            $request->commission_percentage = (float) str_replace(',', '', $request["commission_percentage"]);
+            $request->agency_commission     = (float) str_replace(',', '', $request["agency_commission"]);
+            $request->total                 = (float) str_replace(',', '', $request["total"]);
+
+            ChargeManagement::find($chargeAccount->management_id)->update($request->all());
+
+            $update = $chargeAccount->update($request->all());
+
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    

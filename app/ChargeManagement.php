@@ -22,11 +22,14 @@ class ChargeManagement extends Model
                                 ->where("auditoria.status", "!=", "0");
     }
 
-    public function scopeAllWithAuditoria($query){
+    public function scopeAllWithAuditoria($query, $fechadesde, $fechahasta){
         $query->select('charge_accounts_management.*')
               ->join("auditoria", "auditoria.cod_reg", "=", "charge_accounts_management.id")
               ->where("auditoria.tabla", "charge_accounts_management")
-              ->where("auditoria.status", "!=", "0");
+              ->where("auditoria.status", "!=", "0")
+              ->where('auditoria.fec_regins', '>=', $fechadesde)
+              ->where('auditoria.fec_regins', '<=', $fechahasta);
+                          
     }
 
     public function client(){

@@ -8,7 +8,7 @@ class ChargeAccount extends Model
 {
 
     protected $fillable = [
-        'id_policie','policie_annexes', 'number','init_date', 'limit_date', 'issue', 'observations', 'cousin', 'xpenses', 'vat', 'percentage_vat_cousin',
+        'id_policie','policie_annexes', 'participation', 'number','init_date', 'limit_date', 'issue', 'observations', 'cousin', 'xpenses', 'vat', 'percentage_vat_cousin',
         'commission_percentage', 'agency_commission', 'total', 'management_id'
     ];
 
@@ -26,7 +26,7 @@ class ChargeAccount extends Model
 
 
     public function policieAnexesData(){
-      return $this->hasOne('App\PoliciesAnnexes', 'id_policie', 'id_policie');
+      return $this->hasOne('App\PoliciesAnnexes', 'id_policies_annexes', 'id_policie');
     }
 
     public function policieData(){

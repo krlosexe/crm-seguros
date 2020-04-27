@@ -85,8 +85,11 @@ class Estadists extends Controller
 
     }
 
-    public function PoliciesExpired(){
-        
+    public function PoliciesExpired(Request $request){
+
+        $fechadesde = $request->fecha_desde_polizas.' 00:00:00';
+        $fechahasta = $request->fecha_hasta_polizas.' 23:59:59';
+
         $data = Policies::select("policies.*", 
                                  DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
                                  "clients_company.business_name")
@@ -96,7 +99,10 @@ class Estadists extends Controller
                           ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
                           ->where("auditoria.tabla", "policies")
                           ->where("auditoria.status", "!=", "0")
-
+                          
+                          ->where('auditoria.fec_regins', '>=', $fechadesde)
+                          ->where('auditoria.fec_regins', '<=', $fechahasta)
+                          
                           ->limit(10)
 
                           ->whereRaw("end_date between curdate() and date_add(curdate(), interval 7 day)")
@@ -110,8 +116,11 @@ class Estadists extends Controller
     }
 
 
-    public function ChargeAccounPending(){
-        $data = ChargeManagement::allWithAuditoria()->with(['client', 'company'])->get();
+    public function ChargeAccounPending(Request $request){
+        $fechadesde = $request->fecha_desde_polizas.' 00:00:00';
+        $fechahasta = $request->fecha_hasta_polizas.' 23:59:59';
+
+        $data = ChargeManagement::allWithAuditoria($fechadesde, $fechahasta)->limit(10)->with(['client', 'company'])->get();
 
         return response()->json($data)->setStatusCode(200);
 

@@ -15,4 +15,10 @@ class PoliciesAnnexes extends Model
     protected $table         = 'policies_annexes';
     public    $timestamps    = false;
     protected $primaryKey    = 'id_policies_annexes';
+
+    protected $with = ['policie'];
+
+    public function policie(){
+    	return $this->hasOne('App\Policies', 'id_policies', 'id_policie')->with(['clientPeople', 'clientCompany']);
+    }
 }

@@ -194,7 +194,7 @@ Route::get('fasecolda/value', 'FasecoldaController@value');
 Route::get('fasecolda/get/{codigo}', 'FasecoldaController@Get');
 
 
-Route::get('vehicle/{placa}', 'VehicleController@show');
+Route::get('vehicles/{placa}', 'VehicleController@show');
 
 Route::resource('vehicle', 'VehicleController');
 
@@ -226,9 +226,9 @@ Route::get('stadist/ganancias', 'Estadists@Ganancias');
 Route::get('stadist/policies', 'Estadists@Policies');
 
 
-Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
+Route::post('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
 
-Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
+Route::post('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 
 Route::get('my/companie/files', 'MyCompanyController@Files');
 Route::post('my/companie/files', 'MyCompanyController@StoreFiles');

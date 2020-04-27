@@ -21,6 +21,7 @@
                     <select name="policie_annexes" class="form-control start_simulation selectized" id="policie_annexes-multiple" required>
                       <option value="">Seleccione</option>
                       <option value="Poliza">Poliza</option>
+                      <option value="Anexo">Anexo</option>
                     </select>
                   </div>
               </div>

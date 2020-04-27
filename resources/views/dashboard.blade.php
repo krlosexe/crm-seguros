@@ -12,7 +12,8 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-3">
-                                <div class="card">
+
+                                <div class="card casilla-ganancias">
                                     <div class="card-block">
                                         <div class="inline-block">
                                             <h1 class="no-mrg-vertical" id="balance">$968.900</h1>
@@ -122,15 +123,52 @@
                                 </div>
                             </div>
                         </div>
+
+                          <div class="row">
+                             <div class="col-md-12">
+                                 
+                                 <div class="card">
+                                    <div class="card-heading">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Fecha desde</label>
+                                                <input type="date" id="fecha_desde_polizas" onchange="reloadTables()" class="form-control" value="{{ date('Y-m-01') }}">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Fecha hasta</label>
+                                                <input type="date" id="fecha_hasta_polizas"  onchange="reloadTables()" class="form-control" value="{{ date('Y-m-d') }}">                                
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                 </div>
+                             </div>
+                         </div>
+
                         <div class="row">
                             <div class="col-lg-7 col-md-12">
                               <div class="card">
                                     <div class="card-heading">
-                                        <h4 class="card-title inline-block pdd-top-5">Pólizas próximas a renovar</h4>
+                                                <h4 class="card-title inline-block pdd-top-5">Pólizas próximas a renovar</h4>
+      
                                         {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
                                     </div>
-                                    <div class="pdd-horizon-20 pdd-vertical-5">
-                                        <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
+                                    <div class="pdd-horizon-20 pdd-vertical-5 content-load">
+
+                                    <div class="text-center col-md-12 loader-1" style="display: none">
+                                          <span>Cargando...</span>
+                                          <div class="progress">
+                                              <div class="progress-bar  progress-bar-striped progress-bar-info active" role="progressbar"
+                                                   aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
+                                                   style="width: 100%">
+                                                  <span class="sr-only"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                        <div class="overflow-y-auto relative table-result-1 scrollable" style="max-height: 381px">
                                             <table class="table table-lg table-hover" id="table_policies_next_expired">
                                                 <tbody>
                                                    
@@ -146,8 +184,20 @@
                                         <h4 class="card-title inline-block pdd-top-5">Cartera por cobrar</h4>
                                         {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
                                     </div>
-                                    <div class="pdd-horizon-20 pdd-vertical-5">
-                                        <div class="overflow-y-auto relative scrollable" style="max-height: 381px">
+                                    <div class="pdd-horizon-20 pdd-vertical-5 content-load">
+
+                                        <div class="text-center col-md-12 loader-2" style="display: none">
+                                              <span>Cargando...</span>
+                                              <div class="progress">
+                                                  <div class="progress-bar  progress-bar-striped progress-bar-info active" role="progressbar"
+                                                       aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
+                                                       style="width: 100%">
+                                                      <span class="sr-only"></span>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                        <div class="overflow-y-auto relative table-result-2 scrollable" style="max-height: 381px">
                                             <table class="table table-lg table-hover">
                                                 <tbody id="table_charge_account">
                                                 </tbody>
@@ -199,12 +249,23 @@
 
 			});
 
+
+            function reloadTables(){
+                ChargeAccountPending();
+                policiesExpired();
+            }
+
+
 			function login(){
 				enviarFormulario("#login", 'auth', '#cuadro2', true);
 			}
 
 
             function ganancias(){
+                
+                if(name_rol != 'Administrador'){
+                    $('.casilla-ganancias').hide()
+                }
 
                 var url=document.getElementById('ruta').value;
                 $.ajax({
@@ -233,16 +294,24 @@
                 var url=document.getElementById('ruta').value;
                 $.ajax({
                     url:''+url+'/api/stadist/charge/account/pending',
-                    type:'GET',
+                    type:'POST',
                     dataType:'JSON',
-                
+                    data: {
+                        fecha_hasta_polizas: $('#fecha_hasta_polizas').val(),
+                        fecha_desde_polizas: $('#fecha_desde_polizas').val(),
+                    },
                     beforeSend: function(){
-                    
+                        $('.table-result-2').hide();
+                        $('.loader-2').show();
+                        $("#table_charge_account").html('')
                     },
                     error: function (data) {
                         
                     },
                     success: function(data){
+
+                        $('.loader-2').hide();
+                        $('.table-result-2').show();
 
                         var html = ""
 
@@ -294,11 +363,17 @@
                 var url=document.getElementById('ruta').value;
                 $.ajax({
                     url:''+url+'/api/stadist/policies/next/expired',
-                    type:'GET',
+                    type:'POST',
                     dataType:'JSON',
-                   
+                    data: {
+                        fecha_desde_polizas: $('#fecha_desde_polizas').val(),
+                        fecha_hasta_polizas: $('#fecha_hasta_polizas').val(),
+                    },
                     beforeSend: function(){
-                    
+                        $('.table-result-1').hide();
+                        $('.loader-1').show();
+
+                        $("#table_policies_next_expired").html('')
                     },
                     error: function (data) {
                         
@@ -306,6 +381,8 @@
                     success: function(data){
 
                         var html = ""
+                        $('.loader-1').hide();
+                        $('.table-result-1').show();
 
                         if(data.length == 0){
                             html = `

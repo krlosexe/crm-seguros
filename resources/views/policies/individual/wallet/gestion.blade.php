@@ -442,7 +442,7 @@
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
-					
+					console.log(data)
 					$("#policie_annexes-edit").val(data.policie_annexes).attr("disabled", "disabled")
 					$("#number-edit").val(data.number_policies).attr("disabled", "disabled")
 					$("#number-edit option").remove();
@@ -463,7 +463,7 @@
 					$("#vat-edit").val(number_format(data.vat, 2)).attr("readonly", "readonly")
 					$("#percentage_vat_cousin-edit").val(data.percentage_vat_cousin)
 					$("#commission_percentage-edit").val(data.commission_percentage).attr("readonly", "readonly")
-					$("#participation-edit").val(data.participation).attr("readonly", "readonly")
+					$("#participation-edit").val(data.participation)
 					$("#agency_commission-edit").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
 					$("#total-edit").val(number_format(data.total, 2)).attr("readonly", "readonly")
 
@@ -626,7 +626,7 @@
 								$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
 								$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
 								$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-								$("#participation").val(data.participation).attr("readonly", "readonly")
+								$("#participation").val(data.participation)
 								$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
 								$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
 
@@ -682,7 +682,7 @@
 							$("#vat").val(number_format(data.vat, 2)).attr("readonly", "readonly")
 							$("#percentage_vat_cousin").val(data.percentage_vat_cousin)
 							$("#commission_percentage").val(data.commission_percentage).attr("readonly", "readonly")
-							$("#participation").val(data.participation).attr("readonly", "readonly")
+							$("#participation").val(data.participation)
 							$("#agency_commission").val(number_format(data.agency_commission, 2)).attr("readonly", "readonly")
 							$("#total").val(number_format(data.total, 2)).attr("readonly", "readonly")
 

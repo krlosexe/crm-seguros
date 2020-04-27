@@ -84,12 +84,12 @@ class ImportController extends Controller
                  $fecha = $fecha == false? null : $fecha->format('Y-m-d');
 
                  $row = array(
-                    "names"           => $datos[1],
-                    "last_names"      => $datos[2],
-                    "type_document"   => $datos[3],
-                    "number_document" => $datos[4],
+                    "names"           => trim($datos[1]),
+                    "last_names"      => trim($datos[2]),
+                    "type_document"   => trim($datos[3]),
+                    "number_document" => trim($datos[4]),
                     "expedition_date" => null,
-                    "gender"          => $datos[6],
+                    "gender"          => trim($datos[6]),
                     "birthdate"       => $fecha,
                     "stratum"         => null,
                     "data_treatment"  => 1,
@@ -113,15 +113,15 @@ class ImportController extends Controller
                     "id_clients_people" => $store["id_clients_people"],
                     "id_department"     => $pais == null? null : $pais->id,
                     "id_city"           => $city == null? null : $city->id,
-                    "address1"          => $datos[20],
-                    "type_address1"     => $datos[21],
-                    "address2"          => $datos[22],
-                    "type_address2"     => $datos[23],
-                    "phone1"            => $datos[24],
-                    "type_phone1"       => $datos[25],
-                    "phone2"            => $datos[26],
-                    "type_phone2"       => $datos[27],
-                    "email"  => $datos[28],
+                    "address1"          => trim($datos[20]),
+                    "type_address1"     => trim($datos[21]),
+                    "address2"          => trim($datos[22]),
+                    "type_address2"     => trim($datos[23]),
+                    "phone1"            => trim($datos[24]),
+                    "type_phone1"       => trim($datos[25]),
+                    "phone2"            => trim($datos[26]),
+                    "type_phone2"       => trim($datos[27]),
+                    "email"  => trim($datos[28]),
                  );
                  
 
@@ -172,7 +172,76 @@ class ImportController extends Controller
         
     }
 
-    public function policies()
+    function policies(){
+        $fila = 0;
+        $count = 0;
+
+        if (($gestor = fopen("policiesnuevas.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
+                if($fila == 0){
+                    $fila++;
+                    continue;
+                }
+                $datos[4] = trim(utf8_encode($datos[4]));
+                $datos[5] = trim(utf8_encode($datos[5]));
+                $datos[11] = trim(utf8_encode($datos[11]));
+
+                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
+
+                $clientePeople = ClientsPeople::where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
+                if($clientePeople == null){
+                    $clientePeople = ClientsCompany::where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                }
+
+                if($clientePeople == null){
+                    if($fila < 9000){
+                      // echo ($name);
+                      // echo "<br> Fila: ".$fila;
+                      // echo "<br>";
+                    }
+                }
+
+                $name4 = str_replace(' ', '', str_replace('.', '', trim($datos[4])));
+                $name9 = str_replace(' ', '', str_replace('.', '', trim($datos[5])));
+
+                $insure = Insurers::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name4.'%')->get()->first();
+                $branch = Branchs::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name9.'%')->get()->first();
+
+                if($insure == null){
+                    $count++;
+
+                    if($fila < 9000){
+                      echo ($name4);
+                      echo "<br> Inseure Fila: ".$fila;
+                      echo "<br>";
+                    }
+                }        
+
+                if($branch == null){
+                    $count++;
+
+                    if($fila < 9000){
+                      echo ($name9);
+                      echo "<br> Branch Fila: ".$fila;
+                      echo "<br>";
+                    }
+                }                
+
+
+                if($fila == 7975){
+                  echo "olis";
+                  echo $count;
+                  die;
+                }
+
+                $fila++;
+
+            }
+        }
+    }
+
+    public function policies2()
     {
        
        ini_set("default_charset", "utf-8");
@@ -183,8 +252,8 @@ class ImportController extends Controller
        $fila = 0;
        $noEncontrados = array();
 
-        if (($gestor = fopen("policies202004-2.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+        if (($gestor = fopen("policiesnuevas.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
                 if($fila == 0){
                     $fila++;
                     continue;
@@ -197,13 +266,12 @@ class ImportController extends Controller
                 $datos[18] = utf8_encode($datos[18]);
 
                 $clientePeople = ClientsPeople::select("id_clients_people as id")
-                                                ->where(DB::raw("CONCAT(names, ' ',last_names)"), trim($datos[11]))
+                                                ->where(DB::raw("CONCAT(names, '',last_names)"), trim($datos[11]))
                                                 ->first();
                 $type_clients = 0;
 
                 if($clientePeople == null){
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")
-                                                ->where('business_name', trim($datos[11]))->first();
+                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('business_name', trim($datos[11]))->first();
     
                     $type_clients = 1;
                 }
@@ -230,6 +298,18 @@ class ImportController extends Controller
                     continue;
                 }
 
+               $expedition_date = DateTime::createFromFormat('d/m/Y', $datos[6]);
+               $expedition_date = $expedition_date == false? null : $expedition_date->format('Y-m-d');
+
+               $reception_date = DateTime::createFromFormat('d/m/Y', $datos[7]);
+               $reception_date = $reception_date == false? null : $reception_date->format('Y-m-d');
+
+               $start_date = DateTime::createFromFormat('d/m/Y', $datos[8]);
+               $start_date = $start_date == false? null : $start_date->format('Y-m-d');
+
+               $end_date = DateTime::createFromFormat('d/m/Y', $datos[9]);
+               $end_date = $end_date == false? null : $end_date->format('Y-m-d');
+
                 $array = [
                   "type_poliza"                     => strtolower(trim($datos[0])),
                   "number_policies"                 => trim($datos[1]),
@@ -237,10 +317,10 @@ class ImportController extends Controller
                   "is_renewable"                    => trim($datos[3]),
                   "insurers"                        => $insure->id_insurers,
                   "branch"                          => $branch->id_branchs,
-                  "expedition_date"                 => trim($datos[6]),
-                  "reception_date"                  => trim($datos[7]),
-                  "start_date"                      => trim($datos[8]),
-                  "end_date"                        => trim($datos[9]),
+                  "expedition_date"                 => $expedition_date,
+                  "reception_date"                  => $reception_date,
+                  "start_date"                      => $start_date,
+                  "end_date"                        => $end_date,
                   "risk"                            => trim($datos[10]),
                   "type_clients"                    => $type_clients,
                   "clients"                         => $clientePeople->id,

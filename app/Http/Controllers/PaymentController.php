@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ChargeAccount;
+use App\RecibosCobranza;
 use App\ChargeManagement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -13,6 +15,7 @@ class PaymentController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
             $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        DB::raw("cast(audi.fec_regins as date) as fec_regins"),
                                         "clients_people.id_clients_people",
                                         "clients_people.names as name_client", 
                                         "clients_people.last_names", 

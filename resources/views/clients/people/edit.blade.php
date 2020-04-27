@@ -643,7 +643,7 @@
                         <div class="row">
 
                           <div class="col-md-12">
-                            <label for=""><b>Ocupación *</b></label>
+                            <label for=""><b>Ocupación</b></label>
                               <div class="form-group valid-required">
                                 <input type="text" name="occupation" class="form-control form-control-user" id="occupation_edit" >
                               </div>
@@ -653,7 +653,7 @@
                         <br>
                         <div class="row">
                           <div class="col-md-12">
-                            <label for=""><b>Empresa *</b></label>
+                            <label for=""><b>Empresa</b></label>
                               <div class="form-group valid-required">
                                 <input type="text" name="company" class="form-control form-control-user" id="company_edit" >
                               </div>

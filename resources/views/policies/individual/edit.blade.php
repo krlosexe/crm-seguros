@@ -392,7 +392,7 @@
                       
                         <br>
 
-                        <div class="row">
+                        <div class="row row-participacion">
                             <div class="col-md-6">
                               <label for=""><b>Porcentaje Comisión</b></label>
                                 <div class="form-group valid-required">
