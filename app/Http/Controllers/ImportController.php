@@ -172,7 +172,7 @@ class ImportController extends Controller
         
     }
 
-    function policies(){
+    function policiesTest(){
         $fila = 0;
         $count = 0;
 
@@ -241,7 +241,7 @@ class ImportController extends Controller
         }
     }
 
-    public function policies2()
+    public function policies()
     {
        
        ini_set("default_charset", "utf-8");
@@ -259,19 +259,22 @@ class ImportController extends Controller
                     continue;
                 }
 
+                $datos[4] = utf8_encode($datos[4]);
+                $datos[5] = utf8_encode($datos[5]);
                 $datos[10] = utf8_encode($datos[10]);
                 $datos[11] = utf8_encode($datos[11]);
                 $datos[12] = utf8_encode($datos[12]);
                 $datos[14] = utf8_encode($datos[14]);
                 $datos[18] = utf8_encode($datos[18]);
 
-                $clientePeople = ClientsPeople::select("id_clients_people as id")
-                                                ->where(DB::raw("CONCAT(names, '',last_names)"), trim($datos[11]))
-                                                ->first();
+                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
+
+                $clientePeople = ClientsPeople::where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
                 $type_clients = 0;
 
                 if($clientePeople == null){
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('business_name', trim($datos[11]))->first();
+                    $clientePeople = ClientsCompany::where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
     
                     $type_clients = 1;
                 }
@@ -286,8 +289,11 @@ class ImportController extends Controller
                     continue;
                 }
 
-                $insure = Insurers::where(['name' => trim($datos[4])])->get()->first();
-                $branch = Branchs::where(['name' => trim($datos[5])])->get()->first();
+                $name4 = str_replace(' ', '', str_replace('.', '', trim($datos[4])));
+                $name9 = str_replace(' ', '', str_replace('.', '', trim($datos[5])));
+
+                $insure = Insurers::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name4.'%')->get()->first();
+                $branch = Branchs::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name9.'%')->get()->first();
 
                 if($insure == null || $branch == null){
                     $fila++;
