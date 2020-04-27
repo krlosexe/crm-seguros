@@ -294,7 +294,7 @@
                 var url=document.getElementById('ruta').value;
                 $.ajax({
                     url:''+url+'/api/stadist/charge/account/pending',
-                    type:'POST',
+                    type:'GET',
                     dataType:'JSON',
                     data: {
                         fecha_hasta_polizas: $('#fecha_hasta_polizas').val(),
@@ -363,7 +363,7 @@
                 var url=document.getElementById('ruta').value;
                 $.ajax({
                     url:''+url+'/api/stadist/policies/next/expired',
-                    type:'POST',
+                    type:'GET',
                     dataType:'JSON',
                     data: {
                         fecha_desde_polizas: $('#fecha_desde_polizas').val(),
