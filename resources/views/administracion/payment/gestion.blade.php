@@ -80,6 +80,10 @@
 				$("#nav_payment").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "payment");
+				
+				if(name_rol != 'Administrador'){
+					$('.row-participacion').hide()
+				}
 			});
 
 			function filtrarFecha(){
@@ -622,12 +626,17 @@
                   <td>
                   	<input name="percentage_vat_cousin[]" class="form-control text-right  form-control-user" value="">
                   </td>
-                  <td>
-                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
-                  </td>
-                  <td>
-                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
-                  </td>
+
+  	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
+	                  </td>
+	                  
+
+	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
+	                  </td>
+	                  
+                  
                   <td>
                   	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
                   </td>
