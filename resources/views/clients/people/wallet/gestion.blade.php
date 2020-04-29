@@ -885,13 +885,13 @@
 	                  </td>
 	                  
 
-	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  <td>
 	                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
 	                  </td>
 	                  
                   
 
-                  <td>
+                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
                   	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
                   </td>
                   <td>

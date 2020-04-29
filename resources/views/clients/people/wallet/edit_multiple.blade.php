@@ -54,8 +54,8 @@
                 <th width="6%">IVA</th>
                 <th width="11%">% IVA Prima*</th>
                 <th class="row-participacion" width="15%">Porcentaje Comisión</th>
-                <th class="row-participacion" width="11%">Participación</th>
-                <th width="12%">Comisión agencia</th>
+                <th width="11%">Participación</th>
+                <th class="row-participacion" width="12%">Comisión agencia</th>
                 <th width="6%">Total</th>
               </thead>
               <tbody>

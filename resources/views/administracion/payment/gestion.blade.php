@@ -80,7 +80,7 @@
 				$("#nav_payment").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "payment");
-				
+
 				if(name_rol != 'Administrador'){
 					$('.row-participacion').hide()
 				}
@@ -632,12 +632,12 @@
 	                  </td>
 	                  
 
-	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  <td>
 	                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
 	                  </td>
 	                  
                   
-                  <td>
+                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
                   	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
                   </td>
                   <td>
