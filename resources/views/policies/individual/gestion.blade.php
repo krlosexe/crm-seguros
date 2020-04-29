@@ -945,8 +945,10 @@
 								});
 
 							}else{
+								console.log(data.branchs, value_default)
+								console.log("sleected")
+
 								$.each(data.branchs, function (key, item) { 
-								
 								$(select_branch).append($('<option>',
 								{
 									value: item.id_branch+"|"+item.vat_percentage+"|"+item.commission_percentage,
