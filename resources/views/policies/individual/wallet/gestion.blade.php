@@ -154,6 +154,10 @@
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
 				verifyPersmisos(id_user, tokens, "policies");
+				if(name_rol != 'Administrador'){
+					$('.row-participacion').hide()
+				}
+
 			});
 
 

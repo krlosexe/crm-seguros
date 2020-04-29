@@ -247,6 +247,10 @@
 				      selectAllText: true,
 				      buttonWidth: '100%'
 				});
+
+				if(name_rol != 'Administrador'){
+					$('.row-participacion').hide()
+				}
 			});
 
 
@@ -859,7 +863,7 @@
 			$('#number-multiple, #number-multiple-edit, #number-multiple-view').change(function(){
 				const values = $(this).val();
 
-				const tdContent = `
+				let tdContent = `
                   <td>
                   	<input class="form-control text-right form-control-user monto_formato_decimales" name="cousin[]" value="" required>
                   	<input name="id_policie[]" hidden>
@@ -874,12 +878,19 @@
                   <td>
                   	<input name="percentage_vat_cousin[]" class="form-control text-right  form-control-user" value="">
                   </td>
-                  <td>
-                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
-                  </td>
-                  <td>
-                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
-                  </td>
+                  
+
+	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  	<input name="commission_percentage[]" value="" readonly="readonly" class="form-control text-right  form-control-user">
+	                  </td>
+	                  
+
+	                  <td ${name_rol != 'Administrador'? 'style="display:none"' : ''}>
+	                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
+	                  </td>
+	                  
+                  
+
                   <td>
                   	<input name="agency_commission[]"  value="" readonly="readonly" class="form-control text-right  form-control-user">
                   </td>

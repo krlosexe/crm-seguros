@@ -36,8 +36,8 @@ class ImportController extends Controller
 
       foreach ($policies as $item) {
         
-        $perc = PoliciesCousinsCommissions::find($item->id_policies);
-
+        $perc = PoliciesCousinsCommissions::where('id_policies', $item->id_policies)->first();
+        
         if($perc == null)
           continue;
 
@@ -47,8 +47,10 @@ class ImportController extends Controller
             if($originalInsure == null)
               continue;
 
+          //  dump($originalInsure);
             $perc->percentage_vat_cousin = $originalInsure->vat_percentage;
             $perc->commission_percentage = $originalInsure->commission_percentage;
+        dd($perc);
 
             $perc->save();
           }
