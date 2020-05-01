@@ -161,8 +161,21 @@ class ImportController extends Controller
        $data_notifications = [];
        $data_auditoria = [];
 
-        if (($gestor = fopen("clients.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+       $result = DB::table('clients_people')->select('last_names','number_document')->where('last_names', 'like', '%¥%')->get()->toArray();
+
+       $das = '';
+
+       foreach ($result as $value) {
+          $value->last_names = str_replace('¥', 'Ñ', $value->last_names);
+
+          $das = $das . "UPDATE clients_people SET last_names = '".$value->last_names."' WHERE number_document = ".$value->number_document.";<br>";
+
+       }
+
+       echo $das;die;
+
+        if (($gestor = fopen("clients-inactivos2.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
                 
                 $datos = array_map("utf8_encode", $datos);
 
@@ -263,72 +276,6 @@ class ImportController extends Controller
         
     }
 
-    function policies2(){
-        $fila = 0;
-        $count = 0;
-
-        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
-
-                $datos[4] = trim(utf8_encode($datos[4]));
-                $datos[5] = trim(utf8_encode($datos[5]));
-                $datos[11] = trim(utf8_encode($datos[11]));
-
-                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
-
-                $clientePeople = ClientsPeople::where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
-
-                if($clientePeople == null){
-                    $clientePeople = ClientsCompany::where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
-                }
-
-                if($clientePeople == null){
-
-                }
-
-                $name4 = str_replace(' ', '', str_replace('.', '', trim($datos[4])));
-                $name9 = str_replace(' ', '', str_replace('.', '', trim($datos[5])));
-
-                $insure = Insurers::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name4.'%')->get()->first();
-                $branch = Branchs::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name9.'%')->get()->first();
-
-                if($insure == null){
-                    $count++;
-
-                    if($fila < 9000){
-                      echo ($name4);
-                      echo "<br> Inseure Fila: ".$fila;
-                      echo "<br>";
-                    }
-                }        
-
-                if($branch == null){
-                    $count++;
-
-                    if($fila < 9000){
-                      echo ($name9);
-                      echo "<br> Branch Fila: ".$fila;
-                      echo "<br>";
-                    }
-                }                
-
-
-                if($fila == 7975){
-                  echo "olis";
-                  echo $count;
-                  die;
-                }
-
-                $fila++;
-
-            }
-        }
-    }
-
     public function policies()
     {
        
@@ -342,7 +289,7 @@ class ImportController extends Controller
 
         $reader = ReaderEntityFactory::createReaderFromFile('Polizas-restantes.xlsx');
 
-        $reader->open('Polizas-restantes.xlsx');
+        $reader->open('Polizas-faltantes.xlsx');
 
         foreach ($reader->getSheetIterator() as $sheet) {
             foreach ($sheet->getRowIterator() as $key => $row) {
@@ -356,13 +303,16 @@ class ImportController extends Controller
 
                 $name = str_replace(' ', '', str_replace('.', '', trim($cells[11])));
                 
-                $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+                // $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
+                $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', $cells[14])->first();
 
                 $type_clients = 0;
 
                 if($clientePeople == null){
                   
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                    // $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', $cells[14])->first();
                     
                     $type_clients = 1;
                 }
@@ -488,6 +438,8 @@ class ImportController extends Controller
 
         $reader->close();
 
+        dd($noEncontrados);
+        
         $f = fopen('php://output', 'w');
 
         header('Content-type: text/csv');
