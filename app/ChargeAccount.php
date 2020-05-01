@@ -30,7 +30,7 @@ class ChargeAccount extends Model
     }
 
     public function policieData(){
-      return $this->hasOne('App\Policies', 'id_policies', 'id_policie');
+      return $this->hasOne('App\Policies', 'id_policies', 'id_policie')->with('branch')
     }
 
     

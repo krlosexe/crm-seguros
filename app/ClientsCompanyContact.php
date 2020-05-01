@@ -12,5 +12,5 @@ class ClientsCompanyContact extends Model
 
     protected $table         = 'clients_company_contact';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_company';
+    protected $primaryKey    = 'id_clients_company_contact';
 }

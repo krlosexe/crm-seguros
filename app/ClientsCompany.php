@@ -13,6 +13,8 @@ class ClientsCompany extends Model
     protected $table         = 'clients_company';
     public    $timestamps    = false;
     protected $primaryKey    = 'id_clients_company';
+    
+    protected $with = ['contact'];
 
     public function policies(){
         return $this->hasMany('App\Policies', 'clients')
@@ -26,5 +28,10 @@ class ClientsCompany extends Model
                     ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
                     ->where("auditoria.tabla", "policies")
                     ->where("auditoria.status", "!=", "0");
+    }
+
+    public function contact(){
+        return $this->hasOne('App\ClientsCompanyContact', 'id_clients_company', 'id_clients_company');
+
     }
 }

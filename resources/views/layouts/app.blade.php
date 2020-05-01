@@ -42,8 +42,19 @@
 
 
    @yield('CustomCss')
-  
-   @if(Request::path() != '/')
+
+      @php
+        $validarUrl = true
+      @endphp
+
+   @isset ($__env->getSections()['validarUrl'])
+      @php
+         $validarUrl = false
+      @endphp
+   @endisset
+
+
+   @if(Request::path() != '/' && $validarUrl)
 
     <script>
       $(document).ready(function(){

@@ -138,7 +138,7 @@
               </button>
 
 
-              <a href="/policies/wallet/pdf" id="btn-print" target="_blanck" class="btn btn-danger btn-user" >
+              <a id="btn-print" target="_blanck" class="btn btn-danger btn-user" >
                 <i class="ti-printer"></i>
                   Imprimir
               </a>

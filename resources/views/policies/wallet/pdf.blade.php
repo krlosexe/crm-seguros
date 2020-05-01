@@ -668,13 +668,14 @@
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
 
 <script>
-    var id = {{$id}}
-    
+    var id   = {{ $id }};
 
     $(document).ready(function(){
+
         getDataCompany();
+
         getData();
-        getDataChargeAccount();
+
     });
 
 
@@ -726,25 +727,20 @@
     }
 
 
-
     function getDataCompany(){
 
         var url=document.getElementById('ruta').value; 
+
         $.ajax({
             url:''+url+'/api/my/company',
             type:"GET",
             dataType:'JSON',
             async: false,
-            beforeSend: function(){
-            
-            },
-            error: function (repuesta) {
-                
-            },
             success: function(data){
+                console.log(data)
+                url_imagen = '/img/my_company/';
 
-                url_imagen = '/img/my_company/'
-                $("#logo").attr("src", url_imagen+"/"+data.logo)
+                $("#logo").attr("src", url+'/'+url_imagen+"/"+data.logo)
 
 
                 $("#name").text(data.name)
@@ -753,10 +749,6 @@
             }
         });
     }
-
-
-
-
 
 
 </script>

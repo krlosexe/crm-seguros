@@ -14,6 +14,7 @@ class ClientsPeople extends Model
     public    $timestamps    = false;
     protected $primaryKey    = 'id_clients_people';
 
+    protected $with = ['contact'];
 
     public function childrens()
     {
@@ -40,4 +41,8 @@ class ClientsPeople extends Model
                     ->where("auditoria.status", "!=", "0");
     }
 
+    public function contact(){
+        return $this->hasOne('App\ClientsPeopleContact', 'id_clients_people', 'id_clients_people');
+
+    }
 }

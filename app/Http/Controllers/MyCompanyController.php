@@ -15,7 +15,7 @@ class MyCompanyController extends Controller
     public function index()
     {
         $data = MyCompany::first();
-
+        dd($data);
         return response()->json($data)->setStatusCode(200);
 
 

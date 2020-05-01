@@ -57,6 +57,10 @@ class Policies extends Model
       return $this->hasOne('App\ClientsCompany', 'id_clients_company', 'clients');
     }
 
+    public function branch(){
+      return $this->hasOne('App\Branchs', 'id_branchs', 'branch');
+    }
+
 
 
 

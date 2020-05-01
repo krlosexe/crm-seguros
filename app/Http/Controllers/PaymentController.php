@@ -56,16 +56,20 @@ class PaymentController extends Controller
                                         "clients_people.number_document",
                                         "clients_company.id_clients_company",
                                         "clients_company.business_name",
+                                        "clients_company.nit",
+
                                       )
                                     ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
                                     ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
                                     ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
                                     ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
-
+        
                                     ->where("audi.tabla", "=", "charge_accounts_management")
                                     ->where("audi.status", "!=", "0")
                                     ->where('charge_accounts_management.id', $id)
-                                    ->with('chargeAccount')
+
+                                    ->with(['chargeAccount', 'client', 'company'])
+
                                     ->orderBy("charge_accounts_management.id", "DESC")
                                     ->first();
 

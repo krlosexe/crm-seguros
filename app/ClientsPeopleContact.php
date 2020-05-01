@@ -12,7 +12,17 @@ class ClientsPeopleContact extends Model
 
     protected $table         = 'clients_people_contact';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_clients_people';
+    protected $primaryKey    = 'id_clients_people_contact';
 
+    protected $with = ['departamento', 'city'];
+
+    public function departamento(){
+        return $this->hasOne('App\Departamentos', 'id', 'id_department');
+    }
+
+    public function city(){
+        return $this->hasOne('App\Municipios', 'id', 'id_city');
+
+    }
 
 }

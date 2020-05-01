@@ -433,8 +433,11 @@
 					$("#footer-multiple-view").val(data.observations)
 					
 
-					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/1"
+					var url = "/policies/wallet/files/"+data.id+"/1"
 					$('#iframeDigitalesEdit').attr('src', url);
+
+					var urlpdf = document.querySelector('#ruta').value + "/policies/wallet/pdf/"+data.id+"/1"
+					$('#btn-print').attr('href', urlpdf);
 
 					cuadros('#cuadro1', '#cuadro4');
 				});
