@@ -263,12 +263,13 @@ class ImportController extends Controller
         $fila = 0;
         $count = 0;
 
-        if (($gestor = fopen("policiesnuevas.csv", "r")) !== FALSE) {
+        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
                 if($fila == 0){
                     $fila++;
                     continue;
                 }
+
                 $datos[4] = trim(utf8_encode($datos[4]));
                 $datos[5] = trim(utf8_encode($datos[5]));
                 $datos[11] = trim(utf8_encode($datos[11]));
@@ -282,11 +283,7 @@ class ImportController extends Controller
                 }
 
                 if($clientePeople == null){
-                    if($fila < 9000){
-                      // echo ($name);
-                      // echo "<br> Fila: ".$fila;
-                      // echo "<br>";
-                    }
+
                 }
 
                 $name4 = str_replace(' ', '', str_replace('.', '', trim($datos[4])));
@@ -339,12 +336,14 @@ class ImportController extends Controller
        $fila = 0;
        $noEncontrados = array();
 
-        if (($gestor = fopen("policiesnuevas.csv", "r")) !== FALSE) {
+        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
                 if($fila == 0){
                     $fila++;
                     continue;
                 }
+
+                $datos = array_map("utf8_encode", $datos);
 
                 $datos[10] = utf8_encode($datos[10]);
                 $datos[11] = utf8_encode($datos[11]);
@@ -358,13 +357,15 @@ class ImportController extends Controller
 
                 $type_clients = 0;
 
-                // if(false){
-                    // $clientePeople = ClientsCompany::select("id_clients_company as id")->where('business_name', trim($datos[11]))->first();
-    
-                    // $type_clients = 1;
-                // }
+                if($clientePeople == null){
+                  
+                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                    
+                    $type_clients = 1;
+                }
 
                 if($clientePeople == null){
+
                     $fila++;
 
                     array_unshift($datos, 'Cliente no encontradola. FILA: '.$fila);
@@ -378,6 +379,7 @@ class ImportController extends Controller
                 $branch = Branchs::where(['name' => trim($datos[5])])->get()->first();
 
                 if($insure == null || $branch == null){
+
                     $fila++;
 
                     array_unshift($datos, 'Aseguradora o Ramo no encontrado. FILA: '.$fila);
@@ -385,6 +387,7 @@ class ImportController extends Controller
                     array_push($noEncontrados, $datos);
                     continue;
                 }
+
 
                $expedition_date = DateTime::createFromFormat('d/m/Y', $datos[6]);
                $expedition_date = $expedition_date == false? null : $expedition_date->format('Y-m-d');
