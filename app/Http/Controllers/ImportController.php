@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Common\Entity\Row;
+
 use Illuminate\Http\Request;
 use App\ClientsPeople;
 use App\Auditoria;
@@ -336,23 +340,22 @@ class ImportController extends Controller
        $fila = 0;
        $noEncontrados = array();
 
-        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
+        $reader = ReaderEntityFactory::createReaderFromFile('Polizas-restantes.xlsx');
 
-                $datos = array_map("utf8_encode", $datos);
+        $reader->open('Polizas-restantes.xlsx');
 
-                $datos[10] = utf8_encode($datos[10]);
-                $datos[11] = utf8_encode($datos[11]);
-                $datos[12] = utf8_encode($datos[12]);
-                $datos[14] = utf8_encode($datos[14]);
-                $datos[18] = utf8_encode($datos[18]);
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
 
-                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
+                if($key == 1)
+                  continue;
 
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                $name = str_replace(' ', '', str_replace('.', '', trim($cells[11])));
+                
                 $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
 
                 $type_clients = 0;
@@ -366,66 +369,76 @@ class ImportController extends Controller
 
                 if($clientePeople == null){
 
-                    $fila++;
+                    array_unshift($cells, 'Cliente no encontradola. FILA: '.$key);
 
-                    array_unshift($datos, 'Cliente no encontradola. FILA: '.$fila);
-
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
 
                     continue;
                 }
 
-                $insure = Insurers::where(['name' => trim($datos[4])])->get()->first();
-                $branch = Branchs::where(['name' => trim($datos[5])])->get()->first();
+                $insure = str_replace(' ', '', str_replace('.', '', trim($cells[4])));
+                $branch = str_replace(' ', '', str_replace('.', '', trim($cells[5])));
+
+                $insure = Insurers::where(DB::raw("replace(replace(name, '.', ''), ' ', '')"), 'like', '%'.$insure.'%')->get()->first();
+                $branch = Branchs::where(DB::raw("replace(replace(name, '.', ''), ' ', '')"), 'like', '%'.$branch.'%')->get()->first();
 
                 if($insure == null || $branch == null){
 
-                    $fila++;
+                    array_unshift($cells, 'Aseguradora o Ramo no encontrado. FILA: '.$key);
 
-                    array_unshift($datos, 'Aseguradora o Ramo no encontrado. FILA: '.$fila);
-
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
                     continue;
                 }
 
+                $expedition_date = true;
+               if($cells[6] == '')
+                 $expedition_date = false;
 
-               $expedition_date = DateTime::createFromFormat('d/m/Y', $datos[6]);
-               $expedition_date = $expedition_date == false? null : $expedition_date->format('Y-m-d');
+               $expedition_date = $expedition_date == false? null : $cells[6]->format('Y-m-d');
 
-               $reception_date = DateTime::createFromFormat('d/m/Y', $datos[7]);
-               $reception_date = $reception_date == false? null : $reception_date->format('Y-m-d');
+                $reception_date = true;
+               if($cells[7] == '')
+                 $reception_date = false;
 
-               $start_date = DateTime::createFromFormat('d/m/Y', $datos[8]);
-               $start_date = $start_date == false? null : $start_date->format('Y-m-d');
+               $reception_date = $reception_date == false? null : $cells[7]->format('Y-m-d');
 
-               $end_date = DateTime::createFromFormat('d/m/Y', $datos[9]);
-               $end_date = $end_date == false? null : $end_date->format('Y-m-d');
+                $start_date = true;
+               if($cells[8] == '')
+                 $start_date = false;
+
+               $start_date = $start_date == false? null : $cells[8]->format('Y-m-d');
+
+                $end_date = true;
+               if($cells[9] == '')
+                 $end_date = false;
+
+               $end_date = $end_date == false? null : $cells[9]->format('Y-m-d');
 
                 $array = [
-                  "type_poliza"                     => strtolower(trim($datos[0])),
-                  "number_policies"                 => trim($datos[1]),
-                  "state_policies"                  => ucwords(trim(strtolower($datos[2]))),
-                  "is_renewable"                    => trim($datos[3]),
+                  "type_poliza"                     => strtolower(trim($cells[0])),
+                  "number_policies"                 => trim($cells[1]),
+                  "state_policies"                  => ucwords(trim(strtolower($cells[2]))),
+                  "is_renewable"                    => trim($cells[3]),
                   "insurers"                        => $insure->id_insurers,
                   "branch"                          => $branch->id_branchs,
                   "expedition_date"                 => $expedition_date,
                   "reception_date"                  => $reception_date,
                   "start_date"                      => $start_date,
                   "end_date"                        => $end_date,
-                  "risk"                            => trim($datos[10]),
+                  "risk"                            => trim($cells[10]),
                   "type_clients"                    => $type_clients,
                   "clients"                         => $clientePeople->id,
-                  "name_taker"                      => trim($datos[12]),
-                  "identification_taker"            => trim($datos[13]),
-                  "name_insured"                    => trim($datos[14]),
-                  "identification_insured"          => trim($datos[15]),
+                  "name_taker"                      => trim($cells[12]),
+                  "identification_taker"            => trim($cells[13]),
+                  "name_insured"                    => trim($cells[14]),
+                  "identification_insured"          => trim($cells[15]),
                   "beneficiary_remission"           => 0,
                   "beneficairy_onerous"             => 0,
-                  "beneficairy_name"                => trim($datos[18]),
-                  "beneficairy_identification"      => trim($datos[19]),
+                  "beneficairy_name"                => trim($cells[18]),
+                  "beneficairy_identification"      => trim($cells[19]),
                   "internal_observations"           => null,
                   "observations"                    => null,
-                  "cousin"                          => (float) str_replace(',', '', $datos[20]),
+                  "cousin"                          => (float) str_replace(',', '', $cells[20]),
                   "xpenses"                         => null,
                   "vat"                             => 0,
                   "percentage_vat_cousin"           => 0,
@@ -433,12 +446,12 @@ class ImportController extends Controller
                   "participation"                   => 0,
                   "agency_commission"               => 0,
                   "total"                           => 0,
-                  "placa"                           => trim($datos[28]),
-                  "placas"                          => [trim($datos[28])],
-                  "send_policies_for_expire_email"  => trim($datos[29]),
-                  "send_portfolio_for_expire_email" => trim($datos[30]),
-                  "send_policies_for_expire_sms"    => trim($datos[31]),
-                  "send_portfolio_for_expire_sms"   => trim($datos[32]),
+                  "placa"                           => trim($cells[28]),
+                  "placas"                          => [trim($cells[28])],
+                  "send_policies_for_expire_email"  => trim($cells[29]),
+                  "send_portfolio_for_expire_email" => trim($cells[30]),
+                  "send_policies_for_expire_sms"    => trim($cells[31]),
+                  "send_portfolio_for_expire_sms"   => trim($cells[32]),
                   "payment_method"                  => null,
                   "payment_date"                    => null,
                   "id_user"                         => 68,
@@ -470,10 +483,10 @@ class ImportController extends Controller
                 $auditoria->usr_regins  = 68;
                 $auditoria->save();
                 
-                $fila++;
             }
-            fclose($gestor);
         }
+
+        $reader->close();
 
         $f = fopen('php://output', 'w');
 
