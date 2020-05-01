@@ -25,6 +25,7 @@ use App\InsurersBranchs;
 use App\Insurers;
 use App\Branchs;
 use App\ClientsCompany;
+use App\ClientsCompanyContact;
 use App\Files;
 use DateTime;
 
@@ -57,6 +58,90 @@ class ImportController extends Controller
           
 
       }
+   }
+
+   public function company(){
+        ini_set("default_charset", "UTF-8");
+
+       $fila = 0;
+
+       $data = [];
+       $data_contact = [];
+       $data_notifications = [];
+       $data_auditoria = [];
+
+        if (($gestor = fopen("clients-company.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
+                
+                $datos = array_map("utf8_encode", $datos);
+
+                if($fila == 0){
+                  $fila++;
+                  continue;
+                }
+
+                 $fecha = DateTime::createFromFormat('d/m/Y', $datos[7]);
+                 $fecha = $fecha == false? null : $fecha->format('Y-m-d');
+
+                 $row = array(
+                    "business_name"   => trim($datos[1]),
+                    "nit"             => trim($datos[4]),
+                    "expedition_date" => null,
+                    "constitution_date" => null,
+                    "data_treatment"    => 1,
+                    "observations"    => null,
+                 );
+
+                 $store = ClientsCompany::create($row);
+
+                 $auditoria = array(
+                    "tabla"      => "clients_company",
+                    "cod_reg"    => $store["id_clients_company"],
+                    "status"     => 1,
+                    "usr_regins" => 68
+                 );
+                 
+
+                 $contact = array(
+                    "id_clients_company" => $store["id_clients_company"],
+                    "department"        => trim($datos[18]),
+                    "city"              => trim($datos[19]),
+                    "address1"          => trim($datos[20]),
+                    "type_address1"     => trim($datos[21]),
+                    "address2"          => trim($datos[22]),
+                    "type_address2"     => trim($datos[23]),
+                    "phone1"            => trim($datos[24]),
+                    "type_phone1"       => trim($datos[25]),
+                    "phone2"            => trim($datos[26]),
+                    "type_phone2"       => trim($datos[27]),
+                    "email"             => trim($datos[28]),
+                 );
+                
+
+
+                 $notifications = array(
+                    "id_clients_company"               => $store["id_clients_company"],
+                    "send_policies_for_expire_email"   => 1,
+                    "send_portfolio_for_expire_email"  => 1,
+                    "send_policies_for_expire_sms"     => 1,
+                    "send_portfolio_for_expire_sms"    => 1, 
+                    "send_birthday_card"               => 1,
+                 );
+
+
+                 $data_contact[]       = $contact;
+                 $data_notifications[] = $notifications;
+                 $data_auditoria[]     = $auditoria;
+
+            }
+
+            $store_clients_people               = ClientsCompanyContact::insert($data_contact);
+            $store_clients_notification         = ClientsNotifications::insert($data_notifications);
+            $store_auditoria                    = Auditoria::insert($data_auditoria);
+                
+            fclose($gestor);
+        }
+
    }
 
     //csv clientes
