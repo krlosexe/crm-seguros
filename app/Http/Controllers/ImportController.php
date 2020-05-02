@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Box\Spout\Common\Entity\Row;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
 
 use Illuminate\Http\Request;
 use App\ClientsPeople;
@@ -23,6 +25,7 @@ use App\PoliciesCousinsCommissions;
 use App\PoliciesNotifications;
 use App\PoliciesInfoPayments;
 use App\PolicesVehicles;
+use App\PoliciesAnnexes;
 
 use App\InsurersBranchs;
 
@@ -37,7 +40,7 @@ class ImportController extends Controller
 {
 
    function reprocesar(){
-      $policies = Policies::all();
+      $policies = Policies::where('id_policies >', 9000)->get();
 
       foreach ($policies as $item) {
         
@@ -55,13 +58,124 @@ class ImportController extends Controller
           //  dump($originalInsure);
             $perc->percentage_vat_cousin = $originalInsure->vat_percentage;
             $perc->commission_percentage = $originalInsure->commission_percentage;
-        dd($perc);
 
             $perc->save();
           }
           
 
       }
+   }
+
+   function anexos(){
+
+       ini_set("default_charset", "utf-8");
+       ini_set("pcre.backtrack_limit", "50000000");
+       ini_set("memory_limit", "-1");
+       set_time_limit(0);
+
+       $noEncontrados = array();
+
+        $reader = ReaderEntityFactory::createReaderFromFile('anexos.xlsx');
+
+        $reader->open('anexos.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                if($key == 1)
+                  continue;
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                $policie = Policies::where('number_policies', $cells[0])->first();
+
+                if($policie == null){
+
+                  array_unshift($cells, 'No encontrado, fila: '.$key);
+
+                  array_push($noEncontrados, $cells);
+
+                  continue;
+                }
+
+
+                $expedition_date = true;
+               if($cells[6] == '')
+                 $expedition_date = false;
+
+               $expedition_date = $expedition_date == false? '0000-00-00' : $cells[6]->format('Y-m-d');
+
+                $start_date = true;
+               if($cells[7] == '')
+                 $start_date = false;
+
+               $start_date = $start_date == false? '0000-00-00' : $cells[7]->format('Y-m-d');
+
+                $end_date = true;
+               if($cells[8] == '')
+                 $end_date = false;
+
+               $end_date = $end_date == false? '0000-00-00' : $cells[8]->format('Y-m-d');
+
+
+                $datos = [
+                  'id_policie' => $policie->id_policies,
+                  'number_annexed' => $cells[1],
+                  'state' => $cells[2],
+                  'risk' => $cells[3] == ''? '' : $cells[3],
+                  'is_renewable' => $cells[4],
+                  'reason' => $cells[5],
+                  'expedition_date' => $expedition_date,
+                  'start_date' => $start_date,
+                  'end_date' => $end_date,
+                  'reception_date' => '0000-00-00',
+                  'cousin' => $cells[10],
+                  'xpenses' => $cells[11],
+                  'vat' => $cells[12],
+                  'percentage_vat_cousin' => $cells[13],
+                  'commission_percentage' => $cells[14],
+                  'agency_commission' => $cells[15],
+                  'total' => '',
+                  'payment_method' => '',
+                  'observations' => '',
+                  'accessories' => '',
+                ];
+
+                $store = PoliciesAnnexes::create($datos);
+
+                $auditoria              = new Auditoria;
+                $auditoria->tabla       = "policies_annexes";
+                $auditoria->cod_reg     = $store->id_policies_annexes;
+                $auditoria->status      = 1;
+                $auditoria->usr_regins  = 68;
+                $auditoria->save();
+                
+            }
+        }
+
+        $reader->close();
+
+
+          $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
+            }
+
+            $csv = $csv . "\n";
+          }
+
+        $csv_handler = fopen ('annexes-notfound.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler);
+                
+
    }
 
    public function company(){
