@@ -78,8 +78,8 @@ class ImportController extends Controller
         $reader = ReaderEntityFactory::createReaderFromFile('anexos.xlsx');
 
         $reader->open('anexos.xlsx');
+        foreach ($reader->getSheetIterator() as $key2 => $sheet) {
 
-        foreach ($reader->getSheetIterator() as $sheet) {
             foreach ($sheet->getRowIterator() as $key => $row) {
 
                 if($key == 1)
@@ -153,6 +153,8 @@ class ImportController extends Controller
                 $auditoria->save();
                 
             }
+
+            break;
         }
 
         $reader->close();
@@ -573,86 +575,48 @@ class ImportController extends Controller
        ini_set("memory_limit", "-1");
        set_time_limit(0);
 
-       $fila = 0;
-       $noEncontrados = array();
-/*
-        if (($gestor = fopen("policies-files202004.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
-
-                $policie = Policies::where(['number_policies' => $datos[0]])->get()->first();
-
-                if($policie == null){
-
-                  array_unshift($datos, 'Poliza no encontrada. FILA: '.$fila);
-
-                  array_push($noEncontrados, $datos);
-
-                  $fila++;
-                  continue;
-                }
-
-                $array = [
-                  "id_register"  => $policie->id_policies,
-                  "name"         => $datos[2] == 'NULL'? '' : trim($datos[2]),
-                  "title"        => $datos[3] == 'NULL'? '' : trim($datos[3]),
-                  "descripcion"  => $datos[4] == 'NULL'? '' : trim($datos[4]),
-                  "tabla"        => 'policies',
-                ];
-
-                $store_file = Files::create($array);
-
-                $auditoria              = new Auditoria;
-                $auditoria->tabla       = "files";
-                $auditoria->cod_reg     = $store_file["id_files"];
-                $auditoria->status      = 1;
-                $auditoria->usr_regins  = 68;
-                $auditoria->save();
-
-                $fila++;
-            }
-            fclose($gestor);
-        }
-*/
         $fila = 0;
+        $noEncontrados = array();
+
         $noEncontrados[] = [''];
 
-        if (($gestor = fopen("clientes-files202004.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
+        $reader = ReaderEntityFactory::createReaderFromFile('digitales-nuevos.xlsx');
+
+        $reader->open('digitales-nuevos.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheetKey => $sheet) {
+
+           if($sheetKey == 1){
+
+              foreach ($sheet->getRowIterator() as $key => $row) {
+
+                  if($key == 1)
                     continue;
-                }
 
-                $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', trim($datos[1]))->first();
-                $type_clients = 'clients_people';
+                  $cells = array_map(function($item){
+                    return $item->getValue();
+                  }, $row->getCells());
 
-                if($clientePeople == null){
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', 'like','%'.trim($datos[1]).'%')->first();
-    
-                    $type_clients = 'clients_company';
-                }
+                  $policie = Policies::where('number_policies', (int) $cells[0])->first();
 
-                if($clientePeople == null){
-                    $fila++;
+                  if($policie == null){
 
-                    array_unshift($datos, 'Cliente no encontradola. FILA: '.$fila);
+                    array_unshift($cells, 'No encontrado, fila: '.$key);
 
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
 
                     continue;
-                }
+                  }
 
-                if($datos[0] == 'NIT'){
+                  if ($cells[4] instanceof DateTime)
+                    $cells[4] = $cells[4]->format('d/m/Y');
+
                   $array = [
-                    "id_register"  => $clientePeople->id,
-                    "name"         => $datos[3] == 'NULL'? '' : trim($datos[3]),
-                    "title"        => $datos[4] == 'NULL'? '' : trim($datos[4]),
-                    "descripcion"  => $datos[5] == 'NULL'? '' : trim($datos[5]),
-                    "tabla"        => $type_clients,
+                    "id_register"  => $policie->id_policies,
+                    "name"         => $cells[2] == 'NULL'? '' : trim($cells[2]),
+                    "title"        => $cells[3] == 'NULL'? '' : trim($cells[3]),
+                    "descripcion"  => $cells[4] == 'NULL'? '' : trim($cells[4]),
+                    "tabla"        => 'policies',
                   ];
 
                   $store_file = Files::create($array);
@@ -664,22 +628,83 @@ class ImportController extends Controller
                   $auditoria->usr_regins  = 68;
                   $auditoria->save();
 
-                  $fila++;
+              }
+           }
 
-                }
+           if($sheetKey == 2){
+
+              foreach ($sheet->getRowIterator() as $key => $row) {
+
+                  if($key == 1)
+                    continue;
+
+                  $cells = array_map(function($item){
+                    return $item->getValue();
+                  }, $row->getCells());
+
+                  $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', trim($cells[1]))->first();
+                  $type_clients = 'clients_people';
+
+                  if($clientePeople == null){
+                      $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', 'like','%'.trim($cells[1]).'%')->first();
+      
+                      $type_clients = 'clients_company';
+                  }
+
+                  if($clientePeople == null){
+                      $fila++;
+
+                      array_unshift($cells, 'Cliente no encontradola. FILA: '.$fila);
+
+                      array_push($noEncontrados, $cells);
+
+                      continue;
+                  }
+
+                  if ($cells[5] instanceof DateTime)
+                    $cells[5] = $cells[5]->format('d/m/Y');
+
+                    $array = [
+                      "id_register"  => $clientePeople->id,
+                      "name"         => $cells[3] == 'NULL'? '' : trim($cells[3]),
+                      "title"        => $cells[4] == 'NULL'? '' : trim($cells[4]),
+                      "descripcion"  => $cells[5] == 'NULL'? '' : trim($cells[5]),
+                      "tabla"        => $type_clients,
+                    ];
+
+                    $store_file = Files::create($array);
+
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "files";
+                    $auditoria->cod_reg     = $store_file["id_files"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = 68;
+                    $auditoria->save();
+                  
+              }
+           }
+
+        }
+
+        $reader->close();
+
+
+        $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
             }
-            fclose($gestor);
-        }
 
-        $f = fopen('php://output', 'w');
+            $csv = $csv . "\n";
+          }
 
-        header('Content-type: text/csv');
-        header('Content-Disposition: attachment; filename="policies-file-not-found.csv"');
-
-        foreach ($noEncontrados as $value) {
-            fputcsv($f, $value, ';');
-        }
-
+        $csv_handler = fopen ('files-notfound.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler);
 
         
     }
