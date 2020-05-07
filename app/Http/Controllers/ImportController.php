@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Common\Entity\Row;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
+
 use Illuminate\Http\Request;
 use App\ClientsPeople;
 use App\Auditoria;
@@ -19,6 +25,7 @@ use App\PoliciesCousinsCommissions;
 use App\PoliciesNotifications;
 use App\PoliciesInfoPayments;
 use App\PolicesVehicles;
+use App\PoliciesAnnexes;
 
 use App\InsurersBranchs;
 
@@ -33,7 +40,7 @@ class ImportController extends Controller
 {
 
    function reprocesar(){
-      $policies = Policies::all();
+      $policies = Policies::where('id_policies >', 9000)->get();
 
       foreach ($policies as $item) {
         
@@ -51,13 +58,126 @@ class ImportController extends Controller
           //  dump($originalInsure);
             $perc->percentage_vat_cousin = $originalInsure->vat_percentage;
             $perc->commission_percentage = $originalInsure->commission_percentage;
-        dd($perc);
 
             $perc->save();
           }
           
 
       }
+   }
+
+   function anexos(){
+
+       ini_set("default_charset", "utf-8");
+       ini_set("pcre.backtrack_limit", "50000000");
+       ini_set("memory_limit", "-1");
+       set_time_limit(0);
+
+       $noEncontrados = array();
+
+        $reader = ReaderEntityFactory::createReaderFromFile('anexos.xlsx');
+
+        $reader->open('anexos.xlsx');
+        foreach ($reader->getSheetIterator() as $key2 => $sheet) {
+
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                if($key == 1)
+                  continue;
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                $policie = Policies::where('number_policies', $cells[0])->first();
+
+                if($policie == null){
+
+                  array_unshift($cells, 'No encontrado, fila: '.$key);
+
+                  array_push($noEncontrados, $cells);
+
+                  continue;
+                }
+
+
+                $expedition_date = true;
+               if($cells[6] == '')
+                 $expedition_date = false;
+
+               $expedition_date = $expedition_date == false? '0000-00-00' : $cells[6]->format('Y-m-d');
+
+                $start_date = true;
+               if($cells[7] == '')
+                 $start_date = false;
+
+               $start_date = $start_date == false? '0000-00-00' : $cells[7]->format('Y-m-d');
+
+                $end_date = true;
+               if($cells[8] == '')
+                 $end_date = false;
+
+               $end_date = $end_date == false? '0000-00-00' : $cells[8]->format('Y-m-d');
+
+
+                $datos = [
+                  'id_policie' => $policie->id_policies,
+                  'number_annexed' => $cells[1],
+                  'state' => $cells[2],
+                  'risk' => $cells[3] == ''? '' : $cells[3],
+                  'is_renewable' => $cells[4],
+                  'reason' => $cells[5],
+                  'expedition_date' => $expedition_date,
+                  'start_date' => $start_date,
+                  'end_date' => $end_date,
+                  'reception_date' => '0000-00-00',
+                  'cousin' => $cells[10],
+                  'xpenses' => $cells[11],
+                  'vat' => $cells[12],
+                  'percentage_vat_cousin' => $cells[13],
+                  'commission_percentage' => $cells[14],
+                  'agency_commission' => $cells[15],
+                  'total' => '',
+                  'payment_method' => '',
+                  'observations' => '',
+                  'accessories' => '',
+                ];
+
+                $store = PoliciesAnnexes::create($datos);
+
+                $auditoria              = new Auditoria;
+                $auditoria->tabla       = "policies_annexes";
+                $auditoria->cod_reg     = $store->id_policies_annexes;
+                $auditoria->status      = 1;
+                $auditoria->usr_regins  = 68;
+                $auditoria->save();
+                
+            }
+
+            break;
+        }
+
+        $reader->close();
+
+
+          $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
+            }
+
+            $csv = $csv . "\n";
+          }
+
+        $csv_handler = fopen ('annexes-notfound.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler);
+                
+
    }
 
    public function company(){
@@ -157,8 +277,21 @@ class ImportController extends Controller
        $data_notifications = [];
        $data_auditoria = [];
 
-        if (($gestor = fopen("clients.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+       $result = DB::table('clients_people')->select('last_names','number_document')->where('last_names', 'like', '%¥%')->get()->toArray();
+
+       $das = '';
+
+       foreach ($result as $value) {
+          $value->last_names = str_replace('¥', 'Ñ', $value->last_names);
+
+          $das = $das . "UPDATE clients_people SET last_names = '".$value->last_names."' WHERE number_document = ".$value->number_document.";<br>";
+
+       }
+
+       echo $das;die;
+
+        if (($gestor = fopen("clients-inactivos2.csv", "r")) !== FALSE) {
+            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
                 
                 $datos = array_map("utf8_encode", $datos);
 
@@ -259,72 +392,6 @@ class ImportController extends Controller
         
     }
 
-    function policies2(){
-        $fila = 0;
-        $count = 0;
-
-        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
-
-                $datos[4] = trim(utf8_encode($datos[4]));
-                $datos[5] = trim(utf8_encode($datos[5]));
-                $datos[11] = trim(utf8_encode($datos[11]));
-
-                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
-
-                $clientePeople = ClientsPeople::where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
-
-                if($clientePeople == null){
-                    $clientePeople = ClientsCompany::where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
-                }
-
-                if($clientePeople == null){
-
-                }
-
-                $name4 = str_replace(' ', '', str_replace('.', '', trim($datos[4])));
-                $name9 = str_replace(' ', '', str_replace('.', '', trim($datos[5])));
-
-                $insure = Insurers::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name4.'%')->get()->first();
-                $branch = Branchs::where(DB::raw("replace(name, ' ', '')"), 'like', '%'.$name9.'%')->get()->first();
-
-                if($insure == null){
-                    $count++;
-
-                    if($fila < 9000){
-                      echo ($name4);
-                      echo "<br> Inseure Fila: ".$fila;
-                      echo "<br>";
-                    }
-                }        
-
-                if($branch == null){
-                    $count++;
-
-                    if($fila < 9000){
-                      echo ($name9);
-                      echo "<br> Branch Fila: ".$fila;
-                      echo "<br>";
-                    }
-                }                
-
-
-                if($fila == 7975){
-                  echo "olis";
-                  echo $count;
-                  die;
-                }
-
-                $fila++;
-
-            }
-        }
-    }
-
     public function policies()
     {
        
@@ -336,96 +403,108 @@ class ImportController extends Controller
        $fila = 0;
        $noEncontrados = array();
 
-        if (($gestor = fopen("Polizas-restantes.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
+        $reader = ReaderEntityFactory::createReaderFromFile('Polizas-restantes.xlsx');
 
-                $datos = array_map("utf8_encode", $datos);
+        $reader->open('Polizas-faltantes.xlsx');
 
-                $datos[10] = utf8_encode($datos[10]);
-                $datos[11] = utf8_encode($datos[11]);
-                $datos[12] = utf8_encode($datos[12]);
-                $datos[14] = utf8_encode($datos[14]);
-                $datos[18] = utf8_encode($datos[18]);
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
 
-                $name = str_replace(' ', '', str_replace('.', '', trim($datos[11])));
+                if($key == 1)
+                  continue;
 
-                $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                $name = str_replace(' ', '', str_replace('.', '', trim($cells[11])));
+                
+                // $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
+                $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', $cells[14])->first();
 
                 $type_clients = 0;
 
                 if($clientePeople == null){
                   
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                    // $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', $cells[14])->first();
                     
                     $type_clients = 1;
                 }
 
                 if($clientePeople == null){
 
-                    $fila++;
+                    array_unshift($cells, 'Cliente no encontradola. FILA: '.$key);
 
-                    array_unshift($datos, 'Cliente no encontradola. FILA: '.$fila);
-
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
 
                     continue;
                 }
 
-                $insure = Insurers::where(['name' => trim($datos[4])])->get()->first();
-                $branch = Branchs::where(['name' => trim($datos[5])])->get()->first();
+                $insure = str_replace(' ', '', str_replace('.', '', trim($cells[4])));
+                $branch = str_replace(' ', '', str_replace('.', '', trim($cells[5])));
+
+                $insure = Insurers::where(DB::raw("replace(replace(name, '.', ''), ' ', '')"), 'like', '%'.$insure.'%')->get()->first();
+                $branch = Branchs::where(DB::raw("replace(replace(name, '.', ''), ' ', '')"), 'like', '%'.$branch.'%')->get()->first();
 
                 if($insure == null || $branch == null){
 
-                    $fila++;
+                    array_unshift($cells, 'Aseguradora o Ramo no encontrado. FILA: '.$key);
 
-                    array_unshift($datos, 'Aseguradora o Ramo no encontrado. FILA: '.$fila);
-
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
                     continue;
                 }
 
+                $expedition_date = true;
+               if($cells[6] == '')
+                 $expedition_date = false;
 
-               $expedition_date = DateTime::createFromFormat('d/m/Y', $datos[6]);
-               $expedition_date = $expedition_date == false? null : $expedition_date->format('Y-m-d');
+               $expedition_date = $expedition_date == false? null : $cells[6]->format('Y-m-d');
 
-               $reception_date = DateTime::createFromFormat('d/m/Y', $datos[7]);
-               $reception_date = $reception_date == false? null : $reception_date->format('Y-m-d');
+                $reception_date = true;
+               if($cells[7] == '')
+                 $reception_date = false;
 
-               $start_date = DateTime::createFromFormat('d/m/Y', $datos[8]);
-               $start_date = $start_date == false? null : $start_date->format('Y-m-d');
+               $reception_date = $reception_date == false? null : $cells[7]->format('Y-m-d');
 
-               $end_date = DateTime::createFromFormat('d/m/Y', $datos[9]);
-               $end_date = $end_date == false? null : $end_date->format('Y-m-d');
+                $start_date = true;
+               if($cells[8] == '')
+                 $start_date = false;
+
+               $start_date = $start_date == false? null : $cells[8]->format('Y-m-d');
+
+                $end_date = true;
+               if($cells[9] == '')
+                 $end_date = false;
+
+               $end_date = $end_date == false? null : $cells[9]->format('Y-m-d');
 
                 $array = [
-                  "type_poliza"                     => strtolower(trim($datos[0])),
-                  "number_policies"                 => trim($datos[1]),
-                  "state_policies"                  => ucwords(trim(strtolower($datos[2]))),
-                  "is_renewable"                    => trim($datos[3]),
+                  "type_poliza"                     => strtolower(trim($cells[0])),
+                  "number_policies"                 => trim($cells[1]),
+                  "state_policies"                  => ucwords(trim(strtolower($cells[2]))),
+                  "is_renewable"                    => trim($cells[3]),
                   "insurers"                        => $insure->id_insurers,
                   "branch"                          => $branch->id_branchs,
                   "expedition_date"                 => $expedition_date,
                   "reception_date"                  => $reception_date,
                   "start_date"                      => $start_date,
                   "end_date"                        => $end_date,
-                  "risk"                            => trim($datos[10]),
+                  "risk"                            => trim($cells[10]),
                   "type_clients"                    => $type_clients,
                   "clients"                         => $clientePeople->id,
-                  "name_taker"                      => trim($datos[12]),
-                  "identification_taker"            => trim($datos[13]),
-                  "name_insured"                    => trim($datos[14]),
-                  "identification_insured"          => trim($datos[15]),
+                  "name_taker"                      => trim($cells[12]),
+                  "identification_taker"            => trim($cells[13]),
+                  "name_insured"                    => trim($cells[14]),
+                  "identification_insured"          => trim($cells[15]),
                   "beneficiary_remission"           => 0,
                   "beneficairy_onerous"             => 0,
-                  "beneficairy_name"                => trim($datos[18]),
-                  "beneficairy_identification"      => trim($datos[19]),
+                  "beneficairy_name"                => trim($cells[18]),
+                  "beneficairy_identification"      => trim($cells[19]),
                   "internal_observations"           => null,
                   "observations"                    => null,
-                  "cousin"                          => (float) str_replace(',', '', $datos[20]),
+                  "cousin"                          => (float) str_replace(',', '', $cells[20]),
                   "xpenses"                         => null,
                   "vat"                             => 0,
                   "percentage_vat_cousin"           => 0,
@@ -433,12 +512,12 @@ class ImportController extends Controller
                   "participation"                   => 0,
                   "agency_commission"               => 0,
                   "total"                           => 0,
-                  "placa"                           => trim($datos[28]),
-                  "placas"                          => [trim($datos[28])],
-                  "send_policies_for_expire_email"  => trim($datos[29]),
-                  "send_portfolio_for_expire_email" => trim($datos[30]),
-                  "send_policies_for_expire_sms"    => trim($datos[31]),
-                  "send_portfolio_for_expire_sms"   => trim($datos[32]),
+                  "placa"                           => trim($cells[28]),
+                  "placas"                          => [trim($cells[28])],
+                  "send_policies_for_expire_email"  => trim($cells[29]),
+                  "send_portfolio_for_expire_email" => trim($cells[30]),
+                  "send_policies_for_expire_sms"    => trim($cells[31]),
+                  "send_portfolio_for_expire_sms"   => trim($cells[32]),
                   "payment_method"                  => null,
                   "payment_date"                    => null,
                   "id_user"                         => 68,
@@ -470,11 +549,13 @@ class ImportController extends Controller
                 $auditoria->usr_regins  = 68;
                 $auditoria->save();
                 
-                $fila++;
             }
-            fclose($gestor);
         }
 
+        $reader->close();
+
+        dd($noEncontrados);
+        
         $f = fopen('php://output', 'w');
 
         header('Content-type: text/csv');
@@ -494,86 +575,48 @@ class ImportController extends Controller
        ini_set("memory_limit", "-1");
        set_time_limit(0);
 
-       $fila = 0;
-       $noEncontrados = array();
-/*
-        if (($gestor = fopen("policies-files202004.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
-                    continue;
-                }
-
-                $policie = Policies::where(['number_policies' => $datos[0]])->get()->first();
-
-                if($policie == null){
-
-                  array_unshift($datos, 'Poliza no encontrada. FILA: '.$fila);
-
-                  array_push($noEncontrados, $datos);
-
-                  $fila++;
-                  continue;
-                }
-
-                $array = [
-                  "id_register"  => $policie->id_policies,
-                  "name"         => $datos[2] == 'NULL'? '' : trim($datos[2]),
-                  "title"        => $datos[3] == 'NULL'? '' : trim($datos[3]),
-                  "descripcion"  => $datos[4] == 'NULL'? '' : trim($datos[4]),
-                  "tabla"        => 'policies',
-                ];
-
-                $store_file = Files::create($array);
-
-                $auditoria              = new Auditoria;
-                $auditoria->tabla       = "files";
-                $auditoria->cod_reg     = $store_file["id_files"];
-                $auditoria->status      = 1;
-                $auditoria->usr_regins  = 68;
-                $auditoria->save();
-
-                $fila++;
-            }
-            fclose($gestor);
-        }
-*/
         $fila = 0;
+        $noEncontrados = array();
+
         $noEncontrados[] = [''];
 
-        if (($gestor = fopen("clientes-files202004.csv", "r")) !== FALSE) {
-            while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-                if($fila == 0){
-                    $fila++;
+        $reader = ReaderEntityFactory::createReaderFromFile('digitales-nuevos.xlsx');
+
+        $reader->open('digitales-nuevos.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheetKey => $sheet) {
+
+           if($sheetKey == 1){
+
+              foreach ($sheet->getRowIterator() as $key => $row) {
+
+                  if($key == 1)
                     continue;
-                }
 
-                $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', trim($datos[1]))->first();
-                $type_clients = 'clients_people';
+                  $cells = array_map(function($item){
+                    return $item->getValue();
+                  }, $row->getCells());
 
-                if($clientePeople == null){
-                    $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', 'like','%'.trim($datos[1]).'%')->first();
-    
-                    $type_clients = 'clients_company';
-                }
+                  $policie = Policies::where('number_policies', (int) $cells[0])->first();
 
-                if($clientePeople == null){
-                    $fila++;
+                  if($policie == null){
 
-                    array_unshift($datos, 'Cliente no encontradola. FILA: '.$fila);
+                    array_unshift($cells, 'No encontrado, fila: '.$key);
 
-                    array_push($noEncontrados, $datos);
+                    array_push($noEncontrados, $cells);
 
                     continue;
-                }
+                  }
 
-                if($datos[0] == 'NIT'){
+                  if ($cells[4] instanceof DateTime)
+                    $cells[4] = $cells[4]->format('d/m/Y');
+
                   $array = [
-                    "id_register"  => $clientePeople->id,
-                    "name"         => $datos[3] == 'NULL'? '' : trim($datos[3]),
-                    "title"        => $datos[4] == 'NULL'? '' : trim($datos[4]),
-                    "descripcion"  => $datos[5] == 'NULL'? '' : trim($datos[5]),
-                    "tabla"        => $type_clients,
+                    "id_register"  => $policie->id_policies,
+                    "name"         => $cells[2] == 'NULL'? '' : trim($cells[2]),
+                    "title"        => $cells[3] == 'NULL'? '' : trim($cells[3]),
+                    "descripcion"  => $cells[4] == 'NULL'? '' : trim($cells[4]),
+                    "tabla"        => 'policies',
                   ];
 
                   $store_file = Files::create($array);
@@ -585,24 +628,140 @@ class ImportController extends Controller
                   $auditoria->usr_regins  = 68;
                   $auditoria->save();
 
-                  $fila++;
+              }
+           }
 
-                }
+           if($sheetKey == 2){
+
+              foreach ($sheet->getRowIterator() as $key => $row) {
+
+                  if($key == 1)
+                    continue;
+
+                  $cells = array_map(function($item){
+                    return $item->getValue();
+                  }, $row->getCells());
+
+                  $clientePeople = ClientsPeople::select("id_clients_people as id")->where('number_document', trim($cells[1]))->first();
+                  $type_clients = 'clients_people';
+
+                  if($clientePeople == null){
+                      $clientePeople = ClientsCompany::select("id_clients_company as id")->where('nit', 'like','%'.trim($cells[1]).'%')->first();
+      
+                      $type_clients = 'clients_company';
+                  }
+
+                  if($clientePeople == null){
+                      $fila++;
+
+                      array_unshift($cells, 'Cliente no encontradola. FILA: '.$fila);
+
+                      array_push($noEncontrados, $cells);
+
+                      continue;
+                  }
+
+                  if ($cells[5] instanceof DateTime)
+                    $cells[5] = $cells[5]->format('d/m/Y');
+
+                    $array = [
+                      "id_register"  => $clientePeople->id,
+                      "name"         => $cells[3] == 'NULL'? '' : trim($cells[3]),
+                      "title"        => $cells[4] == 'NULL'? '' : trim($cells[4]),
+                      "descripcion"  => $cells[5] == 'NULL'? '' : trim($cells[5]),
+                      "tabla"        => $type_clients,
+                    ];
+
+                    $store_file = Files::create($array);
+
+                    $auditoria              = new Auditoria;
+                    $auditoria->tabla       = "files";
+                    $auditoria->cod_reg     = $store_file["id_files"];
+                    $auditoria->status      = 1;
+                    $auditoria->usr_regins  = 68;
+                    $auditoria->save();
+                  
+              }
+           }
+
+        }
+
+        $reader->close();
+
+
+        $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
             }
-            fclose($gestor);
-        }
 
-        $f = fopen('php://output', 'w');
+            $csv = $csv . "\n";
+          }
 
-        header('Content-type: text/csv');
-        header('Content-Disposition: attachment; filename="policies-file-not-found.csv"');
-
-        foreach ($noEncontrados as $value) {
-            fputcsv($f, $value, ';');
-        }
-
+        $csv_handler = fopen ('files-notfound.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler);
 
         
+    }
+
+    // los clients 399 están mal guardados, aqui se reprocesan
+
+    function reprocesarpolicies(){
+       $policiesConsulta = Policies::where('type_clients', 1)->where('clients', 399)->get();
+
+       $policiesConsulta = array_map(function($item){
+         return $item['number_policies'];
+       }, $policiesConsulta->toArray());
+
+        $reader = ReaderEntityFactory::createReaderFromFile('policiesnuevas.xlsx');
+
+        $reader->open('policiesnuevas.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                if($key == 1)
+                  continue;
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                
+                if(in_array($cells[1], $policiesConsulta)){
+
+                    $name = str_replace(' ', '', str_replace('.', '', trim($cells[11])));
+
+                    $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
+
+                    $type_clients = 0;
+
+                    if($clientePeople == null){
+                      
+                        $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                        
+                        $type_clients = 1;
+                    }
+
+                    if($clientePeople != null){
+
+                      Policies::where('number_policies', $cells[1])->update(['type_clients' => $type_clients, 'clients' => $clientePeople->id]);
+
+                    }
+                  
+                }
+                // $cells[1];
+
+
+            }
+        }
+
     }
 
 
