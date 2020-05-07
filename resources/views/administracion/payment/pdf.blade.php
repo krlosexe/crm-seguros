@@ -201,39 +201,55 @@
                 $("#id").text("#"+data.id);
                 $("#date").text(data.init_date)
                 $("#observations").text(data.observations)
-                
-                let nitText =  data.type_client == 1? `NIT: ${data.company.nit}`: `CÉDULA: ${data.cliente.number_document}`;
-                let address =  data.type_client == 1? `${data.company.contact.department}, ${data.company.contact.city}`: data.cliente.number_document
+
+                let nitText =  data.type_client == 1? `NIT: ${data.company.nit}`: `CÉDULA: ${data.client.number_document}`;
+                let address =  data.type_client == 1? `${data.company.contact.department}, ${data.company.contact.city}`: data.client.number_document
 
                 
                 data.charge_account.forEach(charge => {
-                console.log(charge);
-                    let row = `
-
+                    let cells = `
+                        <td>1</td>
+                        <td id="branch">${charge.policie_data.branch.name}</td>
+                        <td id="number_policie">${charge.number}</td>
+                        <td>-</td>
+                        <td id="cousin">${charge.cousin}</td>
+                        <td id="vat">${charge.vat}</td>
+                        <td id="total" class="text-right">${charge.total}</td>
                     `;
+
+                    let row = document.createElement('tr');
+                    row.innerHTML = cells;
+
+                    document.querySelector('#showtable tbody').appendChild(row)
                 })
 
                 $("#number_document").text(nitText)
                 $("#address").text(address)
 
-                $("#branch").text(data.name_branch)
-                $("#number_policie").text(data.number_policies)
-                $("#cousin").text(number_format((data.cousin + data.xpenses), 2))
-                $("#vat").text(number_format(data.vat, 2))
-                $("#total").text(number_format((data.cousin + data.xpenses) + data.vat, 2))
-                
-                $("#subtotal").text(number_format((data.cousin + data.xpenses), 2))
-                $("#ivasubtotal").text(number_format(data.vat, 2))
-                $("#totalpagar").text(number_format(data.vat + (data.cousin + data.xpenses), 2))
+                let sumaCousin = data.charge_account.map(item => item.cousin).reduce((el1, el2) => el1 + el2);
+                let sumaXpenses = data.charge_account.map(item => item.xpenses).reduce((el1, el2) => el1 + el2);
+                let sumaVat = data.charge_account.map(item => item.vat).reduce((el1, el2) => el1 + el2);
 
-                $("#name_agent").text(data.nombres+" "+data.apellido_p)
+                $("#subtotal").text(number_format((sumaCousin + sumaXpenses), 2))
+
+                $("#ivasubtotal").text(number_format(sumaVat, 2))
+
+                $("#totalpagar").text(number_format(sumaVat + (sumaCousin + sumaXpenses), 2))
+
+                if(data.name_client == null && data.last_names == null){
+                    data.nombreapellido = data.business_name;
+                }
+                else{
+                    data.nombreapellido = `${data.name_client} ${data.last_names}`;
+                }
+
+                // nombre de agente, no se sabe
+
+                // $("#name_agent").text(data.nombres+" "+data.apellido_p)
+
                 $("#firm_agent").attr("src", "/img/usuarios/firms/"+data.firm)
 
-                if(data.type_clients == 1){
-                    $("#name_client").text(data.business_name)
-                }else{
-                    $("#name_client").text(data.name_client+" "+data.last_names)
-                }
+                $("#name_client").text(data.nombreapellido)                
                 
 
 

@@ -98,7 +98,7 @@ class PoliciesController extends Controller
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
-                                ->orderBy("policies.id_policies", "DESC");    
+                                ->orderBy("policies.state_policies", "asc");    
 
             // se cuentan todos
 

@@ -1,4 +1,9 @@
 @extends('layouts.app')
+    
+    @php
+        setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+        $date = DateTime::createFromFormat("d/m/Y", date('d/m/Y'));
+    @endphp
 
 	@section('content')
 			
@@ -10,8 +15,8 @@
                                 <div class="card calendar-event">
                                     <div class="card-block overlay-dark bg" style="background-image: url('images/others/img-8.jpg')">
                                         <div class="text-center">
-                                                 <h1 class="font-size-65 text-light mrg-btm-5 lh-1"><?= date("d") ?></h1>
-												<h2 class="no-mrg-top"><?= date('l', strtotime(date("d"))); ?></h2>
+                                                 <h1 class="font-size-65 text-light mrg-btm-5 lh-1"><?= strftime("%d", $date->getTimestamp()) ?></h1>
+												<h2 class="no-mrg-top"><?= ucwords(strftime("%A",$date->getTimestamp())) ?></h2>
                                         </div>
                                     </div>
                                     <div class="card-block">

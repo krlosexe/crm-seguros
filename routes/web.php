@@ -182,7 +182,6 @@ Route::get('policies/grouped/annexes/{id_policies}/{management}', function ($id_
 });
 
 
-
 Route::get('tasks', function () {
     return view('tasks.gestion');
 });
@@ -202,8 +201,6 @@ Route::get('payment/{id}', function ($id) {
 });
 
 
-
-
 Route::get('payments-receivable', function () {
     return view('administracion.payment-receivable.gestion');
 });
@@ -219,9 +216,6 @@ Route::get('payments-collected', function () {
 ///////
 
 
-
-
-
 Route::get('policies/wallet/files/{id_charge}/{management}', function ($id_charge, $management) {
     return view('policies.individual.wallet.files.gestion', ["id_charge" => $id_charge, "management" => $management]);
 });
@@ -234,6 +228,8 @@ Route::get('import', 'ImportController@import');
 Route::get('import-company', 'ImportController@company');
 Route::get('import-policies', 'ImportController@policies');
 Route::get('import-files', 'ImportController@files');
+
+Route::get('reprocesarRamos', 'ImportController@reprocesarRamos');
 
 Route::get('reprocesarclientes99', 'ImportController@reprocesarpolicies');
 

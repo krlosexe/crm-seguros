@@ -66,6 +66,27 @@ class ImportController extends Controller
       }
    }
 
+   function reprocesarRamos(){
+     $policies = Policies::all();
+
+     foreach ($policies as $item) {
+            $originalInsure = InsurersBranchs::where('id_branch', $item->branch)->where('id_insurers', $item->insurers)->first();
+
+            if($originalInsure == null){
+              $create = [
+                  'id_insurers' => $item->insurers,
+                  'id_branch' => $item->branch,
+                  'code' => 0,
+                  'commission_percentage' => 0,
+                  'vat_percentage' => 0,
+              ];
+
+              InsurersBranchs::create($create);
+            }
+
+     }
+   }
+
    function anexos(){
 
        ini_set("default_charset", "utf-8");

@@ -429,7 +429,7 @@
 					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/0"
 					$('#iframeDigitalesView').attr('src', url);
 
-
+					$('#btn-print-view').attr('href', `${ruta.value}/policies/wallet/pdf/${data.charge_management.id}/1`)
 
 					cuadros('#cuadro1', '#cuadro3');
 				});

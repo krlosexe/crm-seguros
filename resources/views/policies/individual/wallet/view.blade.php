@@ -190,7 +190,7 @@
                 Cancelar
             </button>
 
-            <a href="/policies/wallet/pdf" id="btn-print-view" target="_blanck" class="btn btn-danger btn-user" >
+            <a href="javascript:void(0)" id="btn-print-view" target="_blank" class="btn btn-danger btn-user" >
               <i class="ti-printer"></i>
                 Imprimir
             </a>

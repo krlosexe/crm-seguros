@@ -135,7 +135,7 @@
       <script src="<?= url('/') ?>/vendors/moment/min/moment.min.js"></script>
       <script src="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.js"></script>
       <script src="<?= url('/') ?>/vendors/fullcalendar_old/dist/gcal.js"></script>
-      <script src="<?= url('/') ?>/vendors/fullCalendar_old/dist/lang-all.js"></script>
+      <script src="<?= url('/') ?>/vendors/fullCalendar_old/dist/lang/es.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script src="<?= url('/') ?>/vendors/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>

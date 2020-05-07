@@ -253,7 +253,7 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
 
-                                ->with("collections")
+                                ->with(["collections", "chargeManagement"])
                                 
                                 ->where("charge_accounts.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
@@ -267,7 +267,7 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
 
-                                ->with("collections")
+                                ->with(["collections", "chargeManagement"])
                                 
                                 ->where("policies_annexes.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")

@@ -605,6 +605,8 @@
 
 						$('#number-multiple-view').change();
 
+						$('#btn-print-view').attr('href', `${ruta.value}/policies/wallet/pdf/${data.id}/1`)
+
 						$('#cuadro3').find('input, select, textarea').attr('disabled', 'disabled')
 
 					}, 2000)

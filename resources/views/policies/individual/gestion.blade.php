@@ -27,7 +27,7 @@
 												<th>Ramo</th>
 												<th>Tipo</th>
 												<th>Estatus</th>
-												<th>Fecha de registro</th>
+												<th>Fecha Inicio</th>
 												<th>Acciones</th>
 											</tr>
 										</thead>
@@ -429,7 +429,7 @@
 						{targets: 3, "data":"name_branchs"},
 						{targets: 4, "data":"type_poliza"},
 						{targets: 5, "data":"state_policies"},
-						{targets: 6, "data": "fec_regins"},
+						{targets: 6, "data": "start_date"},
 						{targets: 7, "data": null,
 							render : function(data, type, row) {
 								var botones = "";
