@@ -235,6 +235,8 @@ Route::get('import-company', 'ImportController@company');
 Route::get('import-policies', 'ImportController@policies');
 Route::get('import-files', 'ImportController@files');
 
+Route::get('reprocesarclientes99', 'ImportController@reprocesarpolicies');
+
 
 
 Route::get('Company', function () {

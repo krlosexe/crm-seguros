@@ -709,5 +709,60 @@ class ImportController extends Controller
         
     }
 
+    // los clients 399 están mal guardados, aqui se reprocesan
+
+    function reprocesarpolicies(){
+       $policiesConsulta = Policies::where('type_clients', 1)->where('clients', 399)->get();
+
+       $policiesConsulta = array_map(function($item){
+         return $item['number_policies'];
+       }, $policiesConsulta->toArray());
+
+        $reader = ReaderEntityFactory::createReaderFromFile('policiesnuevas.xlsx');
+
+        $reader->open('policiesnuevas.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                if($key == 1)
+                  continue;
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                
+                if(in_array($cells[1], $policiesConsulta)){
+
+                    $name = str_replace(' ', '', str_replace('.', '', trim($cells[11])));
+
+                    $clientePeople = ClientsPeople::select("id_clients_people as id")->where(DB::raw("replace(CONCAT(names,last_names), ' ', '')"), 'like', '%'.$name.'%')->first();
+
+
+                    $type_clients = 0;
+
+                    if($clientePeople == null){
+                      
+                        $clientePeople = ClientsCompany::select("id_clients_company as id")->where(DB::raw("replace(replace(business_name, '.', ''), ' ', '')"), 'like', '%'.$name.'%')->first();
+                        
+                        $type_clients = 1;
+                    }
+
+                    if($clientePeople != null){
+
+                      Policies::where('number_policies', $cells[1])->update(['type_clients' => $type_clients, 'clients' => $clientePeople->id]);
+
+                    }
+                  
+                }
+                // $cells[1];
+
+
+            }
+        }
+
+    }
+
 
 }
