@@ -36,7 +36,7 @@
                         <div class="pdd-horizon-30">
                             <div class="mrg-top-15">
                                 <div class="inline-block">
-                                    <img class="img-responsive" src="assets/images/logo/logo.png" id="logo" width="260px">
+                                    <img class="img-responsive" src="{{ url('/') }}/images/logo/logo-dark.png" id="logo" width="260px">
                                        <address class="pdd-left-10 mrg-top-20">
                 <b class="text-dark" id="name">Espire, Inc.</b><br>
                 <span class="text-uppercase">Nit: 900709309-1</span><br>
