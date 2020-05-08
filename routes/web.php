@@ -232,6 +232,7 @@ Route::get('import-files', 'ImportController@files');
 Route::get('reprocesarRamos', 'ImportController@reprocesarRamos');
 
 Route::get('reprocesarclientes99', 'ImportController@reprocesarpolicies');
+Route::get('filesAnnexes', 'ImportController@filesAnnexes');
 
 
 

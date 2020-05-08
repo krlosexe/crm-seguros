@@ -730,6 +730,99 @@ class ImportController extends Controller
         
     }
 
+    public function filesAnnexes()
+    {
+       
+       ini_set("default_charset", "utf-8");
+       ini_set("pcre.backtrack_limit", "50000000");
+       ini_set("memory_limit", "-1");
+       set_time_limit(0);
+
+        $fila = 0;
+        $noEncontrados = array();
+
+        $noEncontrados[] = [''];
+
+        $reader = ReaderEntityFactory::createReaderFromFile('DigitalesAnexos.xlsx');
+
+        $reader->open('DigitalesAnexos.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheetKey => $sheet) {
+
+           if($sheetKey == 1){
+
+              foreach ($sheet->getRowIterator() as $key => $row) {
+
+                  if($key == 1)
+                    continue;
+
+                  $cells = array_map(function($item){
+                    return $item->getValue();
+                  }, $row->getCells());
+
+                  if ($cells[0] instanceof DateTime)
+                    $cells[0] = 'NADA';
+
+                  $policie = PoliciesAnnexes::where('number_annexed', (int) $cells[0])->first();
+
+                  if($policie == null){
+
+                    array_unshift($cells, 'No encontrado, fila: '.$key);
+
+                    array_push($noEncontrados, $cells);
+
+                    continue;
+                  }
+
+                  if ($cells[4] instanceof DateTime)
+                    $cells[4] = $cells[4]->format('d/m/Y');
+
+                  $array = [
+                    "id_register"  => $policie->id_policies_annexes,
+                    "name"         => $cells[2] == 'NULL'? '' : trim($cells[2]),
+                    "title"        => $cells[3] == 'NULL'? '' : trim($cells[3]),
+                    "descripcion"  => $cells[4] == 'NULL'? '' : trim($cells[4]),
+                    "tabla"        => 'policies_annexes',
+                  ];
+
+                  $store_file = Files::create($array);
+
+                  $auditoria              = new Auditoria;
+                  $auditoria->tabla       = "files";
+                  $auditoria->cod_reg     = $store_file["id_files"];
+                  $auditoria->status      = 1;
+                  $auditoria->usr_regins  = 68;
+                  $auditoria->save();
+
+              }
+           }
+
+        }
+
+        $reader->close();
+
+
+        $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
+            }
+
+            $csv = $csv . "\n";
+          }
+
+        $csv_handler = fopen ('files-annexes-notfound.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler);
+
+        
+    }
+
+
     // los clients 399 están mal guardados, aqui se reprocesan
 
     function reprocesarpolicies(){
