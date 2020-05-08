@@ -40,7 +40,6 @@
     <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
     <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
 
-
    @yield('CustomCss')
 
       @php

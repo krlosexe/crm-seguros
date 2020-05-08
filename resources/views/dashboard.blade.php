@@ -19,9 +19,10 @@
                                             <h1 class="no-mrg-vertical" id="balance">$968.900</h1>
                                             <p>Ganancias de la semana</p>
                                         </div>
-                                        <div class="pdd-top-25 inline-block pull-right">
+                                        {{-- Programar esto --}}
+{{--                                         <div class="pdd-top-25 inline-block pull-right">
                                             <span class="label label-success label-lg mrg-left-5">+18%</span>
-                                        </div>
+                                        </div> --}}
                                         <div class="mrg-top-25">
                                             <div id="bar-config"></div>
                                         </div>

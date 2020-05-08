@@ -130,10 +130,10 @@ class ClientsCompanyController extends Controller
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
             isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
 
-
-            $update = ClientsCompany               :: find($clientsCompany)->update($request->all());
-                      ClientsCompanyContact        :: find($clientsCompany)->update($request->all());
-                      ClientsNotificacionsCompany  :: find($clientsCompany)->update($request->all());
+            
+            $update = ClientsCompany::find($clientsCompany)->update($request->all());
+                      ClientsCompanyContact::find($clientsCompany)->update($request->all());
+                      ClientsNotificacionsCompany::find($clientsCompany)->update($request->all());
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
