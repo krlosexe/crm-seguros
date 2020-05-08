@@ -249,9 +249,9 @@
 
                 // nombre de agente, no se sabe
 
-                // $("#name_agent").text(data.nombres+" "+data.apellido_p)
+                $("#name_agent").text(data.nombre_p + ' '+data.apellido_p)
 
-                $("#firm_agent").attr("src", "/img/usuarios/firms/"+data.firm)
+                $("#firm_agent").attr("src", url + "/img/usuarios/firms/"+data.firm)
 
                 $("#name_client").text(data.nombreapellido)                
                 
@@ -281,7 +281,7 @@
             success: function(data){
 
                 url_imagen = '/img/my_company/'
-                $("#logo").attr("src", url_imagen+"/"+data.logo)
+                $("#logo").attr("src", url+'/'+url_imagen+"/"+data.logo)
 
 
                 $("#name").text(data.name)

@@ -110,13 +110,13 @@
                   </a>
                   <ul class="dropdown-menu">
                       <li>
-                          <a href="Company">
+                          <a href="{{ url('/') }}/Company">
                               <i class="ti-settings pdd-right-10"></i>
                               <span>Configuración</span>
                           </a>
                       </li>
                       <li>
-                          <a href="profile">
+                          <a href="{{ url('/') }}/profile">
                               <i class="ti-user pdd-right-10"></i>
                               <span>Mi perfil</span>
                           </a>

@@ -57,10 +57,13 @@ class PaymentController extends Controller
                                         "clients_company.id_clients_company",
                                         "clients_company.business_name",
                                         "clients_company.nit",
-
+                                        "datos_personales.nombres as nombre_p",
+                                        "datos_personales.apellido_p",
+                                        "user_registro.firm",
                                       )
                                     ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
                                     ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("datos_personales", "datos_personales.id_usuario", "=", "audi.usr_regins")
                                     ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
                                     ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
         
