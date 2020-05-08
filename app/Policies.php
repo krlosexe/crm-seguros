@@ -16,7 +16,6 @@ class Policies extends Model
     public    $timestamps    = false;
     protected $primaryKey    = 'id_policies';
 
-
     public function scopeSearch($query, $str){
         if($str)
             return $query->where(function($q) use ($str){

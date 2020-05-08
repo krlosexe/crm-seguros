@@ -207,9 +207,12 @@
 
                 
                 data.charge_account.forEach(charge => {
+                    let branchName = charge.policie_data == null? charge.policie_anexes_data.policie.branch.name : 
+                                                                  charge.policie_data.branch.name
+
                     let cells = `
                         <td>1</td>
-                        <td id="branch">${charge.policie_data.branch.name}</td>
+                        <td id="branch">${branchName}</td>
                         <td id="number_policie">${charge.number}</td>
                         <td>-</td>
                         <td id="cousin">${charge.cousin}</td>
@@ -224,7 +227,8 @@
                 })
 
                 $("#number_document").text(nitText)
-                $("#address").text(address)
+                
+                $("#address").text(address.trim() == ','? '' : address);
 
                 let sumaCousin = data.charge_account.map(item => item.cousin).reduce((el1, el2) => el1 + el2);
                 let sumaXpenses = data.charge_account.map(item => item.xpenses).reduce((el1, el2) => el1 + el2);

@@ -19,6 +19,6 @@ class PoliciesAnnexes extends Model
     protected $with = ['policie'];
 
     public function policie(){
-    	return $this->hasOne('App\Policies', 'id_policies', 'id_policie')->with(['clientPeople', 'clientCompany']);
+    	return $this->hasOne('App\Policies', 'id_policies', 'id_policie')->with(['clientPeople', 'clientCompany', 'branch']);
     }
 }
