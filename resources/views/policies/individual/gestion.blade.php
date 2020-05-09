@@ -1,13 +1,13 @@
 @extends('layouts.app')
 	
+
+	@section('content')
+	
 	<style type="text/css">
-		.toggle-group .btn{
+		.drawpolizas .toggle-group .btn{
 			margin: 0 !important;
 		}
 	</style>
-
-	@section('content')
-			
 		 <!-- Content Wrapper START -->
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
@@ -27,7 +27,7 @@
 											<span>Nuevo</span>
 										</button>
 									</div>
-									<div class="col-md-6 text-right"> 
+									<div class="col-md-6 text-right drawpolizas"> 
 									    <input type="checkbox" id="switchpolizas" data-toggle="toggle" data-on="Próximas a Vencer" data-off="Todas" onchange="drawPolizas()">
 									</div>
 
