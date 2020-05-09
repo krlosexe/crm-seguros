@@ -40,7 +40,7 @@ class ImportController extends Controller
 {
 
    function reprocesar(){
-      $policies = Policies::where('id_policies >', 9000)->get();
+      $policies = Policies::all();
 
       foreach ($policies as $item) {
         
@@ -49,7 +49,7 @@ class ImportController extends Controller
         if($perc == null)
           continue;
 
-          if($perc->percentage_vat_cousin == 0 && $perc->commission_percentage == 0){
+          // if($perc->percentage_vat_cousin == 0 && $perc->commission_percentage == 0){
             $originalInsure = InsurersBranchs::where('id_branch', $item->branch)->where('id_insurers', $item->insurers)->first();
 
             if($originalInsure == null)
@@ -60,7 +60,7 @@ class ImportController extends Controller
             $perc->commission_percentage = $originalInsure->commission_percentage;
 
             $perc->save();
-          }
+          // }
           
 
       }

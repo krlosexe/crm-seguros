@@ -301,7 +301,7 @@
 					url_imagen = '/img/usuarios/profile/'
 
 					if(data.img_profile != ""){
-						img = '<img src="'+url_imagen+data.img_profile+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+ruta.value+url_imagen+data.img_profile+'" class="file-preview-image kv-preview-data">'
 					}else{rfc2c = ""}
 					
 					$("#avatar-view").fileinput({
@@ -326,7 +326,7 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
+							{caption: data.img_profile , downloadUrl: ruta.value+url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
 					
 						],
 
@@ -385,7 +385,7 @@
 					url_imagen = '/img/usuarios/profile/'
 
 					if(data.img_profile != ""){
-						img = '<img src="'+url_imagen+data.img_profile+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+ruta.value+url_imagen+data.img_profile+'" class="file-preview-image kv-preview-data">'
 					}else{rfc2c = ""}
 					
 					$("#avatar-edit").fileinput({
@@ -410,7 +410,7 @@
 						],
 						initialPreviewConfig: [
 								
-							{caption: data.img_profile , downloadUrl: url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
+							{caption: data.img_profile , downloadUrl: ruta.value +url_imagen+data.img_profile  ,url: url+"uploads/delete", key: data.img_profile}
 					
 						],
 

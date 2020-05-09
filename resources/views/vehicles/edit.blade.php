@@ -255,18 +255,27 @@
                           </div>
 
                           <div class="col-md-6">
-                            <label for=""><b>Valor Fasecolda*</b></label>
+                            <label for=""><b>Fecha de vencimiento de SOAT</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="value_fasecolda" class="form-control form-control-user" id="value_fasecolda_edit" placeholder="Valor en pesos" >
+                                <input type="date" name="due_date_soat" class="form-control form-control-user" id="due_date_soat_edit" >
                               </div>
                           </div>
-                          
+
+
                         </div>
 
 
                         <br>
                       <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
+                            <label for=""><b>Valor Fasecolda*</b></label>
+                              <div class="form-group valid-required">
+                                <input type="text" name="value_fasecolda" class="form-control form-control-user" id="value_fasecolda_edit" placeholder="Valor en pesos" >
+                              </div>
+                          </div>
+
+                          <div class="col-md-6">
+                          
                             <label for=""><b>Código Fasecolda</b></label>
                               <div class="form-group valid-required">
                                 <input type="text" name="code" class="form-control form-control-user" id="code_edit" >

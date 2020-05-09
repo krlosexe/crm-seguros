@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class CollectionsController extends Controller
 {
+
     public function store(Request $request){
        
         $destinationPath        = 'img/collections';
-        $request["tabla"]       = "clients_people";
 
         if($request->file('file')){
 
@@ -20,8 +20,11 @@ class CollectionsController extends Controller
             $file->move($destinationPath,$file->getClientOriginalName());
             $request["name"] = $file->getClientOriginalName();
 
+            $request["amount"] = (float) str_replace(',', '', $request["amount"]);
+
             $store_file = Collections::create($request->all());
 
+            ChargeManagement::find($request->id_charge_accounts)->update(['status' => 1]);
 
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "collections";
@@ -54,6 +57,7 @@ class CollectionsController extends Controller
                 $file->move($destinationPath,$file->getClientOriginalName());
                 $request["name"] = $file->getClientOriginalName();
             }
+            $request["amount"] = (float) str_replace(',', '', $request["amount"]);
 
             $update = Collections::find($id)->update($request->all());
 
@@ -63,7 +67,7 @@ class CollectionsController extends Controller
 
 
 
-
+    // No confundir este id_charge_account que guarda relacion con charge_account. La relacion es con charge_account_management
 
     public function get($id){
         $modulos = Collections::select("collections.*", "auditoria.*", "user_registro.email as email_regis")

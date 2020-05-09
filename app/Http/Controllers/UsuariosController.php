@@ -97,18 +97,18 @@ class UsuariosController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             $messages = [
                 'required' => 'El Campo :attribute es requirdo.',
-                'unique'   => 'El Campo :attribute ya se encuentra en uso.'
             ];
 
 
             $validator = Validator::make($request->all(), [
                 'img-profile'     => 'required',
-                'email'           => 'required|unique:users',
+                'email'           => 'required',
                 'password'        => 'required',
                 'repeat-password' => 'required',
                 'rol'             => 'required'
 
             ], $messages);  
+
 
 
             if ($request["password"] != $request["repeat-password"]) {
@@ -120,11 +120,20 @@ class UsuariosController extends Controller
 
             }else{
 
+               $userExist = User::where('email', $request->email)
+                                  ->join("auditoria", "auditoria.cod_reg", "=", "users.id")
+                                  ->where("auditoria.tabla", "users")
+                                  ->where("auditoria.status", "!=", "0")
+                                  ->first();
+
+                if($userExist != null){
+                  return response()->json("El usuario ya se encuentra registrado")->setStatusCode(400);
+                }
+
                 $file = $request->file('img-profile');
 
                 $destinationPath = 'img/usuarios/profile';
                 $file->move($destinationPath,$file->getClientOriginalName());
-                $request["img_profile"] = " asdasdasd asdas"; //add request
 
                
                 $User              = new User;
@@ -321,8 +330,13 @@ class UsuariosController extends Controller
     public function statusUser($id_user, $status, Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
-            $auditoria =  Auditoria::where("cod_reg", $id_user)
-                                     ->where("tabla", "users")->first();
+            $countRegisters = Auditoria::where("usr_regins", $id_user)->where("status", 1)->get()->count();
+
+            if($countRegisters > 0 && $status == 0){
+              return response()->json("El usuario tiene registros dentro de la plataforma, no se puede eliminar")->setStatusCode(400);
+            }
+
+            $auditoria = Auditoria::where("cod_reg", $id_user)->where("tabla", "users")->first();
 
             $auditoria->status = $status;
 

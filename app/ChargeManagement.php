@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\DB;
 class ChargeManagement extends Model
 {
 
-    protected $fillable = ['id_client', 'type_client', 'policie_annexes', 'issue', 'observations', 'init_date', 'limit_date', 'total'];
+    protected $fillable = ['id_client', 'type_client', 'policie_annexes', 'issue', 'observations', 'init_date', 'limit_date', 'total', 'status'];
 
     protected $table         = 'charge_accounts_management';
 
     public    $timestamps    = false;
+
+    protected $with = ['collections'];
 
     public function chargeAccount()
     {
@@ -40,6 +42,13 @@ class ChargeManagement extends Model
     public function company(){
      return $this->hasOne('App\ClientsCompany', 'id_clients_company', 'id_client');   
     }
+
+
+    public function collections()
+    {
+      return $this->hasMany('App\Collections', 'id_charge_accounts');
+    }
+
 
     
 }

@@ -222,6 +222,7 @@
 					$("#model_view").val(data.model).attr("disabled", "disabled")
 					$("#color_view").val(data.color).attr("disabled", "disabled")
 					$("#due_date_techno_mechanics_view").val(data.due_date_techno_mechanics).attr("disabled", "disabled")
+					$("#due_date_soat_view").val(data.due_date_soat).attr("disabled", "disabled")
 
 					$("#number_motor_view").val(data.number_motor).attr("disabled", "disabled")
 					$("#number_chassis_view").val(data.number_chassis).attr("disabled", "disabled")
@@ -398,6 +399,7 @@
 					$("#model_edit").val(data.model)
 					$("#color_edit").val(data.color)
 					$("#due_date_techno_mechanics_edit").val(data.due_date_techno_mechanics)
+					$("#due_date_soat_edit").val(data.due_date_soat)
 
 					$("#number_motor_edit").val(data.number_motor)
 					$("#number_chassis_edit").val(data.number_chassis)

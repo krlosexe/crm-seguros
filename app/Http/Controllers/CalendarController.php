@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Tasks;
+use App\User;
 use App\Queries;
 use App\Surgeries;
 use App\Valuations;
@@ -16,17 +17,26 @@ class CalendarController extends Controller
 {
     function getTask(Request $request, $today = false){
 
+            $data_user = User::select("users.*", "roles.nombre_rol", "datos_personales.*")
+                                  ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
+                                  ->join("roles", "roles.id_rol", "=", "users.id_rol")
+                                  ->where("id", $request["id_user"])
+                                  ->first();
+
         $data = Tasks::select("tasks.id_tasks", "tasks.responsable","tasks.issue as title", "tasks.delivery_date", "tasks.description", "tasks.delivery_date as start",
                              "tasks.description", "tasks.state", "tasks.file", "tasks.id_client", "datos_personales.nombres", "datos_personales.apellido_p", 
                              "user_responsable.img_profile")
                            
                             ->join("datos_personales", "datos_personales.id_usuario", "=", "tasks.responsable")
-                            ->join("users as user_responsable", "user_responsable.id", "=", "tasks.responsable")
+                            ->join("users as user_responsable", "user_responsable.id", "=", "tasks.responsable");
 
-                            ->with("comments")
 
-                            
-                            ->where(function ($query) use ($today) {
+                            if($data_user->nombre_rol != 'Administrador'){
+                                $data->where('tasks.responsable', $request->id_user);
+                            }
+
+
+        $data = $data->with("comments")->where(function ($query) use ($today) {
                                 if($today != false){
                                     $query->where("tasks.delivery_date", $today);
                                 }

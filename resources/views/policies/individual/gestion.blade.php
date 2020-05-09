@@ -1,4 +1,10 @@
 @extends('layouts.app')
+	
+	<style type="text/css">
+		.toggle-group .btn{
+			margin: 0 !important;
+		}
+	</style>
 
 	@section('content')
 			
@@ -13,11 +19,22 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-block">
+								<div class="row">
+									
+									<div class="col-md-6 text-left">
+										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+											<i class="ti-plus"></i>
+											<span>Nuevo</span>
+										</button>
+									</div>
+									<div class="col-md-6 text-right"> 
+									    <input type="checkbox" id="switchpolizas" data-toggle="toggle" data-on="Próximas a Vencer" data-off="Todas" onchange="drawPolizas()">
+									</div>
+
+
+								</div>
+
 								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-										<i class="ti-plus"></i>
-										<span>Nuevo</span>
-									</button>
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
@@ -374,6 +391,9 @@
 
 			});
 
+			function drawPolizas(){
+				list();
+			}
 
 
 			function update(){
@@ -394,6 +414,7 @@
 					"token"  : tokens,
 				};
 
+				let proximas_a_vencer = document.querySelector('#switchpolizas').checked? 1 : 0;
 
 				$('#table tbody').off('click');
 				var url=document.getElementById('ruta').value; 
@@ -410,6 +431,7 @@
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
+							'proximas_a_vencer': proximas_a_vencer
 						},
 					},
 					"columnDefs":[

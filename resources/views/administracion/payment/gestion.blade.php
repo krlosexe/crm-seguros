@@ -352,10 +352,11 @@
 					$("#agency_commission-view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
 					$("#total-view").val(number_format(data.total, 2)).attr("disabled", "disabled")
 					
-					$("#btn-print-view").attr("href", "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
+					$("#btn-print-view").attr("href", ruta.value + "/policies/wallet/pdf/"+data.id_charge_accounts+"/1")
 
 
-					var url = "/policies/wallet/files/"+data.id_charge_accounts+"/0"
+					var url = ruta.value + "/policies/wallet/files/"+data.id_charge_accounts+"/0"
+
 					$('#iframeDigitalesView').attr('src', url);
 
 
@@ -433,7 +434,7 @@
 					$("#footer-multiple-view").val(data.observations)
 					
 
-					var url = "/policies/wallet/files/"+data.id+"/1"
+					var url = ruta.value + "/policies/wallet/files/"+data.id+"/1"
 					$('#iframeDigitalesEdit').attr('src', url);
 
 					var urlpdf = document.querySelector('#ruta').value + "/policies/wallet/pdf/"+data.id+"/1"

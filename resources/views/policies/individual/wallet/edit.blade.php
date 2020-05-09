@@ -12,10 +12,6 @@
             <li class="nav-item">
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
-            <li class="nav-item remove-pay">
-                <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Recaudos</a>
-            </li>
-
         </ul>
 
        <br><br>

@@ -163,6 +163,7 @@
 				enviarFormulario("#store", 'api/wallet/collections', '#cuadro2');
 			}
 
+			// No confundir este4 id_charge con la tabla charge_account. En realidad se trata de charge_account_managament
 
 			function list(cuadro) {
 
@@ -191,7 +192,7 @@
 					},
 					"columns":[
 						
-						{"data":"title"},
+						{"data":"way_to_pay"},
 						{"data":"amount",
 							render: function (data, type, row) { 
 
@@ -287,20 +288,23 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#titles_view").val(data.title).attr("disabled", "disabled")
-					$("#amount_view").val(data.amount).attr("disabled", "disabled")
+					
+					$("#way_to_pay_view").val(data.way_to_pay).attr('disabled', 'disabled')
+					$("#amount_view").val(number_format(data.amount, 2)).attr('disabled', 'disabled')
+					$("#bank_view").val(data.bank).attr('disabled', 'disabled')
+					$("#date_pay_view").val(data.payment_date).attr('disabled', 'disabled')
 				
 					$('#input-file-view').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
+					url_imagen = '/img/collections/'
 
 
 
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
-						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
-						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+url+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
 					
@@ -331,9 +335,6 @@
 
 					});
 
-					$("#btn-print-view").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
-
-
 					
 					cuadros('#cuadro1', '#cuadro3');
 				});
@@ -352,21 +353,22 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					$("#titles_edit").val(data.title)
-					$("#amount_edit").val(data.amount)
+					$("#way_to_pay_edit").val(data.way_to_pay)
+					$("#amount_edit").val(number_format(data.amount, 2))
+					$("#bank_edit").val(data.bank)
+					$("#date_pay_edit").val(data.payment_date)
 				
 					$('#input-file-edit').fileinput('destroy');
 					var url=document.getElementById('ruta').value; 
-					url_imagen = '/img/clients/peopple/'
+					url_imagen = '/img/collections/'
 
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
-						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
-						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+url+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
-					$("#btn-print").attr("href", "/policies/wallet/collection/pdf/"+data.id_collections+"/1")
 
 					$("#input-file-edit").fileinput({
 						theme: "fas",

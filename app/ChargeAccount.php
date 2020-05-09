@@ -19,12 +19,6 @@ class ChargeAccount extends Model
     protected $with = ['policieAnexesData', 'policieData'];
 
 
-    public function collections()
-    {
-      return $this->hasMany('App\Collections', 'id_charge_accounts');
-    }
-
-
     public function policieAnexesData(){
       return $this->hasOne('App\PoliciesAnnexes', 'id_policies_annexes', 'id_policie');
     }

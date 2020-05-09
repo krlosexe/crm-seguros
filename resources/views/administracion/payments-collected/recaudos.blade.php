@@ -23,26 +23,6 @@
                   <div class="card-body">
 
                     <div class="row">
-
-                      <div class="col-md-6">
-                        <label for=""><b>Cuota</b></label>
-                        <div class="form-group valid-required">
-                          <input type="text" name="monthly_fee" class="form-control form-control-user" id="cuota" readonly style="text-align: center">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <label for=""><b>Monto</b></label>
-                        <div class="form-group valid-required">
-                          <input type="text"  class="form-control form-control-user" name="amount" id="amount" readonly style="text-align: right">
-                        </div>
-                      </div>
-
-                    </div>
-                    <br>
-
-
-                    <div class="row">
                         <label class="col-sm-3"><b>Forma de pago</b></label>
                         <div class="col-sm-9 focused">
                           <select name="way_to_pay" id="way_to_pay" class="form-control" required="">
@@ -102,9 +82,6 @@
 
                       <button type="button"   class="btn btn-danger btn-user" onclick="prev('#cuadro4')">
                           Cancelar
-                      </button>
-                      <button id="save_pay" class="btn btn-success btn-user">
-                          Guardar
                       </button>
 
                     </center>

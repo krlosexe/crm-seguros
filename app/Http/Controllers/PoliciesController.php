@@ -74,7 +74,7 @@ class PoliciesController extends Controller
         $start       = $request->start;
         $length      = $request->length;
         $draw        = $request->draw;
-        
+
         $policiesQuery = Policies::select(
                                     "policies.id_policies"
                                    )
@@ -98,6 +98,9 @@ class PoliciesController extends Controller
             $recordsTotal = $dbTemp->get()->count();
 
             // se aplica el filtro y se cuentan los registros filtrados
+            if($request->proximas_a_vencer == '1'){
+                $policiesQuery->whereRaw("policies.end_date between curdate() and date_add(curdate(), interval 7 day)");
+            }
 
             $policiesQuery->search($searchValue);
 

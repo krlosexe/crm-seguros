@@ -16,7 +16,7 @@
                                     <div class="card-block overlay-dark bg" style="background-image: url('images/others/img-8.jpg')">
                                         <div class="text-center">
                                                  <h1 class="font-size-65 text-light mrg-btm-5 lh-1"><?= strftime("%d", $date->getTimestamp()) ?></h1>
-												<h2 class="no-mrg-top"><?= ucwords(strftime("%A",$date->getTimestamp())) ?></h2>
+												<h2 class="no-mrg-top"><?= utf8_encode(ucwords(strftime("%A",$date->getTimestamp()))) ?></h2>
                                         </div>
                                     </div>
                                     <div class="card-block">
@@ -400,6 +400,10 @@
                     eventSources: [
 							{
 								url: 'api/calendar/tasks', 
+                                data: {
+                                      "id_user": id_user,
+                                      "token"  : tokens,
+                                    },
                             }
                     ],
 
@@ -607,6 +611,10 @@
                 var url=document.getElementById('ruta').value;
                 $.ajax({
                     url:''+url+'/api/tasks-today',
+                    data: {
+                      "id_user": id_user,
+                      "token"  : tokens,
+                    },
                     type:'GET',
                     dataType:'JSON',
                     async: false,

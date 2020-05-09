@@ -12,6 +12,8 @@
 
   <title>App</title>
 
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
   <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" />
@@ -102,6 +104,7 @@
   </div>
 <input type="hidden" id="ruta" value="<?= url('/') ?>">
 <script src="<?= url('/') ?>/js/app.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
       <script src="<?= url('/') ?>/vendors/popper.js/dist/umd/popper.min.js"></script>
       <script src="<?= url('/') ?>/vendors/bootstrap/dist/js/bootstrap.js"></script>
       <script src="<?= url('/') ?>/vendors/PACE/pace.min.js"></script>

@@ -6,7 +6,7 @@
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
 				<div class="page-title">
-					<h4>Gestión de Pagos Recaudados.</h4>
+					<h4>Gestión de Polizas Próximas a Vencer</h4>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -91,6 +91,9 @@
 			}
 
 
+			function update(){
+				savePayment("#form-update", 'api/payment/fee', '#cuadro4', false, "#avatar-edit");
+			}
 
 			function list(cuadro) {
 				var data = {
@@ -108,7 +111,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/payments/collected',
+						 "url":''+url+'/api/payments/beaten',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -141,7 +144,6 @@
 								var botones = "";
 							
 								botones += "<span class='editar btn btn-primary  btn-sm waves-effect' data-toggle='tooltip' title='Gestionar Pagos'><i class='ei-money-bag' style='margin-bottom:5px'></i></span> ";
-
 								return botones;
 							}
 						}
@@ -432,6 +434,7 @@
 					
 
 					var url = ruta.value + "/policies/wallet/files/"+data.id+"/0"
+					
 					$('#iframeDigitalesEdit').attr('src', url);
 
 					var urlpdf = document.querySelector('#ruta').value + "/policies/wallet/pdf/"+data.id+"/1"

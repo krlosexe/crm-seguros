@@ -88,17 +88,32 @@ class PaymentController extends Controller
 
 
 
-
+    // cuentas por cobrar
     function paymentsReceivable(Request $request){
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
-            $data = RecibosCobranza::join("policies", "policies.id_policies", "=", "recibos_cobranza.id_policie")
-                                    ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients")
+            $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        DB::raw("cast(audi.fec_regins as date) as fec_regins"),
+                                        "clients_people.id_clients_people",
+                                        "clients_people.names as name_client", 
+                                        "clients_people.last_names", 
+                                        "clients_people.number_document",
+                                        "clients_company.id_clients_company",
+                                        "clients_company.business_name",
+                                      )
+                                    ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
+                                    ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
+                                    ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
 
-                                    ->where("recibos_cobranza.status", 0)
-                                    ->orderBy("recibos_cobranza.id_policie", "desc")
-                                    ->orderBy("recibos_cobranza.monthly_fee", "asc")
+                                    ->where("audi.tabla", "=", "charge_accounts_management")
+                                    ->where("audi.status", "!=", "0")
+                                    ->where("charge_accounts_management.status", 0)
+                                    ->where("charge_accounts_management.limit_date", ">", date("Y-m-d"))
+
+                                    ->with('chargeAccount')
+                                    ->orderBy("charge_accounts_management.id", "DESC")
                                     ->get();
 
             return response()->json($data)->setStatusCode(200);
@@ -109,18 +124,32 @@ class PaymentController extends Controller
 
     }
 
-
+    // cuentas vencidas
     function paymentsBeaten(Request $request){
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
-            $data = RecibosCobranza::join("policies", "policies.id_policies", "=", "recibos_cobranza.id_policie")
-                                    ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients")
+            $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        DB::raw("cast(audi.fec_regins as date) as fec_regins"),
+                                        "clients_people.id_clients_people",
+                                        "clients_people.names as name_client", 
+                                        "clients_people.last_names", 
+                                        "clients_people.number_document",
+                                        "clients_company.id_clients_company",
+                                        "clients_company.business_name",
+                                      )
+                                    ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
+                                    ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
+                                    ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
 
-                                    ->where("recibos_cobranza.status", 0)
-                                    ->where("recibos_cobranza.payment_date", "<", date("Y-m-d"))
-                                    ->orderBy("recibos_cobranza.id_policie", "desc")
-                                    ->orderBy("recibos_cobranza.monthly_fee", "asc")
+                                    ->where("audi.tabla", "=", "charge_accounts_management")
+                                    ->where("audi.status", "!=", "0")
+                                    ->where("charge_accounts_management.status", 0)
+                                    ->where("charge_accounts_management.limit_date", "<", date("Y-m-d"))
+
+                                    ->with('chargeAccount')
+                                    ->orderBy("charge_accounts_management.id", "DESC")
                                     ->get();
 
             return response()->json($data)->setStatusCode(200);
@@ -130,16 +159,31 @@ class PaymentController extends Controller
 
     }
 
+    // pagos recaudados
     function paymentsCollected(Request $request){
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
-            $data = RecibosCobranza::join("policies", "policies.id_policies", "=", "recibos_cobranza.id_policie")
-                                    ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients")
+            $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
+                                        DB::raw("cast(audi.fec_regins as date) as fec_regins"),
+                                        "clients_people.id_clients_people",
+                                        "clients_people.names as name_client", 
+                                        "clients_people.last_names", 
+                                        "clients_people.number_document",
+                                        "clients_company.id_clients_company",
+                                        "clients_company.business_name",
+                                      )
+                                    ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
+                                    ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
+                                    ->join("clients_people", "clients_people.id_clients_people", "=", "charge_accounts_management.id_client", "left")
+                                    ->join("clients_company", "clients_company.id_clients_company", "=", "charge_accounts_management.id_client", "left")
 
-                                    ->where("recibos_cobranza.type_operation", "A")
-                                    ->orderBy("recibos_cobranza.id_policie", "desc")
-                                    ->orderBy("recibos_cobranza.monthly_fee", "asc")
+                                    ->where("audi.tabla", "=", "charge_accounts_management")
+                                    ->where("audi.status", "!=", "0")
+                                    ->where("charge_accounts_management.status", 1)
+
+                                    ->with('chargeAccount')
+                                    ->orderBy("charge_accounts_management.id", "DESC")
                                     ->get();
 
             return response()->json($data)->setStatusCode(200);

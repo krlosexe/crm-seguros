@@ -253,7 +253,7 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
 
-                                ->with(["collections", "chargeManagement"])
+                                ->with(["chargeManagement"])
                                 
                                 ->where("charge_accounts.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
@@ -267,7 +267,7 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
 
-                                ->with(["collections", "chargeManagement"])
+                                ->with(["chargeManagement"])
                                 
                                 ->where("policies_annexes.id_policie", $id_policie)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
@@ -313,8 +313,6 @@ class ChargeAccountController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->join('datos_personales', 'datos_personales.id_usuario', '=', 'user_registro.id')
                                 ->where("auditoria.status", "!=", "0")
-
-                                ->with("collections")
                                 
                                 ->where("charge_accounts.id_charge_accounts", $chargeAccount)
                                 ->orderBy("charge_accounts.id_charge_accounts", "DESC")
@@ -354,8 +352,6 @@ class ChargeAccountController extends Controller
                                 ->where("ap.tabla", "policies")
 
                                 ->where("ap.status", "!=", "0")
-
-                                ->with("collections")
                                 
                                 ->where("charge_accounts.limit_date", "<=", date("Y-m-d"))
 
