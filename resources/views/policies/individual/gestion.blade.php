@@ -752,11 +752,12 @@
 							GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza)
 							GetClients("#clients_select_edit", data.clients+"|"+data.type_clients);
 
+							$('#clients_select_edit').change();
+
 							GetPlacas("#placa-edit")
 
 							ChangeSelectBranch("#branch_edit", "_edit")
 
-							$("#clients_edit").val(data.clients)
 							$("#type_poliza_edit").val(data.type_poliza).attr("readonly", "readonly")
 							$("#number_policies_edit").val(data.number_policies)
 							$("#state_policies_edit").val(data.state_policies)
@@ -817,7 +818,6 @@
 							
 
 							showPays(data.id_policies, "#table-simulation-edit")
-
 
 							var html = ""
 							$.map(data.vehicules, function (item, key) {
