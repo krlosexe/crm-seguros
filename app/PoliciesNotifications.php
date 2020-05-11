@@ -12,5 +12,5 @@ class PoliciesNotifications extends Model
 
     protected $table         = 'policies_notifications';
     public    $timestamps    = false;
-    protected $primaryKey    = 'id_policies_notifications';
+    protected $primaryKey    = 'id_policies';
 }

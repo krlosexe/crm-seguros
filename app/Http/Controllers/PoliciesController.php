@@ -85,9 +85,8 @@ class PoliciesController extends Controller
                                 ->join("branchs", "branchs.id_branchs", "=", "policies.branch")
 
                                 ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
-                                ->where("auditoria.tabla", "policies")
-                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
+                                ->where("auditoria.tabla", "policies")
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->orderBy("policies.state_policies", "asc");    
@@ -366,9 +365,6 @@ class PoliciesController extends Controller
             $request["participation"]         = (float) str_replace(',', '', $request["participation"]);
             $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
-
-
-            
             
             $update = Policies::find($policies)->update($request->all());
 
