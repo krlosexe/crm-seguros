@@ -147,7 +147,7 @@
 				$("#nav_li_Polizas").addClass("open");
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "policies");
 			});
 
 

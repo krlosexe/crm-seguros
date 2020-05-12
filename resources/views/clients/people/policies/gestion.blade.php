@@ -37,7 +37,7 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-3);
-        validAuth(false, url[0]);
+        validAuth(false, 'people');
       });
     </script>
 
