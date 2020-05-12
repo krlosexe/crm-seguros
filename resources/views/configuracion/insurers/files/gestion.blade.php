@@ -147,7 +147,7 @@
 				$("#nav_li_Polizas").addClass("open");
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "insurers");
 			});
 
 
@@ -289,9 +289,9 @@
 
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
-						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
-						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+url+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
 					
@@ -352,9 +352,9 @@
 
 					var ext = data.name.split('.');
 					if (ext[1] == "pdf") {
-						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
-						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
+						img = '<img src="'+url+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
 					}
 					
 					

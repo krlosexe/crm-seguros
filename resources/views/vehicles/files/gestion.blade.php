@@ -139,7 +139,7 @@
 
 <script>
 			$(document).ready(function(){
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "vehicles");
 				store();
 				list();
 				update();

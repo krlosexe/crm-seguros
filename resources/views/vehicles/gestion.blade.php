@@ -67,7 +67,7 @@
 
 				$("#nav_users, #modulo_Vehículos").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "vehicles");
 
 
 				$(".selectized").selectize({
