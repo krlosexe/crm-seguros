@@ -878,5 +878,38 @@ class ImportController extends Controller
 
     }
 
+    function reprocesarCalculoPolicies(){
+       
+     ini_set("default_charset", "utf-8");
+     ini_set("pcre.backtrack_limit", "50000000");
+     ini_set("memory_limit", "-1");
+     set_time_limit(0);
+
+      $cousins = PoliciesCousinsCommissions::all();
+
+      foreach ($cousins as $cousin) {
+        
+        $value_cousin                      = (float) $cousin->cousin;
+        $value_xpenses                     = (float) $cousin->xpenses;
+        $value_percentage_vat_cousin       = (float) $cousin->percentage_vat_cousin;
+        $value_input_commission_percentage = (float) $cousin->commission_percentage;
+        $participation                     = (float) $cousin->participation;
+        
+        $result_percentage_vat_cousin = (float) (($value_cousin + $value_xpenses)/100) * $value_percentage_vat_cousin;
+        $result_commission_percentage = (float) (($value_cousin - ($value_cousin * $value_percentage_vat_cousin/100)) /100) * $value_input_commission_percentage;
+
+        $comission_total =  (float) ($result_commission_percentage / 100) * $participation;
+
+        $total = $result_percentage_vat_cousin + $value_cousin + $value_xpenses;
+
+        $cousin->vat = (float) $result_percentage_vat_cousin;
+        $cousin->agency_commission = (float) $comission_total;
+        $cousin->total = (float) $total;
+        $cousin->save();
+
+      }
+
+    }
+
 
 }
