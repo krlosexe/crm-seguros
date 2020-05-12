@@ -388,8 +388,8 @@
                         
                           <br>
 
-                          <div class="row row-participacion">
-                              <div class="col-md-6">
+                          <div class="row">
+                              <div class="col-md-6 row-participacion">
                                 <label for=""><b>Porcentaje Comisión</b></label>
                                   <div class="form-group valid-required">
                                     <input type="text" name="commission_percentage" class="form-control form-control-user" id="commission_percentage_view" readonly style="text-align: right">
@@ -402,13 +402,8 @@
                                     <input type="text" name="participation" class="form-control form-control-user" id="participation_view" value="100">
                                   </div>
                               </div>
-                          </div>
-                        
-                          <br>
 
-
-                          <div class="row">
-                              <div class="col-md-6">
+                              <div class="col-md-6 row-participacion">
                                 <label for=""><b>Comisión agencia</b></label>
                                   <div class="form-group valid-required">
                                     <input type="text" name="agency_commission" class="form-control form-control-user" id="agency_commission_view" readonly value="0" style="text-align: right">

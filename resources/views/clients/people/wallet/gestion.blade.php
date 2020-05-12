@@ -888,7 +888,7 @@
 	                  
 
 	                  <td>
-	                  	<input name="participation[]" value="" class="form-control text-right  form-control-user">
+	                  	<input name="participation[]" value="100" class="form-control text-right  form-control-user">
 	                  </td>
 	                  
                   

@@ -347,7 +347,18 @@ class UsuariosController extends Controller
 
             $auditoria->save();
 
-            $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+            if($status == 0){
+              
+              User::find($id_user)->delete();
+
+              $mensaje = 'El usuario fue eliminado correctamente';
+            }
+            else{
+              $mensaje = 'Los datos fueron actualizados satisfactoriamente';
+            }
+
+
+            $data = array('mensagge' => $mensaje);    
             return response()->json($data)->setStatusCode(200);
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);

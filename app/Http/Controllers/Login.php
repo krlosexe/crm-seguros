@@ -189,10 +189,9 @@ class Login extends Controller
                        ->join("rol_operaciones", "rol_operaciones.id_rol", "=", "roles.id_rol")
                        ->join("funciones", "funciones.id_funciones", "=", "rol_operaciones.id_funciones")
                             ->where("funciones.route", $request["route"])
-                        ->get();
-                         
+                        ->first();
 
-        return response()->json($users[0])->setStatusCode(200);
+        return response()->json($users)->setStatusCode(200);
     }
 
     public function Logout($user_id)

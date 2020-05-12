@@ -74,7 +74,6 @@
 
 			$(document).ready(function(){
 				list();
-				update();
 
 				$("#nav_li_Cartera").addClass("open");
 				$("#nav_payment").addClass("active");
@@ -88,11 +87,6 @@
 
 			function filtrarFecha(){
 				$(table).DataTable().draw();
-			}
-
-
-			function update(){
-				savePayment("#form-update", 'api/payment/fee', '#cuadro4', false, "#avatar-edit");
 			}
 
 			function list(cuadro) {

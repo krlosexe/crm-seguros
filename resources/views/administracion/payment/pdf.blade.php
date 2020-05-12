@@ -129,6 +129,8 @@
                                                      <img id="firm_agent" class="img-responsive text-opacity mrg-top-5" width="150" src="https://upload.wikimedia.org/wikipedia/commons/1/14/Firma_Ildefonso_Leal.jpg" alt=""> <br>
                                                 <span><b class="text-dark text-uppercase" id="name_agent">JUAN FERNANDO RIVERA QUEVEDO</b></span> <br>
                                                 <span class="text-opacity text-uppercase" >Asistente en seguros</span>
+                                                <br>
+                                                <span class="text-opacity text-uppercase correo" >example@gmail.com</span>
                                             </div>
                                         </div>
                                     </div>
@@ -250,6 +252,7 @@
                 // nombre de agente, no se sabe
 
                 $("#name_agent").text(data.nombre_p + ' '+data.apellido_p)
+                $(".correo").text(data.email)
 
                 $("#firm_agent").attr("src", url + "/img/usuarios/firms/"+data.firm)
 

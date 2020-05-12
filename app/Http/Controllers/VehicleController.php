@@ -29,7 +29,7 @@ class VehicleController extends Controller
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
                                 ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
-
+                                ->limit(10)
                                 ->where("auditoria.status", "!=", "0")
                                 ->orderBy("vehicules.id_vehicules", "DESC")
                                 ->get();

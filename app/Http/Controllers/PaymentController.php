@@ -60,6 +60,7 @@ class PaymentController extends Controller
                                         "datos_personales.nombres as nombre_p",
                                         "datos_personales.apellido_p",
                                         "user_registro.firm",
+                                        "user_registro.email",
                                       )
                                     ->join("auditoria as audi", "audi.cod_reg", "=", "charge_accounts_management.id")
                                     ->join("users as user_registro", "user_registro.id", "=", "audi.usr_regins")
