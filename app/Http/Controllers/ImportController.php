@@ -424,9 +424,9 @@ class ImportController extends Controller
        $fila = 0;
        $noEncontrados = array();
 
-        $reader = ReaderEntityFactory::createReaderFromFile('Polizas-restantes.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile('Polizas-no-renovadas.xlsx');
 
-        $reader->open('Polizas-faltantes.xlsx');
+        $reader->open('Polizas-no-renovadas.xlsx');
 
         foreach ($reader->getSheetIterator() as $sheet) {
             foreach ($sheet->getRowIterator() as $key => $row) {
@@ -574,8 +574,6 @@ class ImportController extends Controller
         }
 
         $reader->close();
-
-        dd($noEncontrados);
         
         $f = fopen('php://output', 'w');
 
@@ -586,6 +584,34 @@ class ImportController extends Controller
             fputcsv($f, $value, ';');
         }
         
+    }
+
+    public function eliminarPolizas(){
+       ini_set("default_charset", "utf-8");
+       ini_set("pcre.backtrack_limit", "50000000");
+       ini_set("memory_limit", "-1");
+       set_time_limit(0);
+
+       $fila = 0;
+       $noEncontrados = array();
+
+        $reader = ReaderEntityFactory::createReaderFromFile('Polizas-equivocadas.xlsx');
+
+        $reader->open('Polizas-equivocadas.xlsx');
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+                Policies::find($cells[0])->delete();
+
+
+            }
+        }
+
     }
 
     public function files()
