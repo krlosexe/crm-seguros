@@ -440,6 +440,9 @@ class PoliciesController extends Controller
                 }
 
             }
+            else{
+                PoliciesFamiliares::where('id_policies', $policie->id_policies)->delete()
+            }
 
 
             if($request->placas != null){
