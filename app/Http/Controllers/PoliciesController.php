@@ -441,7 +441,7 @@ class PoliciesController extends Controller
 
             }
             else{
-                PoliciesFamiliares::where('id_policies', $policie->id_policies)->delete()
+                PoliciesFamiliares::where('id_policies', $policie->id_policies)->delete();
             }
 
 
