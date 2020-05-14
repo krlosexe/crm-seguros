@@ -511,6 +511,8 @@
 
 				GetPlacas("#placa")
 
+				$('#table-store-familiares tbody').html('');
+
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
 
@@ -692,6 +694,12 @@
 
 							$("#table-placas-view").html(html)
 
+							$('#table-view-familiares tbody').html('');
+
+							data.familiares.forEach(item => {
+								addFamiliar(document.querySelector('#table-view-familiares'), item, false)
+							})
+
 
 							var url = "policies/annexes/"+data.id_policies+"/0"
 							$('#iframeAnnexesView').attr('src', url);
@@ -829,6 +837,13 @@
 
 							$("#table-placas-edit").html(html)
 
+							$('#table-edit-familiares tbody').html('');
+
+							data.familiares.forEach(item => {
+
+								addFamiliar(document.querySelector('#table-edit-familiares'), item);
+
+							})
 
 
 
@@ -1368,6 +1383,60 @@
 
 				$("#table-placas").append(html)
 			});
+
+			$(".add-familiar").click(function (e) { 
+				let tablita = e.target.closest('table');
+
+				addFamiliar(tablita)
+			});
+
+			function addFamiliar(tablita, { id = 0, nombre = '', documento = ''} = {}, edit = true){
+				
+				let html = `
+					<td>
+						<input hidden name="familiar_id[]" value="${id}" />
+
+						${edit? 
+							`
+								<input class="form-control" placeholder="Nombre" name="familiar_nombre[]" value="${nombre}" />
+							`
+							:
+							nombre
+						}
+						
+
+					</td>
+					<td>
+						${edit? 
+							`
+								<input class="form-control" placeholder="Documento" name="familiar_documento[]" value="${documento}" />
+							`
+							:
+							documento
+						}
+					</td>
+					<td>
+						${edit? 
+							`
+		                      <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" onclick="this.closest('tr').remove()">
+		                          <i class="fa fa-trash"></i>
+		                      </button>	
+							`
+							:
+							''
+						}
+					
+                    </td>
+				`
+
+				let tr = document.createElement('tr');
+
+				tr.innerHTML = html;
+
+				tablita.querySelector('tbody').appendChild(tr)
+
+			}
+
 			
 			$("#add-vehicle-edit").click(function (e) { 
 				var placa = $("#placa-edit").val()

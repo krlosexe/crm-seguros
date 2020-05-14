@@ -13,6 +13,7 @@ use App\PoliciesBind;
 use App\RecibosCobranza;
 use App\PoliciesAnnexes;
 use App\PolicesVehicles;
+use App\PoliciesFamiliares;
 use Illuminate\Http\Request;
 
 use App\ClientsPeople;
@@ -177,6 +178,19 @@ class PoliciesController extends Controller
             PoliciesObservations::create($request->all());
             PoliciesInfoPayments::create($request->all());
 
+            if(isset($request->familiar_id)){
+
+                foreach ($request->familiar_nombre as $key => $value) {
+
+                    $familiares['nombre'] = $value;
+                    $familiares['documento'] = $request->familiar_documento[$key];
+                    $familiares['id_policies'] = $store->id_policies;
+
+                    PoliciesFamiliares::create($familiares);
+
+                }
+            }
+
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
                 PoliciesNotifications::create($request->all());
@@ -301,6 +315,8 @@ class PoliciesController extends Controller
 
                                 ->with("vehicules")
 
+                                ->with("familiares")
+
                                 ->where("policies.id_policies", $policies)
 
                                 ->where("auditoria.status", "!=", "0")
@@ -385,6 +401,46 @@ class PoliciesController extends Controller
 
 
             $policie = Policies::find($policies);
+
+            if(isset($request->familiar_id)){
+
+                $familiaresMap = PoliciesFamiliares::select('id')->where('id_policies', $policie->id_policies)->get()->toArray();
+
+
+                $familiaresMap = array_map(function($item){
+                    return $item['id'];
+                }, $familiaresMap);
+
+
+                foreach ($request->familiar_nombre as $key => $value) {
+
+                    $familiares['nombre'] = $value;
+                    $familiares['documento'] = $request->familiar_documento[$key];
+                    $familiares['id_policies'] = $policie->id_policies;
+
+                    if(in_array($request->familiar_id[$key], $familiaresMap)){
+
+                        $key = array_search($request->familiar_id[$key], $familiaresMap);
+
+                        unset($familiaresMap[$key]);
+
+                        PoliciesFamiliares::find($request->familiar_id[$key])->update($familiares);
+
+                    }
+                    else if($request->familiar_id[$key] == 0){
+
+                        PoliciesFamiliares::create($familiares);
+
+                    }
+
+                }
+
+                foreach ($familiaresMap as $value) {
+                    PoliciesFamiliares::find($value)->delete();
+                }
+
+            }
+
 
             if($request->placas != null){
                 PolicesVehicles::where('id_policie', $policie->id_policies)->delete();

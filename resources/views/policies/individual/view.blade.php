@@ -478,6 +478,38 @@
                   </div>
 
 
+                <div class="row remove">
+
+                  <div class="col-md-12">
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Familiares</h6>
+                      </div>
+                      <div class="card-body">
+
+                        <table class="table table-bordered" id="table-view-familiares">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Nombre</th>
+                                    <th width="40%">Documento</th>
+                                    <th width="20%">
+
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+                        </table>
+
+
+                        <br>                 
+             
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
                   <div class="row remove">
                   
                     <div class="col-md-12">

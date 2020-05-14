@@ -401,7 +401,7 @@
               </div>
             </div>
 
-      <div class="row remove">
+            <div class="row remove">
 
               <div class="col-md-12">
                 <div class="card shadow mb-4">
@@ -451,6 +451,40 @@
                 </div>
               </div>
             </div>
+
+            <div class="row remove">
+
+              <div class="col-md-12">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Familiares</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <table class="table table-bordered" id="table-store-familiares">
+                        <thead>
+                            <tr>
+                                <th width="40%">Nombre</th>
+                                <th width="40%">Documento</th>
+                                <th width="20%">
+                                  <button type="button" class="btn btn-primary btn-sm waves-effect waves-light add-dato-btn add-familiar">
+                                      <i class="fa fa-plus" ></i>
+                                  </button>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="table-familiares"></tbody>
+                    </table>
+
+
+                    <br>                 
+         
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="row remove">
             

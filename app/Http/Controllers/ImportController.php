@@ -96,9 +96,9 @@ class ImportController extends Controller
 
        $noEncontrados = array();
 
-        $reader = ReaderEntityFactory::createReaderFromFile('anexos.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile('anexos-no-renovados.xlsx');
 
-        $reader->open('anexos.xlsx');
+        $reader->open('anexos-no-renovados.xlsx');
         foreach ($reader->getSheetIterator() as $key2 => $sheet) {
 
             foreach ($sheet->getRowIterator() as $key => $row) {
@@ -110,7 +110,7 @@ class ImportController extends Controller
                   return $item->getValue();
                 }, $row->getCells());
 
-                $policie = Policies::where('number_policies', $cells[0])->first();
+                $policie = Policies::where('number_policies', trim($cells[0]))->first();
 
                 if($policie == null){
 
@@ -194,7 +194,7 @@ class ImportController extends Controller
             $csv = $csv . "\n";
           }
 
-        $csv_handler = fopen ('annexes-notfound.csv','w');
+        $csv_handler = fopen ('annexes-no-renovados.csv','w');
         fwrite ($csv_handler,$csv);
         fclose ($csv_handler);
                 

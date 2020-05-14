@@ -46,6 +46,12 @@ class Policies extends Model
       return $this->hasMany('App\PolicesVehicles', 'id_policie');
     }
 
+    public function familiares()
+    {
+      return $this->hasMany('App\PoliciesFamiliares', 'id_policies');
+    }
+
+
     public function clientPeople()
     {
       return $this->hasOne('App\ClientsPeople', 'id_clients_people', 'clients');
