@@ -222,6 +222,7 @@ Route::get('policies/wallet/files/{id_charge}/{management}', function ($id_charg
 
 
 Route::get('reprocesar', 'ImportController@reprocesar');
+Route::get('crearUsuariosPeople', 'ImportController@crearUsuariosPeople');
 Route::get('reprocesarCalculoPolicies', 'ImportController@reprocesarCalculoPolicies');
 
 Route::get('import-anexos', 'ImportController@anexos');
