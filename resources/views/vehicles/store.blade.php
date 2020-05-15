@@ -102,7 +102,12 @@
                         <div class="row">
                           <div class="col-sm-4">
                               <label for=""><b>Modelo*</b></label>
-                              <input type="number" name="model" class="form-control form-control-user" id="model" placeholder="EJ: 2007" required min="1970">
+                              <select class="form-control" name="model" id="model" required> 
+                                <option value="">Seleccione</option>
+                                @foreach (range(2020, 1970) as $element)
+                                  <option value="{{ $element }}">{{ $element }}</option>
+                                @endforeach
+                              </select>
                             </div>
                           <div class="col-sm-4">
                             <label for=""><b>Color*</b></label>
