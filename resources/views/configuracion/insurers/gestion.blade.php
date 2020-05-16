@@ -185,6 +185,7 @@
 					var data = table.row( $(this).parents("tr") ).data();
 				
 					$("#code_view").val(data.code).attr("disabled", "disabled")
+					$("#link_view").val(data.link_cita).attr("disabled", "disabled")
 					$("#name_view").val(data.name).attr("disabled", "disabled")
 					$("#nit_view").val(data.nit).attr("disabled", "disabled")
 					$("#email_view").val(data.email).attr("disabled", "disabled")
@@ -228,6 +229,7 @@
 					var data = table.row( $(this).parents("tr") ).data();
 					
 					$("#code_edit").val(data.code)
+					$("#link_edit").val(data.link_cita)
 					$("#name_edit").val(data.name)
 					$("#nit_edit").val(data.nit)
 					$("#email_edit").val(data.email)

@@ -19,7 +19,7 @@ Route::get('/compare', function () {
     return view('compare');
 });
 
-Route::post('auth', 'Login@Auth');
+Route::post('auth', 'Login@AuthApp');
 
 Route::get('logout/{id}', 'Login@Logout');
 

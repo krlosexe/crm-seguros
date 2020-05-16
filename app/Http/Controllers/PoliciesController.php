@@ -883,6 +883,47 @@ class PoliciesController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
+    public function getCitasSalud($cedula){
+
+        $cliente = ClientsPeople::select('id_clients_people as id')->where('number_document', $cedula)->first();
+        $type_client = 0;
+
+        if($cliente == null){
+            $cliente = ClientsCompany::select('id_clients_company as id')->where('nit', $cedula)->first();
+            $type_client = 1;
+        }
+        
+
+        if($cliente == null)
+            return response()->json([])->setStatusCode(200);
+
+        $data = Policies::where([
+                        'type_clients' => $type_client,
+                        'clients' => $cliente->id,
+                        'state_policies' => 'Vigente',
+                    ])
+                ->where('branchs.name', 'like', '%SALUD%')
+                ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
+                ->with(['branch_data', 'insurers_data'])
+                ->get();
+
+        $resp = array();
+
+        foreach ($data as $key => $value) {
+            $info = [
+                'insurers_id' => $value->insurers_data->id_insurers,
+                'insurers_name' => $value->insurers_data->name,
+                'number_policies' => $value->number_policies,
+                'link' => $value->insurers_data->link_cita,
+            ];
+
+            array_push($resp, $info);
+        }
+        
+
+        return response()->json($resp)->setStatusCode(200);
+    }
+
 
 
     /**

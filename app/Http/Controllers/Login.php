@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\ClientsCompany;
+use App\ClientsPeople;
 use App\Modulos;
 use App\funciones;
 use App\AuthUsers;
@@ -67,6 +69,88 @@ class Login extends Controller
 	    	}else{
 	    		return response()->json("Usuario o contraseña inválida")->setStatusCode(400);
 	    	}
+        }
+
+
+    }
+
+    public function AuthApp(request $request)
+    {   
+
+        $messages = [
+            'required' => 'El Campo :El campo es requerido.',
+        ];
+
+
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required',
+            'password' => 'required',
+        ], $messages);
+
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }else{
+
+            $users = User::join("auditoria", "auditoria.cod_reg", "=", "users.id")
+                         ->where("email", $request["email"])
+                         ->where("password", md5($request["password"]))
+                         ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
+                         ->where("auditoria.tabla", "users")
+                         ->where("auditoria.status", "!=", "0")
+                         ->get();
+
+            if (sizeof($users) > 0) {
+                $token = bin2hex(random_bytes(64));
+
+
+                $token_user  = AuthUsers::where("id_user", $users[0]->id)->get();
+
+                foreach ($token_user as $key => $value) {
+                    $value->delete();
+                }
+
+                $AuthUsers          = new AuthUsers;
+                $AuthUsers->id_user = $users[0]->id;
+                $AuthUsers->token   = $token;
+                $AuthUsers->save();
+
+                // Esta lógica deberá hacerse con relacion en el campo user. Esta es una solución provisional 15/05
+
+                $nombrecompleto = trim($users[0]->nombres.' '.$users[0]->apellido_p);
+
+                $cliente = ClientsPeople::select("id_clients_people as id")->where('names', $users[0]->nombres)
+                                         ->where('last_names', $users[0]->apellido_p)
+                                         ->first();
+
+                $type = 0;
+
+                if($cliente == null){
+
+                    $cliente = ClientsCompany::select("id_clients_company as id")->where('business_name', $users[0]->nombres)->first();
+                    $type = 1;
+
+                    if($cliente == null){
+                        $cliente = new \stdClass;
+                        $cliente->id = 0;
+                    }
+
+                }
+
+                $data = array('user_id'    => $users[0]->id,
+                              'email'      => $users[0]->email,
+                              'token'      => $token,
+                              'nombre'     => $users[0]->nombres,
+                              'apellido'   => $users[0]->apellido_p,
+                              'type_client'    => $type,
+                              'client_id'      => $cliente->id,
+                              'mensagge'   => "Ha iniciado sesión exitosamente"
+                );
+
+                return response()->json($data)->setStatusCode(200);
+            }else{
+                return response()->json("Usuario o contraseña inválida")->setStatusCode(400);
+            }
         }
 
 

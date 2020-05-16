@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('auth', 'Login@Auth');
+Route::post('authApp', 'Login@authApp');
 
 Route::post('verify-token', 'Login@VerifyToken');
 
@@ -232,3 +233,5 @@ Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 
 Route::get('my/companie/files', 'MyCompanyController@Files');
 Route::post('my/companie/files', 'MyCompanyController@StoreFiles');
+
+Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');

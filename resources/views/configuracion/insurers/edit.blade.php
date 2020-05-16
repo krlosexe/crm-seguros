@@ -54,6 +54,13 @@
                                   <input type="number" name="code" class="form-control form-control-user" id="code_edit" placeholder="Codigo" required>
                                 </div>
                               </div>
+                              <div class="col-md-6">
+                                <label for=""><b>Link Citas</b></label>
+                                <div class="form-group valid-required">
+                                  <input type="text" name="link_cita" class="form-control form-control-user" id="link_edit" placeholder="link citas">
+                                </div>
+                              </div>
+                              
                           </div>
 
                           <div class="row">

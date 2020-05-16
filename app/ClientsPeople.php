@@ -35,10 +35,13 @@ class ClientsPeople extends Model
                         'policies_observations',
                         'policies_notifications',
                         'policies_info_payments',
+                        'branch_data',
+                        'insurers_data',
                     ])
                     ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
                     ->where("auditoria.tabla", "policies")
-                    ->where("auditoria.status", "!=", "0");
+                    ->where("auditoria.status", "!=", "0")
+                    ->where('policies.state_policies', 'Vigente');
     }
 
     public function contact(){

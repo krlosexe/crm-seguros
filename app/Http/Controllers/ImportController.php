@@ -42,7 +42,13 @@ use App\datosPersonaesModel;
 class ImportController extends Controller
 {
 
+function generateRandomString($length = 10) {
+    return substr(str_shuffle(str_repeat($x='123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+}
+
   function crearUsuariosPeople(){
+    $this->updateClaves();
+    die;
     $clients = ClientsPeople::all();
     $company = ClientsCompany::all();
 
@@ -78,7 +84,9 @@ class ImportController extends Controller
             $auditoria->usr_regins  = 1;
             $auditoria->save();
 
-            array_push($csv, ['email' => $User->email, 'password' => $password]);
+            array_push($csv, ['email' => $User->email, 'password' => $password,
+              'nombre_completo' => $datos_personales->nombres.' '.$datos_personales->apellido_p
+          ]);
     }
 
     foreach ($company as $key => $value) {
@@ -111,7 +119,9 @@ class ImportController extends Controller
             $auditoria->usr_regins  = 1;
             $auditoria->save();
 
-            array_push($csv, ['email' => $User->email, 'password' => $password]);
+            array_push($csv, ['email' => $User->email, 'password' => $password,
+              'razon_social' => $datos_personales->nombres
+          ]);
     }
 
     $csvtext = '';
@@ -127,6 +137,39 @@ class ImportController extends Controller
   $csv_handler = fopen ('clients-users.csv','w');
   fwrite ($csv_handler,$csvtext);
   fclose ($csv_handler);
+
+  }
+
+  function updateClaves(){
+    $users = User::where('id', '>', 78)->get();
+    $csv = array();
+
+    foreach ($users as $key => $value) {
+        $datospersonales = datosPersonaesModel::where('id_usuario', $value->id)->first();
+
+         $password = $this->generateRandomString(6);
+
+         User::find($value->id)->update(['password' => md5($password)]);
+
+         array_push($csv, ['email' => $value->email, 'password' => $password,
+            'nombre_completo' => $datospersonales->nombres.' '.$datospersonales->apellido_p
+        ]);
+
+    }
+
+      $csvtext = '';
+
+      foreach ($csv as $record){
+        foreach ($record as $key => $value) {
+            $csvtext = $csvtext . $value.';';
+        }
+
+        $csvtext = $csvtext . "\n";
+      }
+
+    $csv_handler = fopen ('clients-users.csv','w');
+    fwrite ($csv_handler,$csvtext);
+    fclose ($csv_handler);
 
   }
 
