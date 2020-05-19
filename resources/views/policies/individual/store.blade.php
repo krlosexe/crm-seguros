@@ -312,7 +312,7 @@
                       <div class="col-md-12 text-center">
                         <div class="kv-avatar">
                           <div class="file-loading">
-                            <input id="input-file-store" name="file_caratula" type="file">
+                            <input id="input-file-store" name="file" type="file">
                           </div>
                         </div>
 

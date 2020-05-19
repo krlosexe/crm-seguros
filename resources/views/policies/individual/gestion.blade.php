@@ -735,9 +735,10 @@
 							var url = "policies/wallet/"+data.id_policies+"/0"
 							$('#iframeCarteraView').attr('src', url);
 
-							url_imagen = ruta.value + '/img/policies/caratulas/'
 
 							if(data.file_caratula != null){
+
+								url_imagen = ruta.value + '/img/policies/caratulas/'
 
 								var ext = data.file_caratula.split('.');
 								if (ext[1] == "pdf") {
@@ -745,6 +746,8 @@
 								}else{
 									img = '<img src="'+url_imagen+data.file_caratula+'" class="file-preview-image kv-preview-data">'
 								}
+
+								console.log(data.file_caratula)
 								
 								$("#input-file-view").fileinput({
 									theme: "fas",
@@ -938,7 +941,8 @@
 							}else{
 								img = '<img src="'+url_imagen+data.file_caratula+'" class="file-preview-image kv-preview-data">'
 							}
-							
+															console.log(data.file_caratula)
+
 							$("#input-file-edit").fileinput({
 								theme: "fas",
 								overwriteInitial: true,

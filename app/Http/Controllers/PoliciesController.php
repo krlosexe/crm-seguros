@@ -161,13 +161,13 @@ class PoliciesController extends Controller
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
 
-            $file = $request->file('file_caratula');
+            $file = $request->file('file');
 
             if($file != null){
 
                 $file->move('img/policies/caratulas',$file->getClientOriginalName());
         
-                $request["file_caratula"] = $file->getClientOriginalName();
+                $request->file_caratula = $file->getClientOriginalName();
 
             }
 
@@ -380,13 +380,13 @@ class PoliciesController extends Controller
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
 
-            $file = $request->file('file_caratula');
+            $file = $request->file('file');
 
             if($file != null){
 
                 $file->move('img/policies/caratulas',$file->getClientOriginalName());
-        
-                $request["file_caratula"] = $file->getClientOriginalName();
+                
+                $request['file_caratula'] = $file->getClientOriginalName();
                 
             }
 
