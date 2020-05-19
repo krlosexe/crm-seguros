@@ -196,7 +196,7 @@
 				$("#avatar-1").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
-					maxFileSize: 1500,
+					maxFileSize: 10000,
 					showClose: false,
 					showCaption: false,
 					browseLabel: '',
@@ -307,7 +307,7 @@
 					$("#avatar-view").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',
@@ -391,7 +391,7 @@
 					$("#avatar-edit").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',

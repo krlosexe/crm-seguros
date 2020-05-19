@@ -223,7 +223,7 @@
 				$("#logo").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
-					maxFileSize: 1500,
+					maxFileSize: 10000,
 					showClose: false,
 					showCaption: false,
 					browseLabel: '',
@@ -345,7 +345,7 @@
 					$("#logo-view").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',
@@ -480,7 +480,7 @@
 					$("#logo-edit").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',

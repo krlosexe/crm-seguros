@@ -256,7 +256,7 @@
 				$("#input-file-store").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
-					maxFileSize: 1500,
+					maxFileSize: 10000,
 					showClose: false,
 					showCaption: false,
 					browseLabel: '',
@@ -307,7 +307,7 @@
 					$("#input-file-view").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',
@@ -370,7 +370,7 @@
 					$("#input-file-edit").fileinput({
 						theme: "fas",
 						overwriteInitial: true,
-						maxFileSize: 1500,
+						maxFileSize: 10000,
 						showClose: false,
 						showCaption: false,
 						browseLabel: '',
