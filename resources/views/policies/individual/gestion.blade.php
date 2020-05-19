@@ -516,10 +516,33 @@
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
 
+				$('#input-file-store').fileinput('destroy');
+			
+				initFileInput('#input-file-store')
+
 				cuadros("#cuadro1", "#cuadro2");
 			}	
 
 
+			function initFileInput(id){
+				$(id).fileinput({
+					theme: "fas",
+					overwriteInitial: true,
+					maxFileSize: 1500,
+					showClose: false,
+					showCaption: false,
+					browseLabel: '',
+					removeLabel: '',
+					browseIcon: '<i class="fa fa-folder-open"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
+					previewFileIcon: '<i class="fas fa-file"></i>',
+					removeTitle: 'Cancel or reset changes',
+					elErrorContainer: '#kv-avatar-errors-1',
+					msgErrorClass: 'alert alert-block alert-danger',
+					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+				});
+			}
 
 
 			
@@ -712,7 +735,48 @@
 							var url = "policies/wallet/"+data.id_policies+"/0"
 							$('#iframeCarteraView').attr('src', url);
 
+							url_imagen = ruta.value + '/img/policies/caratulas/'
 
+							if(data.file_caratula != null){
+
+								var ext = data.file_caratula.split('.');
+								if (ext[1] == "pdf") {
+									img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.file_caratula+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+								}else{
+									img = '<img src="'+url_imagen+data.file_caratula+'" class="file-preview-image kv-preview-data">'
+								}
+								
+								$("#input-file-view").fileinput({
+									theme: "fas",
+									overwriteInitial: true,
+									maxFileSize: 1500,
+									showClose: false,
+									showCaption: false,
+									browseLabel: '',
+									removeLabel: '',
+									browseIcon: '<i class="fa fa-folder-open"></i>',
+									removeIcon: '<i class="fas fa-trash-alt"></i>',
+									previewFileIcon: '<i class="fas fa-file"></i>',
+									removeTitle: 'Cancel or reset changes',
+									elErrorContainer: '#kv-avatar-errors-1',
+									msgErrorClass: 'alert alert-block alert-danger',
+									layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+									allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+									initialPreview: [ 
+										img
+									],
+									initialPreviewConfig: [
+											
+										{caption: data.file_caratula , downloadUrl: url_imagen+data.file_caratula  ,url: url+"uploads/delete", key: data.file_caratula}
+								
+									],
+
+								});
+
+							}
+							else{
+								initFileInput('#input-file-view');
+							}
 
 							cuadros('#cuadro1', '#cuadro3');
 
@@ -862,7 +926,50 @@
 
 							cuadros('#cuadro1', '#cuadro4');
 
+						if(data.file_caratula != null){
 
+
+							url_imagen = ruta.value + '/img/policies/caratulas/'
+
+
+							var ext = data.file_caratula.split('.');
+							if (ext[1] == "pdf") {
+								img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.file_caratula+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+							}else{
+								img = '<img src="'+url_imagen+data.file_caratula+'" class="file-preview-image kv-preview-data">'
+							}
+							
+							$("#input-file-edit").fileinput({
+								theme: "fas",
+								overwriteInitial: true,
+								maxFileSize: 1500,
+								showClose: false,
+								showCaption: false,
+								browseLabel: '',
+								removeLabel: '',
+								browseIcon: '<i class="fa fa-folder-open"></i>',
+								removeIcon: '<i class="fas fa-trash-alt"></i>',
+								previewFileIcon: '<i class="fas fa-file"></i>',
+								removeTitle: 'Cancel or reset changes',
+								elErrorContainer: '#kv-avatar-errors-1',
+								msgErrorClass: 'alert alert-block alert-danger',
+								layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+								allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+								initialPreview: [ 
+									img
+								],
+								initialPreviewConfig: [
+										
+									{caption: data.file_caratula , downloadUrl: url_imagen+data.file_caratula  ,url: url+"uploads/delete", key: data.file_caratula}
+							
+								],
+
+							});
+
+						}
+						else{
+							initFileInput('#input-file-edit');
+						}
 					  }
 					});
 

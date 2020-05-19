@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Policies extends Model
 {
     protected $fillable = [
-        'number_policies', 'state_policies', 'is_renewable', 'insurers', 'branch', 'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 'type_poliza', 'id_policies_grouped'
+        'number_policies', 'state_policies', 'file_caratula','is_renewable', 'insurers', 'branch', 'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 'type_poliza', 'id_policies_grouped'
     ];
 
     protected $table         = 'policies';

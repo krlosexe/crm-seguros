@@ -151,7 +151,6 @@ class PoliciesController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
-
             isset($request["is_renewable"])          ? $request["is_renewable"]           = 1 : $request["is_renewable"]          = 0;
             isset($request["beneficiary_remission"]) ? $request["beneficiary_remission"]  = 1 : $request["beneficiary_remission"] = 0;
             isset($request["beneficairy_onerous"])   ? $request["beneficairy_onerous"]    = 1 : $request["beneficairy_onerous"]   = 0;
@@ -161,6 +160,16 @@ class PoliciesController extends Controller
             isset($request["send_portfolio_for_expire_email"])  ? $request["send_portfolio_for_expire_email"]  = 1 : $request["send_portfolio_for_expire_email"] = 0;
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
+
+            $file = $request->file('file_caratula');
+
+            if($file != null){
+
+                $file->move('img/policies/caratulas',$file->getClientOriginalName());
+        
+                $request["file_caratula"] = $file->getClientOriginalName();
+
+            }
 
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
@@ -371,7 +380,15 @@ class PoliciesController extends Controller
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
 
+            $file = $request->file('file_caratula');
 
+            if($file != null){
+
+                $file->move('img/policies/caratulas',$file->getClientOriginalName());
+        
+                $request["file_caratula"] = $file->getClientOriginalName();
+                
+            }
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
             $request["xpenses"]               = (float) str_replace(',', '', $request["xpenses"]);

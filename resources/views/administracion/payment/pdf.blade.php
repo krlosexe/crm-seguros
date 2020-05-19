@@ -209,8 +209,8 @@
 
                 
                 data.charge_account.forEach(charge => {
-                    let branchName = charge.policie_data == null? charge.policie_anexes_data.policie.branch.name : 
-                                                                  charge.policie_data.branch.name
+                    let branchName = charge.policie_data == null? charge.policie_anexes_data.policie.branch_data.name : 
+                                                                  charge.policie_data.branch_data.name
 
                     let cells = `
                         <td>1</td>
