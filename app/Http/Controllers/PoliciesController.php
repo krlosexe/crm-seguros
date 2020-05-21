@@ -932,6 +932,7 @@ class PoliciesController extends Controller
                 'insurers_name' => $value->insurers_data->name,
                 'number_policies' => $value->number_policies,
                 'link' => $value->insurers_data->link_cita,
+                'file_caratula' => $value->file_caratula,
             ];
 
             array_push($resp, $info);

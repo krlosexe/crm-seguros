@@ -119,7 +119,7 @@ class Login extends Controller
 
                 $nombrecompleto = trim($users[0]->nombres.' '.$users[0]->apellido_p);
 
-                $cliente = ClientsPeople::select("id_clients_people as id")->where('names', $users[0]->nombres)
+                $cliente = ClientsPeople::select("id_clients_people as id", "number_document")->where('names', $users[0]->nombres)
                                          ->where('last_names', $users[0]->apellido_p)
                                          ->first();
 
@@ -127,12 +127,13 @@ class Login extends Controller
 
                 if($cliente == null){
 
-                    $cliente = ClientsCompany::select("id_clients_company as id")->where('business_name', $users[0]->nombres)->first();
+                    $cliente = ClientsCompany::select("id_clients_company as id", "nit as number_document")->where('business_name', $users[0]->nombres)->first();
                     $type = 1;
 
                     if($cliente == null){
                         $cliente = new \stdClass;
                         $cliente->id = 0;
+                        $cliente->number_document = 0;
                     }
 
                 }
@@ -144,8 +145,10 @@ class Login extends Controller
                               'apellido'   => $users[0]->apellido_p,
                               'type_client'    => $type,
                               'client_id'      => $cliente->id,
+                              'number_document' => $cliente->number_document,
                               'mensagge'   => "Ha iniciado sesión exitosamente"
                 );
+
 
                 return response()->json($data)->setStatusCode(200);
             }else{
