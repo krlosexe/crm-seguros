@@ -76,6 +76,7 @@
 											<thead>
 												<tr>
 													<th>Nombre</th>
+													<th>Descripción</th>
 													<th>Fecha de registro</th>
 													<th>Acciones</th>
 												</tr>
@@ -194,6 +195,7 @@
 					"columns":[
 						
 						{"data":"title"},
+						{"data":"descripcion"},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {

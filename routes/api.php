@@ -235,3 +235,8 @@ Route::get('my/companie/files', 'MyCompanyController@Files');
 Route::post('my/companie/files', 'MyCompanyController@StoreFiles');
 
 Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');
+
+
+// Endpoints que se utilizan desde el cotizador
+
+Route::get('getMovilidadNodosMaestros', 'CotizadorController@getMovilidadNodosMaestros');

@@ -83,7 +83,7 @@
 											<thead>
 												<tr>
 													<th>Nombre</th>
-													<th>Descripcion</th>
+													<th>Descripción</th>
 													<th>Fecha de registro</th>
 													<th>Acciones</th>
 												</tr>
