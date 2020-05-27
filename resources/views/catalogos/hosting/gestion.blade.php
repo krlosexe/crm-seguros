@@ -219,6 +219,7 @@
 				$("#store")[0].reset();
 
 
+				$('#logo').fileinput('destroy').val('')
 
 				$("#logo").fileinput({
 					theme: "fas",
@@ -340,7 +341,7 @@
 					}else{rfc2c = ""}
 
 
-					$('#logo-view').fileinput('destroy');
+					$('#logo-view').fileinput('destroy').val('');
 					
 					$("#logo-view").fileinput({
 						theme: "fas",
@@ -475,7 +476,7 @@
 					}else{rfc2c = ""}
 
 
-					$('#logo-edit').fileinput('destroy');
+					$('#logo-edit').fileinput('destroy').val('');
 					
 					$("#logo-edit").fileinput({
 						theme: "fas",

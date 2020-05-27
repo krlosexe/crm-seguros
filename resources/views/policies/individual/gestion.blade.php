@@ -516,7 +516,7 @@
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
 
-				$('#input-file-store').fileinput('destroy');
+				$('#input-file-store').fileinput('destroy').val('');
 			
 				initFileInput('#input-file-store')
 
@@ -748,7 +748,9 @@
 								}
 
 								console.log(data.file_caratula)
-								
+
+							$('#input-file-view').fileinput('destroy').val('')
+
 								$("#input-file-view").fileinput({
 									theme: "fas",
 									overwriteInitial: true,
@@ -778,6 +780,7 @@
 
 							}
 							else{
+							$('#input-file-view').fileinput('destroy').val('')
 								initFileInput('#input-file-view');
 							}
 
@@ -943,6 +946,7 @@
 							}
 															console.log(data.file_caratula)
 
+							$('#input-file-edit').fileinput('destroy').val('');
 							$("#input-file-edit").fileinput({
 								theme: "fas",
 								overwriteInitial: true,
@@ -972,6 +976,7 @@
 
 						}
 						else{
+							$('#input-file-edit').fileinput('destroy').val('');
 							initFileInput('#input-file-edit');
 						}
 					  }

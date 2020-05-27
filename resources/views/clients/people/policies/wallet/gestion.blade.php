@@ -434,7 +434,7 @@
 
 
 
-					$('#input-file-store').fileinput('destroy');
+					$('#input-file-store').fileinput('destroy').val('');
 				
 					$("#input-file-store").fileinput({
 						theme: "fas",

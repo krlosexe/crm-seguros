@@ -78,7 +78,7 @@
 
 
 
-						$('#avatar-1').fileinput('destroy');
+						$('#avatar-1').fileinput('destroy').val('');
 
 
 					

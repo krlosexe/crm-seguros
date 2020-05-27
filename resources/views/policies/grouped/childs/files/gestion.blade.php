@@ -243,7 +243,7 @@
 				$(".remove-pay").css("display", "none")
 
 
-				$('#input-file-store').fileinput('destroy');
+				$('#input-file-store').fileinput('destroy').val('');
 				$("#input-file-store").fileinput({
 					theme: "fas",
 					overwriteInitial: true,
@@ -281,7 +281,7 @@
 					$("#titles_view").val(data.title).attr("disabled", "disabled")
 					$("#descriptions_view").val(data.descripcion).attr("disabled", "disabled")
 				
-					$('#input-file-view').fileinput('destroy');
+					$('#input-file-view').fileinput('destroy').val('');
 					var url=document.getElementById('ruta').value; 
 					url_imagen = '/img/clients/peopple/'
 
@@ -346,7 +346,7 @@
 					$("#titles_edit").val(data.title)
 					$("#descriptions_edit").val(data.descripcion)
 				
-					$('#input-file-edit').fileinput('destroy');
+					$('#input-file-edit').fileinput('destroy').val('');
 					var url=document.getElementById('ruta').value; 
 					url_imagen = '/img/clients/peopple/'
 

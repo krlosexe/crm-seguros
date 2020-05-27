@@ -239,4 +239,9 @@ Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');
 
 // Endpoints que se utilizan desde el cotizador
 
-Route::get('getMovilidadNodosMaestros', 'CotizadorController@getMovilidadNodosMaestros');
+Route::prefix('apisura')->group(function(){
+
+	Route::get('getNodosMaestros/{method}', 'CotizadorController@getSuraNodosMaestros');
+	Route::get('getPlaca/{placa}', 'CotizadorController@getPlacaSura');
+
+});

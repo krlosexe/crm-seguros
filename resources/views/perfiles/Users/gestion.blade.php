@@ -292,7 +292,7 @@
 					$('.tab_content0-0').addClass("active in show");$('#tab0-0').addClass("active");
 				
 
-					$('#avatar-view').fileinput('destroy');
+					$('#avatar-view').fileinput('destroy').val('');
 
 
 
@@ -376,7 +376,7 @@
 					$('.tab_content1-0').addClass("active in show");$('#tab1-0').addClass("active");
 				
 
-					$('#avatar-edit').fileinput('destroy');
+					$('#avatar-edit').fileinput('destroy').val('');
 
 
 

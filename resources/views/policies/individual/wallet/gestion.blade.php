@@ -446,8 +446,8 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 
-					$("#policie_annexes-edit").val(data.policie_annexes).attr("disabled", "disabled")
-					$("#number-edit").val(data.number_policies).attr("disabled", "disabled")
+					$("#policie_annexes-edit").val(data.policie_annexes).attr("readOnly", "readOnly")
+					$("#number-edit").val(data.number_policies).attr("readOnly", "readOnly")
 					$("#number-edit option").remove();
 					$("#number-edit").append($('<option>',
 					{
@@ -477,7 +477,7 @@
 					ShowCollections(data.collections)
 
 
-					$('#input-file-store').fileinput('destroy');
+					$('#input-file-store').fileinput('destroy').val('');
 				
 					$("#input-file-store").fileinput({
 						theme: "fas",

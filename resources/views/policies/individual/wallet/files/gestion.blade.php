@@ -252,7 +252,7 @@
 				$(".remove-pay").css("display", "none")
 
 
-				$('#input-file-store').fileinput('destroy');
+				$('#input-file-store').fileinput('destroy').val('');
 				
 				$("#input-file-store").fileinput({
 					theme: "fas",
@@ -294,7 +294,7 @@
 					$("#bank_view").val(data.bank).attr('disabled', 'disabled')
 					$("#date_pay_view").val(data.payment_date).attr('disabled', 'disabled')
 				
-					$('#input-file-view').fileinput('destroy');
+					$('#input-file-view').fileinput('destroy').val('');
 					var url=document.getElementById('ruta').value; 
 					url_imagen = '/img/collections/'
 
@@ -358,7 +358,7 @@
 					$("#bank_edit").val(data.bank)
 					$("#date_pay_edit").val(data.payment_date)
 				
-					$('#input-file-edit').fileinput('destroy');
+					$('#input-file-edit').fileinput('destroy').val('');
 					var url=document.getElementById('ruta').value; 
 					url_imagen = '/img/collections/'
 
