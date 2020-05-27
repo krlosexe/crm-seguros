@@ -818,7 +818,7 @@ class PoliciesController extends Controller
                                             ->where("policies_annexes.id_policie", $policies)
 
                                             ->where("auditoria.status", "!=", "0")
-                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->orderBy("auditoria.fec_regins", "DESC")
                                             ->get();
            
         return response()->json($policie)->setStatusCode(200);
@@ -835,7 +835,7 @@ class PoliciesController extends Controller
                                             ->where("policies_annexes.id_policies_annexes", $annexe)
 
                                             ->where("auditoria.status", "!=", "0")
-                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->orderBy("auditoria.fec_regins", "DESC")
                                             ->get();
            
         return response()->json($policie[0])->setStatusCode(200);

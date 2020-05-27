@@ -352,7 +352,7 @@ class ClientsPeopleController extends Controller
                                             ->where("policies.type_clients", $type_cliente)
 
                                             ->where("auditoria.status", "!=", "0")
-                                            ->orderBy("policies_annexes.id_policies_annexes", "DESC")
+                                            ->orderBy("auditoria.fec_regins", "DESC")
                                             ->get();
            
         return response()->json($data)->setStatusCode(200);
