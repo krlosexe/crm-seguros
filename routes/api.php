@@ -243,5 +243,14 @@ Route::prefix('apisura')->group(function(){
 
 	Route::get('getNodosMaestros/{method}', 'CotizadorController@getSuraNodosMaestros');
 	Route::get('getPlaca/{placa}', 'CotizadorController@getPlacaSura');
+	Route::get('getPlanesFiltrados/{codigoclasevehiculo}/{tiposservicio}', 'CotizadorController@getPlanesFiltrados');
+	Route::get('getFasecoldaMarcas/{codigoclasevehiculo}/{modelovehiculo}', 'CotizadorController@getFasecoldaMarcas');
+
+	Route::get('getFasecoldaLineas/{params}', 'CotizadorController@getFasecoldaLineas');
+	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
+	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
+	Route::post('inspeccion', 'CotizadorController@inspeccion');
+
+	Route::post('test', 'CotizadorController@test');
 
 });

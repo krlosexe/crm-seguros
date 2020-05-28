@@ -88,11 +88,13 @@ class CotizadorController extends Controller
                 $data = $this->getResult( $client->get('dispositivosseguridad') );
                 
             break;
-            
-
+            case 'ciudadescirculacion':
                 
-        }
+                $data = $this->getResult( $client->get('ciudadescirculacion') );
+                
+            break;
 
+        }
 
         return response()->json($data);
     }
@@ -112,8 +114,134 @@ class CotizadorController extends Controller
         }
 
         return response()->json($data);
-
     }
+
+    public function getPlanesFiltrados(Request $request, $codigoclasevehiculo, $tiposservicio){
+
+        $client = $this->initConfigApiSura();
+
+        try {
+            
+            $data = $this->getResult( $client->get('planesFiltrados/codigoclasevehiculo/'.$codigoclasevehiculo.'/tiposervicio/'.$tiposservicio.'/planes') );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function getFasecoldaMarcas(Request $request, $codigoclasevehiculo, $modelovehiculo){
+
+        $client = $this->initConfigApiSura();
+
+        try {
+            
+            $data = $this->getResult( $client->get('fasecolda/marcas/'.$codigoclasevehiculo.'/modelo/'.$modelovehiculo.'/marcas') );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function getFasecoldaLineas(Request $request, $params){
+        $data = json_decode($params, true);
+
+        $client = $this->initConfigApiSura();
+
+        try {
+            $data = $this->getResult( 
+                $client->get('fasecolda/lineas/lineas-por-modelo-clase-marca?codigomodelo='.$data['codigomodelo'].'&codigoclase='.$data['codigoclase'].'&codigomarca='.$data['codigomarca'].'&dsmarca='.$data['dsmarca'].'&fechaAlta='.$data['fechaAlta']) 
+            );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function getFasecoldaModelo(Request $request, $params){
+        $data = json_decode($params, true);
+
+        $client = $this->initConfigApiSura();
+
+        try {
+            $data = $this->getResult( 
+                $client->get('fasecolda/lineas/lineas-por-codigofasecolda-modelo?modelo='.$data['modelo'].'&fechaAlta='.$data['fechaAlta'].'&esmanual='.$data['esmanual'].'&codigofasecolda='.$data['codigofasecolda']) 
+            );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function getCoberturas(Request $request, $params){
+        $data = json_decode($params, true);
+
+        $client = $this->initConfigApiSura();
+
+        try {
+            $data = $this->getResult( 
+                $client->get('coberturas/plan/'.$data['codigoplan'].'/clase/'.$data['codigoclasevehiculo'].'/ciudad/'.$data['codigociudad'].'/modelo/'.$data['modelovehiculo'].'/feini/'.$data['feinivigencia']
+                    .'?canal='.$data['canal'].'&organizacion='.$data['organizacion']) 
+            );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function inspeccion(Request $request){
+        
+        $client = $this->initConfigApiSura();
+
+            $req = $request->all();
+
+            $req['coberturas'] = json_decode($req['coberturas']);
+
+            $data = $this->getResult( 
+                $client->request('POST', 'inspeccion', [                     
+                       'form_params' => [
+                          "esCeroKm" => true,
+                          "placa" => "ABC123",
+                          "plan" => "2",
+                          "operacion" => "Submission",
+                          "coberturas" => ["PARCCov","PADanosCov","PAHurtoCov","PACarroReCov","PAAsistenciaCov"],
+                          "esBlindado" => false,
+                          "modelo" => "2014"
+                        ],
+                ])
+            );
+        try {
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            return response()->json([], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+
+
+
 
     private function initConfigApiSura(){
 

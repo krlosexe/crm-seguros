@@ -748,6 +748,80 @@ function generateRandomString($length = 10) {
 
     }
 
+    public function procesarPoliciesAseguradoras(){
+        $reader = ReaderEntityFactory::createReaderFromFile('poliza-aseguradora.xlsx');
+        $reader->open('poliza-aseguradora.xlsx');
+
+        $noEncontrados = array();
+
+        foreach ($reader->getSheetIterator() as $sheetKey => $sheet) {
+
+            foreach ($sheet->getRowIterator() as $key => $row) {
+
+                if($key == 1)
+                  continue;
+
+                $cells = array_map(function($item){
+                  return $item->getValue();
+                }, $row->getCells());
+
+
+              $insure = str_replace(' ', '', str_replace('.', '', trim($cells[1])));
+
+              $insure = Insurers::where(DB::raw("replace(replace(name, '.', ''), ' ', '')"), 'like', '%'.$insure.'%')->first();
+                
+              if($insure == null){
+                 array_unshift($cells, 'Aseguradora no encontrada. FILA: '.$key);
+
+                 array_push($noEncontrados, $cells);
+
+                 continue;
+              }
+
+              $policies = Policies::where('number_policies', trim($cells[0]))->first();
+
+              if($policies == null){
+                 array_unshift($cells, 'Poliza no encontrada. FILA: '.$key);
+
+                 array_push($noEncontrados, $cells);
+
+                 continue;
+
+
+              }
+
+              $policies->insurers = $insure->id_insurers;
+
+              $policies->save();
+
+
+            }
+           
+        }
+
+        $reader->close();
+
+
+          $csv = '';
+
+          foreach ($noEncontrados as $record){
+            foreach ($record as $key => $value) {
+
+                $value = gettype($value) != 'object'? $value : $value->format('d/m/Y');
+
+                $csv = $csv . $value.';';
+            }
+
+            $csv = $csv . "\n";
+          }
+ 
+        $csv_handler = fopen ('polizas-aseguradoras-not-found.csv','w');
+        fwrite ($csv_handler,$csv);
+        fclose ($csv_handler
+                );
+        
+    }
+
     public function files()
     {
        
