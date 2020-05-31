@@ -238,6 +238,7 @@ Route::get('eliminarPolizas', 'ImportController@eliminarPolizas');
 Route::get('reprocesarclientes99', 'ImportController@reprocesarpolicies');
 Route::get('filesAnnexes', 'ImportController@filesAnnexes');
 Route::get('procesarPoliciesAseguradoras', 'ImportController@procesarPoliciesAseguradoras');
+Route::get('concesiorios', 'ImportController@concesiorios');
 
 
 

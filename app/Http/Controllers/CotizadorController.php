@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Fasecolda;
+use App\Vehicle;
 
 class CotizadorController extends Controller
 {
@@ -93,6 +95,29 @@ class CotizadorController extends Controller
                 $data = $this->getResult( $client->get('ciudadescirculacion') );
                 
             break;
+            case 'financiacionCompanias':
+                
+                $data = $this->getResult( $client->get('financiacion/companiasfinancieras') );
+                
+            break;
+            case 'financiacionTiposcuenta':
+                
+                $data = $this->getResult( $client->get('financiacion/tiposcuenta') );
+                
+            break;
+            case 'financiacionBancos':
+                
+                $data = $this->getResult( $client->get('financiacion/bancos') );
+                
+            break;
+            case 'concesiorios':
+                
+                $client = $this->initConfigApiSura('https://apisuratest.segurossura.com/');
+
+                $data = $this->getResult( $client->get('apigateway-ayv-autos/ohs-autos/concesiorios') );
+                
+            break;
+
 
         }
 
@@ -106,10 +131,13 @@ class CotizadorController extends Controller
         try {
             
             $data = $this->getResult( $client->get('vehiculo/placa/'.$placa) );
-            
+            $data->fasecoldaInfo = Fasecolda::where('codigo', $data->fasecolda)->first();
+            $data->vehiculoInfo = Vehicle::where('placa', $placa)->first();
+            $data->encontrado = true;
+
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
-            return response()->json(['mensaje' => 'No se encontró la placa: '.$placa], 404);
+            return response()->json(['mensaje' => 'No se encontró la placa: '.$placa, 'encontrado' => false]);
 
         }
 
@@ -216,23 +244,54 @@ class CotizadorController extends Controller
 
             $req['coberturas'] = json_decode($req['coberturas']);
 
+        try {
+
             $data = $this->getResult( 
-                $client->request('POST', 'inspeccion', [                     
-                       'form_params' => [
-                          "esCeroKm" => true,
-                          "placa" => "ABC123",
-                          "plan" => "2",
-                          "operacion" => "Submission",
-                          "coberturas" => ["PARCCov","PADanosCov","PAHurtoCov","PACarroReCov","PAAsistenciaCov"],
-                          "esBlindado" => false,
-                          "modelo" => "2014"
-                        ],
+                $client->request('POST', 'inspeccion', [
+                       'headers' => [
+                           'Content-Type' => 'application/json',
+                       ],                       
+                       'json' => $req,
                 ])
             );
-        try {
             
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            return response()->json([], 404);
+
+            return response()->json([
+              [
+                "tipo" => "Tecnico",
+                "mensaje" => "coberturas debe ser un arreglo"
+              ]
+            ], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+    public function sarlaft(Request $request){
+        
+        $client = $this->initConfigApiSura();
+
+        try {
+
+            $data = $this->getResult( 
+                $client->post('sarlaft', [
+                       'headers' => [
+                           'Content-Type' => 'application/json',
+                       ],                       
+                       'json' => $request->all(),
+                ])
+            );
+            
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+
+            return response()->json([
+                  [
+                    "tipo" => "Tecnico",
+                    "mensaje" => " debe ser un arreglo"
+                  ]
+            ], 404);
 
         }
 
@@ -240,13 +299,10 @@ class CotizadorController extends Controller
     }
 
 
-
-
-
-    private function initConfigApiSura(){
+    private function initConfigApiSura($newurl = ''){
 
         return new \GuzzleHttp\Client([
-            'base_uri' => $this->apisura,
+            'base_uri' => $newurl == ''? $this->apisura : $newurl,
             'headers' => $this->apikeysura,
             'debug' => false,
         ]); 
