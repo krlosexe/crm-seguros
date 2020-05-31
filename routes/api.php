@@ -250,6 +250,7 @@ Route::prefix('apisura')->group(function(){
 	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
 	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
 	Route::post('inspeccion', 'CotizadorController@inspeccion');
+	Route::post('sarlaft', 'CotizadorController@sarlaft');
 
 	Route::post('test', 'CotizadorController@test');
 
