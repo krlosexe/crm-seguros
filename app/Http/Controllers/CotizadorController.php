@@ -128,6 +128,7 @@ class CotizadorController extends Controller
 
         $client = $this->initConfigApiSura();
 
+
         try {
             
             $data = $this->getResult( $client->get('vehiculo/placa/'.$placa) );
