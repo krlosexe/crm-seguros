@@ -137,7 +137,11 @@ class CotizadorController extends Controller
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
-            return response()->json(['mensaje' => 'No se encontró la placa: '.$placa, 'encontrado' => false]);
+            return response()->json([
+                'mensaje' => 'No se encontró la placa: '.$placa, 
+                'encontrado' => false,
+                'vehiculoInfo' => Vehicle::where('placa', $placa)->first()
+            ]);
 
         }
 
