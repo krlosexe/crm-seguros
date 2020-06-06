@@ -278,8 +278,7 @@ class CotizadorController extends Controller
         $client = $this->initConfigApiSura();
         $req = $request->all();
 
-            echo json_encode($req);die;
-
+        try {
             $data = $this->getResult( 
                 $client->request('POST', 'individual/cotizacion', [
                        'headers' => [
@@ -288,10 +287,8 @@ class CotizadorController extends Controller
                        'json' => $req,
                 ])
             );
-            dd($data);
-        try {
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-
+            
             return response()->json([
               []
             ], 404);
@@ -337,7 +334,7 @@ class CotizadorController extends Controller
 
         extract($request->all());
 
-        $payloads = array();
+        $respuestas = array();
 
         // list planes
         $planes = $this->getPlanesFiltrados($request, $dataSelected['clasevehiculo'], $dataSelected['tiposservicio'])->getData();
@@ -397,7 +394,39 @@ class CotizadorController extends Controller
             $tarifar = [
                 'planSeleccionado' => $plan,
                 'grupoCoberturas' => $coberturas,
-                'infoVehiculo' => [],
+                'infoVehiculo' => [
+                    "placa" => "FHP803",
+                    "modelo" => "2009",
+                    "fasecolda" => "02801090",
+                    "cdClase" => "1",
+                    "cdMarca" => "028",
+                    "cdLinea" => "01601274",
+                    "cdTipoServicio" => "Particular",
+                    "snCeroKm" => false,
+                    "codigoCiudad" => "05001000",
+                    "valorAsegurado" => 28600000,
+                    "valorSugerido" => 28600000,
+                    "usoVehiculo" => "Familiar",
+                    "cdDispositivoSeguridad" => "GpsSura",
+                    "dsClase" => "AUTOMOVIL",
+                    "dsMarca" => "FIAT",
+                    "dsLinea" => "SPARK [3] GT [M300] - MT 1200CC 5P L",
+                    "valorAccesorios" => 0,
+                    "blindado" => false,
+                    "chasis" => "9GAMF48D1FB045602",
+                    "motor" => "B12D1258925KD3",
+                    "tieneGas" => false,
+                    "thermoking" => false,
+                    "valorAccesoriosEspeciales" => 0,
+                    "cdZonaCirculacion" => "2",
+                    "cdGrupoTarifa" => "2",
+                    "cdMarcaLinea" => "48-1-2",
+                    "inspeccionValida" => false,
+                    "codigoClave1" => "3",
+                    "codigoClave3" => "2",
+                    "codigoClave4" => "1",
+                    "codigoClave7" => "5"
+                ],
                 'tomadorPrincipal' => [
                     'datosPersonales' => [
                         'identificacion' => [
@@ -407,47 +436,13 @@ class CotizadorController extends Controller
                         "primerNombre" => $dataSelected['cname'],
                         "segundoNombre" => "USER",
                         "primerApellido" => "QA",
-                        "segundoApellido" => "TEST",
+                        "segundoApellido" => "PRIETO",
                         "nombreCompleto" => $dataSelected['cname'],
                         "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
                         "sexo"  => $dataSelected['genero'],
                         "ocupacion"  => $ocupacionSelected,
                         "tipoPersona" => $dataSelected['tipoPersona'],
-                        "numeroCelular" => $dataSelected['telefono'], // telefono
-                        "estadoCivil" => $dataSelected['estadocivil'],
-                        "edad" => 29, // calcular edad
-                        'direcciones' => [
-                            [
-                              "tipoDireccion" => $tiposdireccionSelected,
-                              "direccion" => "CR10",
-                              "numeroTelefono" => "2123122",
-                              "esCorrespondencia" => "S",
-                              "email" => "rf@rf.com",
-                              "esEmailCorrespondencia" => "S",
-                              "codigoDepartamento" => "05",
-                              "codigoDaneSura" => "05001000",
-                              "municipio" => "4292",
-                              "codigoPostal" => "76001"
-                            ]
-                        ],
-                    ]
-                ],
-                'tomadorSecundario' => [
-                    'datosPersonales' => [
-                        'identificacion' => [
-                            'numero' => $dataSelected['numeroDoc'],
-                            'tipo'   => $tiposdocumentoSelected,
-                        ],
-                        "primerNombre" => $dataSelected['cname'],
-                        "segundoNombre" => "USER",
-                        "primerApellido" => "QA",
-                        "segundoApellido" => "TEST",
-                        "nombreCompleto" => $dataSelected['cname'],
-                        "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
-                        "sexo"  => $dataSelected['genero'],
-                        "ocupacion"  => $ocupacionSelected,
-                        "tipoPersona" => $dataSelected['tipoPersona'],
-                        "numeroCelular" => $dataSelected['telefono'], // telefono
+                        "numeroCelular" => '3152077862',//$dataSelected['telefono'], // telefono
                         "estadoCivil" => $dataSelected['estadocivil'],
                         "edad" => 29, // calcular edad
                         'direcciones' => [
@@ -471,18 +466,18 @@ class CotizadorController extends Controller
                       'datosPersonales' => [
                             'identificacion' => [
                                 'numero' => $dataSelected['numeroDoc'],
-                                'tipo'   => $tiposdocumentoSelected,
+                                'tipo'   => $tiposdocumento[1],
                             ],
                             "primerNombre" => $dataSelected['cname'],
                             "segundoNombre" => "USER",
                             "primerApellido" => "QA",
-                            "segundoApellido" => "TEST",
+                            "segundoApellido" => "PRIETO",
                             "nombreCompleto" => $dataSelected['cname'],
                             "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
                             "sexo"  => $dataSelected['genero'],
                             "ocupacion"  => $ocupacionSelected,
                             "tipoPersona" => $dataSelected['tipoPersona'],
-                            "numeroCelular" => $dataSelected['telefono'], // telefono
+                            "numeroCelular" => '3152077862',//$dataSelected['telefono'], // telefono
                             "estadoCivil" => $dataSelected['estadocivil'],
                             "edad" => 29, // calcular edad
                             'direcciones' => [
@@ -521,8 +516,10 @@ class CotizadorController extends Controller
 
             $resp = $this->cotizar($requestCotizar)->getData();
 
-            dd($resp);
+            array_push($respuestas, $resp);
         }
+
+        return response()->json($respuestas);
     }
 
     private function findSelected($array, $key, $value){
