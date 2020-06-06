@@ -64,6 +64,24 @@ class PoliciesController extends Controller
                                 ->get();
            
         return response()->json($data)->setStatusCode(200);
+
+    }
+
+    public function policiesLight(){
+
+        $data = Policies::select(
+                                 "policies.id_policies", 
+                                 "policies.number_policies"
+                                 )
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                                ->where("auditoria.tabla", "policies")
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("policies.id_policies_grouped", "=", null)
+                                ->orderBy("policies.id_policies", "DESC")
+                                ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+        
     }
 
     public function paginate(Request $request)

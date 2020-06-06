@@ -84,6 +84,7 @@ Route::get('status/sub/company/{id}/{status}', 'TypeSubCompanyController@status'
 
 
 Route::resource('policies', 'PoliciesController');
+Route::get('policiesAll', 'PoliciesController@policiesLight');
 Route::post('policies/paginate', 'PoliciesController@paginate');
 Route::get('status-policies/{id}/{status}', 'PoliciesController@status');
 Route::post('policies/simulation/pay', 'PoliciesController@SimulationPay');
@@ -248,9 +249,12 @@ Route::prefix('apisura')->group(function(){
 
 	Route::get('getFasecoldaLineas/{params}', 'CotizadorController@getFasecoldaLineas');
 	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
+	
 	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
 	Route::post('inspeccion', 'CotizadorController@inspeccion');
 	Route::post('sarlaft', 'CotizadorController@sarlaft');
+
+	Route::post('cotizarPlanes', 'CotizadorController@cotizarPlanes');
 
 	Route::post('test', 'CotizadorController@test');
 

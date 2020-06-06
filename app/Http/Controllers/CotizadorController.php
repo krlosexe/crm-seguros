@@ -140,6 +140,7 @@ class CotizadorController extends Controller
             return response()->json([
                 'mensaje' => 'No se encontró la placa: '.$placa, 
                 'encontrado' => false,
+                'clase' => '',
                 'vehiculoInfo' => Vehicle::where('placa', $placa)->first()
             ]);
 
@@ -155,7 +156,7 @@ class CotizadorController extends Controller
         try {
             
             $data = $this->getResult( $client->get('planesFiltrados/codigoclasevehiculo/'.$codigoclasevehiculo.'/tiposervicio/'.$tiposservicio.'/planes') );
-            
+
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
             return response()->json([], 404);
@@ -230,7 +231,7 @@ class CotizadorController extends Controller
                 $client->get('coberturas/plan/'.$data['codigoplan'].'/clase/'.$data['codigoclasevehiculo'].'/ciudad/'.$data['codigociudad'].'/modelo/'.$data['modelovehiculo'].'/feini/'.$data['feinivigencia']
                     .'?canal='.$data['canal'].'&organizacion='.$data['organizacion']) 
             );
-            
+
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
             return response()->json([], 404);
@@ -245,7 +246,6 @@ class CotizadorController extends Controller
         $client = $this->initConfigApiSura();
 
             $req = $request->all();
-
             $req['coberturas'] = json_decode($req['coberturas']);
 
         try {
@@ -273,6 +273,35 @@ class CotizadorController extends Controller
         return response()->json($data);
     }
 
+    public function cotizar(Request $request){
+        
+        $client = $this->initConfigApiSura();
+        $req = $request->all();
+
+            echo json_encode($req);die;
+
+            $data = $this->getResult( 
+                $client->request('POST', 'individual/cotizacion', [
+                       'headers' => [
+                           'Content-Type' => 'application/json',
+                       ],                       
+                       'json' => $req,
+                ])
+            );
+            dd($data);
+        try {
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+
+            return response()->json([
+              []
+            ], 404);
+
+        }
+
+        return response()->json($data);
+    }
+
+
     public function sarlaft(Request $request){
         
         $client = $this->initConfigApiSura();
@@ -292,8 +321,8 @@ class CotizadorController extends Controller
 
             return response()->json([
                   [
-                    "tipo" => "Tecnico",
-                    "mensaje" => " debe ser un arreglo"
+                    "requiereInspeccion" => false,
+                    "placa" => $request->placa
                   ]
             ], 404);
 
@@ -302,6 +331,207 @@ class CotizadorController extends Controller
         return response()->json($data);
     }
 
+    // Método va hacer todo el proceso de cotizar planes automaticamente
+
+    public function cotizarPlanes(Request $request){
+
+        extract($request->all());
+
+        $payloads = array();
+
+        // list planes
+        $planes = $this->getPlanesFiltrados($request, $dataSelected['clasevehiculo'], $dataSelected['tiposservicio'])->getData();
+
+        foreach ($planes as $plan) {
+            
+            // se buscan las coberturas del plan
+
+            $paramsCobertura = [
+                'codigoplan'          => $plan->codigoPlan,
+                'codigoclasevehiculo' => $dataSelected['clasevehiculo'],
+                'codigociudad'        => $dataSelected['ciudadescirculacion'],
+                'modelovehiculo'      => $dataSelected['modelo'],
+                'feinivigencia'       => $dataSelected['feinivigencia'],
+                'canal'               => 'TraditionalChannel',
+                'organizacion'        => 'Sura',
+            ];
+
+            $coberturas = $this->getCoberturas($request, json_encode($paramsCobertura))->getData();
+
+            // Dentro del array de coberturas, hay una propiedad que tiene las verdaderas coberturas. Se mapea para solo 
+            // obtener el codigo
+
+            $coberturasMap = array_map(function($item){
+                $cdcobertura = array_map(function($item2){
+                    return $item2->cdCobertura;
+                }, $item->coberturas);
+
+                return reset($cdcobertura);
+            }, $coberturas);
+
+            // se inspecciona
+
+            $paramsInspeccionar = [
+                'esCeroKm' => true,
+                'placa' => $dataSelected['placa'],
+                'plan' => $plan->codigoPlan,
+                'operacion' => 'Submission',
+                'esBlindado' => false,
+                'modelo' => $dataSelected['modelo'],
+                'coberturas' => json_encode($coberturasMap)
+            ];
+
+            $request = new \Illuminate\Http\Request();
+
+            $request->setMethod('POST');
+            $request->request->add($paramsInspeccionar);
+
+            $inspeccionar = $this->inspeccion($request)->getData();
+
+            // finalmente, se crea el objeto de tarifa
+
+            $tiposdocumentoSelected = $this->findSelected($tiposdocumento, 'id', $dataSelected['tipoDocumento']);
+            $ocupacionSelected = $this->findSelected($ocupaciones, 'id', $dataSelected['ocupacion']);
+            $tiposdireccionSelected = $this->findSelected($tiposdireccion, 'id', $dataSelected['tiposdireccion']);
+
+            $tarifar = [
+                'planSeleccionado' => $plan,
+                'grupoCoberturas' => $coberturas,
+                'infoVehiculo' => [],
+                'tomadorPrincipal' => [
+                    'datosPersonales' => [
+                        'identificacion' => [
+                            'numero' => $dataSelected['numeroDoc'],
+                            'tipo'   => $tiposdocumentoSelected,
+                        ],
+                        "primerNombre" => $dataSelected['cname'],
+                        "segundoNombre" => "USER",
+                        "primerApellido" => "QA",
+                        "segundoApellido" => "TEST",
+                        "nombreCompleto" => $dataSelected['cname'],
+                        "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
+                        "sexo"  => $dataSelected['genero'],
+                        "ocupacion"  => $ocupacionSelected,
+                        "tipoPersona" => $dataSelected['tipoPersona'],
+                        "numeroCelular" => $dataSelected['telefono'], // telefono
+                        "estadoCivil" => $dataSelected['estadocivil'],
+                        "edad" => 29, // calcular edad
+                        'direcciones' => [
+                            [
+                              "tipoDireccion" => $tiposdireccionSelected,
+                              "direccion" => "CR10",
+                              "numeroTelefono" => "2123122",
+                              "esCorrespondencia" => "S",
+                              "email" => "rf@rf.com",
+                              "esEmailCorrespondencia" => "S",
+                              "codigoDepartamento" => "05",
+                              "codigoDaneSura" => "05001000",
+                              "municipio" => "4292",
+                              "codigoPostal" => "76001"
+                            ]
+                        ],
+                    ]
+                ],
+                'tomadorSecundario' => [
+                    'datosPersonales' => [
+                        'identificacion' => [
+                            'numero' => $dataSelected['numeroDoc'],
+                            'tipo'   => $tiposdocumentoSelected,
+                        ],
+                        "primerNombre" => $dataSelected['cname'],
+                        "segundoNombre" => "USER",
+                        "primerApellido" => "QA",
+                        "segundoApellido" => "TEST",
+                        "nombreCompleto" => $dataSelected['cname'],
+                        "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
+                        "sexo"  => $dataSelected['genero'],
+                        "ocupacion"  => $ocupacionSelected,
+                        "tipoPersona" => $dataSelected['tipoPersona'],
+                        "numeroCelular" => $dataSelected['telefono'], // telefono
+                        "estadoCivil" => $dataSelected['estadocivil'],
+                        "edad" => 29, // calcular edad
+                        'direcciones' => [
+                            [
+                              "tipoDireccion" => $tiposdireccionSelected,
+                              "direccion" => "CR10",
+                              "numeroTelefono" => "2123122",
+                              "esCorrespondencia" => "S",
+                              "email" => "rf@rf.com",
+                              "esEmailCorrespondencia" => "S",
+                              "codigoDepartamento" => "05",
+                              "codigoDaneSura" => "05001000",
+                              "municipio" => "4292",
+                              "codigoPostal" => "76001"
+                            ]
+                        ],
+                    ]
+                ],
+                'asegurados' => [
+                    [
+                      'datosPersonales' => [
+                            'identificacion' => [
+                                'numero' => $dataSelected['numeroDoc'],
+                                'tipo'   => $tiposdocumentoSelected,
+                            ],
+                            "primerNombre" => $dataSelected['cname'],
+                            "segundoNombre" => "USER",
+                            "primerApellido" => "QA",
+                            "segundoApellido" => "TEST",
+                            "nombreCompleto" => $dataSelected['cname'],
+                            "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
+                            "sexo"  => $dataSelected['genero'],
+                            "ocupacion"  => $ocupacionSelected,
+                            "tipoPersona" => $dataSelected['tipoPersona'],
+                            "numeroCelular" => $dataSelected['telefono'], // telefono
+                            "estadoCivil" => $dataSelected['estadocivil'],
+                            "edad" => 29, // calcular edad
+                            'direcciones' => [
+                                [
+                                  "tipoDireccion" => $tiposdireccionSelected,
+                                  "direccion" => "CR10",
+                                  "numeroTelefono" => "2123122",
+                                  "esCorrespondencia" => "S",
+                                  "email" => "rf@rf.com",
+                                  "esEmailCorrespondencia" => "S",
+                                  "codigoDepartamento" => "05",
+                                  "codigoDaneSura" => "05001000",
+                                  "municipio" => "4292",
+                                  "codigoPostal" => "76001"
+                                ]
+                            ],
+                      ]
+                    ]
+                ],
+                "feInicioVigencia" => "2018-11-02T05:00:00.000Z",
+                "esColectiva" => false,
+                "feFinVigencia" => "2019-11-02T05:00:00.000Z",
+                "codigoAsesor" => "660",
+                "codigoOrganizacion" => "Sura",
+                "codigoCanal" => "TraditionalChannel",
+                "fechaCotizacion" => "2019-11-15T15:15:17.234Z",
+                "codigoOficina" => "4030",
+                "medioVenta" => "1",
+                "codigoPolizaVenta" => "PPAutos"
+            ];
+            
+            $requestCotizar = new \Illuminate\Http\Request();
+
+            $requestCotizar->setMethod('POST');
+            $requestCotizar->request->add($tarifar);
+
+            $resp = $this->cotizar($requestCotizar)->getData();
+
+            dd($resp);
+        }
+    }
+
+    private function findSelected($array, $key, $value){
+        $selectedItem = array_filter($array, function($item) use ($value, $key){
+            return ($item[$key] == $value);
+        });
+
+        return reset($selectedItem);
+    }
 
     private function initConfigApiSura($newurl = ''){
 
