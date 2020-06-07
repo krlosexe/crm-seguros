@@ -289,6 +289,8 @@ class CotizadorController extends Controller
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
+            //echo json_encode($req);die;
+
             return response()->json([
               []
             ], 404);
@@ -391,41 +393,44 @@ class CotizadorController extends Controller
             $ocupacionSelected = $this->findSelected($ocupaciones, 'id', $dataSelected['ocupacion']);
             $tiposdireccionSelected = $this->findSelected($tiposdireccion, 'id', $dataSelected['tiposdireccion']);
 
+            $dsMarca = $this->findSelected($fasecoldaMarcas, 'codigoMarca', $dataSelected['fasecoldaMarcas']);
+            $dsLineas = $this->findSelected($fasecoldaLineas, 'descripcionselect', $dataSelected['fasecoldaLineas']);
+
             $tarifar = [
                 'planSeleccionado' => $plan,
                 'grupoCoberturas' => $coberturas,
                 'infoVehiculo' => [
-                    "placa" => "FHP803",
-                    "modelo" => "2009",
-                    "fasecolda" => "02801090",
-                    "cdClase" => "1",
-                    "cdMarca" => "028",
+                    "placa" => $dataSelected['placa'],
+                    "modelo" => $dataSelected['modelo'],
+                    "fasecolda" => $fasecoldaInfo['fasecolda'],
+                    "cdClase" => $dataSelected['clasevehiculo'],
+                    "cdMarca" => $dataSelected['fasecoldaMarcas'],
                     "cdLinea" => "01601274",
-                    "cdTipoServicio" => "Particular",
+                    "cdTipoServicio" => $dataSelected['tiposservicio'],
                     "snCeroKm" => false,
-                    "codigoCiudad" => "05001000",
-                    "valorAsegurado" => 28600000,
+                    "codigoCiudad" => $dataSelected['ciudadescirculacion'],
+                    "valorAsegurado" => $dsLineas['valorAsegurado'], // fasecoldainfo tambien tiene valor asegurado
                     "valorSugerido" => 28600000,
-                    "usoVehiculo" => "Familiar",
+                    "usoVehiculo" => $dataSelected['uso'],
                     "cdDispositivoSeguridad" => "GpsSura",
-                    "dsClase" => "AUTOMOVIL",
-                    "dsMarca" => "FIAT",
-                    "dsLinea" => "SPARK [3] GT [M300] - MT 1200CC 5P L",
+                    "dsClase" => $fasecoldaInfo['fasecoldaInfo']['clase'],
+                    "dsMarca" => $dsMarca['descripcion'],
+                    "dsLinea" => $dsLineas['descripcionLineaCompleto'],
                     "valorAccesorios" => 0,
                     "blindado" => false,
-                    "chasis" => "9GAMF48D1FB045602",
-                    "motor" => "B12D1258925KD3",
+                    "chasis" => $fasecoldaInfo['chasis'],
+                    "motor" => $fasecoldaInfo['motor'],
                     "tieneGas" => false,
                     "thermoking" => false,
                     "valorAccesoriosEspeciales" => 0,
                     "cdZonaCirculacion" => "2",
-                    "cdGrupoTarifa" => "2",
-                    "cdMarcaLinea" => "48-1-2",
+                    "cdGrupoTarifa" => $dsLineas['codigoGrupoTarifa'],
+                    "cdMarcaLinea" => $dsLineas['codigoMarcaLinea'],
                     "inspeccionValida" => false,
-                    "codigoClave1" => "3",
-                    "codigoClave3" => "2",
-                    "codigoClave4" => "1",
-                    "codigoClave7" => "5"
+                    "codigoClave1" => $dsLineas['codigoClave1'],
+                    "codigoClave3" => $dsLineas['codigoClave3'],
+                    "codigoClave4" => $dsLineas['codigoClave4'],
+                    "codigoClave7" => $dsLineas['codigoClave7']
                 ],
                 'tomadorPrincipal' => [
                     'datosPersonales' => [
@@ -442,7 +447,7 @@ class CotizadorController extends Controller
                         "sexo"  => $dataSelected['genero'],
                         "ocupacion"  => $ocupacionSelected,
                         "tipoPersona" => $dataSelected['tipoPersona'],
-                        "numeroCelular" => '3152077862',//$dataSelected['telefono'], // telefono
+                        "numeroCelular" => '3115529981',//$dataSelected['telefono'], // telefono
                         "estadoCivil" => $dataSelected['estadocivil'],
                         "edad" => 29, // calcular edad
                         'direcciones' => [
@@ -477,7 +482,7 @@ class CotizadorController extends Controller
                             "sexo"  => $dataSelected['genero'],
                             "ocupacion"  => $ocupacionSelected,
                             "tipoPersona" => $dataSelected['tipoPersona'],
-                            "numeroCelular" => '3152077862',//$dataSelected['telefono'], // telefono
+                            "numeroCelular" => '3115529981',//$dataSelected['telefono'], // telefono
                             "estadoCivil" => $dataSelected['estadocivil'],
                             "edad" => 29, // calcular edad
                             'direcciones' => [
