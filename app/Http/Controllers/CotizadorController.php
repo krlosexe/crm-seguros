@@ -289,7 +289,7 @@ class CotizadorController extends Controller
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             
-            //echo json_encode($req);die;
+            // echo json_encode($req);die;
 
             return response()->json([
               []
@@ -333,7 +333,7 @@ class CotizadorController extends Controller
     // Método va hacer todo el proceso de cotizar planes automaticamente
 
     public function cotizarPlanes(Request $request){
-
+        set_time_limit(800);
         extract($request->all());
 
         $respuestas = array();
@@ -342,11 +342,21 @@ class CotizadorController extends Controller
         $planes = $this->getPlanesFiltrados($request, $dataSelected['clasevehiculo'], $dataSelected['tiposservicio'])->getData();
 
         foreach ($planes as $plan) {
-            
-            // se buscan las coberturas del plan
+            $resp = $this->cotizarPlan($request)->getData();
 
+            array_push($respuestas, $resp);
+        }
+
+        return response()->json($respuestas);
+    }
+
+    public function cotizarPlan(Request $request){
+
+        extract($request->all());
+
+            // se buscan las coberturas del plan
             $paramsCobertura = [
-                'codigoplan'          => $plan->codigoPlan,
+                'codigoplan'          => $plan['codigoPlan'],
                 'codigoclasevehiculo' => $dataSelected['clasevehiculo'],
                 'codigociudad'        => $dataSelected['ciudadescirculacion'],
                 'modelovehiculo'      => $dataSelected['modelo'],
@@ -368,33 +378,36 @@ class CotizadorController extends Controller
                 return reset($cdcobertura);
             }, $coberturas);
 
-            // se inspecciona
+            // se inspecciona (NO SE UTILIZA AUN)
 
-            $paramsInspeccionar = [
-                'esCeroKm' => true,
-                'placa' => $dataSelected['placa'],
-                'plan' => $plan->codigoPlan,
-                'operacion' => 'Submission',
-                'esBlindado' => false,
-                'modelo' => $dataSelected['modelo'],
-                'coberturas' => json_encode($coberturasMap)
-            ];
+            // $paramsInspeccionar = [
+            //     'esCeroKm' => true,
+            //     'placa' => $dataSelected['placa'],
+            //     'plan' => $plan->codigoPlan,
+            //     'operacion' => 'Submission',
+            //     'esBlindado' => false,
+            //     'modelo' => $dataSelected['modelo'],
+            //     'coberturas' => json_encode($coberturasMap)
+            // ];
 
-            $request = new \Illuminate\Http\Request();
+            // $request = new \Illuminate\Http\Request();
 
-            $request->setMethod('POST');
-            $request->request->add($paramsInspeccionar);
+            // $request->setMethod('POST');
+            // $request->request->add($paramsInspeccionar);
 
-            $inspeccionar = $this->inspeccion($request)->getData();
+            // $inspeccionar = $this->inspeccion($request)->getData();
+
+
 
             // finalmente, se crea el objeto de tarifa
 
-            $tiposdocumentoSelected = $this->findSelected($tiposdocumento, 'id', $dataSelected['tipoDocumento']);
-            $ocupacionSelected = $this->findSelected($ocupaciones, 'id', $dataSelected['ocupacion']);
-            $tiposdireccionSelected = $this->findSelected($tiposdireccion, 'id', $dataSelected['tiposdireccion']);
-
             $dsMarca = $this->findSelected($fasecoldaMarcas, 'codigoMarca', $dataSelected['fasecoldaMarcas']);
             $dsLineas = $this->findSelected($fasecoldaLineas, 'descripcionselect', $dataSelected['fasecoldaLineas']);
+            
+            // dd("xd");
+
+            $dataSelected['cname'] = $dataSelected['cname'] == ''? 'USER' : $dataSelected['cname'];
+            $dataSelected['capellido'] = $dataSelected['capellido'] == ''? 'USER' : $dataSelected['capellido'];
 
             $tarifar = [
                 'planSeleccionado' => $plan,
@@ -435,24 +448,24 @@ class CotizadorController extends Controller
                 'tomadorPrincipal' => [
                     'datosPersonales' => [
                         'identificacion' => [
-                            'numero' => $dataSelected['numeroDoc'],
-                            'tipo'   => $tiposdocumentoSelected,
+                            'numero' => $dataSelected['numeroDoc'] == ''? '11111111' : $dataSelected['numeroDoc'],
+                            'tipo'   => $tiposdocumento[1],
                         ],
                         "primerNombre" => $dataSelected['cname'],
                         "segundoNombre" => "USER",
-                        "primerApellido" => "QA",
-                        "segundoApellido" => "PRIETO",
-                        "nombreCompleto" => $dataSelected['cname'],
+                        "primerApellido" => $dataSelected['capellido'],
+                        "segundoApellido" => "USER",
+                        "nombreCompleto" => $dataSelected['cname'].' '.$dataSelected['capellido'],
                         "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
-                        "sexo"  => $dataSelected['genero'],
-                        "ocupacion"  => $ocupacionSelected,
+                        "sexo"  => 'M',
+                        "ocupacion"  => $ocupaciones[0],
                         "tipoPersona" => $dataSelected['tipoPersona'],
                         "numeroCelular" => '3115529981',//$dataSelected['telefono'], // telefono
-                        "estadoCivil" => $dataSelected['estadocivil'],
+                        "estadoCivil" => 'S',
                         "edad" => 29, // calcular edad
                         'direcciones' => [
                             [
-                              "tipoDireccion" => $tiposdireccionSelected,
+                              "tipoDireccion" => $tiposdireccion[0],
                               "direccion" => "CR10",
                               "numeroTelefono" => "2123122",
                               "esCorrespondencia" => "S",
@@ -470,24 +483,24 @@ class CotizadorController extends Controller
                     [
                       'datosPersonales' => [
                             'identificacion' => [
-                                'numero' => $dataSelected['numeroDoc'],
+                                'numero' => $dataSelected['numeroDoc'] == ''? '11111111' : $dataSelected['numeroDoc'],
                                 'tipo'   => $tiposdocumento[1],
                             ],
                             "primerNombre" => $dataSelected['cname'],
                             "segundoNombre" => "USER",
-                            "primerApellido" => "QA",
-                            "segundoApellido" => "PRIETO",
-                            "nombreCompleto" => $dataSelected['cname'],
+                            "primerApellido" => $dataSelected['capellido'],
+                            "segundoApellido" => "USER",
+                            "nombreCompleto" => $dataSelected['cname'].' '.$dataSelected['capellido'],
                             "fechaNacimiento" => "1990-08-09T05:00:00Z", // nacimiento
-                            "sexo"  => $dataSelected['genero'],
-                            "ocupacion"  => $ocupacionSelected,
+                            "sexo"  => 'M',
+                            "ocupacion"  => $ocupaciones[0],
                             "tipoPersona" => $dataSelected['tipoPersona'],
                             "numeroCelular" => '3115529981',//$dataSelected['telefono'], // telefono
-                            "estadoCivil" => $dataSelected['estadocivil'],
+                            "estadoCivil" => 'S',
                             "edad" => 29, // calcular edad
                             'direcciones' => [
                                 [
-                                  "tipoDireccion" => $tiposdireccionSelected,
+                                  "tipoDireccion" => $tiposdireccion[0],
                                   "direccion" => "CR10",
                                   "numeroTelefono" => "2123122",
                                   "esCorrespondencia" => "S",
@@ -521,10 +534,7 @@ class CotizadorController extends Controller
 
             $resp = $this->cotizar($requestCotizar)->getData();
 
-            array_push($respuestas, $resp);
-        }
-
-        return response()->json($respuestas);
+            return response()->json($resp);
     }
 
     private function findSelected($array, $key, $value){
@@ -541,6 +551,7 @@ class CotizadorController extends Controller
             'base_uri' => $newurl == ''? $this->apisura : $newurl,
             'headers' => $this->apikeysura,
             'debug' => false,
+            'verify' => false
         ]); 
     }
 

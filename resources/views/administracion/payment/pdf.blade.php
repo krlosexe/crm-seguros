@@ -83,6 +83,7 @@
                                                     <th></th>
                                                     <th>Ramo</th>
                                                     <th>Póliza</th>
+                                                    <th>Anexo</th>
                                                     <th>Detalle</th>
                                                     <th>Prima</th>
                                                     <th>IVA</th>
@@ -94,6 +95,7 @@
                                                     <td>1</td>
                                                     <td id="branch">SEGURO DE VIDA</td>
                                                     <td id="number_policie">0012654</td>
+                                                    <td id="number_anexo">0012654</td>
                                                     <td>EXPEDICIÓN PÓLIZA</td>
                                                     <td id="cousin">4.500.000</td>
                                                     <td id="vat">450.000</td>
@@ -212,10 +214,15 @@
                     let branchName = charge.policie_data == null? charge.policie_anexes_data.policie.branch_data.name : 
                                                                   charge.policie_data.branch_data.name
 
+                let numberPolicie = charge.policie_data == null? charge.policie_anexes_data.policie.number_policies : charge.policie_data.number_policies;
+
+                let numberAnexo = charge.policie_data == null? charge.number : '';
+
                     let cells = `
                         <td>1</td>
                         <td id="branch">${branchName}</td>
-                        <td id="number_policie">${charge.number}</td>
+                        <td id="number_policie">${numberPolicie}</td>
+                        <td id="number_anexo">${numberAnexo}</td>
                         <td>-</td>
                         <td id="cousin">${charge.cousin}</td>
                         <td id="vat">${charge.vat}</td>

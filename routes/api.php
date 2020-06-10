@@ -255,6 +255,7 @@ Route::prefix('apisura')->group(function(){
 	Route::post('sarlaft', 'CotizadorController@sarlaft');
 
 	Route::post('cotizarPlanes', 'CotizadorController@cotizarPlanes');
+	Route::post('cotizarPlan', 'CotizadorController@cotizarPlan');
 
 	Route::post('test', 'CotizadorController@test');
 

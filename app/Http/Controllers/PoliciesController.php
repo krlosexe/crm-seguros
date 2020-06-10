@@ -321,7 +321,7 @@ class PoliciesController extends Controller
                                     "policies_notifications.*", 
                                     "policies_info_payments.*",
                                     "auditoria.*", "user_registro.email as email_regis",
-                                    DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
+                                    DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname")
                                     )
 
                                 ->join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
