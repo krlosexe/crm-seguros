@@ -239,9 +239,9 @@
                 
                 $("#address").text(address.trim() == ','? '' : address);
 
-                let sumaCousin = data.charge_account.map(item => item.cousin).reduce((el1, el2) => el1 + el2);
-                let sumaXpenses = data.charge_account.map(item => item.xpenses).reduce((el1, el2) => el1 + el2);
-                let sumaVat = data.charge_account.map(item => item.vat).reduce((el1, el2) => el1 + el2);
+                let sumaCousin = data.charge_account.map(item => item.cousin).reduce((el1, el2) => el1 + el2, 0);
+                let sumaXpenses = data.charge_account.map(item => item.xpenses).reduce((el1, el2) => el1 + el2, 0);
+                let sumaVat = data.charge_account.map(item => item.vat).reduce((el1, el2) => el1 + el2, 0);
 
                 $("#subtotal").text(number_format((sumaCousin + sumaXpenses), 2))
 
@@ -249,7 +249,7 @@
 
                 $("#totalpagar").text(number_format(sumaVat + (sumaCousin + sumaXpenses), 2))
 
-                if(data.name_client == null && data.last_names == null){
+                if(data.type_client == 1){
                     data.nombreapellido = data.business_name;
                 }
                 else{
