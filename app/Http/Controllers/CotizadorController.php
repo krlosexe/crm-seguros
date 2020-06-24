@@ -526,7 +526,7 @@ class CotizadorController extends Controller
                 "medioVenta" => "1",
                 "codigoPolizaVenta" => "PPAutos"
             ];
-            
+
             $requestCotizar = new \Illuminate\Http\Request();
 
             $requestCotizar->setMethod('POST');

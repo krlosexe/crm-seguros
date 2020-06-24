@@ -971,4 +971,10 @@ class PoliciesController extends Controller
     {
         
     }
+
+    public function select2polizas(Request $request){
+        $data = Policies::select('number_policies', 'id_policies')->where('number_policies', 'like', '%'.$request['search'].'%')->limit(10)->get();
+
+        return response()->json($data);
+    }
 }

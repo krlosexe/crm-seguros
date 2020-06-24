@@ -237,6 +237,8 @@ Route::post('my/companie/files', 'MyCompanyController@StoreFiles');
 
 Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');
 
+Route::get('select2polizas', 'PoliciesController@select2polizas');
+
 
 // Endpoints que se utilizan desde el cotizador
 
