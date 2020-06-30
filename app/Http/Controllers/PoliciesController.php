@@ -182,12 +182,22 @@ class PoliciesController extends Controller
             $file = $request->file('file');
 
             if($file != null){
+                
+                $pathinfo = pathinfo($file->getClientOriginalName());
 
-                $file->move('img/policies/caratulas',$file->getClientOriginalName());
-        
-                $request->file_caratula = $file->getClientOriginalName();
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
 
+                $file->move('img/policies/caratulas',$name);
+                
+                $request['file_caratula'] = $name;
+                
             }
+
 
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
@@ -401,10 +411,19 @@ class PoliciesController extends Controller
             $file = $request->file('file');
 
             if($file != null){
-
-                $file->move('img/policies/caratulas',$file->getClientOriginalName());
                 
-                $request['file_caratula'] = $file->getClientOriginalName();
+                $pathinfo = pathinfo($file->getClientOriginalName());
+
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
+
+                $file->move('img/policies/caratulas',$name);
+                
+                $request['file_caratula'] = $name;
                 
             }
 

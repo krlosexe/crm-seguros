@@ -540,7 +540,7 @@
 					elErrorContainer: '#kv-avatar-errors-1',
 					msgErrorClass: 'alert alert-block alert-danger',
 					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf", "PDF"],
 				});
 			}
 
@@ -766,7 +766,7 @@
 									elErrorContainer: '#kv-avatar-errors-1',
 									msgErrorClass: 'alert alert-block alert-danger',
 									layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-									allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+									allowedFileExtensions: ["jpg", "png", "gif", "pdf", "PDF"],
 									initialPreview: [ 
 										img
 									],
@@ -962,7 +962,7 @@
 								elErrorContainer: '#kv-avatar-errors-1',
 								msgErrorClass: 'alert alert-block alert-danger',
 								layoutTemplates: {main2: '{preview}  {remove} {browse}'},
-								allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+								allowedFileExtensions: ["jpg", "png", "gif", "pdf", "PDF"],
 								initialPreview: [ 
 									img
 								],
