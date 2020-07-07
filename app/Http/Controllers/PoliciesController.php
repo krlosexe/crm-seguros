@@ -64,6 +64,24 @@ class PoliciesController extends Controller
                                 ->get();
            
         return response()->json($data)->setStatusCode(200);
+
+    }
+
+    public function policiesLight(){
+
+        $data = Policies::select(
+                                 "policies.id_policies", 
+                                 "policies.number_policies"
+                                 )
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                                ->where("auditoria.tabla", "policies")
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("policies.id_policies_grouped", "=", null)
+                                ->orderBy("policies.id_policies", "DESC")
+                                ->get();
+           
+        return response()->json($data)->setStatusCode(200);
+        
     }
 
     public function paginate(Request $request)
@@ -164,12 +182,22 @@ class PoliciesController extends Controller
             $file = $request->file('file');
 
             if($file != null){
+                
+                $pathinfo = pathinfo($file->getClientOriginalName());
 
-                $file->move('img/policies/caratulas',$file->getClientOriginalName());
-        
-                $request->file_caratula = $file->getClientOriginalName();
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
 
+                $file->move('img/policies/caratulas',$name);
+                
+                $request['file_caratula'] = $name;
+                
             }
+
 
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
@@ -303,7 +331,7 @@ class PoliciesController extends Controller
                                     "policies_notifications.*", 
                                     "policies_info_payments.*",
                                     "auditoria.*", "user_registro.email as email_regis",
-                                    DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"), 
+                                    DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname")
                                     )
 
                                 ->join("policies_info_taker_insured_beneficiary", "policies_info_taker_insured_beneficiary.id_policies", "=", "policies.id_policies", "left")
@@ -383,10 +411,19 @@ class PoliciesController extends Controller
             $file = $request->file('file');
 
             if($file != null){
-
-                $file->move('img/policies/caratulas',$file->getClientOriginalName());
                 
-                $request['file_caratula'] = $file->getClientOriginalName();
+                $pathinfo = pathinfo($file->getClientOriginalName());
+
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
+
+                $file->move('img/policies/caratulas',$name);
+                
+                $request['file_caratula'] = $name;
                 
             }
 
@@ -952,5 +989,11 @@ class PoliciesController extends Controller
     public function destroy(Policies $policies)
     {
         
+    }
+
+    public function select2polizas(Request $request){
+        $data = Policies::select('number_policies', 'id_policies')->where('number_policies', 'like', '%'.$request['search'].'%')->limit(10)->get();
+
+        return response()->json($data);
     }
 }

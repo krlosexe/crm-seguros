@@ -150,6 +150,60 @@
 
 
 
+		function select2_search ($el, term) {
+		  $el.select2('open');
+		  
+		  var $search = $el.data('select2').dropdown.$search || $el.data('select2').selection.$search;
+		  
+		  $search.val(term);
+		  $search.trigger('keyup');
+		}
+
+			function asyncPolizas(select, defaultPolicie){
+				// $('#policie').select2('destroy');
+
+		      if(defaultPolicie != undefined){
+		      	$(select).append(`<option value="${defaultPolicie.id}">${defaultPolicie.text}</option>`).trigger('change')
+		      }
+
+				$(select).select2({
+				  width: '50%',
+				language: {
+				  noResults: function() {
+				    return "No hay resultado";        
+				  },
+				  searching: function() {
+				    return "Buscando..";
+				  },
+				  inputTooShort: function () {
+				    return "Colocar mínimo 2 caracteres para buscar...";
+				  }
+				},
+				  ajax: {
+				  	delay: 300,
+				    url: `${ruta.value}/api/select2polizas`,
+				    data(params) {
+				    
+				      return {
+				      	search: params.term,
+				      	type: 'public'
+				      }
+				    },
+				    processResults(data) {
+				      let results = data.map(item => ({
+				      		id: item.id_policies,
+				      		text: item.number_policies
+				      	}))
+
+				      return { results };
+				    }
+				  }
+				})
+
+
+		
+			}
+
 			function nuevo() {
 
 				$("#alertas").css("display", "none");
@@ -157,8 +211,10 @@
 				$(".container-datos-adicionales-hijo").css("display", "none");
 				$(".container-datos-adicionales-vehicle").css("display", "none");
 				
+				asyncPolizas('#policie');
+
 				//GetClients("#clients_select");
-				GetPolicies("#policie")
+				// GetPolicies("#policie")
 				
 				GetPoliciesById("#policie", "#insures", "#branch", "#insured_name", "#document_insured")
 
@@ -184,7 +240,9 @@
 					var data = table.row( $(this).parents("tr") ).data();
 
 
-					GetPolicies("#policie_view", data.policie)
+					asyncPolizas('#policie_view', {id: data.policie, text: data.number_policies});
+
+					// GetPolicies("#policie_view", data.policie)
 
 					GetPoliciesById("#policie_view", "#insures_view", "#branch_view", "#insured_name_view", "#document_insured_view")
 
@@ -230,8 +288,9 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					
-					GetPolicies("#policie_edit", data.policie)
+					asyncPolizas('#policie_edit', {id: data.policie, text: data.number_policies});
+
+					// GetPolicies("#policie_edit", data.policie)
 
 					GetPoliciesById("#policie_edit", "#insures_edit", "#branch_edit", "#insured_name_edit", "#document_insured_edit")
 

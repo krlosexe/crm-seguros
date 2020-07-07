@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/fullcalendar_old/dist/fullcalendar.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-
+        <link href="<?= url('/') ?>/vendors/select2/select2.min.css" rel="stylesheet">
+        <link href="<?= url('/') ?>/vendors/select2/select2-bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/multiple-select/css/bootstrap-multiselect.css" />
     <!-- page plugins css -->
     <!-- <link rel="stylesheet" href="<?= url('/') ?>/vendors/dragula-master/dist/dragula.min.css" /> -->
@@ -125,6 +126,9 @@
       <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="<?= url('/') ?>/vendors/select2/select2.min.js"></script>
+
       <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert.min.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/sweetalert/sweetalert-dev.js" type="text/javascript"></script>
       <script src="<?= url('/') ?>/vendors/selectize/dist/js/standalone/selectize.min.js"></script>

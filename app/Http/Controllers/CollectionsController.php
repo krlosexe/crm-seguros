@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Collections;
 use App\Auditoria;
 use Illuminate\Http\Request;
+use App\ChargeManagement;
 
 class CollectionsController extends Controller
 {
 
     public function store(Request $request){
-       
+
         $destinationPath        = 'img/collections';
 
         if($request->file('file')){
