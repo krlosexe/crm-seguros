@@ -86,6 +86,7 @@
                                                     <th>Anexo</th>
                                                     <th>Detalle</th>
                                                     <th>Prima</th>
+                                                    <th>Gastos</th>
                                                     <th>IVA</th>
                                                     <th class="text-right">TOTAL</th>
                                                 </tr>
@@ -211,6 +212,7 @@
 
                 
                 data.charge_account.forEach(charge => {
+                    
                     let branchName = charge.policie_data == null? charge.policie_anexes_data.policie.branch_data.name : 
                                                                   charge.policie_data.branch_data.name
 
@@ -225,6 +227,7 @@
                         <td id="number_anexo">${numberAnexo}</td>
                         <td>-</td>
                         <td id="cousin">${charge.cousin}</td>
+                        <td id="cousin">${charge.xpenses}</td>
                         <td id="vat">${charge.vat}</td>
                         <td id="total" class="text-right">${charge.total}</td>
                     `;
