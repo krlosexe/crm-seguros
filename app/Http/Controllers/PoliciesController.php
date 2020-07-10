@@ -377,6 +377,8 @@ class PoliciesController extends Controller
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->orderBy("policies.id_policies", "DESC")
                                 ->first();
+
+        $policie->policies_family_burden_data = PoliciesFamilyBurden::where('id_policie', $policies)->get();
            
         return response()->json($policie)->setStatusCode(200);
     }
@@ -526,6 +528,25 @@ class PoliciesController extends Controller
                 }
                 
             }
+
+           PoliciesFamilyBurden::where('id_policie', $policie->id_policies)->delete();
+
+            if(isset($request->name_familyBurden)):
+
+                foreach ($request->name_familyBurden as $key => $value) {
+
+                    $cargaFamiliar['name']         = $value;
+                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
+                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
+                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
+                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
+                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
+                    $cargaFamiliar['id_policie']   = $store->id_policies;
+
+                    PoliciesFamilyBurden::create($cargaFamiliar);
+
+                }
+            endif;
 
             if($request["type_poliza"] != "Collective"){
                 $comision =  PoliciesCousinsCommissions::find($policies);

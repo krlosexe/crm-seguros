@@ -159,7 +159,7 @@
                           <div class="col-md-12">
                             <label for=""><b>Riesgo (Placa, Dirección, etc)*</b></label>
                               <div class="form-group valid-required">
-                                <input type="text" name="risk" class="form-control form-control-user" id="risk_edit" placeholder="Codigo Objeto Asegurado" required>
+                                <input type="text" name="risk" class="form-control form-control-user" id="risk_edit" placeholder="Codigo Objeto Asegurado">
                               </div>
                           </div>
                         </div>
@@ -185,6 +185,45 @@
                     </div>
                   </div>
                 </div>
+
+              <div class="row remove-pay">
+                <div class="col-md-12">
+                  
+                  <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">Carga Familiar</h6>
+                    </div>
+                    <div class="card-body">
+
+                      <div class="row">
+
+                        <div class="col-md-12">
+                          <button type="button" data-toggle="modal" data-target="#modal-cf" id="btn-familyBurden-policies-edit" class="btn btn-success" style="float: left;">
+                            <i class="ti-user"></i>
+                            <span>Agregar</span>
+                          </button>
+                        </div>
+
+                        <div class="col-md-12">
+                            <table class="table table-bordered" id="table-familyBurden-edit">
+                              <thead>
+                                <tr>
+                                  <th>Nombre</th>
+                                  <th>Documento</th>
+                                  <th>Parentezco</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody></tbody>
+                            </table>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
                 <div class="row">

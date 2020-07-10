@@ -173,7 +173,7 @@
                       <div class="col-md-12">
                         <button type="button" data-toggle="modal" data-target="#modal-cf" id="btn-familyBurden-policies" class="btn btn-success" style="float: left;">
                           <i class="ti-user"></i>
-                          <span>Incluir Carga Familiar</span>
+                          <span>Agregar</span>
                         </button>
                       </div>
 

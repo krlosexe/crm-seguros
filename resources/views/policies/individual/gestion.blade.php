@@ -386,7 +386,7 @@
 									<div class="col-md-6">
 										<label for=""><b>Documento</b></label>
 										<div class="form-group valid-required">
-											<input type="text" class="form-control" id="document_familyBurden" required>
+											<input type="text" class="form-control" id="document_familyBurden">
 										</div>
 									</div>
 
@@ -400,14 +400,14 @@
 									<div class="col-md-6">
 										<label for=""><b>Parentesco</b></label>
 										<div class="form-group valid-required">
-											<input type="text" class="form-control" id="relationship_familyBurden" required>
+											<input type="text" class="form-control" id="relationship_familyBurden">
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<label for=""><b>Fecha Inicio</b></label>
 										<div class="form-group valid-required">
-											<input type="date" class="form-control" id="startDate_familyBurden" required>
+											<input type="date" class="form-control" id="startDate_familyBurden">
 										</div>
 									</div>
 
@@ -1053,6 +1053,20 @@
 							$('#input-file-edit').fileinput('destroy').val('');
 							initFileInput('#input-file-edit');
 						}
+
+						if(data.policies_family_burden_data.length > 0){
+							data.policies_family_burden_data.forEach(item => {
+									document.querySelector('#count_fila_familyBurden').value = countFamilyBurden;
+									document.querySelector('#name_familyBurden').value = item.name;
+									document.querySelector('#document_familyBurden').value = item.document;
+									document.querySelector('#birthdate_familyBurden').value = item.birthday;
+								    document.querySelector('#relationship_familyBurden').value = item.relationship;
+									document.querySelector('#startDate_familyBurden').value = item.date_init;
+									document.querySelector('#cousin_familyBurden').value = item.cousin;
+
+									realFormSave()
+							})
+						}
 					  }
 					});
 
@@ -1346,8 +1360,8 @@
 				$('#modal-lg #btn-add-bind').show();
 			});
 
-			$("#btn-familyBurden-policies").click(function (e) { 
-				$('#count_fila_familyBurden').val('nuevo');
+			$("#btn-familyBurden-policies, #btn-familyBurden-policies-edit").click(function (e) { 
+				$('#count_fila_familyBurden').val('Nuevo');
 				$('#modal-cf input').removeAttr('disabled')
 				$('#modal-cf select').removeAttr('disabled')
 				$("#form-familyBurden")[0].reset()
@@ -1460,9 +1474,9 @@
         	});
 
 			var countFamilyBurden = 0
-			document.querySelector('#form-familyBurden').addEventListener("submit", function(e){
 
-				e.preventDefault();
+			function realFormSave(view = false){
+
 				var count_fila_familyBurden   = document.querySelector('#count_fila_familyBurden').value;
 				var name_familyBurden 		  = document.querySelector('#name_familyBurden').value;
 				var document_familyBurden     = document.querySelector('#document_familyBurden').value;
@@ -1499,7 +1513,12 @@
 					htmlFamilyBurden += "<td>"+name_familyBurden+"</td>"
 					htmlFamilyBurden += "<td>"+document_familyBurden+"</td>"
 					htmlFamilyBurden += "<td>"+relationship_familyBurden+"</td>"
-					htmlFamilyBurden += "<td>"+btn_delete_familyBurden+valuesFB+"</td>"
+					if (!view) {
+						htmlFamilyBurden += "<td>"+btn_delete_familyBurden+valuesFB+"</td>"
+					}
+					else{
+						htmlFamilyBurden += "<td></td>"
+					}
 				htmlFamilyBurden += "</tr>"
 
 
@@ -1508,15 +1527,22 @@
 				}
 
 				$("#table-familyBurden tbody").append(htmlFamilyBurden);
+				$("#table-familyBurden-edit tbody").append(htmlFamilyBurden);
+				$("#table-familyBurden-view tbody").append(htmlFamilyBurden);
 
 				$("#modal-cf").modal("hide");
 
 				countFamilyBurden++
-
-				   
 										
 
+			}
 
+			document.querySelector('#form-familyBurden').addEventListener("submit", function(e){
+
+				e.preventDefault();
+
+				realFormSave();
+			
 			})
 
 			function editVinculacion(tr, countId, isinfo = false){
