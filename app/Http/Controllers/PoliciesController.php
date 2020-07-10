@@ -14,6 +14,7 @@ use App\RecibosCobranza;
 use App\PoliciesAnnexes;
 use App\PolicesVehicles;
 use App\PoliciesFamiliares;
+use App\PoliciesFamilyBurden;
 use Illuminate\Http\Request;
 
 use App\ClientsPeople;
@@ -198,7 +199,6 @@ class PoliciesController extends Controller
                 
             }
 
-
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
             
@@ -227,6 +227,23 @@ class PoliciesController extends Controller
 
                 }
             }
+
+            if(isset($request->name_familyBurden)):
+
+                foreach ($request->name_familyBurden as $key => $value) {
+
+                    $cargaFamiliar['name']         = $value;
+                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
+                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
+                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
+                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
+                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
+                    $cargaFamiliar['id_policie']   = $store->id_policies;
+
+                    PoliciesFamilyBurden::create($cargaFamiliar);
+
+                }
+            endif;
 
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
