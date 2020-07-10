@@ -901,7 +901,7 @@
 							$.map(data.vehicules, function (item, key) {
 								html += "<tr>"
 									html +="<td><a target='_blank' href='vehicles/"+item.placa+"'>"+item.placa+"</a><input type='hidden' name='placas[]' value='"+item.placa+"'></td>"
-									html +="<td></td>"
+									html +="<td><a href='javascript:void(0)' onclick='deleteRow(this)'><i class='fa fa-trash'></i></a></td>"
 								html += "</tr>"
 							});
 
@@ -1494,11 +1494,15 @@
 
 				html += "<tr>"
 					html +="<td><a target='_blank' href='vehicles/"+placa+"'>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></a></td>"
-					html +="<td></td>"
+					html +=`<td><a href='javascript:void(0)' onclick="deleteRow(this)"><i class="fa fa-trash"></i></a></td>`
 				html += "</tr>"
 
 				$("#table-placas").append(html)
 			});
+
+			function deleteRow(element){
+				element.closest('tr').remove();
+			}
 
 			$(".add-familiar").click(function (e) { 
 				let tablita = e.target.closest('table');
@@ -1560,7 +1564,7 @@
 
 				html += "<tr>"
 					html +="<td><a target='_blank' href='vehicles/"+placa+"'>"+placa+"<input type='hidden' name='placas[]' value='"+placa+"'></a></td>"
-					html +="<td></td>"
+					html +="<td><a href='javascript:void(0)' onclick='deleteRow(this)'><i class='fa fa-trash'></i></a></td>"
 				html += "</tr>"
 
 				$("#table-placas-edit").append(html)

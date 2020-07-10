@@ -250,9 +250,14 @@ Route::get('profile', function () {
     return view('profile.gestion');
 });
 
+Route::get('cotizaciones', function () {
+    return view('cotizaciones.gestion');
+});
+
 Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
+
 
 Route::get('vehicles/files/{id_vehicules}/{management}', function ($id_vehicules, $management) {
     return view('vehicles.files.gestion', ["id_vehicules" => $id_vehicules, "management" => $management]);
