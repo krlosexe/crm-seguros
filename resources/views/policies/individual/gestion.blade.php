@@ -1504,7 +1504,7 @@
 
 
 				if(count_fila_familyBurden != 'nuevo'){
-					$('#tr_bind_'+count_fila_familyBurden).remove();
+					$('#tr_familyBurden_'+count_fila_familyBurden).remove();
 				}
 
 				$("#table-familyBurden tbody").append(htmlFamilyBurden);
