@@ -159,6 +159,45 @@
               </div>
             </div>
 
+            <div class="row remove-pay">
+              <div class="col-md-12">
+                
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Carga Familiar</h6>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+                        <button type="button" data-toggle="modal" data-target="#modal-cf" id="btn-familyBurden-policies" class="btn btn-success" style="float: left;">
+                          <i class="ti-user"></i>
+                          <span>Incluir Carga Familiar</span>
+                        </button>
+                      </div>
+
+                      <div class="col-md-12">
+                          <table class="table table-bordered" id="table-familyBurden">
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Parentezco</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="row">
 
