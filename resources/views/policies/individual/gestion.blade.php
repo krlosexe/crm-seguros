@@ -361,81 +361,6 @@
 				</div>
 			</div>
 
-			<div class="modal fade" id="modal-cf" aria-hidden="true" style="display: none;">
-			
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h3>Carga Familiar</h3>
-						</div>
-						<div class="modal-body">
-							<form action="" id="form-familyBurden">
-							<input id="count_fila_familyBurden" hidden value="nuevo">
-								<div class="row">
-									 
-									<input id="count_fila_familyBurden" hidden value="nuevo">
-
-									<div class="col-md-6">
-										<label for=""><b>Nombre</b></label>
-										<div class="form-group valid-required">
-											<input type="text" class="form-control" id="name_familyBurden">
-										</div>
-									</div>
-
-
-									<div class="col-md-6">
-										<label for=""><b>Documento</b></label>
-										<div class="form-group valid-required">
-											<input type="text" class="form-control" id="document_familyBurden">
-										</div>
-									</div>
-
-									<div class="col-md-6">
-										<label for=""><b>Fecha de Nacimiento</b></label>
-										<div class="form-group valid-required">
-											<input type="date" class="form-control" id="birthdate_familyBurden" >
-										</div>
-									</div>
-
-									<div class="col-md-6">
-										<label for=""><b>Parentesco</b></label>
-										<div class="form-group valid-required">
-											<input type="text" class="form-control" id="relationship_familyBurden">
-										</div>
-									</div>
-
-									<div class="col-md-6">
-										<label for=""><b>Fecha Inicio</b></label>
-										<div class="form-group valid-required">
-											<input type="date" class="form-control" id="startDate_familyBurden">
-										</div>
-									</div>
-
-									<div class="col-md-6">
-										<label for=""><b>Prima</b></label>
-										<div class="form-group valid-required">
-											<input type="text" class="form-control monto_formato_decimales" id="cousin_familyBurden" required>
-										</div>
-									</div>
-
-								</div>
-
-
-								<div class="row">
-									<div class="col-md-12">
-										<button type="submit" id="btn-add-familyBurden" class="btn btn-success" style="float: left;">
-										<i class="ti-user"></i>
-										<span>Agregar  </span>
-									</button>
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</div>
-
-				</div>
-			</div>
                 <!-- Content Wrapper END ------->
 	@endsection
 
@@ -1053,20 +978,6 @@
 							$('#input-file-edit').fileinput('destroy').val('');
 							initFileInput('#input-file-edit');
 						}
-
-						if(data.policies_family_burden_data.length > 0){
-							data.policies_family_burden_data.forEach(item => {
-									document.querySelector('#count_fila_familyBurden').value = countFamilyBurden;
-									document.querySelector('#name_familyBurden').value = item.name;
-									document.querySelector('#document_familyBurden').value = item.document;
-									document.querySelector('#birthdate_familyBurden').value = item.birthday;
-								    document.querySelector('#relationship_familyBurden').value = item.relationship;
-									document.querySelector('#startDate_familyBurden').value = item.date_init;
-									document.querySelector('#cousin_familyBurden').value = item.cousin;
-
-									realFormSave()
-							})
-						}
 					  }
 					});
 
@@ -1360,7 +1271,7 @@
 				$('#modal-lg #btn-add-bind').show();
 			});
 
-			$("#btn-familyBurden-policies, #btn-familyBurden-policies-edit").click(function (e) { 
+			$("#btn-familyBurden").click(function (e) { 
 				$('#count_fila_familyBurden').val('Nuevo');
 				$('#modal-cf input').removeAttr('disabled')
 				$('#modal-cf select').removeAttr('disabled')
@@ -1382,7 +1293,7 @@
 			$("#form-bind").submit(function(e){
 				e.preventDefault();
 
-				var count_fila                  = $("#count_fila").val()
+				    var count_fila                      = $("#count_fila").val()
 					var number_annexed                  = $("#number_anexo_bind").val()
 					var number_affiliate_bind           = $("#number_affiliate_bind").val()
 					var date_init_bind                  = $("#date_init_bind").val()
@@ -1473,77 +1384,6 @@
 				count++
         	});
 
-			var countFamilyBurden = 0
-
-			function realFormSave(view = false){
-
-				var count_fila_familyBurden   = document.querySelector('#count_fila_familyBurden').value;
-				var name_familyBurden 		  = document.querySelector('#name_familyBurden').value;
-				var document_familyBurden     = document.querySelector('#document_familyBurden').value;
-				var birthdate_familyBurden    = document.querySelector('#birthdate_familyBurden').value;
-				var relationship_familyBurden = document.querySelector('#relationship_familyBurden').value;
-				var startDate_familyBurden 	  = document.querySelector('#startDate_familyBurden').value;
-				var cousin_familyBurden       = document.querySelector('#cousin_familyBurden').value;
-
-				var btn_delete_familyBurden = `
-						<button type='button' onclick='editFamilyBurden("#tr_familyBurden_${countFamilyBurden}", ${countFamilyBurden}, true)' class='btn btn-info btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
-								<i class='ei-preview' aria-hidden='true'></i>
-						</button>
-
-						<button type='button' onclick='editFamilyBurden("#tr_familyBurden_${countFamilyBurden}", ${countFamilyBurden})' class='btn btn-primary btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
-								<i class='ei-save-edit' aria-hidden='true'></i>
-						</button>
-
-						<button type='button' onclick='DeleteTr("#tr_familyBurden_${countFamilyBurden}")' class='btn btn-danger btn-sm waves-effect waves-light add-dato-btn' id='remove-children'> 
-								<i class='fa fa-trash' aria-hidden='true'></i>
-						</button>`
-
-				var valuesFB = `<input type='hidden'  name='name_familyBurden[]' value='${name_familyBurden}'>`
-				    valuesFB += `<input type='hidden'  name='document_familyBurden[]' value='${document_familyBurden}'>`
-				    valuesFB += `<input type='hidden'  name='birthdate_familyBurden[]' value='${birthdate_familyBurden}'>`
-				    valuesFB += `<input type='hidden'  name='relationship_familyBurden[]' value='${relationship_familyBurden}'>`
-				    valuesFB += `<input type='hidden'  name='startDate_familyBurden[]' value='${startDate_familyBurden}'>`
-				    valuesFB += `<input type='hidden'  name='cousin_familyBurden[]' value='${cousin_familyBurden}'>`
-
-
-				var htmlFamilyBurden       = ""
-
-
-				htmlFamilyBurden += "<tr id='tr_familyBurden_"+countFamilyBurden+"'>"
-					htmlFamilyBurden += "<td>"+name_familyBurden+"</td>"
-					htmlFamilyBurden += "<td>"+document_familyBurden+"</td>"
-					htmlFamilyBurden += "<td>"+relationship_familyBurden+"</td>"
-					if (!view) {
-						htmlFamilyBurden += "<td>"+btn_delete_familyBurden+valuesFB+"</td>"
-					}
-					else{
-						htmlFamilyBurden += "<td></td>"
-					}
-				htmlFamilyBurden += "</tr>"
-
-
-				if(count_fila_familyBurden != 'nuevo'){
-					$('#tr_familyBurden_'+count_fila_familyBurden).remove();
-				}
-
-				$("#table-familyBurden tbody").append(htmlFamilyBurden);
-				$("#table-familyBurden-edit tbody").append(htmlFamilyBurden);
-				$("#table-familyBurden-view tbody").append(htmlFamilyBurden);
-
-				$("#modal-cf").modal("hide");
-
-				countFamilyBurden++
-										
-
-			}
-
-			document.querySelector('#form-familyBurden').addEventListener("submit", function(e){
-
-				e.preventDefault();
-
-				realFormSave();
-			
-			})
 
 			function editVinculacion(tr, countId, isinfo = false){
 				let number_annexed_bind = document.querySelector(`${tr} input[name="number_annexed_bind[]"]`).value;
@@ -1622,36 +1462,6 @@
 
 			}
 
-
-
-			function editFamilyBurden(tr, countId, isinfo = false){
-
-				let name_familyBurden 		  = document.querySelector(`${tr} input[name="name_familyBurden[]"]`).value;
-				let document_familyBurden     = document.querySelector(`${tr} input[name="document_familyBurden[]"]`).value;
-				let birthdate_familyBurden    = document.querySelector(`${tr} input[name="birthdate_familyBurden[]"]`).value;
-				let relationship_familyBurden = document.querySelector(`${tr} input[name="relationship_familyBurden[]"]`).value;
-				let startDate_familyBurden 	  = document.querySelector(`${tr} input[name="startDate_familyBurden[]"]`).value;
-				let cousin_familyBurden       = document.querySelector(`${tr} input[name="cousin_familyBurden[]"]`).value;
-				
-
-				$("#btn-familyBurden-policies").click();
-
-				$('#count_fila_familyBurden').val(countId);
-				$("#name_familyBurden").val(name_familyBurden)
-				$("#document_familyBurden").val(document_familyBurden)
-				$("#birthdate_familyBurden").val(birthdate_familyBurden)
-				$("#relationship_familyBurden").val(relationship_familyBurden)
-				$("#startDate_familyBurden").val(startDate_familyBurden)
-				$("#name_affiliate_bind").val(name_affiliate_bind)
-				$("#cousin_familyBurden").val(cousin_familyBurden)
-				
-				if(isinfo){
-					$('#modal-cf input').attr('disabled', true)
-					$('#modal-cf select').attr('disabled', true)
-					$('#modal-cf #btn-add-familyBurden').hide();
-				}
-
-			}
 
 			$("#clients_select").change(function (e) { 
 				var arrayClient = $(this).val().split("|")

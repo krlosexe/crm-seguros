@@ -228,22 +228,24 @@ class PoliciesController extends Controller
                 }
             }
 
-            if(isset($request->name_familyBurden)):
+            // esto se movio a storeBinds
 
-                foreach ($request->name_familyBurden as $key => $value) {
+            // if(isset($request->name_familyBurden)):
 
-                    $cargaFamiliar['name']         = $value;
-                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
-                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
-                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
-                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
-                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
-                    $cargaFamiliar['id_policie']   = $store->id_policies;
+            //     foreach ($request->name_familyBurden as $key => $value) {
 
-                    PoliciesFamilyBurden::create($cargaFamiliar);
+            //         $cargaFamiliar['name']         = $value;
+            //         $cargaFamiliar['document']     = $request->document_familyBurden[$key];
+            //         $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
+            //         $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
+            //         $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
+            //         $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
+            //         $cargaFamiliar['id_policie']   = $store->id_policies;
 
-                }
-            endif;
+            //         PoliciesFamilyBurden::create($cargaFamiliar);
+
+            //     }
+            // endif;
 
             if($request["type_poliza"] != "Collective"){
                 PoliciesCousinsCommissions::create($request->all());
@@ -378,7 +380,6 @@ class PoliciesController extends Controller
                                 ->orderBy("policies.id_policies", "DESC")
                                 ->first();
 
-        $policie->policies_family_burden_data = PoliciesFamilyBurden::where('id_policie', $policies)->get();
            
         return response()->json($policie)->setStatusCode(200);
     }
@@ -531,23 +532,6 @@ class PoliciesController extends Controller
 
            PoliciesFamilyBurden::where('id_policie', $policie->id_policies)->delete();
 
-            if(isset($request->name_familyBurden)):
-
-                foreach ($request->name_familyBurden as $key => $value) {
-
-                    $cargaFamiliar['name']         = $value;
-                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
-                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
-                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
-                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
-                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
-                    $cargaFamiliar['id_policie']   = $store->id_policies;
-
-                    PoliciesFamilyBurden::create($cargaFamiliar);
-
-                }
-            endif;
-
             if($request["type_poliza"] != "Collective"){
                 $comision =  PoliciesCousinsCommissions::find($policies);
 
@@ -588,6 +572,10 @@ class PoliciesController extends Controller
                                     ->where("policies_bind.id_policie", $id_policie)
                                     ->orderBy("policies_bind.id_policies_bind", "DESC")
                                     ->get();
+                                    
+            foreach ($modulos as $key => $mod) {
+                 $mod->policies_family_burden_data = PoliciesFamilyBurden::where('id_policie', $mod->id_policies_bind)->get();
+            }
 
             return response()->json($modulos)->setStatusCode(200);
         }else{
@@ -607,6 +595,24 @@ class PoliciesController extends Controller
             $request["total"]           = str_replace(',', '', $request["total"]);
 
             $store                  = PoliciesBind::create($request->all());
+            
+            if(isset($request->name_familyBurden)):
+
+                foreach ($request->name_familyBurden as $key => $value) {
+
+                    $cargaFamiliar['name']         = $value;
+                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
+                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
+                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
+                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
+                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
+                    $cargaFamiliar['id_policie']   = $store->id_policies_bind;
+
+                    PoliciesFamilyBurden::create($cargaFamiliar);
+
+                }
+            endif;
+
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "binds";
             $auditoria->cod_reg     = $store->id_policies_bind;
@@ -635,6 +641,25 @@ class PoliciesController extends Controller
             $request["expenses"]        = str_replace(',', '', $request["expenses"]);
             $request["vat"]             = str_replace(',', '', $request["vat"]);
             $request["total"]           = str_replace(',', '', $request["total"]);
+
+            PoliciesFamilyBurden::where('id_policie', $bind)->delete();
+
+            if(isset($request->name_familyBurden)):
+
+                foreach ($request->name_familyBurden as $key => $value) {
+
+                    $cargaFamiliar['name']         = $value;
+                    $cargaFamiliar['document']     = $request->document_familyBurden[$key];
+                    $cargaFamiliar['birthdate']    = $request->birthdate_familyBurden[$key];
+                    $cargaFamiliar['relationship'] = $request->relationship_familyBurden[$key];
+                    $cargaFamiliar['date_init']    = $request->startDate_familyBurden[$key];
+                    $cargaFamiliar['cousin']       = $request->cousin_familyBurden[$key];
+                    $cargaFamiliar['id_policie']   = $bind;
+
+                    PoliciesFamilyBurden::create($cargaFamiliar);
+
+                }
+            endif;
 
             $update = PoliciesBind::find($bind)->update($request->all());
 
