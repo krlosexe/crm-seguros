@@ -171,8 +171,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<button type="submit" id="btn-add-familyBurden" class="btn btn-success" style="float: left;">
-										<i class="ti-user"></i>
-										<span>Agregar  </span>
+										<span>Guardar  </span>
 									</button>
 									</div>
 								</div>
@@ -503,10 +502,11 @@
 
 					if(data.policies_family_burden_data.length > 0){
 						data.policies_family_burden_data.forEach(item => {
+
 								document.querySelector('#count_fila_familyBurden').value = countFamilyBurden;
 								document.querySelector('#name_familyBurden').value = item.name;
 								document.querySelector('#document_familyBurden').value = item.document;
-								document.querySelector('#birthdate_familyBurden').value = item.birthday;
+								document.querySelector('#birthdate_familyBurden').value = item.birthdate;
 							    document.querySelector('#relationship_familyBurden').value = item.relationship;
 								document.querySelector('#startDate_familyBurden').value = item.date_init;
 								document.querySelector('#cousin_familyBurden').value = item.cousin;
@@ -573,7 +573,7 @@
 								document.querySelector('#count_fila_familyBurden').value = countFamilyBurden;
 								document.querySelector('#name_familyBurden').value = item.name;
 								document.querySelector('#document_familyBurden').value = item.document;
-								document.querySelector('#birthdate_familyBurden').value = item.birthday;
+								document.querySelector('#birthdate_familyBurden').value = item.birthdate;
 							    document.querySelector('#relationship_familyBurden').value = item.relationship;
 								document.querySelector('#startDate_familyBurden').value = item.date_init;
 								document.querySelector('#cousin_familyBurden').value = item.cousin;
@@ -656,13 +656,13 @@
 
 
 
-			$("#cousin, #xpenses, #participation").keyup(function (e) { 
-				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
-			});
+			// $("#cousin, #xpenses, #participation").keyup(function (e) { 
+			// 	calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
+			// });
 
 
-			$("#cousin_edit, #xpenses_edit, #participation_edit").keyup(function (e) { 
-				calc("#cousin_edit", "#xpenses_edit", "#total_edit", "#percentage_vat_cousin_edit", "#vat_edit", "#commission_percentage_edit", "#agency_commission_edit", "#participation_edit")
+			$("#cousin_bind_edit, #expenses_bind_edit, #percentage_vat_bind_edit, #total_bind_edit").keyup(function (e) { 
+				calc_bind("#cousin_bind_edit", "#expenses_bind_edit", "#total_bind_edit", "#percentage_vat_bind_edit", "#vat_bind_edit")
 			});
 
 
