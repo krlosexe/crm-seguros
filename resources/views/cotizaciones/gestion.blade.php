@@ -87,24 +87,23 @@
 				var table=$("#table").DataTable({
 					"destroy":true,
 					"stateSave": true,
-					"serverSide":false,
+					"serverSide":true,
+          			"processing": true,
 					"ajax":{
-						"method":"GET",
+						"method":"post",
 						 "url":''+url+'/api/cotizaciones/paginate',
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
 						},
-						"dataSrc":""
 					},
-					"columns":[
-						
-						{"data":"nombre_completo"},
-						{"data":"placa"},
-						{"data":"correo"},
-						{"data":"estado"}, 
-						{"data":"fecha_consulta"}, 
-						{"data": null,
+					"columnDefs":[
+						{targets: 0, "data":"nombre_completo"},
+						{targets: 1, "data":"placa"},
+						{targets: 2, "data":"correo"},
+						{targets: 3, "data":"estado"},
+						{targets: 4, "data":"fecha_consulta"},
+						{targets: 5, "data": null,
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)
