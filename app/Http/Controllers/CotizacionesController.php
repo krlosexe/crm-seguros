@@ -63,9 +63,9 @@ class CotizacionesController extends Controller
             ])->setStatusCode(200);
         }
 
-    function update(Request $request){
+    function update(Request $request,$placa){
 
-        DB::table('vehiculo_cotizador')->where('id_vehiculo', $request->id_user_edit)->update(['estatus' => $request->estado]);
+        DB::table('vehiculo_cotizador')->where('placa', $placa)->update(['estatus' => $request->estado]);
 
         $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
         return response()->json($data)->setStatusCode(200);
