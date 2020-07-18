@@ -203,7 +203,7 @@ Route::resource('vehicle', 'VehicleController');
 Route::post('vehicle/paginate', 'VehicleController@paginate');
 
 Route::post('cotizaciones/paginate', 'CotizacionesController@paginate');
-Route::put('cotizaciones/{placa}', 'CotizacionesController@update');
+Route::put('cotizaciones/{id}', 'CotizacionesController@update');
 Route::post('cotizaciones/updateStatus', 'CotizacionesController@updateStatus');
 Route::get('cotizaciones/status/{id}/{status}', 'CotizacionesController@status');
 

@@ -138,36 +138,31 @@
 
 
 			
-			/* ------------------------------------------------------------------------------- */
-			/* 
-				Funcion que muestra el cuadro3 para la consulta del banco.
-			*/
 			function ver(tbody, table){
 				$(tbody).on("click", "span.consultar", function(){
 					var data = table.row( $(this).parents("tr") ).data();
-
 				   $('.show-when-interesado').hide();
-
-					
-					$("#nombre_view").val(data.nombre).attr('disabled', 'disabled')
-					$("#apellido_view").val(data.apellido).attr('disabled', 'disabled')
-					$("#placa_view").val(data.placa).attr('disabled', 'disabled')
-					$("#correo_view").val(data.correo).attr('disabled', 'disabled')
-					$("#estado_view").val(data.estatus).attr('disabled', 'disabled')
-
+					$("#nombre_view").val(data.nombre).attr("disabled", "disabled")
+					$("#apellido_view").val(data.apellido).attr("disabled", "disabled")
+					$("#tipo_documento_view").val(data.tipo_documento_identidad).attr("disabled", "disabled")
+					$("#documento_identidad_view").val(data.documento_identidad).attr("disabled", "disabled")
+					$("#tipo_persona_view").val(data.tipo_persona).attr("disabled", "disabled")
+					$("#correo_view").val(data.correo).attr("disabled", "disabled")
+					$("#clase_vehiculo_view").val(data.clase_vehiculo).attr("disabled", "disabled")
+					$("#marca_view").val(data.marca).attr("disabled", "disabled")
+					$("#modelo_view").val(data.modelo).attr("disabled", "disabled")
+					$("#referencia_view").val(data.referencia).attr("disabled", "disabled")
+					$("#tipo_servicio_view").val(data.tipo_servicio).attr("disabled", "disabled")
+					$("#estado_view").val(data.estado).attr("disabled", "disabled")
 					if(data.estado == 'INTERESADO'){
 						$('.show-when-interesado').show();
 						$('#plan_view').val(data.plan).attr('disabled', 'disabled')
 						$('#total_view').val(data.total).attr('disabled', 'disabled')
 					}
-
 					$("#created_at").html(data.fecha_consulta)
-
 					cuadros('#cuadro1', '#cuadro5');
 				});
 			}
-
-
 			/* ------------------------------------------------------------------------------- */
 			/* 
 				Funcion que muestra el cuadro3 para la consulta del banco.
@@ -176,27 +171,28 @@
 				$(tbody).on("click", "span.editar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
+					
 	
 					$("#nombre_edit").val(data.nombre).attr('disabled', 'disabled')
 					$("#apellido_edit").val(data.apellido).attr('disabled', 'disabled')
-					$("#placa_edit").val(data.placa).attr('disabled', 'disabled')
+					$("#tipo_documento_edit").val(data.tipo_documento_identidad).attr('disabled', 'disabled')
+					$("#documento_identidad_edit").val(data.documento_identidad).attr('disabled', 'disabled')
+					$("#tipo_persona_edit").val(data.tipo_persona).attr('disabled', 'disabled')
 					$("#correo_edit").val(data.correo).attr('disabled', 'disabled')
-					$("#estado_edit").val(data.estatus)
-					$("#id_edit").val(data.placa)
-					
-
+					$("#clase_vehiculo_edit").val(data.clase_vehiculo).attr('disabled', 'disabled')
+					$("#marca_edit").val(data.marca).attr('disabled', 'disabled')
+					$("#modelo_edit").val(data.modelo).attr('disabled', 'disabled')
+					$("#referencia_edit").val(data.referencia).attr('disabled', 'disabled')
+					$("#tipo_servicio_edit").val(data.tipo_servicio).attr('disabled', 'disabled')
 					$("#created_at").html(data.fecha_consulta)
-
 					$("#estado_edit").val(data.estado)
+					$("#id_edit").val(data.id_vehiculo)
 					if(data.estado == 'INTERESADO'){
 						$('.show-when-interesado').show();
 						$('#plan_edit').val(data.plan).attr('disabled', 'disabled')
 						$('#total_edit').val(data.total).attr('disabled', 'disabled')
 					}
-
 					cuadros('#cuadro1', '#cuadro4');
-
-
 				});
 			}
 
