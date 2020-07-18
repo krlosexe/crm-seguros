@@ -8,7 +8,7 @@ class PoliciesAnnexes extends Model
 {
     protected $fillable = [
         'id_policie', 'number_annexed', 'state', 'risk', 'is_renewable',
-        'reason', 'expedition_date', 'start_date', 'end_date', 'reception_date', 'cousin', 'xpenses', 'vat', 'percentage_vat_cousin',
+        'reason', 'reason_description' ,'expedition_date', 'start_date', 'end_date', 'reception_date', 'cousin', 'xpenses', 'vat', 'percentage_vat_cousin',
         'commission_percentage', 'agency_commission', 'total', 'payment_method', 'observations', 'accessories'
     ];
 

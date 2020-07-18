@@ -42,11 +42,81 @@ use App\datosPersonaesModel;
 class ImportController extends Controller
 {
 
+function renovables(){
+  $policies = DB::table('affected_renewable')->where('estado', '!=', 'Vigente')->get();
+
+  foreach ($policies as $key => $value) {
+
+    Policies::find($value->policie_id)->update(['state_policies' => $value->estado]);
+
+
+  }
+}
+
+// function renovables(){
+//   $policies = Policies::all();
+//   $afectadas = array();
+
+//   foreach ($policies as $key => $value) {
+
+//       $oldRegister['is_renewable'] = $value->is_renewable;
+//       $oldRegister['estado'] = $value->state_policies;
+//       $oldRegister['policie_id'] = $value->id_policies;
+
+//      if($value->is_renewable == 1 && strtotime(date('Y-m-d')) > strtotime($value->end_date)){
+
+//       DB::table('affected_renewable')->insert($oldRegister);
+
+//       $value->state_policies = 'No renovada';
+//       $value->save();
+//      }
+
+
+//      if($value->is_renewable == 0 && strtotime(date('Y-m-d')) > strtotime($value->end_date)){
+      
+//       DB::table('affected_renewable')->insert($oldRegister);
+
+//       $value->state_policies = 'Vencida';
+//       $value->save();
+//      }
+
+
+
+//   }
+// }
+
 function generateRandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
-
+  
   function crearUsuariosPeople(){
+    $usuarios = User::where('id_rol', 21)->get();
+
+    foreach ($usuarios as $key => $user) {
+      
+      $datos = datosPersonaesModel::where('id_usuario', $user->id)->first();
+
+      if($datos->n_cedula == null)
+        return;
+
+      try {
+      
+        if(User::where('email', $datos->n_cedula)->first() != null)
+          return;
+
+        $user->email = $datos->n_cedula;
+        $user->password = md5($datos->n_cedula);
+        $user->save();
+
+      } catch (Exception $e) {
+        dd($datos);        
+      }
+      
+    }
+
+  }
+
+  function crearUsuariosPeople2(){
     $this->updateClaves();
     die;
     $clients = ClientsPeople::all();

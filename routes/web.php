@@ -240,6 +240,8 @@ Route::get('filesAnnexes', 'ImportController@filesAnnexes');
 Route::get('procesarPoliciesAseguradoras', 'ImportController@procesarPoliciesAseguradoras');
 Route::get('concesiorios', 'ImportController@concesiorios');
 
+Route::get('renovables', 'ImportController@renovables');
+
 
 
 Route::get('Company', function () {

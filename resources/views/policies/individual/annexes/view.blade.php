@@ -69,7 +69,15 @@
 
         </div>
 
+        <div class="row">
+          <div class="col-md-12">
+            <label for="">Descripción Motivo</label>
 
+            <textarea style="height: 120px !important" class="form-control" rows="1"  name="reason_description" id="reason_description_view"></textarea>
+          </div>
+        </div>
+
+<br>
 
         <div class="row">
 

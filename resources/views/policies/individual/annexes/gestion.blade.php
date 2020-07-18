@@ -79,6 +79,7 @@
 												<tr>
 													<th>Numero de Anexo</th>
 													<th>Motivo</th>
+													<th>Descripción</th>
 													<th>Total</th>
 													<th>Estatus</th>
 													<th>Fecha de registro</th>
@@ -196,6 +197,7 @@
 						
 						{"data":"number_annexed"},
 						{"data":"reason"},
+						{"data":"reason_description"},
 						{"data":"total", 
 							render : function(data, type, row){
 								return number_format(data, 2)
@@ -342,6 +344,7 @@
 					$("#state_view").val(data.state).attr("disabled", "disabled")
 					$("#risk_view").val(data.risk).attr("disabled", "disabled")
 					$("#reason_view").val(data.reason).attr("disabled", "disabled")
+					$("#reason_description_view").val(data.reason_description).attr("disabled", "disabled")
 					$("#expedition_date_view").val(data.expedition_date).attr("disabled", "disabled")
 					$("#start_date_view").val(data.start_date).attr("disabled", "disabled")
 					$("#end_date_view").val(data.end_date).attr("disabled", "disabled")
@@ -383,6 +386,7 @@
 					$("#state_edit").val(data.state)
 					$("#risk_edit").val(data.risk)
 					$("#reason_edit").val(data.reason)
+					$("#reason_description_edit").val(data.reason_description)
 					$("#expedition_date_edit").val(data.expedition_date)
 					$("#start_date_edit").val(data.start_date)
 					$("#end_date_edit").val(data.end_date)

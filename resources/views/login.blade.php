@@ -53,7 +53,7 @@
                         <p style="font-size: 15px;">Ingresa correctamente los campos requeridos.</p>
                          <form class="user" id="login" method="post" action="">
                             @csrf
-                            <input class="form-control" type="email" name="email" placeholder="Email" required>
+                            <input class="form-control" type="text" name="email" placeholder="Email" required>
                             <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
                             <div class="form-button">
                                  <input type="hidden" id="ruta" value="<?= url('/') ?>">
