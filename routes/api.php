@@ -234,6 +234,7 @@ Route::get('stadist/policies', 'Estadists@Policies');
 
 
 Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
+Route::get('stadist/policies/next/vencidas', 'Estadists@PoliciesVencidas');
 
 Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 

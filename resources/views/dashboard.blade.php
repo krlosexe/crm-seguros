@@ -134,7 +134,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label>Fecha desde</label>
-                                                <input type="date" id="fecha_desde_polizas" onchange="reloadTables()" class="form-control" value="{{ date('Y-m-01') }}">
+                                                <input type="date" id="fecha_desde_polizas" onchange="reloadTables()" class="form-control" value="{{ date('Y-m-01', strtotime('-1 year')) }}">
                                             </div>
 
                                             <div class="col-md-3">
@@ -208,7 +208,39 @@
                                 </div>
                             </div>
                       
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7 col-md-12">
+                              <div class="card">
+                                    <div class="card-heading">
+                                                <h4 class="card-title inline-block pdd-top-5">Pólizas Vencidas/No renovadas</h4>
+      
+                                        {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
+                                    </div>
+                                    <div class="pdd-horizon-20 pdd-vertical-5 content-load">
+
+                                    <div class="text-center col-md-12 loader-1" style="display: none">
+                                          <span>Cargando...</span>
+                                          <div class="progress">
+                                              <div class="progress-bar  progress-bar-striped progress-bar-info active" role="progressbar"
+                                                   aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
+                                                   style="width: 100%">
+                                                  <span class="sr-only"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                        <div class="overflow-y-auto relative table-result-1 scrollable" style="max-height: 381px">
+                                            <table class="table table-lg table-hover" id="table_policies_expired">
+                                                <tbody>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <!-- Content Wrapper END -->
 	@endsection
@@ -242,6 +274,7 @@
                 ganancias()
                 policies()
                 policiesExpired()
+                policiesVencidas()
                 ChargeAccountPending()
 
 
@@ -253,6 +286,7 @@
 
             function reloadTables(){
                 ChargeAccountPending();
+                policiesVencidas()
                 policiesExpired();
             }
 
@@ -329,7 +363,8 @@
                         }
 
                         $.map(data, function (item, key) {
-                            let name = item.type_clients == 1? item.company.business_name : item.client.fullname;
+
+                            let name = item.type_client == 1? item.company.business_name : item.client.fullname;
 
                             html += '<tr>'
                                     +'<td>'
@@ -420,6 +455,73 @@
                         });
 
                         $("#table_policies_next_expired").html(html)
+                    }
+                });
+
+            }
+
+            function policiesVencidas(){
+
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/policies/next/vencidas',
+                    type:'GET',
+                    dataType:'JSON',
+                    data: {
+                        fecha_desde_polizas: $('#fecha_desde_polizas').val(),
+                        fecha_hasta_polizas: $('#fecha_hasta_polizas').val(),
+                    },
+                    beforeSend: function(){
+                        $('.table-result-1').hide();
+                        $('.loader-1').show();
+
+                        $("#table_policies_next_expired").html('')
+                    },
+                    error: function (data) {
+                        
+                    },
+                    success: function(data){
+
+                        var html = ""
+                        $('.loader-1').hide();
+                        $('.table-result-1').show();
+
+                        if(data.length == 0){
+                            html = `
+                                <tr>
+                                    <td>
+                                        <div class="list-info text-center">
+                                            <span>Sin datos que mostrar</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+
+                        $.map(data, function (item, key) {
+                           let name = item.type_clients == 1? item.business_name : item.fullname
+
+                           html += '<tr>'
+                                +'<td>'
+                                    +'<div class="list-info">'
+                                        +` <img class="thumb-img" src="${url}/img/default-user.png" alt="">`
+                                       + '<div class="info">'
+                                          +  '<span class="title">'+name+'</span>'
+                                          +  '<span class="sub-title" style="font-weight: bold;">'+item.state_policies+'</span>'
+                                           + '<a target="_blank" href="policies/'+item.id_policies+'" class="sub-title"># '+item.number_policies+'</a>'
+                                        +'</div>'
+                                    +'</div>'
+                               + '</td>'
+                              + ' <td>'
+                                   + '<div class="mrg-top-10">'
+                                       + '<span>'+item.end_date+'</span>'
+                                    +'</div>'
+                               + '</td>'
+                           + '</tr>'
+
+                        });
+
+                        $("#table_policies_expired").html(html)
                     }
                 });
 
