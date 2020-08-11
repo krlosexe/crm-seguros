@@ -7,6 +7,7 @@ use App\Auditoria;
 use App\Fasecolda;
 use Illuminate\Http\Request;
 use App\Files;
+use DB;
 
 class VehicleController extends Controller
 {
@@ -322,6 +323,24 @@ class VehicleController extends Controller
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
+    }
+
+
+
+    public function asyncPlacaVehiculos(Request $request){
+
+
+        $data = DB::table('vehicules')->select('*')
+        ->where('placa', 'like', '%'.$request['search'].'%')
+
+        ->join("auditoria", "auditoria.cod_reg", "=", "vehicules.id_vehicules")
+        ->where("auditoria.tabla", "vehicules")
+        ->where("auditoria.status", "!=", "0")
+        
+        ->orderBy("vehicules.id_vehicules", "DESC")
+        ->limit(10)->get();
+
+        return response()->json($data);
     }
 
     /**

@@ -200,12 +200,7 @@
 						{"data":"reason_description"},
 						{"data":"total", 
 							render : function(data, type, row){
-								total_normal = number_format(data, 2)
-
-								if(data < 0)
-									total_normal = total_normal * -1;
-
-								return total_normal
+								return number_format(data, 2)
 							}
 						},
 						{"data":"state"},
@@ -345,27 +340,6 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					let cousin_normal = number_format(data.cousin, 2)
-					let xpenses_normal = number_format(data.xpenses, 2)
-					let vat_normal = number_format(data.vat, 2)
-					let agency_commission_normal = number_format(data.agency_commission, 2)
-					let total_normal = number_format(data.total, 2)
-
-					if(data.cousin < 0)
-						cousin_normal = cousin_normal * -1;
-
-					if(data.xpenses < 0)
-						xpenses_normal = xpenses_normal * -1;
-
-					if(data.vat < 0)
-						vat_normal = vat_normal * -1;
-
-					if(data.agency_commission < 0)
-						agency_commission_normal = agency_commission_normal * -1;
-
-					if(data.total < 0)
-						total_normal = total_normal * -1;
-
 					$("#number_annexed_view").val(data.number_annexed).attr("disabled", "disabled")
 					$("#state_view").val(data.state).attr("disabled", "disabled")
 					$("#risk_view").val(data.risk).attr("disabled", "disabled")
@@ -375,13 +349,13 @@
 					$("#start_date_view").val(data.start_date).attr("disabled", "disabled")
 					$("#end_date_view").val(data.end_date).attr("disabled", "disabled")
 					$("#reception_date_view").val(data.reception_date).attr("disabled", "disabled")
-					$("#cousin_view").val(cousin_normal).attr("disabled", "disabled")
-					$("#xpenses_view").val(xpenses_normal).attr("disabled", "disabled")
-					$("#vat_view").val(vat_normal).attr("disabled", "disabled")
+					$("#cousin_view").val(number_format(data.cousin, 2)).attr("disabled", "disabled")
+					$("#xpenses_view").val(number_format(data.xpenses, 2)).attr("disabled", "disabled")
+					$("#vat_view").val(number_format(data.vat, 2)).attr("disabled", "disabled")
 					$("#percentage_vat_cousin_view").val(data.percentage_vat_cousin).attr("disabled", "disabled")
 					$("#commission_percentage_view").val(data.commission_percentage).attr("disabled", "disabled")
-					$("#agency_commission_view").val(agency_commission_normal).attr("disabled", "disabled")
-					$("#total_view").val(total_normal).attr("disabled", "disabled")
+					$("#agency_commission_view").val(number_format(data.agency_commission, 2)).attr("disabled", "disabled")
+					$("#total_view").val(number_format(data.total, 2)).attr("disabled", "disabled")
 					$("#payment_method_view").val(data.payment_method).attr("disabled", "disabled")
 					$("#observations_view").val(data.observations).attr("disabled", "disabled")
 					$("#accessories_view").val(data.accessories).attr("disabled", "disabled")
@@ -408,28 +382,6 @@
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
 					
-					let cousin_normal = number_format(data.cousin, 2)
-					let xpenses_normal = number_format(data.xpenses, 2)
-					let vat_normal = number_format(data.vat, 2)
-					let agency_commission_normal = number_format(data.agency_commission, 2)
-					let total_normal = number_format(data.total, 2)
-
-					if(data.cousin < 0)
-						cousin_normal = cousin_normal * -1;
-
-					if(data.xpenses < 0)
-						xpenses_normal = xpenses_normal * -1;
-
-					if(data.vat < 0)
-						vat_normal = vat_normal * -1;
-
-					if(data.agency_commission < 0)
-						agency_commission_normal = agency_commission_normal * -1;
-
-					if(data.total < 0)
-						total_normal = total_normal * -1;
-
-
 					$("#number_annexed_edit").val(data.number_annexed)
 					$("#state_edit").val(data.state)
 					$("#risk_edit").val(data.risk)
@@ -439,13 +391,13 @@
 					$("#start_date_edit").val(data.start_date)
 					$("#end_date_edit").val(data.end_date)
 					$("#reception_date_edit").val(data.reception_date)
-					$("#cousin_edit").val(cousin_normal)
-					$("#xpenses_edit").val(xpenses_normal)
-					$("#vat_edit").val(vat_normal)
+					$("#cousin_edit").val(number_format(data.cousin, 2))
+					$("#xpenses_edit").val(number_format(data.xpenses, 2))
+					$("#vat_edit").val(number_format(data.vat, 2))
 					$("#percentage_vat_cousin_edit").val(data.percentage_vat_cousin)
 					$("#commission_percentage_edit").val(data.commission_percentage)
-					$("#agency_commission_edit").val(agency_commission_normal)
-					$("#total_edit").val(total_normal)
+					$("#agency_commission_edit").val(number_format(data.agency_commission, 2))
+					$("#total_edit").val(number_format(data.total, 2))
 					$("#payment_method_edit").val(data.payment_method)
 					$("#observations_edit").val(data.observations)
 					$("#accessories_edit").val(data.accessories)
@@ -530,18 +482,7 @@
 				});
 			}
 
-			$("body").on('change', '.monto_formato_decimales_annexes', function() {   
-			  if($(this).val() != ""){  
-			  	let val = number_format($(this).val(), 2)
-			  	let valOriginal = parseFloat($(this).val());
 
-			  	if(valOriginal < 0){
-			  		val = val * -1;
-			  	}
-
-			    $(this).val(val);   
-			  }       
-			});
 
 			$("#cousin, #xpenses, #commission_percentage, #percentage_vat_cousin").keyup(function (e) { 
 				calc("#cousin", "#xpenses", "#total", "#percentage_vat_cousin", "#vat", "#commission_percentage", "#agency_commission", "#participation")
@@ -571,22 +512,9 @@
 				
 				var total = result_percentage_vat_cousin + value_cousin + value_xpenses
 
-				let percentage_vat_cousin_normal = number_format(result_percentage_vat_cousin, 2)
-				let comission_total_normal = number_format(comission_total, 2)
-				let total_normal = number_format(total, 2)
-
-				if(result_percentage_vat_cousin < 0)
-					percentage_vat_cousin_normal = percentage_vat_cousin_normal * -1;
-
-				if(comission_total < 0)
-					comission_total_normal = comission_total_normal * -1;
-
-				if(total < 0)
-					total_normal = total_normal * -1;
-
-				$(input_vat).val(percentage_vat_cousin_normal)
-				$(agency_commission).val(comission_total_normal)
-				$(input_total).val(total_normal)
+				$(input_vat).val(number_format(result_percentage_vat_cousin, 2))
+				$(agency_commission).val(number_format(comission_total ,2))
+				$(input_total).val(number_format(total, 2))
 			}
 
 

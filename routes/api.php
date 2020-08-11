@@ -196,7 +196,9 @@ Route::get('fasecolda/value', 'FasecoldaController@value');
 Route::get('fasecolda/get/{codigo}', 'FasecoldaController@Get');
 
 
-Route::get('vehicles/{placa}', 'VehicleController@show');
+Route::get('vehicles/asyncPlacaVehiculos', 'VehicleController@asyncPlacaVehiculos');
+
+Route::resource('vehicle', 'VehicleController');
 
 Route::resource('vehicle', 'VehicleController');
 

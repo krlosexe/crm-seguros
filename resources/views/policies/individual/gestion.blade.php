@@ -508,7 +508,8 @@
 
 				StartSimulation(".start_simulation", "#payment_method", "#payment_period", "#payment_terms","#payment_date", "#total", "#table-simulation")
 
-				GetPlacas("#placa")
+				/*GetPlacas("#placa")*/
+				asyncPlacaVehiculos("#placa")
 
 				$('#table-store-familiares tbody').html('');
 
@@ -602,6 +603,53 @@
 				  }
 				});
 			}
+
+
+			function asyncPlacaVehiculos(select){
+				// $('#policie').select2('destroy');
+
+		   /*   if(defaultPolicie != undefined){
+		      	$(select).append(`<option value="${defaultPolicie.id}">${defaultPolicie.text}</option>`).trigger('change')
+		      }*/
+
+				$(select).select2({
+				  width: '50%',
+				language: {
+				  noResults: function() {
+				    return "No hay resultado";        
+				  },
+				  searching: function() {
+				    return "Buscando..";
+				  },
+				  inputTooShort: function () {
+				    return "Colocar mínimo 2 caracteres para buscar...";
+				  }
+				},
+				  ajax: {
+				  	delay: 300,
+				    url: `${ruta.value}/api/vehicles/asyncPlacaVehiculos`,
+				    data(params) {
+				    
+				      return {
+				      	search: params.term,
+				      	type: 'public'
+				      }
+				    },
+				    processResults(data) {
+				      let results = data.map(item => ({
+				      		id: item.placa,
+				      		text: item.placa
+				      	}))
+
+				      return { results };
+				    }
+				  }
+				})
+
+
+		
+			}
+
 
 			  
 
