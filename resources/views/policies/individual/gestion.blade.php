@@ -848,12 +848,18 @@
 								$(".remove").css("display", "none")
 								$(".remove-pay").css("display", "block")
 
+								$('.remove input[required]').attr('disabled', 'disabled');
+								$('.remove select[required]').attr('disabled', 'disabled');
+
 								var url = "binds/"+data.id_policies+"/1"
 								$('#iframeVinculadosEdit').attr('src', url);
 
 							}else{
 								$(".remove").css("display", "block")
 								$(".remove-pay").css("display", "none")
+
+								$('.remove-pay input[required]').attr('disabled', 'disabled');
+								$('.remove-pay select[required]').attr('disabled', 'disabled');
 							}
 
 

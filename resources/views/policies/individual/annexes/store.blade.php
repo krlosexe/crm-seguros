@@ -112,14 +112,14 @@
           <div class="col-md-6">
             <label for=""><b>Prima *</b></label>
               <div class="form-group valid-required">
-                <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales" id="cousin" required value="0" style="text-align: right">
+                <input type="text" name="cousin" class="form-control form-control-user monto_formato_decimales_annexes" id="cousin" required value="0" style="text-align: right">
               </div>
           </div>
 
           <div class="col-md-6">
             <label for=""><b>Gastos (Expedición,Runt,Fosyga) *</b></label>
               <div class="form-group valid-required">
-                <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales" id="xpenses" value="0" style="text-align: right">
+                <input type="text" name="xpenses" class="form-control form-control-user monto_formato_decimales_annexes" id="xpenses" value="0" style="text-align: right">
               </div>
           </div>
 

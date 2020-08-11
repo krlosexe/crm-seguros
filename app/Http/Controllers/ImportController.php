@@ -26,6 +26,7 @@ use App\PoliciesNotifications;
 use App\PoliciesInfoPayments;
 use App\PolicesVehicles;
 use App\PoliciesAnnexes;
+use App\PoliciesBind;
 
 use App\InsurersBranchs;
 
@@ -117,18 +118,18 @@ function generateRandomString($length = 10) {
   }
 
   function crearUsuariosPeople2(){
-    $this->updateClaves();
-    die;
-    $clients = ClientsPeople::all();
-    $company = ClientsCompany::all();
+    $clients = PoliciesBind::all();
 
     $csv = array();
 
     foreach ($clients as $key => $value) {
-      $password = substr(md5(microtime()),rand(0,26),5);
+           $password = $value->document_affiliate;
+
+          if(User::where('email', $value->document_affiliate)->first() != null)
+            return;
 
             $User              = new User;
-            $User->email       = 'client0'.$value->id_clients_people.'@chseguros.com';
+            $User->email       = $value->document_affiliate;
             $User->password    = md5($password);
             $User->img_profile = null;
             $User->id_rol      = 21;
@@ -136,10 +137,10 @@ function generateRandomString($length = 10) {
 
 
             $datos_personales                   = new datosPersonaesModel;
-            $datos_personales->nombres          = $value->names;
-            $datos_personales->apellido_p       = $value->last_names;
+            $datos_personales->nombres          = $value->name_affiliate;
+            $datos_personales->apellido_p       = null;
             $datos_personales->apellido_m       = null;
-            $datos_personales->n_cedula         = $value->number_document;
+            $datos_personales->n_cedula         = $value->document_affiliate;
             $datos_personales->fecha_nacimiento = $value->birthdate;
             $datos_personales->telefono         = null;
             $datos_personales->direccion        = null;
@@ -159,40 +160,6 @@ function generateRandomString($length = 10) {
           ]);
     }
 
-    foreach ($company as $key => $value) {
-      $password = substr(md5(microtime()),rand(0,26),5);
-
-            $User              = new User;
-            $User->email       = 'client1'.$value->id_clients_company.'@chseguros.com';
-            $User->password    = md5($password);
-            $User->img_profile = null;
-            $User->id_rol      = 21;
-            $User->save();
-
-
-            $datos_personales                   = new datosPersonaesModel;
-            $datos_personales->nombres          = $value->business_name;
-            $datos_personales->apellido_p       = null;
-            $datos_personales->apellido_m       = null;
-            $datos_personales->n_cedula         = $value->nit;
-            $datos_personales->fecha_nacimiento = null;
-            $datos_personales->telefono         = null;
-            $datos_personales->direccion        = null;
-            $datos_personales->id_usuario       = $User->id;
-            $datos_personales->save();
-
-
-            $auditoria              = new Auditoria;
-            $auditoria->tabla       = "users";
-            $auditoria->cod_reg     = $User->id;
-            $auditoria->status      = 1;
-            $auditoria->usr_regins  = 1;
-            $auditoria->save();
-
-            array_push($csv, ['email' => $User->email, 'password' => $password,
-              'razon_social' => $datos_personales->nombres
-          ]);
-    }
 
     $csvtext = '';
 
@@ -204,7 +171,7 @@ function generateRandomString($length = 10) {
       $csvtext = $csvtext . "\n";
     }
 
-  $csv_handler = fopen ('clients-users.csv','w');
+  $csv_handler = fopen ('vinculados-users.csv','w');
   fwrite ($csv_handler,$csvtext);
   fclose ($csv_handler);
 
