@@ -107,7 +107,10 @@
 							render : function(data, type, row) {
 								var botones = "";
 								if(consultar == 1)
-									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
+									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";	
+
+									botones += "<span class='link btn btn-success waves-effect' data-toggle='tooltip' title='Link'><i class='ei-link' style='margin-bottom:5px'></i></span> ";
+
 								if(actualizar == 1)
 									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
 	
@@ -129,6 +132,7 @@
 
 
 				ver("#table tbody", table)
+				link("#table tbody", table)
 				edit("#table tbody", table)
 
 				eliminar("#table tbody", table)
@@ -138,6 +142,17 @@
 
 
 			
+			function link(tbody, table){
+				$(tbody).on("click", "span.link", function(){
+					var data = table.row( $(this).parents("tr") ).data();
+				   	
+				   	let str = `sodastereo-${data.id_vehiculo}`
+					let refLink = btoa(unescape(encodeURIComponent(str)));
+
+					window.open(`https://chseguros.com.co/api/cotizador/resultados/${refLink}`)
+				});
+			}	
+
 			function ver(tbody, table){
 				$(tbody).on("click", "span.consultar", function(){
 					var data = table.row( $(this).parents("tr") ).data();

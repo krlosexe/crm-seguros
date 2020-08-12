@@ -47,7 +47,7 @@ class CotizacionesController extends Controller
                 $dbFiltered = Clone $query;
                 $recordsFiltered = $dbFiltered->get()->count();
 
-                $data = $query->paginar($start, $length)->get();
+                $data = $query->orderBy('created_at', 'desc')->paginar($start, $length)->get();
 
                 foreach ($data as $key => $value) {
                     $value->nombre_completo = $value->nombre.' '.$value->apellido;

@@ -613,7 +613,7 @@
 		      }*/
 
 				$(select).select2({
-				  width: '50%',
+				  width: '100%',
 				language: {
 				  noResults: function() {
 				    return "No hay resultado";        
