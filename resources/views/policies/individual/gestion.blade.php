@@ -605,12 +605,12 @@
 			}
 
 
-			function asyncPlacaVehiculos(select){
+			function asyncPlacaVehiculos(select,defaultPlaca){
 				// $('#policie').select2('destroy');
 
-		   /*   if(defaultPolicie != undefined){
-		      	$(select).append(`<option value="${defaultPolicie.id}">${defaultPolicie.text}</option>`).trigger('change')
-		      }*/
+		      if(defaultPlaca != undefined){
+		      	$(select).append(`<option value="${defaultPlaca.id}">${defaultPlaca.text}</option>`).trigger('change')
+		      }
 
 				$(select).select2({
 				  width: '100%',
@@ -879,7 +879,9 @@
 
 							$('#clients_select_edit').change();
 
-							GetPlacas("#placa-edit")
+							/*GetPlacas("#placa-edit")*/
+
+							asyncPlacaVehiculos('#placa-edit',{id: data.placa, text: data.placa})
 
 							ChangeSelectBranch("#branch_edit", "_edit")
 
