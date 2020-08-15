@@ -371,7 +371,11 @@
 	@section('CustomJs')
 
 		<script>
+
+
 			$(document).ready(function(){
+
+
 				store();
 				list();
 				update();
@@ -403,8 +407,6 @@
 			function store(){
 				enviarFormulario("#store", 'api/policies', '#cuadro2');
 			}
-
-
 
 
 			function list(cuadro) {
@@ -474,7 +476,55 @@
 					"ordering": false,
 					"responsive": true,
 					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
+ 						{
+ 							extend: 'copy',
+ 							text: 'Copiar',
+ 							title: 'Polizas',
+ 							action: exportActionAsync,
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'excel',
+ 							text: 'Excel',
+ 							title: 'Polizas',
+ 							filename: 'polizas',
+ 							action: exportActionAsync,
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'csv',
+ 							text: 'CSV',
+ 							title: 'Polizas',
+ 							filename: 'polizas',
+ 							action: exportActionAsync,
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'pdf',
+ 							text: 'PDF',
+ 							title: 'Polizas',
+ 							filename: 'polizas',
+ 							action: exportActionAsync,
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'print',
+ 							text: 'Imprimir',
+ 							title: 'Polizas',
+ 							action: exportActionAsync,
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						}
+ 						
 					]
 				});
 
@@ -1131,9 +1181,7 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+
 				});
 			}
 

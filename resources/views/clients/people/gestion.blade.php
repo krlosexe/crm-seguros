@@ -13,11 +13,15 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-block">
+								<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
+									<i class="ti-user"></i>
+									<span>Nuevo</span>
+								</button>
+
+								<br>
+									
 								<div class="table-overflow">
-									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
-										<i class="ti-user"></i>
-										<span>Nuevo</span>
-									</button>
+
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
@@ -56,6 +60,8 @@
 	@section('CustomJs')
 
 		<script>
+
+
 			$(document).ready(function(){
 				store();
 				list();
@@ -115,11 +121,11 @@
 					},
 					"columns":[
 						
-						{"data":"names"},
-						{"data":"last_names"},
-						{"data":"type_document"},
-						{"data":"number_document"},
-						{"data": "fec_regins"},
+						{"data":"names", targets: 0},
+						{"data":"last_names", targets: 1},
+						{"data":"type_document", targets: 2},
+						{"data":"number_document", targets: 3},
+						{"data": "fec_regins", targets: 4},
 						{"data": null,
 							render : function(data, type, row) {
 								var botones = "";
@@ -143,7 +149,50 @@
 					"ordering": false,
 					"responsive": true,
 					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
+ 						{
+ 							extend: 'copy',
+ 							text: 'Copiar',
+ 							title: 'Clientes - Personas',
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'excel',
+ 							text: 'Excel',
+ 							title: 'Clientes - Personas',
+ 							filename: 'clientes-personas',
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'csv',
+ 							text: 'CSV',
+ 							title: 'Clientes - Personas',
+ 							filename: 'clientes-personas',
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'pdf',
+ 							text: 'PDF',
+ 							title: 'Clientes - Personas',
+ 							filename: 'clientes-personas',
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						},
+ 						{
+ 							extend: 'print',
+ 							text: 'Imprimir',
+ 							title: 'Clientes - Personas',
+				 			exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                }
+ 						}
+ 						
 					]
 				});
 
