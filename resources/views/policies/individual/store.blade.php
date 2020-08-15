@@ -427,7 +427,7 @@
                         <div class="col-md-8">
                           <label for=""><b>Placa del vehículo</b></label>
                             <div class="form-group valid-required">
-                              <select name="placa" class="selectized" id="placa" required>
+                              <select name="placa" class="selectized" id="placa">
                                <option value="">Seleccione</option>
                               </select>
                             </div>
