@@ -30,6 +30,7 @@
     <link href="<?= url('/') ?>/css/app.css" rel="stylesheet">
     <link href="<?= url('/') ?>/css/custom.css" rel="stylesheet">
     <script src="<?= url('/') ?>/vendors/jquery/dist/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" rel="stylesheet">
 
   
    @if(Request::path() != '/')
@@ -134,6 +135,16 @@
       <script src="<?= url('/') ?>/js/dashboard/dashboard.js"></script>
       <script src="<?= url('/') ?>/js/funciones.js"></script>
       <script src="<?= url('/') ?>/js/table/data-table.js"></script>
+
+
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>    
+
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)
@@ -221,9 +232,7 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+
 				});
 
 

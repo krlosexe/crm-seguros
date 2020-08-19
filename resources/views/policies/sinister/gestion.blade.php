@@ -133,9 +133,14 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+					"buttons": buttonsDatatable({
+						title: 'Siniestros',
+						filename: 'siniestros',
+						columns: [0,1,2,3, 4],
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 

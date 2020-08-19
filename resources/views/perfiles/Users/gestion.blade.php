@@ -164,9 +164,14 @@
 					"language": idioma_espanol,
 					"dom": 'Bfrtip',
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+					"buttons": buttonsDatatable({
+						title: 'Usuarios',
+						filename: 'usuarios',
+						columns: [0, 1,2,3,4,5,6],
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 				ver("#table tbody", table)

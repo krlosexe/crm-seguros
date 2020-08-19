@@ -117,9 +117,14 @@
 					"language": idioma_espanol,
 					"dom": 'Bfrtip',
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+					"buttons": buttonsDatatable({
+						title: 'Roles',
+						filename: 'roles',
+						columns: [1,2,3,4],
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 

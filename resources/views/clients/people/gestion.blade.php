@@ -148,52 +148,14 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
- 						{
- 							extend: 'copy',
- 							text: 'Copiar',
- 							title: 'Clientes - Personas',
-				 			exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4 ]
-			                }
- 						},
- 						{
- 							extend: 'excel',
- 							text: 'Excel',
- 							title: 'Clientes - Personas',
- 							filename: 'clientes-personas',
-				 			exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4 ]
-			                }
- 						},
- 						{
- 							extend: 'csv',
- 							text: 'CSV',
- 							title: 'Clientes - Personas',
- 							filename: 'clientes-personas',
-				 			exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4 ]
-			                }
- 						},
- 						{
- 							extend: 'pdf',
- 							text: 'PDF',
- 							title: 'Clientes - Personas',
- 							filename: 'clientes-personas',
-				 			exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4 ]
-			                }
- 						},
- 						{
- 							extend: 'print',
- 							text: 'Imprimir',
- 							title: 'Clientes - Personas',
-				 			exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4 ]
-			                }
- 						}
- 						
-					]
+					"buttons": buttonsDatatable({
+						title: 'Clientes - Personas',
+						filename: 'clientes-personas',
+						columns: [0,1,2,3,4]
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 

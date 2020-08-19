@@ -153,9 +153,14 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+					"buttons": buttonsDatatable({
+						title: 'Gestión de Polizas Próximas a Vencer',
+						filename: 'proximas-vencer',
+						columns: [1,2,3]
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 			$.fn.dataTableExt.afnFiltering.push(

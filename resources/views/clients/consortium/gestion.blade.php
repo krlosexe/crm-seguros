@@ -105,9 +105,9 @@
 					},
 					"columns":[
 						
-						{"data":"name"},
-						{"data":"identification"},
-						{"data": "fec_regins"},
+						{"data":"name", targets: 0},
+						{"data":"identification", targets: 1},
+						{"data": "fec_regins", targets: 2},
 						{"data": null,
 							render : function(data, type, row) {
 								var botones = "";
@@ -130,9 +130,14 @@
 					"dom": 'Bfrtip',
 					"ordering": false,
 					"responsive": true,
-					"buttons":[
-						'copy', 'csv', 'excel', 'pdf', 'print'
-					]
+					"buttons": buttonsDatatable({
+						title: 'Gestión de Clientes - Consorcios.',
+						filename: 'clientes-consorcios',
+						columns: [0,1,2]
+					}),
+					initComplete(){
+						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
+					}
 				});
 
 
