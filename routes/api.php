@@ -206,8 +206,14 @@ Route::post('vehicle/paginate', 'VehicleController@paginate');
 
 Route::post('cotizaciones/paginate', 'CotizacionesController@paginate');
 Route::put('cotizaciones/{id}', 'CotizacionesController@update');
+
 Route::post('cotizaciones/updateStatus', 'CotizacionesController@updateStatus');
 Route::get('cotizaciones/status/{id}/{status}', 'CotizacionesController@status');
+
+Route::post('cotizaciones_hogar/paginate', 'CotizacionesHogarController@paginate');
+Route::get('cotizaciones_hogar/status/{id}/{status}', 'CotizacionesHogarController@status');
+
+
 
 Route::get('vehicle/status/{id}/{status}', 'VehicleController@status');
 

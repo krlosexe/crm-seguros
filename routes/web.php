@@ -256,6 +256,10 @@ Route::get('cotizaciones', function () {
     return view('cotizaciones.gestion');
 });
 
+Route::get('cotizaciones-hogar', function () {
+    return view('cotizaciones_hogar.gestion');
+});
+
 Route::get('vehicles', function () {
     return view('vehicles.gestion');
 });
