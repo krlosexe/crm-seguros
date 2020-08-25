@@ -176,6 +176,7 @@ Route::get('calendar/tasks/', 'CalendarController@getTask');
 Route::get('clients/people/policies/{id_client}/{type_cliente}', 'ClientsPeopleController@Policies');
 
 Route::get('clients/policies/{id_client}/{type_cliente}', 'PoliciesController@PoliciesByClients');
+Route::get('clients/policies_bind/{id_policies_bind}', 'PoliciesController@PoliciesByBind');
 
 
 Route::get('client/policies/annexes/{id_client}/{type_cliente}', 'ClientsPeopleController@Annexes');
@@ -254,25 +255,25 @@ Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');
 Route::get('select2polizas', 'PoliciesController@select2polizas');
 
 
-// Endpoints que se utilizan desde el cotizador
+// // Endpoints que se utilizan desde el cotizador
 
-Route::prefix('apisura')->group(function(){
+// Route::prefix('apisura')->group(function(){
 
-	Route::get('getNodosMaestros/{method}', 'CotizadorController@getSuraNodosMaestros');
-	Route::get('getPlaca/{placa}', 'CotizadorController@getPlacaSura');
-	Route::get('getPlanesFiltrados/{codigoclasevehiculo}/{tiposservicio}', 'CotizadorController@getPlanesFiltrados');
-	Route::get('getFasecoldaMarcas/{codigoclasevehiculo}/{modelovehiculo}', 'CotizadorController@getFasecoldaMarcas');
+// 	Route::get('getNodosMaestros/{method}', 'CotizadorController@getSuraNodosMaestros');
+// 	Route::get('getPlaca/{placa}', 'CotizadorController@getPlacaSura');
+// 	Route::get('getPlanesFiltrados/{codigoclasevehiculo}/{tiposservicio}', 'CotizadorController@getPlanesFiltrados');
+// 	Route::get('getFasecoldaMarcas/{codigoclasevehiculo}/{modelovehiculo}', 'CotizadorController@getFasecoldaMarcas');
 
-	Route::get('getFasecoldaLineas/{params}', 'CotizadorController@getFasecoldaLineas');
-	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
+// 	Route::get('getFasecoldaLineas/{params}', 'CotizadorController@getFasecoldaLineas');
+// 	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
 	
-	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
-	Route::post('inspeccion', 'CotizadorController@inspeccion');
-	Route::post('sarlaft', 'CotizadorController@sarlaft');
+// 	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
+// 	Route::post('inspeccion', 'CotizadorController@inspeccion');
+// 	Route::post('sarlaft', 'CotizadorController@sarlaft');
 
-	Route::post('cotizarPlanes', 'CotizadorController@cotizarPlanes');
-	Route::post('cotizarPlan', 'CotizadorController@cotizarPlan');
+// 	Route::post('cotizarPlanes', 'CotizadorController@cotizarPlanes');
+// 	Route::post('cotizarPlan', 'CotizadorController@cotizarPlan');
 
-	Route::post('test', 'CotizadorController@test');
+// 	Route::post('test', 'CotizadorController@test');
 
-});
+// });

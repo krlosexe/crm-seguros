@@ -395,6 +395,48 @@ class PoliciesController extends Controller
          return response()->json($data)->setStatusCode(200);
  
     }
+    // Endpoint para consultar con la ID de un cliente, sus polizas
+
+    public function PoliciesByBind($id_policies_bind){
+        $policie_bind = PoliciesBind::select("policies_bind.*","auditoria.*", "user_registro.email as email_regis")
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
+                                ->where("auditoria.tabla", "binds")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->where("auditoria.status", "!=", "0")
+
+                                ->where("policies_bind.id_policies_bind", $id_policies_bind)
+                                ->orderBy("policies_bind.id_policies_bind", "DESC")
+                                ->first();
+
+        
+        if($policie_bind != null){
+            $policie_bind->policies_family_burden_data = PoliciesFamilyBurden::where('id_policie', $policie_bind->id_policies_bind)->get();
+        }
+        
+
+        $data['policie_bind'] = $policie_bind == null? array() : $policie_bind;
+        $data['policie_parent'] = $policie_bind == null? array() : Policies::with([
+                        'policies_info_taker_insured_beneficiary',
+                        'policies_cousins_commissions',
+                        'policies_observations',
+                        'policies_notifications',
+                        'policies_info_payments',
+                        'policies_bind',
+                        'branch_data',
+                        'insurers_data',
+                    ])
+                    ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                    ->where("auditoria.tabla", "policies")
+                    ->where("auditoria.status", "!=", "0")
+                    ->where('policies.id_policies', $policie_bind->id_policie)
+                    ->where('policies.state_policies', 'Vigente')
+                    ->first();
+
+            
+         return response()->json($data)->setStatusCode(200);
+ 
+    }
 
     /**
      * Show the form for editing the specified resource.

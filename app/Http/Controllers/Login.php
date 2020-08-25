@@ -8,6 +8,7 @@ use App\ClientsPeople;
 use App\Modulos;
 use App\funciones;
 use App\AuthUsers;
+use App\PoliciesBind;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -124,6 +125,8 @@ class Login extends Controller
                                          ->first();
 
                 $type = 0;
+                $bind = array();
+                $vinculado = false;
 
                 if($cliente == null){
 
@@ -131,9 +134,25 @@ class Login extends Controller
                     $type = 1;
 
                     if($cliente == null){
-                        $cliente = new \stdClass;
-                        $cliente->id = 0;
-                        $cliente->number_document = 0;
+                       // evaluar si es un usuario de poliza colectiva
+
+
+                        $bind = PoliciesBind::select("policies_bind.*","auditoria.*", "user_registro.email as email_regis")
+
+                                    ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
+                                    ->where("auditoria.tabla", "binds")
+                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                    ->where("auditoria.status", "!=", "0")
+                                    ->where("policies_bind.document_affiliate", $users[0]->email)
+                                    ->orderBy("policies_bind.id_policies_bind", "DESC")
+                                    ->first();
+
+                          $vinculado = $bind == null? false : true;
+                          $cliente = new \stdClass;
+                          $cliente->id = 0;
+                          $cliente->number_document = 0;
+
+                      
                     }
 
                 }
@@ -146,9 +165,10 @@ class Login extends Controller
                               'type_client'    => $type,
                               'client_id'      => $cliente->id,
                               'number_document' => $cliente->number_document,
+                              'vinculado'  => $vinculado,
+                              'vinculado_data' => $bind == null? array() : $bind,
                               'mensagge'   => "Ha iniciado sesión exitosamente"
                 );
-
 
                 return response()->json($data)->setStatusCode(200);
             }else{
