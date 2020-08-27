@@ -11,7 +11,7 @@ class PoliciesBind extends Model
         'cousin', 'name_affiliate', 'document_affiliate', 'relationship', 'birthdate', 
         'gender', 'phone', 'email', 'address', 'plan', 'type_rate', 'type_membership', 
         'percentage_vat', 'expenses', 'vat', 'total', 'company', 
-        'employee', 'internal_observations', 'observations', 'beneficairy_onerous', 'beneficairy_name', 'beneficairy_identification', 
+        'employee', 'internal_observations', 'observations', 'beneficairy_onerous', 'beneficairy_name', 'beneficairy_identification','file_caratula', 
     ];
 
     protected $table         = 'policies_bind';

@@ -636,6 +636,26 @@ class PoliciesController extends Controller
             $request["vat"]             = str_replace(',', '', $request["vat"]);
             $request["total"]           = str_replace(',', '', $request["total"]);
 
+            $file = $request->file('file');
+
+            if($file != null){
+                
+                $pathinfo = pathinfo($file->getClientOriginalName());
+
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
+
+                $file->move('img/policies/caratulas-binds',$name);
+                
+                $request['file_caratula'] = $name;
+                
+            }
+
+
             $store                  = PoliciesBind::create($request->all());
             
             if(isset($request->name_familyBurden)):
@@ -702,6 +722,25 @@ class PoliciesController extends Controller
 
                 }
             endif;
+
+            $file = $request->file('file');
+
+            if($file != null){
+                
+                $pathinfo = pathinfo($file->getClientOriginalName());
+
+                if($pathinfo['extension'] == 'PDF'){
+                    $name = $pathinfo['filename'].'.pdf';
+                }
+                else{
+                    $name = $file->getClientOriginalName();
+                }
+
+                $file->move('img/policies/caratulas',$name);
+                
+                $request['file_caratula'] = $name;
+                
+            }
 
             $update = PoliciesBind::find($bind)->update($request->all());
 
