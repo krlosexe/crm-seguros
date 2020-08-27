@@ -321,6 +321,9 @@
 				</table>
 			</div>
 
+		</div>
+        <!---END ROW-->
+
 			
            <div class="row">
             <div class="col-md-12">
@@ -339,9 +342,6 @@
 
             </div>
           </div>
-
-		</div>
-        <!---END ROW-->
 
         <input type="hidden" name="id_user" class="id_user">
         <input type="hidden" name="token" class="token">

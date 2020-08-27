@@ -316,6 +316,23 @@
 
 		</div>
 
+           <div class="row">
+            <div class="col-md-12">
+              <label><b>Caratula</b></label>
+            </div>
+            <div class="col-md-12 text-center">
+              <div class="kv-avatar">
+                <div class="file-loading">
+                  <input id="input-file-view" name="file" type="file">
+                </div>
+              </div>
+
+              <div class="kv-avatar-hintss">
+                <small>Seleccione un archivo</small>
+              </div>
+
+            </div>
+          </div>
 
         <!---END ROW----->
 

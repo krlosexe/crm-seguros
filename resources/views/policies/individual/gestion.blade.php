@@ -1031,7 +1031,7 @@
 								],
 								initialPreviewConfig: [
 										
-									{caption: data.file_caratula , downloadUrl: url_imagen+data.file_caratula  ,url: url+"uploads/delete", key: data.file_caratula}
+									{caption: data.file_caratula , downloadUrl: url_imagen+data.file_caratula  ,url: url+"uploads/deleteCaratulaBinds", key: data.file_caratula}
 							
 								],
 

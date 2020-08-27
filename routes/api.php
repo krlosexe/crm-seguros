@@ -70,7 +70,6 @@ Route::get('insurers/sub/company/{id_insurers}', 'InsurersController@GetSubCompa
 Route::put('insurers/sub/company/{id_insurers}', 'InsurersController@updateSubCompany');
 Route::get('insurers/sub/company/status/{id_insurers}/{status}', 'InsurersController@statusSubCompany');
 
-Route::post('insurers/oficce/', 'InsurersController@StoreOficce');
 Route::get('insurers/oficce/{id_insurers}', 'InsurersController@getOficce');
 Route::put('insurers/oficce/{id_insurers}', 'InsurersController@StoreOficce');
 Route::get('insurers/oficce/status/{id_insurers}/{status}', 'InsurersController@statusOficce');
@@ -91,6 +90,7 @@ Route::post('policies/simulation/pay', 'PoliciesController@SimulationPay');
 
 Route::get('policies-binds/{id}', 'PoliciesController@Binds');
 Route::post('policies-binds', 'PoliciesController@StoreBinds');
+Route::post('uploads/deleteCaratulaBinds', 'PoliciesController@deleteCaratulaBinds');
 
 Route::put('policies-binds/{id}', 'PoliciesController@UpdateBinds');
 

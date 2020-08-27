@@ -16,7 +16,7 @@ use App\PolicesVehicles;
 use App\PoliciesFamiliares;
 use App\PoliciesFamilyBurden;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File; 
 use App\ClientsPeople;
 use App\ClientsCompany;
 use App\Files;
@@ -890,6 +890,19 @@ class PoliciesController extends Controller
 
         $data = RecibosCobranza::where("id_policie", $id_policie)->get();
         return response()->json($data)->setStatusCode(200);
+    }
+
+    function deleteCaratulaBinds(Request $request){
+        $policie = PoliciesBind::find($request->key);
+
+        $file = $policie->file_caratula;
+
+        $policie->file_caratula = null;
+        $policie->save();
+
+        File::delete(public_path().'/img/policies/caratulas-binds/'.$file);
+
+        return response()->json([], 200);
     }
 
 
