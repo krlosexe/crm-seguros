@@ -386,13 +386,25 @@ class PoliciesController extends Controller
 
     // Endpoint para consultar con la ID de un cliente, sus polizas
 
-    public function PoliciesByClients($client_id, $type_client){
+    public function PoliciesByClients($number_document){
 
-         $model = $type_client == 0? new ClientsPeople : new ClientsCompany;
 
-         $data = $model->with('policies')->find($client_id);
+         $cliente = ClientsPeople::with('policies')->where('number_document', trim($number_document))->first();
+
+         if($cliente == null)
+            $cliente = ClientsCompany::with('policies')->where('nit', trim($number_document))->first();
+
+         
+         $cliente->binds = PoliciesBind::select("policies_bind.*")
+                                ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
+                                ->where("auditoria.tabla", "binds")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("policies_bind.number_affiliate", trim($number_document))
+                                ->orderBy("policies_bind.id_policies_bind", "DESC")
+                                ->get();
             
-         return response()->json($data)->setStatusCode(200);
+         return response()->json($cliente)->setStatusCode(200);
  
     }
     // Endpoint para consultar con la ID de un cliente, sus polizas
@@ -736,7 +748,7 @@ class PoliciesController extends Controller
                     $name = $file->getClientOriginalName();
                 }
 
-                $file->move('img/policies/caratulas',$name);
+                $file->move('img/policies/caratulas-binds',$name);
                 
                 $request['file_caratula'] = $name;
                 

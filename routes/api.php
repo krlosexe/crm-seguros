@@ -175,8 +175,9 @@ Route::get('calendar/tasks/', 'CalendarController@getTask');
 
 Route::get('clients/people/policies/{id_client}/{type_cliente}', 'ClientsPeopleController@Policies');
 
-Route::get('clients/policies/{id_client}/{type_cliente}', 'PoliciesController@PoliciesByClients');
-Route::get('clients/policies_bind/{id_policies_bind}', 'PoliciesController@PoliciesByBind');
+// se busca por numero de documento (cliente || Empresa && vinculado)
+Route::get('clients/policies/{number_document}', 'PoliciesController@PoliciesByClients');
+// Route::get('clients/policies_bind/{id_policies_bind}', 'PoliciesController@PoliciesByBind');
 
 
 Route::get('client/policies/annexes/{id_client}/{type_cliente}', 'ClientsPeopleController@Annexes');

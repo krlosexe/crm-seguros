@@ -12,6 +12,8 @@ use App\PoliciesBind;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use DB;
+
 class Login extends Controller
 {
     public function Auth(request $request)
@@ -120,53 +122,60 @@ class Login extends Controller
 
                 $nombrecompleto = trim($users[0]->nombres.' '.$users[0]->apellido_p);
 
-                $cliente = ClientsPeople::select("id_clients_people as id", "number_document")->where('names', $users[0]->nombres)
-                                         ->where('last_names', $users[0]->apellido_p)
+                $cliente = ClientsPeople::select("id_clients_people as id", "number_document")
+                                         // ->whereRaw('concat(names, " ", last_names) = "'.trim($users[0]->nombres.' '.$users[0]->apellido_p).'"')
+                                         ->where('number_document', $users[0]->email)
                                          ->first();
 
                 $type = 0;
-                $bind = array();
-                $vinculado = false;
 
                 if($cliente == null){
 
-                    $cliente = ClientsCompany::select("id_clients_company as id", "nit as number_document")->where('business_name', $users[0]->nombres)->first();
+                    $cliente = ClientsCompany::select("id_clients_company as id", "nit as number_document")
+                                          // ->where('business_name', $users[0]->nombres)
+                                          ->where('nit', $users[0]->email)
+                                          ->first();
                     $type = 1;
 
                     if($cliente == null){
-                       // evaluar si es un usuario de poliza colectiva
 
+                      $cliente = new \stdClass;
+                      $cliente->id = 0;
+                      $cliente->number_document = 0;
 
-                        $bind = PoliciesBind::select("policies_bind.*","auditoria.*", "user_registro.email as email_regis")
-
-                                    ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
-                                    ->where("auditoria.tabla", "binds")
-                                    ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
-                                    ->where("auditoria.status", "!=", "0")
-                                    ->where("policies_bind.document_affiliate", $users[0]->email)
-                                    ->orderBy("policies_bind.id_policies_bind", "DESC")
-                                    ->first();
-
-                          $vinculado = $bind == null? false : true;
-                          $cliente = new \stdClass;
-                          $cliente->id = 0;
-                          $cliente->number_document = 0;
-
-                      
                     }
 
                 }
+
+                 // evaluar si es un usuario de poliza colectiva
+
+
+                  $bind = PoliciesBind::select("policies_bind.*","auditoria.*", "user_registro.email as email_regis")
+                              ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
+                              ->where("auditoria.tabla", "binds")
+                              ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+                              ->where("auditoria.status", "!=", "0")
+                              ->where("policies_bind.document_affiliate", $users[0]->email)
+                              ->orderBy("policies_bind.id_policies_bind", "DESC")
+                              ->first();
+
+                if($bind != null){
+                  $cliente = new \stdClass;
+                  $cliente->id = 0;
+                  $cliente->number_document = $bind->document_affiliate;
+
+                }
+
 
                 $data = array('user_id'    => $users[0]->id,
                               'email'      => $users[0]->email,
                               'token'      => $token,
                               'nombre'     => $users[0]->nombres,
                               'apellido'   => $users[0]->apellido_p,
+                              'fullname'   => trim($users[0]->nombres.' '.$users[0]->apellido_p),
                               'type_client'    => $type,
                               'client_id'      => $cliente->id,
                               'number_document' => $cliente->number_document,
-                              'vinculado'  => $vinculado,
-                              'vinculado_data' => $bind == null? array() : $bind,
                               'mensagge'   => "Ha iniciado sesión exitosamente"
                 );
 

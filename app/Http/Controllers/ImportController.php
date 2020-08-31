@@ -117,7 +117,7 @@ function generateRandomString($length = 10) {
 
   }
 
-  function crearUsuariosPeople2(){
+  function crearUsuariosPeopleVinculados(){
     $clients = PoliciesBind::all();
 
     $csv = array();
@@ -126,7 +126,7 @@ function generateRandomString($length = 10) {
            $password = $value->document_affiliate;
 
           if(User::where('email', $value->document_affiliate)->first() != null)
-            return;
+            continue;
 
             $User              = new User;
             $User->email       = $value->document_affiliate;
@@ -172,6 +172,106 @@ function generateRandomString($length = 10) {
     }
 
   $csv_handler = fopen ('vinculados-users.csv','w');
+  fwrite ($csv_handler,$csvtext);
+  fclose ($csv_handler);
+
+  }
+
+  function crearUsuariosPeoplePeoples(){
+    $clients = ClientsCompany::all();
+    $clients2 = ClientsPeople::all();
+
+    $csv = array();
+    
+    foreach ($clients as $key => $value) {
+           $password = $value->nit;
+
+          if(User::where('email', $value->nit)->first() != null)
+            continue;
+
+            $User              = new User;
+            $User->email       = $value->nit;
+            $User->password    = md5($password);
+            $User->img_profile = null;
+            $User->id_rol      = 21;
+            $User->save();
+
+
+            $datos_personales                   = new datosPersonaesModel;
+            $datos_personales->nombres          = $value->business_name;
+            $datos_personales->apellido_p       = '';
+            $datos_personales->apellido_m       = null;
+            $datos_personales->n_cedula         = $value->nit;
+            $datos_personales->fecha_nacimiento = null;
+            $datos_personales->telefono         = null;
+            $datos_personales->direccion        = null;
+            $datos_personales->id_usuario       = $User->id;
+            $datos_personales->save();
+
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "users";
+            $auditoria->cod_reg     = $User->id;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = 1;
+            $auditoria->save();
+
+            array_push($csv, ['email' => $User->email, 'password' => $password,
+              'nombre_completo' => $datos_personales->nombres.' '.$datos_personales->apellido_p
+          ]);
+    }
+
+    foreach ($clients2 as $key => $value) {
+           $password = $value->number_document;
+
+          if(User::where('email', $value->number_document)->first() != null)
+            continue;
+
+            $User              = new User;
+            $User->email       = $value->number_document;
+            $User->password    = md5($password);
+            $User->img_profile = null;
+            $User->id_rol      = 21;
+            $User->save();
+
+
+            $datos_personales                   = new datosPersonaesModel;
+            $datos_personales->nombres          = $value->names;
+            $datos_personales->apellido_p       = $value->last_names;
+            $datos_personales->apellido_m       = null;
+            $datos_personales->n_cedula         = $value->number_document;
+            $datos_personales->fecha_nacimiento = null;
+            $datos_personales->telefono         = null;
+            $datos_personales->direccion        = null;
+            $datos_personales->id_usuario       = $User->id;
+            $datos_personales->save();
+
+
+            $auditoria              = new Auditoria;
+            $auditoria->tabla       = "users";
+            $auditoria->cod_reg     = $User->id;
+            $auditoria->status      = 1;
+            $auditoria->usr_regins  = 1;
+            $auditoria->save();
+
+            array_push($csv, ['email' => $User->email, 'password' => $password,
+              'nombre_completo' => $datos_personales->nombres.' '.$datos_personales->apellido_p
+          ]);
+    }
+
+
+    $csvtext = '';
+
+    foreach ($csv as $record){
+      foreach ($record as $key => $value) {
+          $csvtext = $csvtext . $value.';';
+      }
+
+      $csvtext = $csvtext . "\n";
+    }
+
+
+  $csv_handler = fopen ('users.csv','w');
   fwrite ($csv_handler,$csvtext);
   fclose ($csv_handler);
 
