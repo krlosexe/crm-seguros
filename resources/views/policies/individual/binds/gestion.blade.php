@@ -557,7 +557,7 @@
 					if(data.file_caratula != null){
 
 
-							url_imagen = ruta.value + '/img/policies/caratulas-binds/'
+							url_imagen = ruta.value + '/img/policies/caratulas/'
 
 
 							var ext = data.file_caratula.split('.');
@@ -672,7 +672,7 @@
 					if(data.file_caratula != null){
 
 
-							url_imagen = ruta.value + '/img/policies/caratulas-binds/'
+							url_imagen = ruta.value + '/img/policies/caratulas/'
 
 
 							var ext = data.file_caratula.split('.');
