@@ -13,8 +13,18 @@ class Policies extends Model
     ];
 
     protected $table         = 'policies';
+
     public    $timestamps    = false;
+
     protected $primaryKey    = 'id_policies';
+
+    protected $appends = ['route_caratula'];
+
+
+    function getRouteCaratulaAttribute()
+    {
+        return getenv('APP_URL').'img/policies/caratulas/'.$this->file_caratula;
+    }    
 
     public function scopeSearch($query, $str){
         if($str)

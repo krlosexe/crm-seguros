@@ -24,6 +24,7 @@ class ClientsCompany extends Model
                         'policies_observations',
                         'policies_notifications',
                         'policies_info_payments',
+                        'policies_bind',
                         'branch_data',
                         'insurers_data',
 

@@ -394,13 +394,18 @@ class PoliciesController extends Controller
          if($cliente == null)
             $cliente = ClientsCompany::with('policies')->where('nit', trim($number_document))->first();
 
-         
-         $cliente->binds = PoliciesBind::select("policies_bind.*")
+        
+        if($cliente == null){
+            $cliente = new \stdClass;
+        }
+
+         $cliente->binds = PoliciesBind::with('policie_parent')
+                                ->select("policies_bind.*", "auditoria.*")
                                 ->join("auditoria", "auditoria.cod_reg", "=", "policies_bind.id_policies_bind")
                                 ->where("auditoria.tabla", "binds")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
                                 ->where("auditoria.status", "!=", "0")
-                                ->where("policies_bind.number_affiliate", trim($number_document))
+                                ->where("policies_bind.document_affiliate", trim($number_document))
                                 ->orderBy("policies_bind.id_policies_bind", "DESC")
                                 ->get();
             
@@ -661,7 +666,7 @@ class PoliciesController extends Controller
                     $name = $file->getClientOriginalName();
                 }
 
-                $file->move('img/policies/caratulas-binds',$name);
+                $file->move('img/policies/caratulas',$name);
                 
                 $request['file_caratula'] = $name;
                 
@@ -748,7 +753,7 @@ class PoliciesController extends Controller
                     $name = $file->getClientOriginalName();
                 }
 
-                $file->move('img/policies/caratulas-binds',$name);
+                $file->move('img/policies/caratulas',$name);
                 
                 $request['file_caratula'] = $name;
                 
@@ -912,7 +917,7 @@ class PoliciesController extends Controller
         $policie->file_caratula = null;
         $policie->save();
 
-        File::delete(public_path().'/img/policies/caratulas-binds/'.$file);
+        File::delete(public_path().'/img/policies/caratulas/'.$file);
 
         return response()->json([], 200);
     }
@@ -1075,15 +1080,28 @@ class PoliciesController extends Controller
 
 
     public function GetVehicule($placa){
+        $soats = DB::table('branchs')->where('name', 'like', '%soat%')->get()->toArray();
 
-        $data = PolicesVehicles::select("policies_vehicle.*", "fasecolda.clase", "fasecolda.marca", "fasecolda.referencia1", 
-                                        "fasecolda.referencia2", "fasecolda.referencia3", "insurers.name as name_insurers", "insurers.phone")
-                                    
+        $soats = array_map(function($item){
+            return $item->id_branchs;
+        }, $soats);
+
+        $data = PolicesVehicles::select(
+                                        "policies_vehicle.*", 
+                                        "fasecolda.clase", 
+                                        "fasecolda.marca", 
+                                        "fasecolda.referencia1", 
+                                        "fasecolda.referencia2", 
+                                        "fasecolda.referencia3", 
+                                        "insurers.name as name_insurers", 
+                                        "insurers.phone"
+                                    )
                                     ->join("policies", "policies.id_policies", "=", "policies_vehicle.id_policie")
                                     ->join("vehicules", "vehicules.placa", "=", "policies_vehicle.placa")
                                     ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
                                     ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
                                     ->where("policies_vehicle.placa", $placa)
+                                    ->whereNotIn("policies.branch", $soats)
                                     ->first();
         if($data){
             return response()->json($data)->setStatusCode(200);
