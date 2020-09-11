@@ -185,12 +185,13 @@ class PoliciesController extends Controller
             if($file != null){
                 
                 $pathinfo = pathinfo($file->getClientOriginalName());
+                $currentTime = date('YmdHis');
 
                 if($pathinfo['extension'] == 'PDF'){
-                    $name = $pathinfo['filename'].'.pdf';
+                    $name = $pathinfo['filename']."-$currentTime".'.pdf';
                 }
                 else{
-                    $name = $file->getClientOriginalName();
+                    $name = $pathinfo['filename']."-$currentTime" .".$pathinfo[extension]";
                 }
 
                 $file->move('img/policies/caratulas',$name);
@@ -489,15 +490,17 @@ class PoliciesController extends Controller
 
             $file = $request->file('file');
 
+            
             if($file != null){
                 
                 $pathinfo = pathinfo($file->getClientOriginalName());
+                $currentTime = date('YmdHis');
 
                 if($pathinfo['extension'] == 'PDF'){
-                    $name = $pathinfo['filename'].'.pdf';
+                    $name = $pathinfo['filename']."-$currentTime".'.pdf';
                 }
                 else{
-                    $name = $file->getClientOriginalName();
+                    $name = $pathinfo['filename']."-$currentTime" .".$pathinfo[extension]";
                 }
 
                 $file->move('img/policies/caratulas',$name);
@@ -660,10 +663,10 @@ class PoliciesController extends Controller
                 $pathinfo = pathinfo($file->getClientOriginalName());
 
                 if($pathinfo['extension'] == 'PDF'){
-                    $name = $pathinfo['filename'].'.pdf';
+                     $name = $pathinfo['filename']."-$currentTime".'.pdf';
                 }
                 else{
-                    $name = $file->getClientOriginalName();
+                     $name = $pathinfo['filename']."-$currentTime" .".$pathinfo[extension]";
                 }
 
                 $file->move('img/policies/caratulas',$name);
@@ -742,15 +745,17 @@ class PoliciesController extends Controller
 
             $file = $request->file('file');
 
+           
             if($file != null){
                 
                 $pathinfo = pathinfo($file->getClientOriginalName());
+                $currentTime = date('YmdHis');
 
                 if($pathinfo['extension'] == 'PDF'){
-                    $name = $pathinfo['filename'].'.pdf';
+                    $name = $pathinfo['filename']."-$currentTime".'.pdf';
                 }
                 else{
-                    $name = $file->getClientOriginalName();
+                    $name = $pathinfo['filename']."-$currentTime" .".$pathinfo[extension]";
                 }
 
                 $file->move('img/policies/caratulas',$name);
