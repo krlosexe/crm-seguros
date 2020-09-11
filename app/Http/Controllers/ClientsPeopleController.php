@@ -20,6 +20,12 @@ use App\Departamentos;
 use App\Municipios;
 use Illuminate\Http\Request;
 
+use App\User;
+use App\datosPersonaesModel;
+use App\PoliciesBind;
+use App\ClientsCompany;
+
+
 class ClientsPeopleController extends Controller
 {
     /**
@@ -94,6 +100,14 @@ class ClientsPeopleController extends Controller
             $this->StoreChildren($request->all(), $store["id_clients_people"]);
             $this->StoreVehicle($request->all(), $store["id_clients_people"]);
 
+            if(
+               User::where('email', $store->number_document)->first() == null 
+                && 
+               ($store->number_document != null && $store->number_document != '')
+             ){
+
+               $this->createUser($store);
+            }
 
 
             $destinationPath        = 'img/clients/peopple';
@@ -134,6 +148,63 @@ class ClientsPeopleController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
 
+    }
+
+    public function updatedUser($number_document, $update){
+
+        // Se busca en clientes, company y policie_bind si el numero de documento anterior existe
+        // Si no existe ningun registro con el numero de documento, entonces se puede eliminar el usuario
+
+        if($number_document != $update->number_document){
+
+            $this->checkDestroyUser($number_document);
+            
+            $this->createUser($update);
+        }
+
+
+    }
+
+    public function checkDestroyUser($number_document, $forceDelete = false){
+
+        $client = ClientsPeople::where('number_document', trim($number_document))->first();
+        $company = ClientsCompany::where('nit', trim($number_document))->first();
+        $bind = PoliciesBind::where('document_affiliate', trim($number_document))->first();
+        
+        if(($client == null || $forceDelete) && $company == null && $bind == null){
+            datosPersonaesModel::where('n_cedula', trim($number_document))->delete();
+            User::where('email', trim($number_document))->delete();
+        }
+            
+    }
+
+    public function createUser($store){
+        $User              = new User;
+        $User->email       = $store->number_document;
+        $User->password    = md5($store->number_document);
+        $User->img_profile = null;
+        $User->id_rol      = 21;
+        $User->save();
+
+
+        $datos_personales                   = new datosPersonaesModel;
+        $datos_personales->nombres          = $store->names;
+        $datos_personales->apellido_p       = $store->last_names;
+        $datos_personales->apellido_m       = null;
+        $datos_personales->n_cedula         = $store->number_document;
+        $datos_personales->fecha_nacimiento = null;
+        $datos_personales->telefono         = null;
+        $datos_personales->direccion        = null;
+        $datos_personales->id_usuario       = $User->id;
+        $datos_personales->save();
+
+
+        $auditoria              = new Auditoria;
+        $auditoria->tabla       = "users";
+        $auditoria->cod_reg     = $User->id;
+        $auditoria->status      = 1;
+        $auditoria->usr_regins  = 1;
+        $auditoria->save();
     }
 
 
@@ -235,18 +306,24 @@ class ClientsPeopleController extends Controller
             isset($request["send_birthday_card"])               ? $request["send_birthday_card"]               = 1 : $request["send_birthday_card"]              = 0;
 
 
-            $update = ClientsPeople::find($clientsPeople)->update($request->all());
-               ClientsPeopleContact::find($clientsPeople)->update($request->all());
-               ClientsPeopleInfoCrm::find($clientsPeople)->update($request->all());
-               ClientsNotifications::find($clientsPeople)->update($request->all());
-               ClientsWorkingInformation::find($clientsPeople)->update($request->all());
+           $update = ClientsPeople::find($clientsPeople);
+           $originalDocument = $update->number_document; 
+           $update->update($request->all());
 
+           // si es diferente, entonces se cambio el numero de doc
 
-               ClientsPeopleChildrens::where('id_clients_people', $clientsPeople)->delete();
-               $this->StoreChildren($request->all(), $clientsPeople);
+            $this->updatedUser($originalDocument, $update);
 
-               ClientsPeopleVehicle::where('id_clients_people', $clientsPeople)->delete();
-               $this->StoreVehicle($request->all(), $clientsPeople);
+           ClientsPeopleContact::find($clientsPeople)->update($request->all());
+           ClientsPeopleInfoCrm::find($clientsPeople)->update($request->all());
+           ClientsNotifications::find($clientsPeople)->update($request->all());
+           ClientsWorkingInformation::find($clientsPeople)->update($request->all());
+
+           ClientsPeopleChildrens::where('id_clients_people', $clientsPeople)->delete();
+           $this->StoreChildren($request->all(), $clientsPeople);
+
+           ClientsPeopleVehicle::where('id_clients_people', $clientsPeople)->delete();
+           $this->StoreVehicle($request->all(), $clientsPeople);
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
@@ -273,6 +350,11 @@ class ClientsPeopleController extends Controller
         if($status == 0){
             $auditoria->usr_regmod = $request["id_user"];
             $auditoria->fec_regmod = date("Y-m-d");
+
+            $bind = ClientsPeople::find($id);
+
+            $this->checkDestroyUser($bind->number_document, true);
+
         }
         $auditoria->save();
 
