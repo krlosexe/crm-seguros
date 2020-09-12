@@ -23,6 +23,9 @@ use App\Files;
 
 use Illuminate\Support\Facades\DB;
 
+use App\User;
+use App\datosPersonaesModel;
+
 class PoliciesController extends Controller
 {
     /**
@@ -678,6 +681,16 @@ class PoliciesController extends Controller
 
             $store                  = PoliciesBind::create($request->all());
             
+
+            if(
+               User::where('email', $store->document_affiliate)->first() == null 
+                && 
+               ($store->document_affiliate != null && $store->document_affiliate != '')
+             ){
+
+               $this->createUser($store);
+            }
+
             if(isset($request->name_familyBurden)):
 
                 foreach ($request->name_familyBurden as $key => $value) {
@@ -764,7 +777,12 @@ class PoliciesController extends Controller
                 
             }
 
-            $update = PoliciesBind::find($bind)->update($request->all());
+            $update = PoliciesBind::find($bind);
+            $documentoOriginal = $update->document_affiliate;
+            $update->update($request->all());
+
+            $this->updatedUser($documentoOriginal, $update);
+
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
@@ -788,7 +806,13 @@ class PoliciesController extends Controller
             if($status == 0){
                 $auditoria->usr_regmod = $request["id_user"];
                 $auditoria->fec_regmod = date("Y-m-d");
+
+                $bind = PoliciesBind::find($id);
+
+                $this->checkDestroyUser($bind->document_affiliate, true);
+
             }
+
             $auditoria->save();
 
             $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
@@ -1187,5 +1211,65 @@ class PoliciesController extends Controller
         $data = Policies::select('number_policies', 'id_policies')->where('number_policies', 'like', '%'.$request['search'].'%')->limit(10)->get();
 
         return response()->json($data);
+    }
+
+
+    public function updatedUser($number_document, $update){
+
+        // Se busca en clientes, company y policie_bind si el numero de documento anterior existe
+        // Si no existe ningun registro con el numero de documento, entonces se puede eliminar el usuario
+
+        if($number_document != $update->document_affiliate){
+
+            $this->checkDestroyUser($number_document);
+
+            $this->createUser($update);
+        }
+
+
+    }
+
+    public function checkDestroyUser($number_document, $forceDelete = false){
+
+        $client = ClientsPeople::where('number_document', trim($number_document))->first();
+        $company = ClientsCompany::where('nit', trim($number_document))->first();
+        $bind = PoliciesBind::where('document_affiliate', trim($number_document))->first();
+
+        if($client == null && $company == null && ($bind == null || $forceDelete)){
+            // dump($number_document);
+            datosPersonaesModel::where('n_cedula', trim($number_document))->delete();
+            User::where('email', trim($number_document))->delete();
+        }
+
+            
+    }
+
+    public function createUser($store){
+        $User              = new User;
+        $User->email       = $store->document_affiliate;
+        $User->password    = md5($store->document_affiliate);
+        $User->img_profile = null;
+        $User->id_rol      = 21;
+        $User->save();
+
+
+        $datos_personales                   = new datosPersonaesModel;
+        $datos_personales->nombres          = $store->name_affiliate;
+        $datos_personales->apellido_p       = null;
+        $datos_personales->apellido_m       = null;
+        $datos_personales->n_cedula         = $store->document_affiliate;
+        $datos_personales->fecha_nacimiento = null;
+        $datos_personales->telefono         = null;
+        $datos_personales->direccion        = null;
+        $datos_personales->id_usuario       = $User->id;
+        $datos_personales->save();
+
+
+        $auditoria              = new Auditoria;
+        $auditoria->tabla       = "users";
+        $auditoria->cod_reg     = $User->id;
+        $auditoria->status      = 1;
+        $auditoria->usr_regins  = 1;
+        $auditoria->save();
     }
 }
