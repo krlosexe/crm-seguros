@@ -291,7 +291,7 @@
 					},
 					"columns":[
 						
-						{"data":"number_annexed"},
+						{"data":"number_annexed" },
 						{"data":"number_affiliate"},
 						{"data":"name_affiliate"},
 						{"data":"document_affiliate"},
@@ -324,10 +324,10 @@
 						columns: [0, 1, 2,3,4],
 					}),
 					initComplete(){
+
 						$('.dt-button').removeClass('dt-button buttons-copy buttons-html5')
 					}	
 				});
-
 
 				ver("#table tbody", table)
 				edit("#table tbody", table)
@@ -335,6 +335,13 @@
 				desactivar("#table tbody", table)
 				eliminar("#table tbody", table)
 
+				if(id_rol == 22){
+					$('.row-calculos, .prima, .observaciones-internas').hide()
+					$('.objeto, .fecha-inicio').removeClass('col-md-4').addClass('col-md-6')
+					$('.observaciones').removeClass('col-md-6').addClass('col-md-12')
+					$("#table").DataTable().column(0).visible(false)
+					$("#table").DataTable().column(4).visible(false)
+				}
 
 			}
 

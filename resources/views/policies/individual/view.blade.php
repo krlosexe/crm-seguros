@@ -622,7 +622,7 @@
                   </div>
 
 
-                  <div class="row">
+                  <div class="row informacion-pagos">
                   
                     <div class="col-md-12">
                       
@@ -676,7 +676,7 @@
 
 
 
-                  <div class="row">
+                  <div class="row simulacion-pagos">
               
                     <div class="col-md-12">
                       

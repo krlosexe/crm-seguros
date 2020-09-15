@@ -493,10 +493,16 @@
 				desactivar("#table tbody", table)
 				eliminar("#table tbody", table)
 
+				hideElementsByRol();
 
 			}
 
-
+			function hideElementsByRol(){
+				// rol municipio
+				if(id_rol == 22){
+					$('.informacion-pagos, .simulacion-pagos').hide();
+				}
+			}
 
 			function nuevo() {
 

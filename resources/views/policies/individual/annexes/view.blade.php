@@ -79,7 +79,7 @@
 
 <br>
 
-        <div class="row">
+        <div class="row row-municipio-hide">
 
           <div class="col-sm-3">
             <label for=""><b>Fecha expedicion</b></label>
@@ -109,7 +109,7 @@
         <br>
 
 
-        <div class="row">
+        <div class="row row-municipio-hide">
 
           <div class="col-md-6">
             <label for=""><b>Prima *</b></label>
@@ -172,7 +172,7 @@
 
 
 
-        <div class="row">
+        <div class="row row-municipio-hide">
 
           <div class="col-md-4">
             <label for=""><b>Forma Pago</b></label>

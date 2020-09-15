@@ -254,6 +254,10 @@
 				desactivar("#table tbody", table)
 				eliminar("#table tbody", table)
 
+				if(id_rol == 22){
+					$("#table").DataTable().column(5).visible(false)
+					$('.row-municipio-hide').hide()
+				}
 
 			}
 

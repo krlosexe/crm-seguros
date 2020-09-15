@@ -30,7 +30,7 @@
 
 		<div class="row">
 
-			<div class="col-md-4">
+			<div class="col-md-4 fecha-inicio">
 				<label for=""><b>Fecha de Inicio *</b></label>
 				<div class="form-group valid-required">
 				<input type="date" class="form-control" id="date_init_bind_view" required>
@@ -38,14 +38,14 @@
 			</div>
 
 
-			<div class="col-md-4">
+			<div class="col-md-4 objeto">
 				<label for=""><b>Objeto asegurado*</b></label>
 				<div class="form-group valid-required">
 				<input type="text" class="form-control" id="insured_object_bind_view" placeholder="Codigo Objeto Asegurado" required>
 				</div>
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-4 prima">
 				<label for=""><b>Prima (Mensual, semestral, anual)*</b></label>
 				<div class="form-group valid-required">
 				<input type="text" class="form-control monto_formato_decimales" id="cousin_bind_view" required style="text-align: right">
@@ -167,7 +167,7 @@
 
 
 
-		<div class="row">
+		<div class="row row-calculos">
 
 			<div class="col-md-2">
 				<label for=""><b>% IVA</b></label>
@@ -254,14 +254,14 @@
 
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 observaciones-internas">
 				<label for=""><b>Observaciones Internas</b></label>
 				<div class="form-group valid-required">
 					<textarea class="form-control" id="internal_observations_bind_view" cols="30" rows="10"></textarea>
 				</div>
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-6 observaciones">
 				<label for=""><b>Observaciones</b></label>
 				<div class="form-group valid-required">
 					<textarea  id="observations_bind_view" class="form-control" cols="30" rows="10"></textarea>
