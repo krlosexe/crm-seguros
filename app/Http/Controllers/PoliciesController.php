@@ -1157,21 +1157,38 @@ class PoliciesController extends Controller
 
         $cliente = ClientsPeople::select('id_clients_people as id')->where('number_document', $cedula)->first();
         $type_client = 0;
+        $bind = null;
 
         if($cliente == null){
             $cliente = ClientsCompany::select('id_clients_company as id')->where('nit', $cedula)->first();
             $type_client = 1;
         }
         
+        if($cliente == null){
+            $cliente = PoliciesBind::where('document_affiliate', trim($cedula))->first();
+        
+            if($cliente != null){
+
+               $where = [
+                    'id_policies' => $cliente->id_policie,
+                    'state_policies' => 'Vigente'
+                ];
+
+            }
+
+        }
+        else{
+            $where = [
+                'type_clients' => $type_client,
+                'clients' => $cliente->id,
+                'state_policies' => 'Vigente',
+            ];
+        }
 
         if($cliente == null)
             return response()->json([])->setStatusCode(200);
 
-        $data = Policies::where([
-                        'type_clients' => $type_client,
-                        'clients' => $cliente->id,
-                        'state_policies' => 'Vigente',
-                    ])
+        $data = Policies::where($where)
                 ->where('branchs.name', 'like', '%SALUD%')
                 ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
                 ->with(['branch_data', 'insurers_data'])
