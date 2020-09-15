@@ -242,7 +242,7 @@ class ClientsCompanyController extends Controller
         $User->email       = $store->nit;
         $User->password    = md5($store->nit);
         $User->img_profile = null;
-        $User->id_rol      = 21;
+        $User->id_rol      = 22;
         $User->save();
 
 
