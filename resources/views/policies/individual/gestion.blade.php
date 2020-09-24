@@ -844,7 +844,8 @@
 							$('#input-file-view').fileinput('destroy').val('')
 								initFileInput('#input-file-view');
 							}
-
+							
+							hideElementsByRol();
 							cuadros('#cuadro1', '#cuadro3');
 
 

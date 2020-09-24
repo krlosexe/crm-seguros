@@ -191,7 +191,7 @@
 
 				var table=$("#table").DataTable({
 					"destroy":true,
-					
+					"cache": false,
 					"stateSave": true,
 					"serverSide":false,
 					"ajax":{
@@ -255,6 +255,7 @@
 				eliminar("#table tbody", table)
 
 				if(id_rol == 22){
+					$("#table").DataTable().column(3).visible(false)
 					$("#table").DataTable().column(5).visible(false)
 					$('.row-municipio-hide').hide()
 				}
