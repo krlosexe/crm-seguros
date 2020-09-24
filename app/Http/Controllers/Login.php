@@ -168,6 +168,7 @@ class Login extends Controller
 
 
                 $data = array('user_id'    => $users[0]->id,
+                              'id_rol'     => $users[0]->id_rol,
                               'email'      => $users[0]->email,
                               'token'      => $token,
                               'nombre'     => $users[0]->nombres,
