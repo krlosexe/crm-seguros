@@ -63,7 +63,7 @@
 				$("#nav_li_Pólizas").addClass("open");
 				$("#nav_users, #modulo_Pólizas").addClass("active");
 				$("#nav_policies-grouped").addClass("active");
-				verifyPersmisos(id_user, tokens, "modules");
+				verifyPersmisos(id_user, tokens, "policies-grouped");
 			});
 
 

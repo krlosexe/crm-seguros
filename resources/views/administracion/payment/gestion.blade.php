@@ -439,6 +439,11 @@
 					var urlpdf = document.querySelector('#ruta').value + "/policies/wallet/pdf/"+data.id+"/1"
 					$('#btn-print').attr('href', urlpdf);
 
+					if(id_rol == 22){
+						$('.remove-pay').hide()
+						$('#form-update').find('input, select, textarea').attr('disabled', 'disabled')
+					}
+
 					cuadros('#cuadro1', '#cuadro4');
 				});
 			}

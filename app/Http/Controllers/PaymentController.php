@@ -8,11 +8,14 @@ use App\ChargeManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\User;
+
 class PaymentController extends Controller
 {
     function get(Request $request){
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
+            $user = User::find($request->id_user);
 
             $data = ChargeManagement::select('charge_accounts_management.*', 'audi.*',
                                         DB::raw("cast(audi.fec_regins as date) as fec_regins"),
@@ -30,7 +33,12 @@ class PaymentController extends Controller
 
                                     ->where("audi.tabla", "=", "charge_accounts_management")
                                     ->where("audi.status", "!=", "0")
-                                
+                                    ->where(function($query) use ($user){
+                                        if(!is_null($user) && $user->id_rol == 22){
+                                            $query->where("charge_accounts_management.id_client", $user->clients_company->id_clients_company);
+                                            $query->where("charge_accounts_management.type_client", 1);
+                                        }
+                                    })
                                     ->with('chargeAccount')
                                     ->orderBy("charge_accounts_management.id", "DESC")
                                     ->get();

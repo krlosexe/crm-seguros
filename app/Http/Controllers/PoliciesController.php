@@ -92,6 +92,8 @@ class PoliciesController extends Controller
     {
 
         ini_set('memory_limit', '-1'); 
+
+        $user = User::find($request->id_user);
         
         $searchValue = $request->search['value']; // value
         $start       = $request->start;
@@ -112,6 +114,14 @@ class PoliciesController extends Controller
                                 ->where("auditoria.tabla", "policies")
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
+                                ->where(function($query) use ($user){
+
+                                    if(!is_null($user) && $user->id_rol == 22){
+                                        $query->where("policies.clients", $user->clients_company->id_clients_company);
+                                        $query->where("policies.type_clients", 1);
+                                    }
+
+                                })
                                 ->orderBy("policies.state_policies", "asc");    
 
             // se cuentan todos
@@ -1158,51 +1168,71 @@ class PoliciesController extends Controller
         $cliente = ClientsPeople::select('id_clients_people as id')->where('number_document', $cedula)->first();
         $type_client = 0;
         $bind = null;
+        $dataBinds = array();
 
         if($cliente == null){
             $cliente = ClientsCompany::select('id_clients_company as id')->where('nit', $cedula)->first();
             $type_client = 1;
         }
         
-        if($cliente == null){
-            $cliente = PoliciesBind::where('document_affiliate', trim($cedula))->first();
-        
-            if($cliente != null){
+        // las polizas de company y cliente se combinan con las binds
 
-               $where = [
-                    'id_policies' => $cliente->id_policie,
-                    'state_policies' => 'Vigente'
-                ];
+        $bind = PoliciesBind::where('document_affiliate', trim($cedula))->get()->toArray();
+    
+        if(count($bind) > 0){
 
-            }
+            $whereIn = array_map(function($item){
+                return $item['id_policie'];
+            }, $bind);
+
+            $dataBinds = Policies::where([
+                        'state_policies' => 'Vigente',
+                    ])
+                    ->where('branchs.name', 'like', '%SALUD%')
+                    ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
+                    ->whereIn('id_policies', $whereIn)
+                    ->with(['branch_data', 'insurers_data'])
+                    ->get()->toArray();
+
 
         }
         else{
+            $bind = null;
+        }
+
+
+
+        if($cliente == null && $bind == null)
+            return response()->json([])->setStatusCode(200);
+
+        $data = array();
+
+        if($cliente != null){
+
             $where = [
                 'type_clients' => $type_client,
                 'clients' => $cliente->id,
                 'state_policies' => 'Vigente',
             ];
+
+            $data = Policies::where($where)
+                    ->where('branchs.name', 'like', '%SALUD%')
+                    ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
+                    ->with(['branch_data', 'insurers_data'])
+                    ->get()->toArray();
         }
 
-        if($cliente == null)
-            return response()->json([])->setStatusCode(200);
-
-        $data = Policies::where($where)
-                ->where('branchs.name', 'like', '%SALUD%')
-                ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
-                ->with(['branch_data', 'insurers_data'])
-                ->get();
+        $data = array_merge($dataBinds, $data);
 
         $resp = array();
 
         foreach ($data as $key => $value) {
             $info = [
-                'insurers_id' => $value->insurers_data->id_insurers,
-                'insurers_name' => $value->insurers_data->name,
-                'number_policies' => $value->number_policies,
-                'link' => $value->insurers_data->link_cita,
-                'file_caratula' => $value->file_caratula,
+                'insurers_id' => $value['insurers_data']['id_insurers'],
+                'insurers_name' => $value['insurers_data']['name'],
+                'number_policies' => $value['number_policies'],
+                'link' => $value['insurers_data']['link_cita'],
+                'file_caratula' => $value['file_caratula'],
             ];
 
             array_push($resp, $info);
