@@ -22,11 +22,11 @@
                 <a href="#default-tab-3-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item informacion-pagos">
                 <a href="#default-tab-4-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item informacion-pagos">
                 <a href="#default-tab-5-view" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
 
@@ -363,7 +363,7 @@
 
                 <div class="col-md-6">
 
-                  <div class="row remove">
+                  <div class="row remove informacion-pagos">
 
                     <div class="col-md-12">
                       <div class="card shadow mb-4">

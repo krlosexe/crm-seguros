@@ -119,6 +119,7 @@ class PoliciesController extends Controller
                                     if(!is_null($user) && $user->id_rol == 22){
                                         $query->where("policies.clients", $user->clients_company->id_clients_company);
                                         $query->where("policies.type_clients", 1);
+                                        $query->where('policies.state_policies', 'Vigente');
                                     }
 
                                 })
