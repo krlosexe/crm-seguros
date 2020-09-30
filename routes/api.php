@@ -242,9 +242,9 @@ Route::get('stadist/ganancias', 'Estadists@Ganancias');
 
 Route::get('stadist/policies', 'Estadists@Policies');
 
-
-Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
-Route::get('stadist/policies/next/vencidas', 'Estadists@PoliciesVencidas');
+Route::get('stadist/policies/next/vigentes','Estadists@PoliciesVigentes');
+Route::get('stadist/policies/next/expired','Estadists@PoliciesExpired');
+Route::get('stadist/policies/next/vencidas','Estadists@PoliciesVencidas');
 
 Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 

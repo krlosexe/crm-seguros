@@ -8,26 +8,46 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/login/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="css/login/iofrm-theme22.css">
-  @if(Request::path() != '/')
-
-    <script>
-      $(document).ready(function(){
-
-        var url = $(location).attr('href').split("/").splice(-1);
-         validAuth(false, url[0]);
-      });
-    </script>
-      @endif
+    @if(Request::path() != '/')
+        <script>
+        $(document).ready(function(){
+            var url = $(location).attr('href').split("/").splice(-1);
+            validAuth(false, url[0]);
+        });
+        </script>
+    @endif
       <style type="text/css">
           @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,500,700");
-            html, html a, body { -webkit-font-smoothing: antialiased; }
+            html, html a, body { 
+                -webkit-font-smoothing: antialiased; 
+            }
 
-            body { font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 14px; background-color: #f6f7fb; color: #888da8; line-height: 1.5; letter-spacing: 0.2px; overflow-x: hidden; }
+            body { 
+                font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+                font-size: 14px; 
+                background-color: #f6f7fb; 
+                color: #888da8; line-height: 1.5; 
+                letter-spacing: 0.2px; 
+                overflow-x: hidden; 
+                }
 
-            h1, h2, h3, h4, h5, h6 { color: #515365; font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.5px; font-weight: normal; line-height: 1.5; }
+            h1, h2, h3, h4, h5, h6 { 
+                color: #515365; 
+                font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+                letter-spacing: 0.5px;
+                font-weight: normal; 
+                line-height: 1.5; 
+            }
 
-            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
-            p { font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: #888da8; line-height: 1.9; }
+            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { 
+                font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+            }
+
+            p { 
+                font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; 
+                color: #888da8; 
+                line-height: 1.9; 
+            }
       </style>
 </head>
 <body>

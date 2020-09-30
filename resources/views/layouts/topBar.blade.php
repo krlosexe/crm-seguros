@@ -108,21 +108,21 @@
                           <i class="ti-angle-down font-size-10"></i>
                       </div>
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu" id="menu_options">
                       <li>
-                          <a href="{{ url('/') }}/Company">
+                          <a href="{{ url('/') }}/Company" class="configuration">
                               <i class="ti-settings pdd-right-10"></i>
                               <span>Configuración</span>
                           </a>
                       </li>
                       <li>
-                          <a href="{{ url('/') }}/profile">
+                          <a href="{{ url('/') }}/profile" class="profile">
                               <i class="ti-user pdd-right-10"></i>
                               <span>Mi perfil</span>
                           </a>
                       </li>
                       <li>
-                          <a href="">
+                          <a href="" class="message_user">
                               <i class="ti-email pdd-right-10"></i>
                               <span>Mensajes</span>
                           </a>

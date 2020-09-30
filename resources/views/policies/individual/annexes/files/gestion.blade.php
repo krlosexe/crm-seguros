@@ -38,7 +38,7 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-4);
-        validAuth(false, 'modules');
+        validAuth(false, url[0]);
       });
     </script>
 
@@ -183,7 +183,7 @@
 				$('#table tbody').off('click');
 				var url=document.getElementById('ruta').value; 
 				cuadros(cuadro, "#cuadro1");
-
+			
 				var table=$("#table").DataTable({
 					"destroy":true,
 					
@@ -291,7 +291,7 @@
 				Funcion que muestra el cuadro3 para la consulta del banco.
 			*/
 			function ver(tbody, table){
-
+				
 				$(tbody).on("click", "span.consultar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();

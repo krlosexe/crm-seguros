@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('login');
 });
+
 
 Route::get('/compare', function () {
     return view('compare');

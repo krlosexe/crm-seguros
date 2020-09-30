@@ -18,17 +18,15 @@ class Login extends Controller
 {
     public function Auth(request $request)
     {	
-
+   
     	$messages = [
 		    'required' => 'El Campo :El campo es requerido.',
 		];
-
 
     	$validator = Validator::make($request->all(), [
             'email'    => 'required',
             'password' => 'required',
         ], $messages);
-
 
         if ($validator->fails()) {
             return response()->json($validator->errors())->setStatusCode(400);
@@ -40,8 +38,9 @@ class Login extends Controller
                          ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
                          ->where("auditoria.tabla", "users")
                          ->where("auditoria.status", "!=", "0")
-	    				 ->get();
-
+                         ->get();
+                         
+ 
 	    	if (sizeof($users) > 0) {
 	    		$token = bin2hex(random_bytes(64));
 
