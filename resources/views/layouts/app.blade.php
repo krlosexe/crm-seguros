@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <link rel="shortcut icon" href="https://chseguros.com.co/wp-content/uploads/2020/01/cropped-Captura-de-pantalla-2020-01-16-a-las-4.11.15-p.-m.-32x32.png">
 
   <title>App</title>
@@ -16,7 +17,7 @@
 
   <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" />
+    <!-- <link rel="stylesheet" href="<?= url('/') ?>/vendors/PACE/themes/blue/pace-theme-minimal.css" /> -->
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/perfect-scrollbar/css/perfect-scrollbar.min.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/selectize/dist/css/selectize.default.css" />
     <link rel="stylesheet" href="<?= url('/') ?>/vendors/vectorMap/jquery-jvectormap-2.0.5.css" />
@@ -86,16 +87,7 @@
 
 
          <!-- Footer START -->
-         <footer class="content-footer">
-              <div class="footer">
-                  <div class="copyright">
-                      <span>Con la tecnología de <b class="text-dark"></b>SkySeguros.</span>
-                      <span class="go-right">
-          
-          </span>
-                  </div>
-              </div>
-          </footer>
+        
           <!-- Footer END -->
 
 
@@ -176,12 +168,30 @@
   <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>    
 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+
   <script>
     var user_id = localStorage.getItem('user_id');
     $("#logout").attr("href", "logout/"+user_id)
 
-
+    var socket = io.connect('http://chseguros.com.co:3000', {secure: true});
     
+    socket.on('askForUserId', function () {
+        console.log("sender user")
+
+        socket.emit("userIdReceived", user_id);  
+
+    });
+
+
+
+    window.onbeforeunload = function () {
+      alert("No te vallas")
+  };
+
+
 
 
   </script>

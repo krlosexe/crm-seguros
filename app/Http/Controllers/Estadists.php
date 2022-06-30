@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\ClientsPeople;
+use App\User;
 use App\Policies;
 use App\ChargeAccount;
+use App\ClientsPeople;
 use App\ChargeManagement;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class Estadists extends Controller
@@ -144,6 +145,42 @@ class Estadists extends Controller
         return response()->json($data)->setStatusCode(200);
                         
     }
+
+
+    public function PoliciesVigentes(Request $request){
+
+       // $fechadesde = $request->fecha_desde_polizas.' 00:00:00';
+      //  $fechahasta = $request->fecha_hasta_polizas.' 23:59:59';
+      $user = User::find($request->id_user);
+        
+        $data = Policies::select("policies.*", 
+            DB::raw("CONCAT(clients_people.names, ' ', clients_people.last_names) AS fullname"),"clients_company.business_name")
+                ->join("clients_people", "clients_people.id_clients_people", "=", "policies.clients", "left")
+                ->join("clients_company", "clients_company.id_clients_company", "=", "policies.clients", "left")
+
+                ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
+                ->where("auditoria.tabla", "policies")
+                ->where("auditoria.status", "!=", "0")
+                ->where(function($query) use ($user){
+
+                    if(!is_null($user) && $user->id_rol == 22){
+                        $query->where("policies.clients", $user->clients_company->id_clients_company);
+                        $query->where("policies.type_clients", 1);
+                    }
+
+                })            
+        //       ->where('auditoria.fec_regins', '>=', $fechadesde)
+          //      ->where('auditoria.fec_regins', '<=', $fechahasta)
+                ->whereIn("state_policies", ['Vigente'])
+                ->where("policies.end_date", '!=', null)
+                                
+                ->orderBy("policies.end_date", "DESC")
+                ->get();
+
+        return response()->json($data)->setStatusCode(200);
+                        
+    }
+
 
 
     public function ChargeAccounPending(Request $request){

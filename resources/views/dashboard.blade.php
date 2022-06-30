@@ -9,7 +9,7 @@
 
                 <!-- Content Wrapper START -->
                 <div class="main-content">
-                    <div class="container-fluid">
+                    <div class="container-fluid dashbord_content">
                         <div class="row">
                             <div class="col-lg-3">
 
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
+                                <div class="card estadistica-poliza">
                                     <div class="card-block">
                                         <p class="mrg-btm-5">Estadisticas de pólizas</p>
                                         <h1 class="no-mrg-vertical font-size-35" id="sold"><b class="font-size-16"></b></h1>
@@ -54,11 +54,17 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card estadistica-poliza-vigente">
+                                    <div class="card-block">
+                                        <h1 class="no-mrg-vertical font-size-35" id="Vigentes_count"><b class="font-size-16"></b></h1>
+                                        <p class="mrg-btm-5">Pólizas Vigentes</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="card">
+                                <div class="card ciudades-principales">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="maps map-500 padding-20">
@@ -95,10 +101,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer d-none d-md-inline-block">
+                                   <!-- Content Wrapper START <div class="card-footer d-none d-md-inline-block">
                                         <div class="text-center">
                                             <div class="row">
-                                                <div class="col-md-10 ml-auto mr-auto">
+                                                <div class="col-md-12 ml-auto mr-auto">
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="pdd-vertical-5">
@@ -119,7 +125,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --> 
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +134,7 @@
                           <div class="row">
                              <div class="col-md-12">
                                  
-                                 <div class="card">
+                                 <div class="card ragen-time">
                                     <div class="card-heading">
                                         
                                         <div class="row">
@@ -150,7 +156,7 @@
 
                         <div class="row">
                             <div class="col-lg-7 col-md-12">
-                              <div class="card">
+                              <div class="card next-polices">
                                     <div class="card-heading">
                                                 <h4 class="card-title inline-block pdd-top-5">Pólizas próximas a renovar</h4>
       
@@ -180,7 +186,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-5 col-md-12">
-                                <div class="card">
+                                <div class="card cartera-cobro">
                                     <div class="card-heading">
                                         <h4 class="card-title inline-block pdd-top-5">Cartera por cobrar</h4>
                                         {{-- <a href="" class="btn btn-default pull-right no-mrg">Ver toda</a> --}}
@@ -211,7 +217,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-7 col-md-12">
-                              <div class="card">
+                              <div class="card polizas-vencidas">
                                     <div class="card-heading">
                                                 <h4 class="card-title inline-block pdd-top-5">Pólizas Vencidas/No renovadas</h4>
       
@@ -254,34 +260,51 @@
         
 		<script>
 			$(document).ready(function(){
-				login()
-                Clients()
-                var primary = '#7774e7',
-                success = '#37c936',
-                info = '#0f9aee',
-                warning = '#ffcc00',
-                danger = '#ff3c7e',
-                primaryInverse = 'rgba(119, 116, 231, 0.1)',
-                successInverse = 'rgba(55, 201, 54, 0.1)',
-                infoInverse = 'rgba(15, 154, 238, 0.1)',
-                warningInverse = 'rgba(255, 204, 0, 0.1)',
-                dangerInverse = 'rgba(255, 60, 126, 0.1)',
-                gray = '#f6f7fb',
-                white = '#fff',
-                dark = '#515365'
+
+                /* case by role*/
+                if(id_rol != 22){
+                    RemoveNotRole('.estadistica-poliza-vigente')
+                    login()
+                    Clients()
+                    var primary = '#7774e7',
+                    success = '#37c936',
+                    info = '#0f9aee',
+                    warning = '#ffcc00',
+                    danger = '#ff3c7e',
+                    primaryInverse = 'rgba(119, 116, 231, 0.1)',
+                    successInverse = 'rgba(55, 201, 54, 0.1)',
+                    infoInverse = 'rgba(15, 154, 238, 0.1)',
+                    warningInverse = 'rgba(255, 204, 0, 0.1)',
+                    dangerInverse = 'rgba(255, 60, 126, 0.1)',
+                    gray = '#f6f7fb',
+                    white = '#fff',
+                    dark = '#515365'
+
+                    ganancias()
+                    policies()
+                    policiesExpired()
+                    policiesVencidas()
+                    ChargeAccountPending()
+
+                }else{
+                    $('.dashbord_content').find('.casilla-ganancias,.estadistica-poliza-vigente').show();
+                    ganancias();
+                    policiesVigentes();
+                }
+
+                /**/
 
 
-                ganancias()
-                policies()
-                policiesExpired()
-                policiesVencidas()
-                ChargeAccountPending()
 
 
 
+            });
+            
 
-
-			});
+            function RemoveNotRole(class_list){
+                $(class_list).parent().remove();
+                $('.dashbord_content .card').show();
+            }
 
 
             function reloadTables(){
@@ -298,7 +321,7 @@
 
             function ganancias(){
                 
-                if(name_rol != 'Administrador'){
+               if(name_rol != 'Administrador'){
                     $('.casilla-ganancias').hide()
                 }
 
@@ -527,6 +550,22 @@
 
             }
 
+            function policiesVigentes(){
+
+                var url=document.getElementById('ruta').value;
+                $.ajax({
+                    url:''+url+'/api/stadist/policies/next/vigentes',
+                    type:'GET',
+                    dataType:'JSON',
+                    data: { id_user },
+                    success: function(data){
+                        $('#Vigentes_count').text(
+                            data.length
+                        )
+                    }
+                });
+
+            }
 
             function policies(){
 

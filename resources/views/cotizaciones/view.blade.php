@@ -80,6 +80,18 @@
 
                         </div>
 
+
+                        <div class="row">
+                              <div class="col-md-6">
+                                <label for=""><b>Telefono*</b></label>
+                                  <div class="form-group valid-required">
+                                    <input type="text" name="phone" class="form-control form-control-user" id="phone_view"  required>
+                                  </div>
+                              </div>
+                          </div>
+
+
+
                         <br>
                           
 

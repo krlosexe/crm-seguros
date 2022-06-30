@@ -12,7 +12,44 @@
 					
 					<div class="col-md-12">
 						<div class="card">
+
+
+							
+
+
 							<div class="card-block">
+
+								<div class="row">
+
+									<div class="col-md-3">
+										<label for=""><b><br>Siniestro*</b></label>
+										<div class="form-group valid-required">
+											<input type="text" id="number-sinister" class="form-control">
+										</div>
+									</div>
+
+
+									<div class="col-md-3">
+										<label for=""><b><br>Compañia*</b></label>
+										<div class="form-group valid-required">
+											<select name="companie-filter" class="form-control selectized" id="companie-filter" required>
+												<option value="0">Seleccione</option>
+											</select>
+										</div>
+									</div>
+
+
+									<div class="col-md-3">
+										<label for=""><b><br>Ramos*</b></label>
+										<div class="form-group valid-required">
+											<select name="branch-filter" class="form-control" id="branch-filter" required>
+												<option value="0">Seleccione</option>
+											</select>
+										</div>
+									</div>
+
+
+								</div>
 								<div class="table-overflow">
 									<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
 										<i class="ti-user"></i>
@@ -54,6 +91,11 @@
 
 	@section('CustomJs')
 
+
+	<link href="<?= url('/') ?>/vendors/summernote-master/dist/summernote.min.css" rel="stylesheet">
+    <script src="<?= url('/') ?>/vendors/summernote-master/dist/summernote.min.js"></script>
+
+
 		<script>
 			$(document).ready(function(){
 				store();
@@ -64,7 +106,18 @@
 				$("#nav_li_Pólizas").addClass("open");
 				$("#nav_users, #modulo_Pólizas").addClass("active");
 				$("#nav_sinister").addClass("active");
+
+				GetCompanies("#companie-filter")
+				GetRamos("#branch-filter")
 				verifyPersmisos(id_user, tokens, "sinister");
+
+
+				$('#comments').summernote({
+						height: 145, 
+					})
+
+
+
 			});
 
 
@@ -79,13 +132,27 @@
 			}
 
 
+			$("#companie-filter, #branch-filter").change(function (e) { 
+				list()
+			});
 
+			$("#number-sinister").keyup(function (e) { 
+				list()
+			});
 
 			function list(cuadro) {
 				var data = {
 					"id_user": id_user,
 					"token"  : tokens,
 				};
+
+
+				let number_sinister = 0
+
+				if($("#number-sinister").val() != ""){
+					number_sinister = $("#number-sinister").val()
+				}
+
 				$('#table tbody').off('click');
 				var url=document.getElementById('ruta').value; 
 				cuadros(cuadro, "#cuadro1");
@@ -97,7 +164,7 @@
 					"serverSide":false,
 					"ajax":{
 						"method":"GET",
-						 "url":''+url+'/api/sinister',
+						 "url":''+url+'/api/get/sinister/'+$("#companie-filter").val()+'/'+number_sinister+"/"+$("#branch-filter").val()+"/"+id_rol,
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
@@ -109,7 +176,24 @@
 						{"data":"number_sinister"},
 						{"data":"date_sinister"},
 						{"data":"number_policies"},
-						{"data":"state_policie"},
+						{"data":"state_policie",
+							render : function(data, type, row) {
+								var clase = "";
+								if(data == "En proceso" || data == "Solicitado" || data == "Objetado"){
+									clase = "badge-primary"
+								}
+
+								if(data == "Pagado"){
+									clase = "badge-success"
+								}
+
+								if(data == "Cancelado"){
+									clase = "badge-danger"
+								}
+
+								return `<span class="badge ${clase}">${data}</span>`;
+							}
+						},
 						{"data": "fec_regins"},
 						{"data": null,
 							render : function(data, type, row) {
@@ -118,11 +202,8 @@
 									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
 								if(actualizar == 1)
 									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
-								if(data.status == 1 && actualizar == 1)
-									botones += "<span class='desactivar btn btn-warning waves-effect' data-toggle='tooltip' title='Desactivar'><i class='fa fa-unlock' style='margin-bottom:5px'></i></span> ";
-								else if(data.status == 2 && actualizar == 1)
-									botones += "<span class='activar btn btn-success waves-effect' data-toggle='tooltip' title='Activar'><i class='fa fa-lock' style='margin-bottom:5px'></i></span> ";
-								if(borrar == 1)
+
+								if(actualizar == 1)
 									botones += "<span class='eliminar btn btn-danger waves-effect' data-toggle='tooltip' title='Eliminar'><i class='ei-delete-alt' style='margin-bottom:5px'></i></span>";
 								return botones;
 							}
@@ -191,7 +272,8 @@
 				    
 				      return {
 				      	search: params.term,
-				      	type: 'public'
+				      	type: 'public',
+						id_user : id_user
 				      }
 				    },
 				    processResults(data) {
@@ -227,6 +309,29 @@
 
 				$(".remove").css("display", "block")
 				$(".remove-pay").css("display", "none")
+
+
+
+				$('#input-file-store').fileinput('destroy').val('');
+				$("#input-file-store").fileinput({
+					theme: "fas",
+					overwriteInitial: true,
+					maxFileSize: 10000,
+					showClose: false,
+					showCaption: false,
+					browseLabel: '',
+					removeLabel: '',
+					browseIcon: '<i class="fa fa-folder-open"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
+					previewFileIcon: '<i class="fas fa-file"></i>',
+					removeTitle: 'Cancel or reset changes',
+					elErrorContainer: '#kv-avatar-errors-1',
+					msgErrorClass: 'alert alert-block alert-danger',
+					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+				});
+
+
 
 				cuadros("#cuadro1", "#cuadro2");
 			}
@@ -324,6 +429,41 @@
 
 					addAmparos("#add-amparo-edit", "#amparos-edit")
 
+					$("#history-edit").html("")
+
+					getComments(data.state_policie, data.id_sinister, "#comments_content_edit")
+				    //getFiles(data.state_policie, data.id_sinister)
+					getHistory(data.state_policie, data.id_sinister)
+
+
+
+					$("#input-file-edit").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 10000,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="fas fa-trash-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+						
+						
+
+					});
+
+					$('#comments-edit').summernote({
+						height: 145, 
+					})
+
+
+
 
 					$("#id_edit").val(data.id_sinister)
 
@@ -338,8 +478,189 @@
 
 
 
+
+			function getFiles(state, id){
+				console.log(state, id)
+
+				var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/sinister/get/files/'+state+'/'+id,
+						type:'GET',
+						data: {
+							"id_user": id_user,
+							"token"  : tokens,
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							$("#files_content_edit-state").html("")
+							$.map(data, function (item, key) {
+								console.log(item)
+								$("#files_content_edit-state").append(`
+									<a target="_blank" href="/img/sinisters/${item.file}" >${item.file}</a><br>
+								`)
+							});
+						}
+					});
+
+			}
+
+
+
+
+
+			function getHistory(state, id){
+				console.log(state, id)
+
+				var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/sinister/get/states/'+id,
+						type:'GET',
+						data: {
+							"id_user": id_user,
+							"token"  : tokens,
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							
+							console.log(data)
+							var html = ""
+
+							$.map(data, function (item, key) {
+								html = `
+									<div class="col-md-3">
+										<img  onclick="showState('${item.status}')" style="width: 127px;" src ="https://static3.depositphotos.com/1006031/209/i/600/depositphotos_2091246-stock-photo-full-blue-folder-icon.jpg">
+										<br>
+										<b>${item.fecha}</b>
+									</div>
+								`
+								$("#history-edit").append(html)
+							});
+
+						}
+					});
+
+			}
+
+
+			function showState(state){
+				getComments(state, $("#id_edit").val(), "#comments_content_edit-state")
+		        getFiles(state, $("#id_edit").val(), "#comment-state-edit")
+			}
+
+			function getComments(state, id, comment){
+				console.log(state, id)
+
+				var url=document.getElementById('ruta').value;
+					$.ajax({
+						url:''+url+'/api/sinister/get/comments/'+state+'/'+id,
+						type:'GET',
+						data: {
+							"id_user": id_user,
+							"token"  : tokens,
+						},
+						dataType:'JSON',
+						async: false,
+						beforeSend: function(){
+						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+						},
+						error: function (data) {
+						//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+						},
+						success: function(data){
+							
+
+							var count_view = 0
+							var html  = "";
+                        $.map(data, function (item, key) {
+
+                            count_view++
+                            html += '<div class="col-md-12" style="margin-bottom: 34px" id="comments_view_'+count_view+'">'
+                                html += '<div class="row">'
+                                    html += '<div class="col-md-2">'
+                                        html += "<img class='rounded' src='"+url+"/img/usuarios/profile/"+item.img_profile+"' style='height: 4rem;width: 4rem; margin: 1%; border-radius: 50%!important;' title='"+item.name_follower+" "+item.last_name_follower+"'>"
+                                        
+                                        html += '</div>'
+                                                html += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;">'
+                                                html += '<div class="row">'
+                                            html += '<div class="col-md-10">'
+                                                html += '<div>'+item.comment+'</div>'
+                                            html += '</div>'
+
+                                            // html += '<div class="col-md-2">'
+
+                                            //     if(id_rol == 6){
+                                            //         html += "<div><a href='javascript:void(0)' style='color: red' onclick='DeleteComment(\"" + "#comments_view_" + count_view +"\", true, "+item.id_tasks_comments+")'>Borrar</a></div>"
+                                            //     }
+                                               
+                                            html += '</div>'
+                                        html += '</div>'
+
+                                        html += '<div><b>'+item.nombres+" "+item.apellido_p+'</b> <span style="float: right">'+item.created_at+'</span></div>'
+
+
+                                    html += '</div>'
+                                html += '</div>'
+                            html += '</div>'
+                            
+                        });
+
+						$(comment).html("")
+						$(comment).html(html)
+
+						}
+					});
+
+			}
+
+
+
+			$("#add-comments-edit").click(function (e) { 
+
+
+				var url=document.getElementById('ruta').value;
+
+				$.ajax({
+					url:''+url+'/api/sinister/store/comments',
+					type:'post',
+					data: {
+						"id_user": id_user,
+						"state"  : $("#state_policie_edit").val(),
+						"id"     : $("#id_edit").val(),
+						"comment" : $("#comments-edit").val(),
+					},
+					dataType:'JSON',
+					async: false,
+					beforeSend: function(){
+					// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+					},
+					error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+					},
+					success: function(data){
+						
+						getComments($("#state_policie_edit").val(), $("#id_edit").val(), "#comments_content_edit")
+
+					}
+				});
+			});
+
 			function addAmparos(btn, table) {
 				var count = 0;
+			
 				$(btn).unbind().click(function (e) { 
 					e.preventDefault();
 					count++
@@ -434,6 +755,9 @@
 
 							$(insured_name).val(data.name_insured)
 							$(document_insured).val(data.identification_insured)
+
+							$("#id_client").val(data.clients)
+							$("#branch_hidden").val(data.branch)
 						}
 					});
 
@@ -508,6 +832,95 @@
 					statusConfirmacion('api/status-sinister/'+data.id_sinister+"/"+0,"¿Esta seguro de eliminar el registro?", 'Eliminar');
 				});
 			}
+
+
+
+			function GetCompanies(select){
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/company/',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: 0,
+					  text : "Seleccione"
+					}));
+					$.each(data, function(i, item){
+					  if (item.status == 1) {
+						$(select).append($('<option>',
+						{
+						  value: item.id_clients_company,
+						  text : item.business_name
+						}));
+					  }
+					});
+			  
+				  }
+				});
+			  }	
+
+
+
+
+			  function GetRamos(select){
+				
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/branchs',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value : 0,
+					  text  : "Seleccione"
+					}));
+					$.each(data, function(i, item){
+					  if (item.status == 1) {
+						$(select).append($('<option>',
+						{
+						  value: item.id_branchs,
+						  text : item.name,
+						  
+						}));
+					  }
+					});
+			  
+				  }
+				});
+			  }
+
+
+
+
+			  
+
 
 
 		</script>

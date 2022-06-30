@@ -38,6 +38,8 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-5);
+		
+	
         validAuth(false, url[1]);
       });
     </script>
@@ -57,7 +59,7 @@
 
 				<div class="container-fluid" id="cuadro1">
 					<div class="page-title">
-						<h4>Gestión de Digitales.</h4>
+						<h4>Gestión de Digitalesssssss.</h4>
 					</div>
 					<div class="row">
 	  
@@ -157,7 +159,7 @@
 				$("#nav_li_Polizas").addClass("open");
 				$("#nav_users, #modulo_Polizas").addClass("active");
 
-				verifyPersmisos(id_user, tokens, "policies_annexes");
+				verifyPersmisos(id_user, tokens, "policies");
 			});
 
 

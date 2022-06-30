@@ -62,7 +62,7 @@ class VehicleController extends Controller
                                 ->join("auditoria", "auditoria.cod_reg", "=", "vehicules.id_vehicules")
                                 ->where("auditoria.tabla", "vehicules")
                                 ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
-                                ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
+                                ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code", "left")
                                 ->where("auditoria.status", "!=", "0")
                                 ->orderBy("vehicules.id_vehicules", "DESC");
 

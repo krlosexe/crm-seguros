@@ -214,6 +214,28 @@
                     </div>
                   </div>
 
+
+
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+
+                    <label for=""><b>Logo *</b></label>
+                      <div class="kv-avatar">
+                        <div class="file-loading">
+                          <input id="input-file-edit" name="logo" type="file" required>
+                        </div>
+                      </div>
+
+                      <div class="kv-avatar-hintss">
+                        <small>Seleccione una foto</small>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
                 </div>
 
               </div>

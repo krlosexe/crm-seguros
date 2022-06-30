@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 	@section('content')
-			
+	<link href="<?= url('/') ?>/vendors/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.css" media="all" rel="stylesheet" type="text/css"/>
 		 <!-- Content Wrapper START -->
 		 <div class="main-content">
 			<div class="container-fluid" id="cuadro1">
@@ -21,6 +22,7 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
+											<th></th>
 											<th>Código</th>
 											<th>Nombre</th>
 											<th>NIT</th>
@@ -53,6 +55,16 @@
 
 
 	@section('CustomJs')
+
+
+	<script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/piexif.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/fileinput.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/fr.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/js/locales/es.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/fas/theme.js" type="text/javascript"></script>
+      <script src="<?= url('/') ?>/vendors/bootstrap-fileinput/themes/explorer-fas/theme.js" type="text/javascript"></script>
+
 
 		<script>
 			$(document).ready(function(){
@@ -118,6 +130,15 @@
 						"dataSrc":""
 					},
 					"columns":[
+
+						{"data": "logo_img",
+							render : function(data, type, row) {
+							
+								return `<img src="/img/insurers/${row.logo_img}" width = "150">`;
+							}
+						},
+
+						
 						{"data":"code"},
 						{"data":"name"},
 						{"data":"nit"},
@@ -174,6 +195,30 @@
 				GetRamos("#branchs")
 
 				AddBranch( "#add-branch", "#table-branch","#branchs")
+
+
+
+				$('#input-file-store').fileinput('destroy').val('');
+				$("#input-file-store").fileinput({
+					theme: "fas",
+					overwriteInitial: true,
+					maxFileSize: 10000,
+					showClose: false,
+					showCaption: false,
+					browseLabel: '',
+					removeLabel: '',
+					browseIcon: '<i class="fa fa-folder-open"></i>',
+					removeIcon: '<i class="ei-delete-alt"></i>',
+					previewFileIcon: '<i class="fas fa-file"></i>',
+					removeTitle: 'Cancel or reset changes',
+					elErrorContainer: '#kv-avatar-errors-1',
+					msgErrorClass: 'alert alert-block alert-danger',
+					layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+					allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+				});
+
+
+
 				cuadros("#cuadro1", "#cuadro2");
 			}
 
@@ -211,6 +256,49 @@
 
 					var url = "insurers/files/"+data.id_insurers+"/0"
 					$('#iframeDigitalesView').attr('src', url);
+
+
+
+					var url=document.getElementById('ruta').value; 
+					url_imagen = url+'/img/insurers/'
+
+					var ext = data.logo_img.split('.');
+					if (ext[1] == "pdf") {
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.logo_img+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+					}else{
+						img = '<img src="'+url_imagen+data.logo_img+'" class="file-preview-image kv-preview-data">'
+					}
+					
+					
+					$("#input-file-view").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 10000,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="fas fa-trash-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						defaultPreviewContent: '<img src="/img/default-user.png" width="150" alt="Your Avatar">',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+						initialPreview: [ 
+							img
+						],
+						initialPreviewConfig: [
+								
+							{caption: data.logo_img , downloadUrl: url_imagen+data.logo_img  ,url: url+"uploads/delete", key: data.logo_img}
+					
+						],
+
+					});
+
+
 
 
 
@@ -256,6 +344,52 @@
 
 					var url = "insurers/files/"+data.id_insurers+"/1"
 					$('#iframeDigitalesEdit').attr('src', url);
+
+
+
+
+					var url=document.getElementById('ruta').value; 
+					url_imagen = url+'/img/insurers/'
+
+					var ext = data.logo_img.split('.');
+					if (ext[1] == "pdf") {
+						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.logo_img+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
+					}else{
+						img = '<img src="'+url_imagen+data.logo_img+'" class="file-preview-image kv-preview-data">'
+					}
+					
+					
+					$("#input-file-edit").fileinput({
+						theme: "fas",
+						overwriteInitial: true,
+						maxFileSize: 10000,
+						showClose: false,
+						showCaption: false,
+						browseLabel: '',
+						removeLabel: '',
+						browseIcon: '<i class="fa fa-folder-open"></i>',
+						removeIcon: '<i class="fas fa-trash-alt"></i>',
+						previewFileIcon: '<i class="fas fa-file"></i>',
+						removeTitle: 'Cancel or reset changes',
+						elErrorContainer: '#kv-avatar-errors-1',
+						msgErrorClass: 'alert alert-block alert-danger',
+						defaultPreviewContent: '<img src="/img/default-user.png" width="150" alt="Your Avatar">',
+						layoutTemplates: {main2: '{preview}  {remove} {browse}'},
+						allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+						initialPreview: [ 
+							img
+						],
+						initialPreviewConfig: [
+								
+							{caption: data.logo_img , downloadUrl: url_imagen+data.logo_img  ,url: url+"uploads/delete", key: data.logo_img}
+					
+						],
+
+					});
+
+
+
+
 
 					$("#id_edit").val(data.id_insurers)
 					cuadros('#cuadro1', '#cuadro4');

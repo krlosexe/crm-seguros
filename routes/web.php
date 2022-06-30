@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +15,18 @@ Route::get('/', function () {
     return view('login');
 });
 
+
 Route::get('/compare', function () {
     return view('compare');
 });
+
 
 Route::post('auth', 'Login@AuthApp');
 
 Route::get('logout/{id}', 'Login@Logout');
 
 Route::get('/dashboard', function () {
+
     return view('dashboard');
 });
 
@@ -192,6 +195,11 @@ Route::get('sinister', function () {
 });
 
 
+Route::get('report-sinister', function () {
+    return view('report-sinister.gestion');
+});
+
+
 Route::get('payment', function () {
     return view('administracion.payment.gestion');
 });
@@ -303,6 +311,23 @@ Route::get('clients/people/sinister/{id_client}/{management}', function ($id_cli
 Route::get('Company/files', function () {
     return view('configuracion.Company.files.gestion');
 });
+
+
+
+Route::get('notifications', function () {
+    return view('notifications.gestion');
+});
+
+
+
+Route::get('policiesview/{id}', function ($id_policie ) {
+    return view('policies.view', ["id_policie" => $id_policie]);
+});
+
+
+
+
+
 
 
 Route::get('insurers/files/{id_client}/{management}', function ($id_insurers, $management) {

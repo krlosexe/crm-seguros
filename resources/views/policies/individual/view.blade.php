@@ -88,6 +88,20 @@
                                 </div>
                             </div>
 
+
+                            <div class="col-md-4">
+                            <label for=""><b>Tipo de negocio*</b></label>
+                              <div class="form-group valid-required">
+                                <select name="business_type" class="form-control selectized" id="business_type_view">
+                                    <option value="">Seleccione</option>
+                                    <option value="Renovado">Renovado</option>
+                                    <option value="Nuevo Cliente">Nuevo Cliente</option>
+                                  </select>
+                              </div>
+                          </div>
+
+
+
                             <div class="col-md-4">
                               <label for="is_renewable"><b>¿Es renovable?</b><br></label><br>
                               <div class="toggle-checkbox toggle-success checkbox-inline toggle-sm">
@@ -711,6 +725,37 @@
                       </div>
                     </div>
                   </div></div>
+
+
+
+                  <div class="row" id="history">
+                      <div class="col-md-12">
+                        
+                        <div class="card shadow mb-4">
+                          <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Historial</h6>
+                          </div>
+                          <div class="card-body">
+
+                            <div class="row">
+
+                            <div class="col-md-12">
+                                <div id="logs_edit"></div>
+
+
+                            </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                  </div>
+                </div> 
+
+
+
 
 
                 </div>

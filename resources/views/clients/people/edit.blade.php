@@ -13,18 +13,18 @@
                 <a href="#default-tab-1-edit" class="nav-link active show" role="tab" data-toggle="tab" aria-selected="true">Datos Generales</a>
             </li>
             <li class="nav-item">
-                <a href="#default-tab-2-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+                <a href="#default-tab-2-edit" id="tab-digitales-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
 
             <li class="nav-item">
-                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Pólizas</a>
+                <a href="#default-tab-3-edit" id="tab-polizas-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Pólizas</a>
             </li>
 
             <li class="nav-item">
-                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+                <a href="#default-tab-4-edit" id="tab-cartera-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
              <li class="nav-item">
-                <a href="#default-tab-5-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Siniestros</a>
+                <a href="#default-tab-5-edit" id="tab-siniestro-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Siniestros</a>
             </li>
 
 

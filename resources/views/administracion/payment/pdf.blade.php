@@ -228,8 +228,8 @@
                         <td>-</td>
                         <td id="cousin">${charge.cousin}</td>
                         <td id="cousin">${charge.xpenses}</td>
-                        <td id="vat">${charge.vat}</td>
-                        <td id="total" class="text-right">${charge.total}</td>
+                        <td id="vat">${Math.round(charge.vat)}</td>
+                        <td id="total" class="text-right">${Math.round(charge.total)}</td>
                     `;
 
                     let row = document.createElement('tr');
@@ -246,11 +246,12 @@
                 let sumaXpenses = data.charge_account.map(item => item.xpenses).reduce((el1, el2) => el1 + el2, 0);
                 let sumaVat = data.charge_account.map(item => item.vat).reduce((el1, el2) => el1 + el2, 0);
 
-                $("#subtotal").text(number_format((sumaCousin + sumaXpenses), 2))
+                $("#subtotal").text(number_format((Math.round(sumaCousin + sumaXpenses)), 0))
 
-                $("#ivasubtotal").text(number_format(sumaVat, 2))
+                $("#ivasubtotal").text(number_format(Math.round(sumaVat), 0))
 
-                $("#totalpagar").text(number_format(sumaVat + (sumaCousin + sumaXpenses), 2))
+
+                $("#totalpagar").text(number_format(Math.round(sumaVat + (sumaCousin + sumaXpenses)), 0))
 
                 if(data.type_client == 1){
                     data.nombreapellido = data.business_name;

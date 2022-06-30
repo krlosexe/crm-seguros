@@ -36,6 +36,7 @@
                   <select name="state"  class="form-control selectize-input items has-options full has-items" id="state-store" required>
                     <option value="">Seleccione</option>
                     <option value="Vigente">Vigente</option>
+                    <option value="No Vigente">No Vigente</option>
                   </select>
                 </div>
             </div>

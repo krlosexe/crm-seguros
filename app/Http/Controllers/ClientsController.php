@@ -25,6 +25,10 @@ class ClientsController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
+
+            ini_set('memory_limit', '-1');
+
+            
             $clientsPeople = ClientsPeople::select("clients_people.*", "auditoria.*", "user_registro.email as email_regis")
                                 ->join("auditoria", "auditoria.cod_reg", "=", "clients_people.id_clients_people")
                                 ->where("auditoria.tabla", "clients_people")
@@ -51,7 +55,18 @@ class ClientsController extends Controller
     }
 
 
+    public function GetOffert($id_cliente){
+        $data = ClientsPeople::where("id_clients_people", $id_cliente)->first();
+        return response()->json($data)->setStatusCode(200);
+    }
 
+    public function UpdateOffert($id_cliente){
+        $data = ClientsPeople::where("id_clients_people", $id_cliente)->update([
+            "offert" => 0 
+        ]);
+        return response()->json("ok")->setStatusCode(200);
+    }
+    
 
     public function CreateUser(){
        

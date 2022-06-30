@@ -395,7 +395,7 @@
 						$("#email").val(data.email);
                         $("#telefono").val(data.telefono);
 
-                        $("#name_avatar").val(data.nombres+" "+data.apellido_p)
+                        $("#name_avatar").text(data.nombres)
 
 
                         $("#img-firm").attr("src", "/img/usuarios/firms/"+data.firm)

@@ -38,7 +38,9 @@
     <script>
       $(document).ready(function(){
 		var url = $(location).attr('href').split("/").splice(-4);
-        validAuth(false, 'modules');
+		
+		console.log(url)
+        validAuth(false, "policies");
       });
     </script>
 
@@ -183,7 +185,7 @@
 				$('#table tbody').off('click');
 				var url=document.getElementById('ruta').value; 
 				cuadros(cuadro, "#cuadro1");
-
+			
 				var table=$("#table").DataTable({
 					"destroy":true,
 					
@@ -206,7 +208,6 @@
 						{"data": null,
 							render : function(data, type, row) {
 								var botones = "";
-								if(consultar == 1)
 									botones += "<span class='consultar btn btn-info waves-effect' data-toggle='tooltip' title='Consultar'><i class='ei-preview' style='margin-bottom:5px'></i></span> ";
 								if(actualizar == 1 && management == 1)
 									botones += "<span class='editar btn btn-primary waves-effect' data-toggle='tooltip' title='Editar'><i class='ei-save-edit' style='margin-bottom:5px'></i></span> ";
@@ -291,7 +292,7 @@
 				Funcion que muestra el cuadro3 para la consulta del banco.
 			*/
 			function ver(tbody, table){
-
+				
 				$(tbody).on("click", "span.consultar", function(){
 					$("#alertas").css("display", "none");
 					var data = table.row( $(this).parents("tr") ).data();
@@ -306,7 +307,8 @@
 
 
 					var ext = data.name.split('.');
-					if (ext[1] == "pdf") {
+
+					if ((ext[1] == "pdf") || ext[1] == "PDF" ) {
 						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
 						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'
@@ -369,7 +371,7 @@
 					url_imagen = url + '/img/policies/annexes/'
 
 					var ext = data.name.split('.');
-					if (ext[1] == "pdf") {
+					if ((ext[1] == "pdf") || ext[1] == "PDF" ) {
 						img = '<embed class="kv-preview-data file-preview-pdf" src="'+url_imagen+data.name+'" type="application/pdf" style="width:213px;height:160px;" internalinstanceid="174">'
 					}else{
 						img = '<img src="'+url_imagen+data.name+'" class="file-preview-image kv-preview-data">'

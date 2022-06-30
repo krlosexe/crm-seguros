@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class CalendarController extends Controller
 {
     function getTask(Request $request, $today = false){
-
+        ini_set('memory_limit', '-1');
             $data_user = User::select("users.*", "roles.nombre_rol", "datos_personales.*")
                                   ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
                                   ->join("roles", "roles.id_rol", "=", "users.id_rol")

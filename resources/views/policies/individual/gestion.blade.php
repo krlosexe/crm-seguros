@@ -20,6 +20,85 @@
 						<div class="card">
 							<div class="card-block">
 								<div class="row">
+
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-3">
+
+												<label for=""><b><br>Estado Póliza*</b></label>
+												<div class="form-group valid-required">
+													<select name="state_policies-filter" class="form-control selectized" id="state_policies-filter" required>
+													<option value="0">Seleccione</option>
+													<option value="Vigente">Vigente</option>
+													<option value="Vencida">Vencida</option>
+													<option value="No renovada">No renovada</option>
+													<option value="Expedición">Expedición</option>
+													<option value="Devengada">Devengada</option>
+													<option value="Cotización">Cotización</option>
+													<!-- <option value="Cancelada">Cancelada</option> -->
+													</select>
+												</div>
+											</div>
+
+
+											<div class="col-md-3">
+												<label for=""><b><br>Aseguradoras*</b></label>
+												<div class="form-group valid-required">
+													<select name="insurers-filter" class="form-control" id="insurers-filter" required>
+													<option value="0">Seleccione</option>
+													<!-- <option value="Cancelada">Cancelada</option> -->
+													</select>
+												</div>
+											</div>
+
+											<div class="col-md-3">
+												<label for=""><b><br>Ramos*</b></label>
+												<div class="form-group valid-required">
+													<select name="branch-filter" class="form-control" id="branch-filter" required>
+													<option value="0">Seleccione</option>
+													<!-- <option value="Cancelada">Cancelada</option> -->
+													</select>
+												</div>
+											</div>
+
+
+											<div class="col-md-3">
+												<label for=""><b>Fechas de Vencimiento*</b></label>
+												<div class="row">
+													<div class="col-md-6">
+														<label for=""><b>Fechas desde*</b></label>
+														<div class="form-group valid-required">
+															<input type="date" class="form-control" id="date_init-filter">
+														</div>
+													</div>
+
+													<div class="col-md-6">
+														<label for=""><b>Fechas hasta*</b></label>
+														<div class="form-group valid-required">
+															<input type="date" class="form-control" id="date_end-filter">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row">
+											<div class="col-md-3">
+												<label for=""><b><br>Cedula*</b></label>
+												<div class="form-group valid-required">
+													<input type="text" class="form-control" id="number_document-filter">
+												</div>
+											</div>
+
+											<div class="col-md-3">
+												<label for=""><b><br>Placa*</b></label>
+												<div class="form-group valid-required">
+													<input type="text" class="form-control" id="placa-filter">
+												</div>
+											</div>
+										</div>
+									</div>
 									
 									<div class="col-md-6 text-left">
 										<button onclick="nuevo()" id="btn-new" class="btn btn-success" style="float: left;">
@@ -42,7 +121,7 @@
 												<th>Cliente</th>
 												<th>Aseguradora</th>
 												<th>Ramo</th>
-												<th>Tipo</th>
+												<th>Riesgo</th>
 												<th>Estatus</th>
 												<th>Fecha Inicio</th>
 												<th>Acciones</th>
@@ -379,6 +458,10 @@
 				store();
 				list();
 				update();
+				GetInsurers2("#insurers-filter")
+				GetRamos2("#branch-filter")
+
+				
 
 				$("#collapse_Pólizas").addClass("show");
 				$("#nav_li_Pólizas").addClass("open");
@@ -390,9 +473,109 @@
 
 				if(name_rol != 'Administrador'){
 					$('.row-participacion').hide()
+					$("#history").css("display", "none")
+				}else{
+					$("#history").css("display", "block")
 				}
 
+				
+
 			});
+
+
+			function GetInsurers2(select, select_default = false){
+				
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/insurers',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				 // async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+			  
+					$(select).each(function() {
+					  if (this.selectize) {
+						this.selectize.destroy();
+					  }
+				   });
+				   
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: "0",
+					  text : "Seleccione"
+					}));
+					$.each(data, function(i, item){
+					  if (item.status == 1) {
+						$(select).append($('<option>',
+						{
+						  value: item.id_insurers,
+						  text : item.name,
+						  selected: select_default == item.id_insurers ? true : false
+						}));
+					  }
+					});
+					
+				  }
+				});
+			}
+
+
+			function GetRamos2(select){
+				
+				var url=document.getElementById('ruta').value;
+				$.ajax({
+				  url:''+url+'/api/branchs',
+				  type:'GET',
+				  data: {
+					  "id_user": id_user,
+					  "token"  : tokens,
+					},
+				  dataType:'JSON',
+				  async: false,
+				  beforeSend: function(){
+				  // mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
+				  },
+				  error: function (data) {
+					//mensajes('danger', '<span>Ha ocurrido un error, por favor intentelo de nuevo</span>');         
+				  },
+				  success: function(data){
+					$(select+" option").remove();
+					$(select).append($('<option>',
+					{
+					  value: "0",
+					  text : "Seleccione"
+					}));
+					$.each(data, function(i, item){
+					  if (item.status == 1) {
+						$(select).append($('<option>',
+						{
+						  value: item.id_branchs,
+						  text : item.name,
+						  
+						}));
+					  }
+					});
+			  
+				  }
+				});
+			  }
+
+
+
+
+			  
+
 
 			function drawPolizas(){
 				list();
@@ -407,6 +590,22 @@
 			function store(){
 				enviarFormulario("#store", 'api/policies', '#cuadro2');
 			}
+
+
+
+			$("#state_policies-filter, #insurers-filter, #branch-filter, #date_init-filter, #date_end-filter").change(function (e) { 
+				list();
+			});
+
+
+			$("#number_document-filter").keyup(function (e) { 
+				list();
+			});
+
+
+			$("#placa-filter").keyup(function (e) { 
+				list();
+			});
 
 
 			function list(cuadro) {
@@ -432,7 +631,14 @@
 						 "data": {
 							"id_user": id_user,
 							"token"  : tokens,
-							'proximas_a_vencer': proximas_a_vencer
+							'proximas_a_vencer': proximas_a_vencer,
+							"state" : $("#state_policies-filter").val(),
+							"insurance" : $("#insurers-filter").val(),
+							"branch" : $("#branch-filter").val(),
+							"date_init" : $("#date_init-filter").val(),
+							"date_finish" : $("#date_end-filter").val(),
+							"document" : $("#number_document-filter").val(),
+							"placa" : $("#placa-filter").val()
 						},
 					},
 					"columnDefs":[
@@ -450,7 +656,7 @@
 						},
 						{targets: 2, "data":"name_insurers"},
 						{targets: 3, "data":"name_branchs"},
-						{targets: 4, "data":"type_poliza"},
+						{targets: 4, "data":"risk"},
 						{targets: 5, "data":"state_policies"},
 						{targets: 6, "data": "start_date"},
 						{targets: 7, "data": null,
@@ -494,6 +700,50 @@
 				eliminar("#table tbody", table)
 
 				hideElementsByRol();
+
+
+				var date_init = 0
+				if($("#date_init-filter").val() != ""){
+					date_init = $("#date_init-filter").val()
+				}
+
+				var date_end = 0
+				if($("#date_end-filter").val() != ""){
+					date_end = $("#date_end-filter").val()
+				}
+
+				var cedula = 0
+				if($("#number_document-filter").val() != ""){
+					cedula = $("#number_document-filter").val()
+				}
+
+
+				var placa = 0
+				if($("#placa-filter").val() != ""){
+					placa = $("#placa-filter").val()
+				}
+
+
+
+				$(".buttons-excel").remove()
+				$("#xls").remove();
+				$("#view_xls").remove();
+
+				var a = '<button id="xls" class="buttons-excel btn btn-sm btn-info"><span><i class="fa fa-file-excel-o mr-2"></i> Excel</span></button>';
+				$('.dt-buttons').append(a);
+
+				var b = `<button id="view_xls" target="_blank" style="opacity: 0" href="api/exports/policies/${id_user}/${$("#state_policies-filter").val()}/${$("#insurers-filter").val()}/${$("#branch-filter").val()}/${date_init}/${date_end}/${cedula}/${placa}" class="dt-button buttons-excel buttons-html5">xls</button>`;
+				$('.dt-buttons').append(b);
+
+				$("#xls").click(function (e) {
+					url = $("#view_xls").attr("href");
+					console.log(url)
+					window.open(url, '_blank');
+				});
+
+
+
+
 
 			}
 
@@ -721,7 +971,7 @@
 								$(".remove-pay").css("display", "none")
 							}
 
-
+							$("#business_type_view").val(data.business_type).attr("disabled", "disabled")
 							$("#type_poliza_view").val(data.type_poliza).attr("disabled", "disabled")
 							$("#number_policies_view").val(data.number_policies).attr("disabled", "disabled")
 							$("#state_policies_view").val(data.state_policies).attr("disabled", "disabled")
@@ -844,8 +1094,39 @@
 							$('#input-file-view').fileinput('destroy').val('')
 								initFileInput('#input-file-view');
 							}
+							hideElementsByRol();
 
-							cuadros('#cuadro1', '#cuadro3');
+
+
+
+
+							var url=document.getElementById('ruta').value;
+							var html = "";
+							$.map(info.logs, function (item, key) {
+								html += '<div class="col-md-12" style="margin-bottom: 15px">'
+									html += '<div class="row">'
+										html += '<div class="col-md-2">'
+											html += "<img class='rounded' src='"+url+"/img/usuarios/profile/"+item.img_profile+"' style='height: 4rem;width: 4rem; margin: 1%; border-radius: 50%!important;' title='"+item.name_follower+" "+item.last_name_follower+"'>"
+
+										html += '</div>'
+										html += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;overflow: scroll">'
+											html += '<div>'+item.event+'</div>'
+
+											html += '<div><b>'+item.name_user+" "+item.last_name_user+'</b> <span style="float: right">'+item.create_at+'</span></div>'
+
+
+										html += '</div>'
+									html += '</div>'
+								html += '</div>'
+
+							});
+
+							$("#logs_edit").html(html)
+
+
+
+
+								cuadros('#cuadro1', '#cuadro3');
 
 
 					  }
@@ -888,9 +1169,9 @@
 					
 							GetInsurers("#insurers_edit", data.insurers)
 
-							GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza)
+							GetBranchByInsurers("#insurers_edit", "#branch_edit", data.branch+"|"+data.percentage_vat_cousin+"|"+data.commission_percentage,  data.branch, data.type_poliza, data.insurers)
 							GetClients("#clients_select_edit", data.clients+"|"+data.type_clients);
-
+							$("#insurers_edit").trigger("change");
 							$('#clients_select_edit').change();
 
 							/*GetPlacas("#placa-edit")*/
@@ -900,6 +1181,9 @@
 							ChangeSelectBranch("#branch_edit", "_edit")
 
 							$("#type_poliza_edit").val(data.type_poliza).attr("readonly", "readonly")
+							$("#business_type_edit").val(data.business_type)
+							
+							
 							$("#number_policies_edit").val(data.number_policies)
 							$("#state_policies_edit").val(data.state_policies)
 							$("#expedition_date_edit").val(data.expedition_date)
@@ -962,6 +1246,7 @@
 							data.send_portfolio_for_expire_email == 1 ? $("#send_portfolio_for_expire_email_edit").prop("checked", true) : $("#send_portfolio_for_expire_email_edit").prop("checked", false) 
 							data.send_policies_for_expire_sms    == 1 ? $("#send_policies_for_expire_sms_edit").prop("checked", true)    : $("#send_policies_for_expire_sms_edit").prop("checked", false) 
 							data.send_portfolio_for_expire_sms   == 1 ? $("#send_portfolio_for_expire_sms_edit").prop("checked", true)   : $("#send_portfolio_for_expire_sms_edit").prop("checked", false) 
+							data.activate_promotion              == 1 ? $("#activate_promotion_edit").prop("checked", true)              : $("#activate_promotion_edit").prop("checked", false) 
 							
 
 							showPays(data.id_policies, "#table-simulation-edit")
@@ -985,19 +1270,26 @@
 							})
 
 
-
-							var url = "policies/annexes/"+data.id_policies+"/1"
-							$('#iframeAnnexesEdit').attr('src', url);
+							Anexos("#iframeAnnexesEdit", "#tab-anexos-edit" ,data.id_policies)
+							Digitales("#iframeDigitalesEdit", "#tab-digitales-edit" ,data.id_policies)
+							Cartera("#iframeCarteraEdit", "#tab-cartera-edit" ,data.id_policies)
+							// var url = "policies/annexes/"+data.id_policies+"/1"
+							// $('#iframeAnnexesEdit').attr('src', url);
 							
 
-							var url = "policies/files/"+data.id_policies+"/1"
-							$('#iframeDigitalesEdit').attr('src', url);
+							// var url = "policies/files/"+data.id_policies+"/1"
+							// $('#iframeDigitalesEdit').attr('src', url);
 
 
-							var url = "policies/wallet/"+data.id_policies+"/1"
-							$('#iframeCarteraEdit').attr('src', url);
+							// var url = "policies/wallet/"+data.id_policies+"/1"
+							// $('#iframeCarteraEdit').attr('src', url);
 
 							$("#id_edit").val(data.id_policies)
+
+
+
+
+
 
 							cuadros('#cuadro1', '#cuadro4');
 
@@ -1051,8 +1343,40 @@
 					  }
 					});
 
+
 				});
 			}
+
+
+
+			function Anexos(iframe, tab, id_poliza){
+				$(tab).click(function (e) { 
+					var url = "policies/annexes/"+id_poliza+"/1"
+					$(iframe).attr('src', url);
+				});
+			}
+
+
+			function Digitales(iframe, tab, id_poliza){
+				$(tab).click(function (e) { 
+					var url = "policies/files/"+id_poliza+"/1"
+					$(iframe).attr('src', url);
+				});
+			}
+
+
+			function Cartera(iframe, tab, id_poliza){
+				$(tab).click(function (e) { 
+					var url = "policies/wallet/"+id_poliza+"/1"
+					$(iframe).attr('src', url);
+				});
+			}
+
+
+
+
+
+
 
 
 
@@ -1166,24 +1490,30 @@
 
 			
 
-			function GetBranchByInsurers(select_insurers, select_branch, value_default = false, branch = false, type_poliza = false){
+			function GetBranchByInsurers(select_insurers, select_branch, value_default = false, branch = false, type_poliza = false, aseguradora = false){
 
 				$(select_branch).selectize({
 					sortField: 'text'
 				});
 
 				$(select_insurers).change(function (e) { 
+
+					let insurance = $(this).val()
+					if(aseguradora){
+						insurance = aseguradora
+					}
+					console.log("EPAAA")
 				
 					var url=document.getElementById('ruta').value;
 					$.ajax({
-						url:''+url+'/api/insurers/'+$(this).val(),
+						url:''+url+'/api/insurers/'+insurance,
 						type:'GET',
 						data: {
 							"id_user": id_user,
 							"token"  : tokens,
 						},
 						dataType:'JSON',
-						async: false,
+						//async: false,
 						beforeSend: function(){
 						// mensajes('info', '<span>Buscando, espere por favor... <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></span>');
 						},

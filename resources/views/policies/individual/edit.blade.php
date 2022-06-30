@@ -18,16 +18,16 @@
             </li>
 
             <li class="nav-item">
-                <a href="#default-tab-3-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
+                <a href="#default-tab-3-edit" id="tab-anexos-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Anexos</a>
             </li>
 
 
             <li class="nav-item">
-                <a href="#default-tab-4-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
+                <a href="#default-tab-4-edit" id="tab-digitales-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Digitales</a>
             </li>
             
             <li class="nav-item">
-                <a href="#default-tab-5-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
+                <a href="#default-tab-5-edit" id="tab-cartera-edit" class="nav-link" role="tab" data-toggle="tab" aria-selected="false">Cartera</a>
             </li>
 
         </ul>
@@ -63,6 +63,21 @@
                                   </select>
                               </div>
                           </div>
+
+
+                          <div class="col-md-4">
+                            <label for=""><b>Tipo de negocio*</b></label>
+                              <div class="form-group valid-required">
+                                <select name="business_type" class="form-control selectized" id="business_type_edit">
+                                    <option value="">Seleccione</option>
+                                    <option value="Renovado">Renovado</option>
+                                    <option value="Nuevo Cliente">Nuevo Cliente</option>
+                                  </select>
+                              </div>
+                          </div>
+
+
+
                         </div>
                         <div class="row">
                           <div class="col-md-4">
@@ -155,7 +170,7 @@
 
                           <br>
 
-                        <div class="row remove">
+                        <div class="row">
                           <div class="col-md-12">
                             <label for=""><b>Riesgo (Placa, Dirección, etc)*</b></label>
                               <div class="form-group valid-required">
@@ -623,6 +638,25 @@
                         </div>
                         <br>
 
+
+
+
+                        <div class="row">
+                          <div class="col-md-12 form-group" style="margin-bottom: 0px !important">
+                            <div class="form-group row" style="margin-bottom: 0px !important">
+                                <label for="activate_promotion" class="col-md-6 control-label">Activar Promoción</label>
+                                <div class="col-md-1 toggle-checkbox toggle-success checkbox-inline toggle-sm mrg-top-8">
+                                <input type="checkbox" name="activate_promotion" id="activate_promotion_edit">
+                                <label for="activate_promotion_edit"></label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+
+
+
+
                       </div>
                     </div>
                   </div>
@@ -721,6 +755,39 @@
 
                 </div>
               </div> 
+
+
+
+<!--
+
+              <div class="row" id="history">
+                    <div class="col-md-12">
+                      
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Historial</h6>
+                        </div>
+                        <div class="card-body">
+
+                          <div class="row">
+
+                          <div class="col-md-12">
+                              <div id="logs_edit"></div>
+
+
+                          </div>
+
+
+                          </div>
+
+                      </div>
+                  </div>
+
+                </div>
+              </div> 
+
+
+-->
 
 
 

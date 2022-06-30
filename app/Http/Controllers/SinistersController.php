@@ -6,7 +6,7 @@ use App\Sinisters;
 use App\Auditoria;
 use App\SinisterAmparosAffected;
 use Illuminate\Http\Request;
-
+use DB;
 class SinistersController extends Controller
 {
     /**
@@ -14,8 +14,16 @@ class SinistersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $companie, $sinister, $branch, $rol)
     {
+
+        $id_client = null;
+        if($rol == 22){
+            $user            = DB::table("users")->where("id", $request["id_user"])->first();
+            $clients_company = DB::table("clients_company")->where("nit", $user->email)->first();
+            $id_client = $clients_company->id_clients_company;
+        }
+      
         $data = Sinisters::select("sinisters.*", "policies.number_policies",  "auditoria.*", "user_registro.email as email_regis")
 
                                     ->join("policies", "policies.id_policies", "=", "sinisters.policie")
@@ -24,7 +32,32 @@ class SinistersController extends Controller
                                     ->where("auditoria.tabla", "sinisters")
                                     ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
 
-                                      ->with("sinister_amparos_affected")
+                                    ->with("sinister_amparos_affected")
+                                    ->where(function ($query) use ($companie) {
+                                        if($companie != "0"){
+                                            $query->where("sinisters.id_client", $companie);
+                                        }
+                                    })
+
+                                    ->where(function ($query) use ($sinister) {
+                                        if($sinister != "0"){
+                                            $query->whereRaw("sinisters.number_sinister like '%".$sinister."%'");
+                                        }
+                                    })
+
+                                    ->where(function ($query) use ($branch) {
+                                        if($branch != "0"){
+                                            $query->where("sinisters.branch", $branch);
+                                        }
+                                    })
+
+
+                                    ->where(function ($query) use ($rol, $id_client) {
+                                        if($rol == 22){
+                                            $query->where("sinisters.id_client", $id_client);
+                                        }
+                                    })
+
 
                                     ->where("auditoria.status", "!=", "0")
                                     ->orderBy("sinisters.id_sinister", "DESC")
@@ -76,7 +109,7 @@ class SinistersController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
-            
+
             isset($request["finalized"])  ? $request["finalized"]  = 1 : $request["finalized"] = 0;
 
             $store                   = Sinisters::create($request->all());
@@ -91,6 +124,7 @@ class SinistersController extends Controller
                     SinisterAmparosAffected::create($request->all());
                 }
            }        
+           
 
             $auditoria              = new Auditoria;
             $auditoria->tabla       = "sinisters";
@@ -98,6 +132,40 @@ class SinistersController extends Controller
             $auditoria->status      = 1;
             $auditoria->usr_regins  = $request["id_user"];
             $auditoria->save();
+
+
+            
+            if($request["comments"] != ""){
+                DB::table("sinisters_comments")->insert([
+                    "state"        => $request["state_policie"],
+                    "comment"      => $request["comments"],
+                    "id_sinister"  => $store->id_sinister,
+                    "id_user"      => $request["id_user"]
+                ]);
+            }
+
+            if($request->file('logo')){
+                $file            = $request->file('logo');
+                $destinationPath = 'img/sinisters';
+                $file->move($destinationPath,$file->getClientOriginalName());
+            
+                DB::table("sinisters_files")->insert([
+                    "state"        => $request["state_policie"],
+                    "file"         => $file->getClientOriginalName(),
+                    "id_sinister"  => $store->id_sinister,
+                    "id_user"      => $request["id_user"]
+                ]);
+            }
+
+
+
+            DB::table("sinisters_status")->insert([
+                "status"       => $request["state_policie"],
+                "fecha"        => $request["date_status"],
+                "id_sinister"  => $store->id_sinister,
+                "id_user"      => $request["id_user"]
+            ]);
+
 
             if ($store) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
@@ -111,6 +179,52 @@ class SinistersController extends Controller
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
     }
+
+
+
+    public function getComments($state, $id){
+       $data = DB::table("sinisters_comments")
+                    ->select("sinisters_comments.*", "users.img_profile", "datos_personales.*")
+                    ->join("users", "users.id", "=", "sinisters_comments.id_user")
+                    ->join("datos_personales", "datos_personales.id_usuario", "=", "users.id")
+                    ->where("sinisters_comments.state", $state)
+                    ->where("sinisters_comments.id_sinister", $id)->get();
+       return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+    public function storeComments(Request $request){
+        if($request["comment"] != ""){
+            DB::table("sinisters_comments")->insert([
+                "state"        => $request["state"],
+                "comment"      => $request["comment"],
+                "id_sinister"  => $request["id"],
+                "id_user"      => $request["id_user"]
+            ]);
+        }
+
+        return response()->json("ok")->setStatusCode(200);
+
+    }
+
+
+
+    public function getFiles($state, $id){
+        $data = DB::table("sinisters_files")
+                     ->where("sinisters_files.state", $state)
+                     ->where("sinisters_files.id_sinister", $id)->get();
+        return response()->json($data)->setStatusCode(200);
+     }
+
+
+
+     public function getStates($id){
+        $data = DB::table("sinisters_status")
+                     ->where("sinisters_status.id_sinister", $id)->get();
+        return response()->json($data)->setStatusCode(200);
+     }
+    
 
     /**
      * Display the specified resource.
@@ -144,6 +258,35 @@ class SinistersController extends Controller
     public function update(Request $request, $sinisters)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+
+           
+
+            $sinister = Sinisters::where("id_sinister",$sinisters)->first();
+
+
+            if($sinister->state_policie != $request["state_policie"]){
+                DB::table("sinisters_status")->insert([
+                    "status"       => $request["state_policie"],
+                    "fecha"        => $request["date_status"],
+                    "id_sinister"  => $sinisters,
+                    "id_user"      => $request["id_user"]
+                ]);
+            }
+
+
+            if($request->file('logo')){
+                $file            = $request->file('logo');
+                $destinationPath = 'img/sinisters';
+                $file->move($destinationPath,$file->getClientOriginalName());
+            
+                DB::table("sinisters_files")->insert([
+                    "state"        => $request["state_policie"],
+                    "file"         => $file->getClientOriginalName(),
+                    "id_sinister"  => $sinisters,
+                    "id_user"      => $request["id_user"]
+                ]);
+            }
 
 
             isset($request["finalized"]) ? $request["finalized"] = 1 : $request["finalized"]  = 0;
@@ -195,6 +338,58 @@ class SinistersController extends Controller
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
+    }
+
+
+
+
+    public Function GetReports(){
+        $data_people = DB::table("request_sinister")
+                ->join("clients_people", "clients_people.id_clients_people", "=", "request_sinister.id_client")
+                ->orderBy("request_sinister.id","desc")
+                ->get();
+
+
+        $data_company = DB::table("request_sinister")
+            ->selectRaw("request_sinister.*, clients_company.*, clients_company.business_name as names")
+            ->join("clients_company", "clients_company.id_clients_company", "=", "request_sinister.id_client")
+            ->orderBy("request_sinister.id","desc")
+            ->get();
+
+        $data = [];
+        foreach($data_people as $value){
+            $data[] = $value;
+        }
+
+        foreach($data_company as $value){
+            $data[] = $value;
+        }
+
+
+
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+    public function ReportSinister(Request $request){
+        $data = $request["file"];
+        $folder = "img";
+        $fileData = base64_decode($data);
+        $fileName = rand(0, 100000000) . '-report.mp3';
+        file_put_contents($folder . "/" . $fileName, $fileData);
+
+
+
+        DB::table("request_sinister")->insert([
+            "id_client" => $request["id_client"],
+            "motivo"    => $request["motivo"],
+            "type"      => $request["branch"],
+            "file"      => $fileName,
+        ]);
+
+        return response()->json("Registro Exitoso")->setStatusCode(200);
     }
 
 

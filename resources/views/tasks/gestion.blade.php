@@ -468,6 +468,9 @@
                         var html = "";
 
                         var count_view = 0
+
+
+                        console.log(calEvent.comments)
                         $.map(calEvent.comments, function (item, key) {
 
                             count_view++
@@ -484,7 +487,11 @@
                                             html += '</div>'
 
                                             html += '<div class="col-md-2">'
-                                                html += "<div><a href='javascript:void(0)' style='color: red' onclick='DeleteComment(\"" + "#comments_view_" + count_view +"\", true, "+item.id_tasks_comments+")'>Borrar</a></div>"
+
+                                                if(id_rol == 6){
+                                                    html += "<div><a href='javascript:void(0)' style='color: red' onclick='DeleteComment(\"" + "#comments_view_" + count_view +"\", true, "+item.id_tasks_comments+")'>Borrar</a></div>"
+                                                }
+                                               
                                             html += '</div>'
                                         html += '</div>'
 
@@ -598,7 +605,7 @@
             $("#new-tasks").click(function (e) { 
                 $("#calendar-edit").modal("show")
                 $("#form-store")[0].reset()
-
+                $("#comments_content").html("")
                 enviarFormularioTask("#form-store", 'api/tasks', '#cuadro2');
 
             });

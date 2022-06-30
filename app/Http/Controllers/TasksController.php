@@ -26,7 +26,7 @@ class TasksController extends Controller
 
             $rol     = $request["rol"];
             $id_user = $request["id_user"];
-
+            ini_set('memory_limit', '-1');
             $tasks = Tasks::select("tasks.*", "responsable.email as email_responsable", "datos_personales.nombres as name_responsable", 
                                    "datos_personales.apellido_p as last_name_responsable", "auditoria.*", "users.email as email_regis")
 

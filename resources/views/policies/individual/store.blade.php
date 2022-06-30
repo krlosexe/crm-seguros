@@ -35,6 +35,18 @@
                           </div>
                       </div>
 
+                      <div class="col-md-4">
+                        <label for=""><b>Tipo de negocio*</b></label>
+                          <div class="form-group valid-required">
+                            <select name="business_type" class="form-control selectized" id="business_type">
+                                <option value="">Seleccione</option>
+                                <option value="Renovado">Renovado</option>
+                                <option value="Nuevo Cliente">Nuevo Cliente</option>
+                              </select>
+                          </div>
+                      </div>
+
+
                     </div>
 
                     <div class="row">
@@ -128,7 +140,7 @@
 
                       <br>
 
-                    <div class="row remove">
+                    <div class="row">
                       <div class="col-md-12">
                         <label for=""><b>Riesgo (Placa, Direccion, etc)*</b></label>
                           <div class="form-group valid-required">

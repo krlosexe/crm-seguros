@@ -51,8 +51,8 @@
 									<table class="table table-bordered" id="table" width="100%" cellspacing="0">
 										<thead>
 											<tr>
+												<th>Conexion</th>
 												<th>Nombres</th>
-												<th>Apellidos</th>
 												<th>Email</th>
 												<th>Teléfono</th>
 												<th>Rol</th>
@@ -98,7 +98,36 @@
 				$("#collapse_Perfiles").addClass("show");
 				$("#nav_li_Perfiles").addClass("open");
 				$("#nav_users, #modulo_Perfiles").addClass("active");
+
+
+				setTimeout(() => {
+					RequestUsers()
+				}, 5000);
+
 			});
+
+
+			    socket.on('ListUsers', function (data) {
+					console.log(data, "users")
+					data.map((item, key)=>{
+						console.log()
+						statusUser(item.user_id)
+					})
+				});
+
+
+
+				socket.on('UserConnect', function (data) {
+					if(data){
+						$("#status_user_edit").html("<p style='color: green;font-weight: bold;'>Online</p>")
+						console.log(data, "data connect")
+					}
+				});
+
+
+
+
+
 
 			function store(){
 				enviarFormulario("#store", 'api/user', '#cuadro2');
@@ -135,9 +164,22 @@
 						"dataSrc":""
 					},
 					"columns":[
-						
-						{"data":"nombres"},
-						{"data":"apellido_p"},
+
+						{"data": null,
+							render : function(data, type, row) {
+								
+								return `<div class="item_user_connect" id="item_${row.id}">
+											Última Conexion : ${row.last_connection}
+										</div>`;
+							}
+						},
+
+						{"data":"nombres",
+							render : function(data, type, row) {
+								
+								return `${row.nombres} ${row.apellido_p}`;
+							}
+						},
 						{"data":"email"},
 						{"data":"telefono"},
 						{"data":"nombre_rol"},
@@ -179,6 +221,29 @@
 				activar("#table tbody", table)
 				desactivar("#table tbody", table)
 				eliminar("#table tbody", table)
+
+
+				setTimeout(() => {
+					RequestUsers()
+				}, 5000);
+
+
+				
+			}
+
+
+			function RequestUsers(){
+				socket.emit("RequestUsers");
+			}
+
+			function statusUser(id_user){
+				console.log(id_user)
+				
+				$("#table tr").map((key, item)=>{
+					$(item).find(`#item_${id_user}`).html("")
+					let td = $(item).find(`#item_${id_user}`)
+					$(td).html(`<i style="color: green" class="fa fa-circle"></i>`)
+				})
 			}
 
 
@@ -351,6 +416,66 @@
 					$("#telefono-view").val(data.telefono).attr("disabled", "disabled")
 					$("#direccion-view").val(data.direccion).attr("disabled", "disabled")
 
+
+
+					var url=document.getElementById('ruta').value;
+					var html = "";
+					var html2 = "";
+					
+
+					
+					$.map(data.logs, function (item, key) {
+						html += '<div class="col-md-12" style="margin-bottom: 15px">'
+							html += '<div class="row">'
+								html += '<div class="col-md-2">'
+									html += "<img class='rounded' src='"+url+"/img/usuarios/profile/"+item.img_profile+"' style='height: 4rem;width: 4rem; margin: 1%; border-radius: 50%!important;' title='"+item.name_follower+" "+item.last_name_follower+"'>"
+
+								html += '</div>'
+								html += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;overflow: scroll">'
+									html += '<div>'+item.event+'</div>'
+									html += '<br><div>Poliza: '+item.number_policies+'</div>'
+
+									html += '<div><b>'+item.name_user+" "+item.last_name_user+'</b> <span style="float: right">'+item.create_at+'</span></div>'
+
+
+								html += '</div>'
+							html += '</div>'
+						html += '</div>'
+
+					});
+
+					$("#logs_edit").html(html)
+
+
+
+					console.log(data.logs_sessiones)
+					$.map(data.logs_sessiones, function (item, key) {
+						html2 += '<div class="col-md-12" style="margin-bottom: 15px">'
+							html2 += '<div class="row">'
+								html2 += '<div class="col-md-10" style="background: #eee;padding: 2%;border-radius: 17px;overflow: scroll">'
+
+									if(item.date_login != null){
+										html2 += '<div style="color: green">Inicio sesion :'+item.date_login+'</div>'
+									}
+
+
+									if(item.date_logout != null){
+										html2 += '<div style="color: red">Cerro sesion :'+item.date_logout+'</div>'
+									}
+
+									
+									
+								html2 += '</div>'
+							html2 += '</div>'
+						html2 += '</div>'
+
+					});
+					$("#logs_session").html(html2)
+
+
+
+					
+
 					
 
 					cuadros('#cuadro1', '#cuadro3');
@@ -383,9 +508,11 @@
 
 					$('#avatar-edit').fileinput('destroy').val('');
 
-
-
 					
+					$("#status_user_edit").text(`Última Conexion : ${data.last_connection}`)
+
+					socket.emit("RequestUsersId", data.id);
+
 
 					url_imagen = '/img/usuarios/profile/'
 

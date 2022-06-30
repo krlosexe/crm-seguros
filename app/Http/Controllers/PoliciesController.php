@@ -20,6 +20,13 @@ use Illuminate\Support\Facades\File;
 use App\ClientsPeople;
 use App\ClientsCompany;
 use App\Files;
+use App\LogsPolicies;
+use App\Notifications;
+
+
+use App\Exports\ClientsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 use Illuminate\Support\Facades\DB;
 
@@ -61,6 +68,7 @@ class PoliciesController extends Controller
                                 ->with("policies_bind")
 
                                 ->with("vehicules")
+                                ->with("logs")
 
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
@@ -99,6 +107,15 @@ class PoliciesController extends Controller
         $start       = $request->start;
         $length      = $request->length;
         $draw        = $request->draw;
+        
+        $state       = $request->state;
+        $insurance   = $request->insurance;
+        $branch      = $request->branch;
+        $date_init   = $request->date_init;
+        $date_finish = $request->date_finish;
+        $document    = $request->document;
+        $placa       = $request->placa;
+        
 
         $policiesQuery = Policies::select(
                                     "policies.id_policies"
@@ -110,19 +127,91 @@ class PoliciesController extends Controller
                                 ->join("branchs", "branchs.id_branchs", "=", "policies.branch")
 
                                 ->join("auditoria", "auditoria.cod_reg", "=", "policies.id_policies")
-
+                                
+                                
+                                ->with("logs")
+                                
+                                
+    
+                                ->when($placa, function ($query, $placa) {
+                                    if($placa != ""){
+                                        return $query->join("policies_vehicle", "policies_vehicle.id_policie", "=", "policies.id_policies");
+                                    }
+                                })
+                          
                                 ->where("auditoria.tabla", "policies")
                                 ->where("auditoria.status", "!=", "0")
                                 ->where("policies.id_policies_grouped", "=", null)
                                 ->where(function($query) use ($user){
-
                                     if(!is_null($user) && $user->id_rol == 22){
                                         $query->where("policies.clients", $user->clients_company->id_clients_company);
                                         $query->where("policies.type_clients", 1);
                                         $query->where('policies.state_policies', 'Vigente');
                                     }
-
                                 })
+                                
+                                ->where(function ($query) use ($state) {
+                                    if($state != "0"){
+                                        $query->where("policies.state_policies", $state);
+                                    }
+                                })
+                                
+                                
+                                ->where(function ($query) use ($insurance) {
+                                    if($insurance != "0"){
+                                        $query->where("policies.insurers", $insurance);
+                                    }
+                                })
+                                
+                                
+                                ->where(function ($query) use ($branch) {
+                                    if($branch != "0"){
+                                        $query->where("policies.branch", $branch);
+                                    }
+                                })
+                                
+                                
+                                ->where(function ($query) use ($date_init) {
+                                    if($date_init != 0){
+                                        $query->where("policies.end_date", ">=", $date_init);
+                                    }
+                                })
+
+
+
+
+                                ->where(function ($query) use ($date_finish) {
+                                    if($date_finish != 0){
+                                        $query->where("policies.end_date", "<=", $date_finish);
+                                    }
+                                })
+
+
+
+                                ->where(function ($query) use ($document) {
+                                    if($document != ""){
+                                       $query->where("clients_people.number_document", $document);
+                                    }
+                                })
+
+                                ->Orwhere(function ($query) use ($document) {
+                                    if($document != ""){
+                                    $query->where("clients_company.nit", $document);
+                                    }
+                                })
+
+
+                                ->where(function ($query) use ($placa) {
+                                    if($placa != ""){
+                                        
+                                        $query->where("policies_vehicle.placa", $placa);
+                                    }
+                                })
+
+
+                                
+                                
+                                
                                 ->orderBy("policies.state_policies", "asc");    
 
             // se cuentan todos
@@ -163,6 +252,29 @@ class PoliciesController extends Controller
             "data"            => $data
         ])->setStatusCode(200);
     }
+
+
+
+    public function Excel($id_user, $state = 0, $insurance = 0, $branch = 0, $date_init = 0, $date_finish = 0, $cedula = 0, $placa = 0){
+
+        $xls = new ClientsExport;
+        
+        $xls->id_user      = $id_user;
+        $xls->state        = $state;
+        $xls->insurance    = $insurance;
+        $xls->branch       = $branch;
+        $xls->date_init    = $date_init;
+        $xls->date_finish  = $date_finish;
+        $xls->cedula       = $cedula;
+        $xls->placa        = $placa;
+      
+
+
+        return Excel::download($xls, 'ClientExport.xlsx');
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource
@@ -213,6 +325,7 @@ class PoliciesController extends Controller
                 $request['file_caratula'] = $name;
                 
             }
+
 
             $store                  = Policies::create($request->all());
             $request["id_policies"] = $store->id_policies;
@@ -492,6 +605,202 @@ class PoliciesController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
 
+           // dd($request["state_policies"]);
+
+            $policie = Policies::find($policies);
+
+            $users = User::where("id_rol", 6)->get();
+            $data_user = DB::table("datos_personales")->where("id_usuario", $request["id_user"])->first();
+           
+            if($request["state_policies"] != $policie->state_policies){
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO EL ESTADO DE LA POLIZA DE ".$policie->state_policies." a ".$request["state_policies"]
+                ]);
+
+                
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO EL ESTADO DE LA POLIZA ".$request["number_policies"]." DE ".$policie->state_policies." a ".$request["state_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+            }
+
+
+            if($request["insurers"] != $policie->insurers){
+                $insurance_actual = DB::table("insurers")->where("id_insurers", $policie->insurers)->first();
+                $insurance_new = DB::table("insurers")->where("id_insurers", $request["insurers"])->first();
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO ASEGURADORA DE ".$insurance_actual->name." a ".$insurance_new->name
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO ASEGURADORA DE ".$insurance_actual->name." a ".$insurance_new->name." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+
+            }
+
+
+            if($request["branch"] != $policie->branch){
+                $branch_actual = DB::table("branchs")->where("id_branchs", $policie->branch)->first();
+                $branch_new = DB::table("branchs")->where("id_branchs", $request["branch"])->first();
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO EL RAMO DE ".$branch_actual->name." a ".$branch_new->name
+                ]);
+
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO EL RAMO DE ".$branch_actual->name." a ".$branch_new->name." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+
+
+            }
+
+
+
+            if($request["number_policies"] != $policie->number_policies){
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO EL NUMERO DE POLIZA DE ".$policie->number_policies." a ".$request["number_policies"]
+                ]);
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO EL NUMERO DE POLIZA DE ".$policie->number_policies." a ".$request["number_policies"]." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+            }
+
+
+
+
+            if($request["expedition_date"] != $policie->expedition_date){
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO FECHA DE EXPEDICION DE  ".$policie->expedition_date." a ".$request["expedition_date"]
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO FECHA DE EXPEDICION DE  ".$policie->expedition_date." a ".$request["expedition_date"]." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+            }
+
+
+            if($request["start_date"] != $policie->start_date){
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO FECHA INICIO DE LA POLZOA DE  ".$policie->start_date." a ".$request["start_date"]
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO FECHA INICIO DE LA POLZOA DE  ".$policie->start_date." a ".$request["start_date"]." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+
+
+            }
+
+
+            if($request["end_date"] != $policie->end_date){
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO FECHA FIN DE LA POLIZA DE  ".$policie->end_date." a ".$request["end_date"]
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p."CAMBIO FECHA FIN DE LA POLIZA DE  ".$policie->end_date." a ".$request["end_date"]." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+            }
+
+
+
+            if($request["clients"] != $policie->clients){
+
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "CAMBIO EL CLIENTE DE  ".$policie->clients." a ".$request["clients"]
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." CAMBIO EL CLIENTE DE  ".$policie->clients." a ".$request["clients"]." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+
+            }
+
+
+
+
+            
+
+
+
             isset($request["is_renewable"])          ? $request["is_renewable"]           = 1 : $request["is_renewable"]          = 0;
             isset($request["beneficiary_remission"]) ? $request["beneficiary_remission"]  = 1 : $request["beneficiary_remission"] = 0;
             isset($request["beneficairy_onerous"])   ? $request["beneficairy_onerous"]    = 1 : $request["beneficairy_onerous"]   = 0;
@@ -501,6 +810,7 @@ class PoliciesController extends Controller
             isset($request["send_portfolio_for_expire_email"])  ? $request["send_portfolio_for_expire_email"]  = 1 : $request["send_portfolio_for_expire_email"] = 0;
             isset($request["send_policies_for_expire_sms"])     ? $request["send_policies_for_expire_sms"]     = 1 : $request["send_policies_for_expire_sms"]    = 0;
             isset($request["send_portfolio_for_expire_sms"])    ? $request["send_portfolio_for_expire_sms"]    = 1 : $request["send_portfolio_for_expire_sms"]   = 0;
+            isset($request["activate_promotion"])               ? $request["activate_promotion"]               = 1 : $request["activate_promotion"]              = 0;
 
             $file = $request->file('file');
 
@@ -520,6 +830,28 @@ class PoliciesController extends Controller
                 $file->move('img/policies/caratulas',$name);
                 
                 $request['file_caratula'] = $name;
+
+
+
+                LogsPolicies::create([
+                    "id_user"    => $request["id_user"],
+                    "id_policie" => $policies,
+                    "event"      => "Actualizo la Caratula"
+                ]);
+
+
+                foreach($users as $user){
+                    Notifications::create([
+                        "fecha"   => date("Y-m-d"),
+                        "title"   => $data_user->nombres." ".$data_user->apellido_p." Actualizo la Caratula"." POLIZA ".$request["number_policies"],
+                        "id_policie" => $policies,
+                        "id_user" => $user->id,
+                        "view"    => "No"
+                    ]);
+                }
+
+
+
                 
             }
 
@@ -619,6 +951,27 @@ class PoliciesController extends Controller
                 if($notify != null)
                     $notify->update($request->all());
             }
+
+
+
+            LogsPolicies::create([
+                "id_user"    => $request["id_user"],
+                "id_policie" => $policies,
+                "event"      => "Actualizo la Poliza"
+            ]);
+
+            foreach($users as $user){
+                Notifications::create([
+                    "fecha"   => date("Y-m-d"),
+                    "title"   => $data_user->nombres." ".$data_user->apellido_p." Actualizo la Poliza : ".$request["number_policies"],
+                    "id_policie" => $policies,
+                    "id_user" => $user->id,
+                    "view"    => "No"
+                ]);
+            }
+
+            
+            
 
             
 
@@ -967,6 +1320,11 @@ class PoliciesController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
 
+
+            $users = User::where("id_rol", 6)->get();
+            $data_user = DB::table("datos_personales")->where("id_usuario", $request["id_user"])->first();
+
+
             isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
@@ -976,7 +1334,8 @@ class PoliciesController extends Controller
             $request["commission_percentage"] = (float) str_replace(',', '', $request["commission_percentage"]);
             $request["agency_commission"]     = (float) str_replace(',', '', $request["agency_commission"]);
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
-            
+
+
             $store                  = PoliciesAnnexes::create($request->all());
             $request["id_policies_annexes"] = $store->id_policies_annexes;
  
@@ -1011,6 +1370,31 @@ class PoliciesController extends Controller
             $auditoria->usr_regins  = $request["id_user"];
             $auditoria->save();
 
+
+
+            LogsPolicies::create([
+                "id_user"    => $request["id_user"],
+                "id_policie" => $request["id_policie"],
+                "event"      => "Agrego el Anexo numero ".$request["number_annexed"]
+            ]);
+
+
+
+            foreach($users as $user){
+                Notifications::create([
+                    "fecha"   => date("Y-m-d"),
+                    "title"   => $data_user->nombres." ".$data_user->apellido_p." Agrego el Anexo numero ".$request["number_annexed"]." Poliza: ".$request["number_policies"],
+                    "id_policie" => $request["id_policie"],
+                    "id_user" => $user->id,
+                    "view"    => "No"
+                ]);
+            }
+
+
+
+
+
+
             if ($store) {
                 $data = array('mensagge' => "Los datos fueron registrados satisfactoriamente");    
                 return response()->json($data)->setStatusCode(200);
@@ -1029,6 +1413,11 @@ class PoliciesController extends Controller
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
 
+
+            $users = User::where("id_rol", 6)->get();
+            $data_user = DB::table("datos_personales")->where("id_usuario", $request["id_user"])->first();
+
+
             isset($request["is_renewable"]) ? $request["is_renewable"]  = 1 : $request["is_renewable"] = 0;
 
             $request["cousin"]                = (float) str_replace(',', '', $request["cousin"]);
@@ -1040,6 +1429,31 @@ class PoliciesController extends Controller
             $request["total"]                 = (float) str_replace(',', '', $request["total"]);
 
             $update = PoliciesAnnexes::find($annexe)->update($request->all());
+
+
+            $anexe = PoliciesAnnexes::where("id_policies_annexes", $annexe)->first();
+          
+            LogsPolicies::create([
+                "id_user"    => $request["id_user"],
+                "id_policie" => $anexe->id_policie,
+                "event"      => "Actualizo el Anexo numero ".$anexe->number_annexed
+            ]);
+
+
+
+            foreach($users as $user){
+                Notifications::create([
+                    "fecha"   => date("Y-m-d"),
+                    "title"   => $data_user->nombres." ".$data_user->apellido_p." Actualizo el Anexo numero ".$anexe->number_annexed." Poliza: ".$request["number_policies"],
+                    "id_policie" =>$anexe->id_policie,
+                    "id_user" => $user->id,
+                    "view"    => "No"
+                ]);
+            }
+
+
+
+
 
             if ($update) {
                 $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
@@ -1058,8 +1472,13 @@ class PoliciesController extends Controller
 
 
 
-    public function GetAnnexes($policies)
+    public function GetAnnexes(Request $request, $policies)
     {
+        
+        $id_user = $request["id_user"];
+        
+        $user = User::where("id", $id_user)->first();
+        $rol = $user->id_rol;
         $policie = PoliciesAnnexes::select("policies_annexes.*", "auditoria.*", "user_registro.email as email_regis")
 
                                             ->join("auditoria", "auditoria.cod_reg", "=", "policies_annexes.id_policies_annexes")
@@ -1069,6 +1488,14 @@ class PoliciesController extends Controller
                                             ->where("policies_annexes.id_policie", $policies)
 
                                             ->where("auditoria.status", "!=", "0")
+                                            
+                                            ->where(function ($query) use ($rol) {
+                                                    if($rol == 22){
+                                                        $query->where("policies_annexes.state", "!=","No Vigente");
+                                                    }
+                                                })
+                                
+                                
                                             ->orderBy("auditoria.fec_regins", "DESC")
                                             ->get();
            
@@ -1141,6 +1568,7 @@ class PoliciesController extends Controller
                                     ->join("fasecolda", "fasecolda.codigo", "=", "vehicules.code")
                                     ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
                                     ->where("policies_vehicle.placa", $placa)
+                                    ->where("policies.state_policies", "Vigente")
                                     ->whereNotIn("policies.branch", $soats)
                                     ->first();
         if($data){
@@ -1150,6 +1578,27 @@ class PoliciesController extends Controller
         }
         
     }
+
+
+
+    public function getPolicieAccidentes($id_client){
+
+
+        $data = Policies::select("policies.*")
+                                    ->where("policies.clients", $id_client)
+                                    ->where("policies.branch",7)
+                                    ->where("policies.state_policies","Vigente")
+                                    ->with("policies_bind")
+                                    ->first();
+        if($data){
+            return response()->json($data)->setStatusCode(200);
+        }else{
+            return response()->json("La Placa no se encuentra asegurada")->setStatusCode(400);
+        }
+        
+    }
+
+
 
 
 
@@ -1189,7 +1638,11 @@ class PoliciesController extends Controller
             $dataBinds = Policies::where([
                         'state_policies' => 'Vigente',
                     ])
-                    ->where('branchs.name', 'like', '%SALUD%')
+                    ->where(function ($query) use ($text) {
+                        $query->where('branchs.name', 'like', '%SALUD%');
+                        $query->orWhere('branchs.name', 'like', '%PLAN COMPLEMENTARIO%');
+                        $query->orWhere('branchs.name', 'like', '%PLAN COMPLEMENTARIO DE SALUD%');
+                    })
                     ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
                     ->whereIn('id_policies', $whereIn)
                     ->with(['branch_data', 'insurers_data'])
@@ -1217,7 +1670,13 @@ class PoliciesController extends Controller
             ];
 
             $data = Policies::where($where)
-                    ->where('branchs.name', 'like', '%SALUD%')
+                    ->where(function ($query)  {
+                        $query->where('branchs.name', 'like', '%SALUD%');
+                        $query->orWhere('branchs.name', 'like', '%PLAN COMPLEMENTARIO%');
+                        $query->orWhere('branchs.name', 'like', '%PLAN COMPLEMENTARIO DE SALUD%');
+                    })
+
+
                     ->join('branchs', 'branchs.id_branchs', "=", "policies.branch")
                     ->with(['branch_data', 'insurers_data'])
                     ->get()->toArray();
@@ -1256,7 +1715,29 @@ class PoliciesController extends Controller
     }
 
     public function select2polizas(Request $request){
-        $data = Policies::select('number_policies', 'id_policies')->where('number_policies', 'like', '%'.$request['search'].'%')->limit(10)->get();
+
+
+        $user   = DB::table("users")->where("id", $request["id_user"])->first();
+        $rol = 0;
+        if($user->id_rol == 22){
+            $rol = 22;
+            $clients_company = DB::table("clients_company")->where("nit", $user->email)->first();
+            $id_client = $clients_company->id_clients_company;
+        }
+
+
+        $data = Policies::select('number_policies', 'id_policies')
+                        ->where('number_policies', 'like', '%'.$request['search'].'%')
+
+                        ->where(function ($query) use ($rol, $id_client) {
+                            if($rol == 22){
+                                $query->where("policies.clients", $id_client);
+                                $query->where("policies.state_policies","Vigente");
+                            }
+                        })
+
+                        ->limit(10)
+                        ->get();
 
         return response()->json($data);
     }
@@ -1320,4 +1801,86 @@ class PoliciesController extends Controller
         $auditoria->usr_regins  = 1;
         $auditoria->save();
     }
+
+
+
+
+
+
+    
+    public function PoliciesByBranch($branch, $client){
+
+
+        $data = DB::table("policies_vehicle")
+                    ->selectRaw("policies_vehicle.*, policies.number_policies, policies.insurers, insurers.name, insurers.phone")
+                    ->join("policies", "policies.id_policies", "=", "policies_vehicle.id_policie")
+                    ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                    ->where("policies.clients", $client)
+                    ->where("policies.branch", $branch)
+                    ->where("policies.state_policies", "Vigente")
+                    ->get();
+        
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+    public function PoliciesByVehicule($client){
+
+
+        $data = DB::table("policies_vehicle")
+                    ->selectRaw("policies_vehicle.*, policies.number_policies, policies.insurers, insurers.name, insurers.phone")
+                    ->join("policies", "policies.id_policies", "=", "policies_vehicle.id_policie")
+                    ->join("insurers", "insurers.id_insurers", "=", "policies.insurers")
+                    ->where("policies.clients", $client)
+                    ->where(function($query){
+                        $query->orWhere('policies.branch', 4);
+                        $query->orWhere('policies.branch', 8);
+                        $query->orWhere('policies.branch', 148);
+                    })
+
+
+                    ->where("policies.state_policies", "Vigente")
+                    ->get();
+        
+        return response()->json($data)->setStatusCode(200);
+    }
+
+
+
+    
+
+
+
+
+    public function saveNewReporte(Request $request){
+        try{
+            DB::table('accidentePersonal')
+            ->insert([
+            'name' => $request['name_affiliate'],
+            'documentType' => $request['type_document_affiliate'],
+            'documentNumber' => $request['document_affiliate'],
+            'associate' => $request['id_policie'],
+            'crashSite' => $request['place'],
+            'typeOfAccident' => $request['typeAccident'],
+            'id_hospital' => $request['hospital_id']
+            ]);
+
+            return response()->json("successful")->setStatusCode(200);
+            
+        }
+        catch(\Throwable $th){
+            return $th;
+        }
+    }
+
+
+    public function GetOffert($id_cliente){
+        $data = DB::table("policies_bind")->where("document_affiliate", $id_cliente)->first();
+
+        $policie = DB::table("policies")->where("id_policies", $data->id_policie)->first();
+        return response()->json($policie)->setStatusCode(200);
+    }
+
+
 }

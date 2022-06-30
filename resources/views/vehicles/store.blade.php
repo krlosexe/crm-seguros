@@ -104,7 +104,7 @@
                               <label for=""><b>Modelo*</b></label>
                               <select class="form-control" name="model" id="model" required> 
                                 <option value="">Seleccione</option>
-                                @foreach (range(2021, 1970) as $element)
+                                @foreach (range(2023, 1970) as $element)
                                   <option value="{{ $element }}">{{ $element }}</option>
                                 @endforeach
                               </select>

@@ -11,24 +11,22 @@ use App\AuthUsers;
 use App\PoliciesBind;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\LogsSession;
 use DB;
 
 class Login extends Controller
 {
     public function Auth(request $request)
     {	
-
+   
     	$messages = [
 		    'required' => 'El Campo :El campo es requerido.',
 		];
-
 
     	$validator = Validator::make($request->all(), [
             'email'    => 'required',
             'password' => 'required',
         ], $messages);
-
 
         if ($validator->fails()) {
             return response()->json($validator->errors())->setStatusCode(400);
@@ -40,8 +38,9 @@ class Login extends Controller
                          ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
                          ->where("auditoria.tabla", "users")
                          ->where("auditoria.status", "!=", "0")
-	    				 ->get();
-
+                         ->get();
+                         
+ 
 	    	if (sizeof($users) > 0) {
 	    		$token = bin2hex(random_bytes(64));
 
@@ -57,7 +56,7 @@ class Login extends Controller
 		        $AuthUsers->token   = $token;
 		        $AuthUsers->save();
 
-
+                LogsSession::create(["id_user" => $users[0]->id, "date_login" => date("Y-m-d G:i:s")]);
 
 
 	    		$data = array('user_id'    => $users[0]->id,
@@ -166,10 +165,13 @@ class Login extends Controller
 
                 }
 
+                LogsSession::create(["id_user" => $users[0]->id, "date_login" => date("Y-m-d G:i:s")]);
+
 
                 $data = array('user_id'    => $users[0]->id,
                               'id_rol'     => $users[0]->id_rol,
                               'email'      => $users[0]->email,
+                              'photo'      => $users[0]->img_profile,
                               'token'      => $token,
                               'nombre'     => $users[0]->nombres,
                               'apellido'   => $users[0]->apellido_p,
@@ -318,7 +320,9 @@ class Login extends Controller
 
 		foreach ($token_user as $key => $value) {
 			$value->delete();
-		}
+        }
+        
+        LogsSession::create(["id_user" => $user_id, "date_logout" => date("Y-m-d G:i:s")]);
 
 
 		return redirect(url('/'));

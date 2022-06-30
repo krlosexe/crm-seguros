@@ -44,6 +44,7 @@ Route::get('status-rol/{id}/{status}', 'RolesController@status');
 
 Route::resource('people', 'ClientsPeopleController');
 Route::get('status-people/{id}/{status}', 'ClientsPeopleController@status');
+Route::get('peoples/paginate', 'ClientsPeopleController@GetPaginate');
 
 Route::get('files/{tabla}/{id_client}', 'FilesController@GetFiles');
 Route::post('files', 'FilesController@store');
@@ -116,10 +117,24 @@ Route::put('policies/grouped/annexes/{id}', 'PoliciesGroupedController@UpdateAnn
 Route::get('policies/grouped/annexes/status/{id}/{status}', 'PoliciesGroupedController@StatusAnnexes');
 Route::get('policies/simulation/pay/{id}', 'PoliciesController@GetPays');
 
+Route::get('exports/policies/{id_user}/{state}/{insurance}/{branch}/{date_init}/{date_finish}/{cedula}/{placa}', 'PoliciesController@Excel');
+
+
 
 Route::resource('sinister', 'SinistersController');
 Route::get('sinister/client/{id_client}', 'SinistersController@GetByClient');
 Route::get('status-sinister/{id}/{status}', 'SinistersController@status');
+
+
+Route::get('get/sinister/{companie}/{sinister}/{branch}/{rol}', 'SinistersController@index');
+Route::get('sinister/get/comments/{state}/{id}', 'SinistersController@getComments');
+Route::post('sinister/store/comments', 'SinistersController@storeComments');
+
+Route::get('sinister/get/files/{state}/{id}', 'SinistersController@getFiles');
+Route::post('sinister/store/files', 'SinistersController@storeFiles');
+
+Route::get('sinister/get/states/{id}', 'SinistersController@getStates');
+
 
 Route::get('payment', 'PaymentController@get');
 Route::get('payment/{id}', 'PaymentController@getId');
@@ -242,9 +257,9 @@ Route::get('stadist/ganancias', 'Estadists@Ganancias');
 
 Route::get('stadist/policies', 'Estadists@Policies');
 
-
-Route::get('stadist/policies/next/expired', 'Estadists@PoliciesExpired');
-Route::get('stadist/policies/next/vencidas', 'Estadists@PoliciesVencidas');
+Route::get('stadist/policies/next/vigentes','Estadists@PoliciesVigentes');
+Route::get('stadist/policies/next/expired','Estadists@PoliciesExpired');
+Route::get('stadist/policies/next/vencidas','Estadists@PoliciesVencidas');
 
 Route::get('stadist/charge/account/pending', 'Estadists@ChargeAccounPending');
 
@@ -255,26 +270,65 @@ Route::get('citas/{number_document}', 'PoliciesController@getCitasSalud');
 
 Route::get('select2polizas', 'PoliciesController@select2polizas');
 
+Route::get('RememberPolicies', 'NotificacionesController@remember');
+
+
+Route::get('notifications/get', 'NotificacionesController@Get');
+Route::get('notifications', 'NotificacionesController@GetAll');
+
+
+Route::get('user/last/connection/{id_user}', 'UsuariosController@LastConnection');
+
+
+
+
+Route::get('policies/by/branch/{branch}/{id_client}', 'PoliciesController@PoliciesByBranch');
+
+
+Route::get('policies/of/vehicule/{id_client}', 'PoliciesController@PoliciesByVehicule');
+
+
+
+Route::post('report/sinister', 'SinistersController@ReportSinister');
+Route::get('get-coordenadas/{lat}/{long}','HospitalesController@ObtenerCoordenadas');
+Route::get('policies/accidentes/personales/{id_cliente}', 'PoliciesController@getPolicieAccidentes');
+
+Route::get('get/report/sinister', 'SinistersController@GetReports');
+
+
+
+Route::post('saveNewReporte','PoliciesController@saveNewReporte');
+
+Route::post('register/client/people','OrderPolicieController@RegisterClientPeople');
+Route::post('create/order/pdf','OrderPolicieController@CreatePdf');
+Route::get('download/order/pdf/{id_order}','OrderPolicieController@DownloadPdf');
+
+Route::post('comment/cotizacion/vehiculo','CotizacionesController@CommentCotizacion');
+Route::get('comment/cotizacion/vehiculo/{id_cotizacion}','CotizacionesController@GetCommentCotizacion');
+
+
+
+Route::post('emailCotizador','CotizacionesController@EmailCotizador');
+
+
+Route::get('get/offert/{id_client}','PoliciesController@GetOffert');
+Route::get('update/offert/{id_client}','ClientsController@UpdateOffert');
+
+Route::get('pdf/liberty/{id_coti}/{plan}','LibertyController@PdfPlan');
+
 
 // // Endpoints que se utilizan desde el cotizador
-
 // Route::prefix('apisura')->group(function(){
-
 // 	Route::get('getNodosMaestros/{method}', 'CotizadorController@getSuraNodosMaestros');
 // 	Route::get('getPlaca/{placa}', 'CotizadorController@getPlacaSura');
 // 	Route::get('getPlanesFiltrados/{codigoclasevehiculo}/{tiposservicio}', 'CotizadorController@getPlanesFiltrados');
 // 	Route::get('getFasecoldaMarcas/{codigoclasevehiculo}/{modelovehiculo}', 'CotizadorController@getFasecoldaMarcas');
-
 // 	Route::get('getFasecoldaLineas/{params}', 'CotizadorController@getFasecoldaLineas');
 // 	Route::get('getFasecoldaModelo/{params}', 'CotizadorController@getFasecoldaModelo');
-	
 // 	Route::get('getCoberturas/{params}', 'CotizadorController@getCoberturas');
 // 	Route::post('inspeccion', 'CotizadorController@inspeccion');
 // 	Route::post('sarlaft', 'CotizadorController@sarlaft');
-
 // 	Route::post('cotizarPlanes', 'CotizadorController@cotizarPlanes');
 // 	Route::post('cotizarPlan', 'CotizadorController@cotizarPlan');
-
 // 	Route::post('test', 'CotizadorController@test');
-
 // });

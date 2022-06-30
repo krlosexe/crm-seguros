@@ -8,7 +8,7 @@ class Sinisters extends Model
 {
 
     protected $fillable = [
-        'state_policie', 'number_sinister', 'type_sinister', 'date_sinister', 'date_notice', 'date_notification_insurers', 'assigned_provider', 'descriptions', 'policie', 'compensation_value', 'deductible', 'claim_amount', 'coinsurance', 'finalized'
+        'state_policie', 'number_sinister', 'type_sinister', 'date_sinister', 'date_notice', 'date_notification_insurers', 'assigned_provider', 'descriptions', 'policie', 'compensation_value', 'deductible', 'claim_amount', 'coinsurance', 'id_client', 'branch','finalized'
     ];
 
     protected $table         = 'sinisters';

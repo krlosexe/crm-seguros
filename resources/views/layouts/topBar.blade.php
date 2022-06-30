@@ -108,21 +108,21 @@
                           <i class="ti-angle-down font-size-10"></i>
                       </div>
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu" id="menu_options">
                       <li>
-                          <a href="{{ url('/') }}/Company">
+                          <a href="{{ url('/') }}/Company" class="configuration">
                               <i class="ti-settings pdd-right-10"></i>
                               <span>Configuración</span>
                           </a>
                       </li>
                       <li>
-                          <a href="{{ url('/') }}/profile">
+                          <a href="{{ url('/') }}/profile" class="profile">
                               <i class="ti-user pdd-right-10"></i>
                               <span>Mi perfil</span>
                           </a>
                       </li>
                       <li>
-                          <a href="">
+                          <a href="" class="message_user">
                               <i class="ti-email pdd-right-10"></i>
                               <span>Mensajes</span>
                           </a>
@@ -137,7 +137,7 @@
                   </ul>
               </li>
               <li class="notifications dropdown">
-                  <span class="counter">1</span>
+                  <span class="counter" id="count_notification">0</span>
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="ti-bell"></i>
                   </a>
@@ -148,26 +148,26 @@
                           <span>Novedades</span>
                       </li>
                       <li>
-                          <ul class="list-info overflow-y-auto relative scrollable">
-                              <li>
+                          <ul class="list-info overflow-y-auto relative scrollable" id="list-notifications">
+                              <!--<li>
                                   <a href="">
                                       <img class="thumb-img" src="assets/images/avatars/thumb-5.jpg" alt="">
                                       <div class="info">
                                           <span class="title">
-                <span class="font-size-14 text-semibold">Hebert Noreña</span>
+                                                <span class="font-size-14 text-semibold">Hebert Noreña</span>
                                           <span class="text-gray">Solicitud de póliza <span class="text-dark">Cancelación</span></span>
                                           </span>
                                           <span class="sub-title">Hace 5 minutos</span>
                                       </div>
                                   </a>
-                              </li>
+                              </li>-->
                              
                           </ul>
                       </li>
 
                       <li class="notice-footer">
                           <span>
-                              <a href="" class="text-gray">Ver todas las novedades <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
+                              <a href="/notifications" class="text-gray">Ver todas las novedades <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
       </span>
                       </li>
                   </ul>

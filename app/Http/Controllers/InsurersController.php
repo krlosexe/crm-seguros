@@ -55,6 +55,12 @@ class InsurersController extends Controller
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
             
 
+            $file            = $request->file('logo');
+            $destinationPath = 'img/insurers';
+            $file->move($destinationPath,$file->getClientOriginalName());
+        
+            $request["logo_img"] = $file->getClientOriginalName();
+
             $store                   = Insurers::create($request->all());
             $request["id_insurers"]  = $store->id_insurers;
 
@@ -69,6 +75,9 @@ class InsurersController extends Controller
                     InsurersBranchs::create($request->all());
                 }
            }        
+            
+
+
             
 
             $auditoria              = new Auditoria;
@@ -136,6 +145,15 @@ class InsurersController extends Controller
     {
 
         if ($this->VerifyLogin($request["id_user"],$request["token"])){
+
+
+            if($request->file('logo')){
+                $file            = $request->file('logo');
+                $destinationPath = 'img/insurers';
+                $file->move($destinationPath,$file->getClientOriginalName());
+            
+                $request["logo_img"] = $file->getClientOriginalName();
+            }
 
             $update = Insurers::find($insurers)->update($request->all());
 

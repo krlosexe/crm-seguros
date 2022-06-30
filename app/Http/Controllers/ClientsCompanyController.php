@@ -111,9 +111,27 @@ class ClientsCompanyController extends Controller
      * @param  \App\ClientsCompany  $clientsCompany
      * @return \Illuminate\Http\Response
      */
-    public function show(ClientsCompany $clientsCompany)
+    public function show($clientsCompany)
     {
-        //
+
+        $modulos = ClientsCompany::select("clients_company.*", "clients_company_contact.*", "clients_notifications.*","auditoria.*", "user_registro.email as email_regis")
+                                ->join("clients_company_contact", "clients_company_contact.id_clients_company", "=", "clients_company.id_clients_company")
+                               
+                                ->join("clients_notifications", "clients_notifications.id_clients_company", "=", "clients_company.id_clients_company")
+                                
+
+                                ->join("auditoria", "auditoria.cod_reg", "=", "clients_company.id_clients_company")
+                                ->where("auditoria.tabla", "clients_company")
+                                ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+                                ->where("auditoria.status", "!=", "0")
+                                ->where("clients_company.id_clients_company", $clientsCompany)
+                                ->orderBy("clients_company.id_clients_company", "DESC")
+                                ->get();
+           
+        return response()->json($modulos)->setStatusCode(200);
+        
+   
     }
 
     /**

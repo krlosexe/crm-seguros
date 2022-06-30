@@ -42,10 +42,11 @@
                           <div class="form-group valid-required">
                             <select name="state_policie" class="form-control selectized" id="state_policie_view" required>
                                 <option value="">Seleccione</option>
-                                <option value="Objected to">Objetado</option>
-                                <option value="paid">Pagado</option>
-                                <option value="in process">En proceso</option>
-                                <option value="Requested">Solicitado</option>
+                                <option value="Objetado">Objetado</option>
+                                <option value="Pagado">Pagado</option>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Solicitado">Solicitado</option>
+                                <option value="Cancelado">Cancelado</option>
                               </select>
                           </div>
                       </div>

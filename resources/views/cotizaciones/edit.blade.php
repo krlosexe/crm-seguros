@@ -83,6 +83,16 @@
 
                           </div>
 
+
+                          <div class="row">
+                              <div class="col-md-6">
+                                <label for=""><b>Telefono*</b></label>
+                                  <div class="form-group valid-required">
+                                    <input type="text" name="phone" class="form-control form-control-user" id="phone_edit"  required>
+                                  </div>
+                              </div>
+                          </div>
+
                           <br>
                             
 
@@ -163,6 +173,8 @@
                       </div>
                     </div>
                   </div>
+
+
                 </div>
               </div>
               
@@ -205,6 +217,50 @@
 
                   </div>
 
+                </div>
+
+
+                <div class="col-md-6">
+                   <div class="row">
+
+                    <div class="col-md-12">
+
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Comentarios</h6>
+                        </div>
+                        <div class="card-body">
+
+                          <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Comentarios</label>
+                                        <textarea id="comments" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-md-2">
+                                  <button type="button" id="add-comments"  class="btn btn-primary">
+                                      Comentar
+                                  </button>
+                              </div>
+                          </div>
+
+
+                          <div class="row" id="comments_content">
+                        
+                          </div>
+
+                          <br>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 

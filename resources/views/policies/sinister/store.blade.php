@@ -24,18 +24,25 @@
 
                     <div class="row">
 
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <label for=""><b>Estado*</b></label>
                           <div class="form-group valid-required">
                             <select name="state_policie" class="form-control selectized" id="state_policie" required>
-                                <option value="">Seleccione</option>
-                                <option value="Objected to">Objetado</option>
-                                <option value="paid">Pagado</option>
-                                <option value="in process">En proceso</option>
-                                <option value="Requested">Solicitado</option>
+                                <option value="En proceso">En proceso</option>
                               </select>
                           </div>
                       </div>
+
+
+
+                      <div class="col-md-6">
+                        <label for=""><b>Fecha de estatus*</b></label>
+                          <div class="form-group valid-required">
+                          <input type="date" name="date_status" class="form-control form-control-user" id="date_status" placeholder="" required>
+                          </div>
+                      </div>
+
+
 
                     </div>
 
@@ -108,6 +115,10 @@
                                 <option value="">Seleccione</option>
                               </select>
                           </div>
+
+
+                          <input type="hidden" name="id_client" id="id_client">
+                          <input type="hidden" name="branch" id="branch_hidden">
                       </div>
                     </div>
 
@@ -272,6 +283,39 @@
                 </div>
               </div>
             </div>
+
+
+            <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label>Comentarios</label>
+                          <textarea id="comments" name="comments" class="form-control"></textarea>
+                      </div>
+                  </div>
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-md-12 text-center">
+
+                <label for=""><b>Adjuntos *</b></label>
+                  <div class="kv-avatar">
+                    <div class="file-loading">
+                      <input id="input-file-store" name="logo" type="file" required>
+                    </div>
+                  </div>
+
+                  <div class="kv-avatar-hintss">
+                    <small>Seleccione una foto</small>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
 
           </div>
           

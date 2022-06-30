@@ -55,6 +55,50 @@ class ClientsPeopleController extends Controller
         return response()->json($modulos)->setStatusCode(200);
     }
 
+
+
+    public function GetPaginate(Request $request){
+
+
+        $search = 0;
+        if(isset($request["search"]) && $request["search"] != ""){
+            $search = $request["search"];
+        }
+
+        $data = ClientsPeople::select("clients_people.*", "clients_people_contact.*", "clients_people_info_crm.*", "clients_notifications.*", "clients_people_working_information.*","auditoria.*", "user_registro.email as email_regis")
+            ->join("clients_people_contact", "clients_people_contact.id_clients_people", "=", "clients_people.id_clients_people")
+            ->join("clients_people_info_crm", "clients_people_info_crm.id_clients_people", "=", "clients_people.id_clients_people")
+            ->join("clients_notifications", "clients_notifications.id_clients", "=", "clients_people.id_clients_people")
+            ->join("clients_people_working_information", "clients_people_working_information.id_clients_people", "=", "clients_people.id_clients_people")
+
+            ->join("auditoria", "auditoria.cod_reg", "=", "clients_people.id_clients_people")
+            ->where("auditoria.tabla", "clients_people")
+            ->join("users as user_registro", "user_registro.id", "=", "auditoria.usr_regins")
+
+
+
+            ->where(function ($query) use ($search) {
+
+                
+                if($search != "0"){
+                    $query->where("clients_people.names", 'like', '%'.$search.'%');
+                    $query->orWhere("clients_people.last_names", 'like', '%'.$search.'%');
+                    $query->orWhere("clients_people.type_document", 'like', '%'.$search.'%');
+                    $query->orWhere("clients_people.number_document", 'like', '%'.$search.'%');
+                }
+            })
+
+
+            ->with("childrens")
+            ->with("vehicle")                               
+            
+            ->where("auditoria.status", "!=", "0")
+            ->orderBy("clients_people.id_clients_people", "DESC")
+            ->paginate(10);
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

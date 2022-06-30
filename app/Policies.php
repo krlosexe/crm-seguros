@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 class Policies extends Model
 {
     protected $fillable = [
-        'number_policies', 'state_policies', 'file_caratula','is_renewable', 'insurers', 'branch', 'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 'type_poliza', 'id_policies_grouped'
+        'number_policies', 'state_policies', 'file_caratula','is_renewable', 'insurers', 'branch',
+        'expedition_date', 'reception_date', 'start_date', 'end_date', 'risk', 'clients', 'type_clients', 
+        'type_poliza', 'business_type','id_policies_grouped', 'activate_promotion'
     ];
 
     protected $table         = 'policies';
@@ -105,6 +107,21 @@ class Policies extends Model
     public function policies_info_payments(){
         return $this->hasOne('App\PoliciesInfoPayments', 'id_policies');
     }
+
+
+
+
+
+    public function logs(){
+        return $this->hasMany('App\LogsPolicies', 'id_policie', 'id_policies')
+                    ->join('users', 'users.id', '=', 'logs_policies.id_user')
+                    ->join('datos_personales', 'datos_personales.id_usuario', '=', 'logs_policies.id_user')
+                    ->select(array('logs_policies.*', 'users.email', 'users.img_profile', "datos_personales.nombres as name_user",
+                      "datos_personales.apellido_p as last_name_user"));
+    }
+
+
+
 
 
 

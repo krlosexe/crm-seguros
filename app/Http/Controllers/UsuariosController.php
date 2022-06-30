@@ -17,6 +17,11 @@ class UsuariosController extends Controller
     public function index(Request $request)
     {
         if ($this->VerifyLogin($request["id_user"],$request["token"])) {
+
+
+            ini_set('memory_limit', '-1');
+
+            
             $User = User::select("users.*", "datos_personales.*", "roles.nombre_rol", "auditoria.status", "auditoria.fec_regins", "user_registro.email as user_registro")
                           ->join('datos_personales', 'datos_personales.id_usuario', '=', 'users.id')
                           ->join("auditoria", "auditoria.cod_reg", "=", "users.id")
@@ -25,6 +30,11 @@ class UsuariosController extends Controller
                           ->where("auditoria.tabla", "users")
                           ->where("auditoria.status", "!=", "0")
                           ->orderBy("users.id", "desc")
+
+                          ->with("logs")
+                          ->with("logsSessiones")
+
+                         
                           ->get();
             
             return response()->json($User)->setStatusCode(200);
@@ -363,6 +373,18 @@ class UsuariosController extends Controller
         }else{
             return response()->json("No esta autorizado")->setStatusCode(400);
         }
+    }
+
+
+
+    public function LastConnection($id_user){
+        User::where("id", $id_user)->update([
+            "last_connection" => date("Y-m-d G:i:s")
+        ]);
+
+        $data = array('mensagge' => "Los datos fueron actualizados satisfactoriamente");    
+        return response()->json($data)->setStatusCode(200);
+
     }
 
     /**

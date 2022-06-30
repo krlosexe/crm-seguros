@@ -35,10 +35,18 @@
 					            </div>
 					        </div>
 						</div>
+
 					</div>
 
 
 					<div class="col-md-6">
+
+						<div class="form-group valid-required">
+                          <div id="status_user_edit">
+						  </div>
+			            </div>
+
+
 			            <div class="form-group valid-required">
                           <label for=""><b>Email</b></label>
 			              <input type="email" name="email" class="form-control form-control-user" id="email-edit" placeholder="Email" required>
@@ -67,6 +75,7 @@
 					
 				</div>
 
+
 			  </div>
 
 
@@ -81,12 +90,12 @@
 
 				        <div class="col-sm-4 valid-required">
 				        	<label for=""><b>Apellido Paterno</b></label>
-				            <input type="text" name="apellido_p" class="form-control form-control-user" id="apellidos_p-edit" placeholder="Apellido Paterno" required>
+				            <input type="text" name="apellido_p" class="form-control form-control-user" id="apellidos_p-edit" placeholder="Apellido Paterno">
 				        </div>
 
 				        <div class="col-sm-4 valid-required">
 				        	<label for=""><b>Apellido Materno</b></label>
-				            <input type="text" name="apellido_m" class="form-control form-control-user" id="apellidos_m-edit" placeholder="Apellido Materno" required>
+				            <input type="text" name="apellido_m" class="form-control form-control-user" id="apellidos_m-edit" placeholder="Apellido Materno">
 				        </div>
 			  		</div>
 
@@ -98,17 +107,17 @@
 
 				        <div class="col-sm-4 valid-required">
                             <label for=""><b>Numero de Cédula</b></label>
-				            <input type="text" name="n_cedula" class="form-control form-control-user" id="n_cedula-edit" placeholder="Numero de Cedula" required>
+				            <input type="text" name="n_cedula" class="form-control form-control-user" id="n_cedula-edit" placeholder="Numero de Cedula">
 				        </div>
 
 				        <div class="col-sm-4 valid-required">
 				        	<label for=""><b>Fecha de Nacimiento</b></label>
-				            <input type="date" name="fecha_nacimiento" class="form-control form-control-user" id="fecha_nacimiento-edit" required>
+				            <input type="date" name="fecha_nacimiento" class="form-control form-control-user" id="fecha_nacimiento-edit">
 				        </div>
 
 			  			<div class="col-sm-4 valid-required">
                           <label for=""><b>Número de Teléfono</b></label>
-				            <input type="text" name="telefono" class="form-control form-control-user" id="telefono-edit" placeholder="Número de Teléfono" required>
+				            <input type="text" name="telefono" class="form-control form-control-user" id="telefono-edit" placeholder="Número de Teléfono">
 				        </div>
 
 			  		</div>

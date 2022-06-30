@@ -41,18 +41,29 @@
 
                     <div class="row">
 
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <label for=""><b>Estado*</b></label>
                           <div class="form-group valid-required">
                             <select name="state_policie" class="form-control selectized" id="state_policie_edit" required>
                                 <option value="">Seleccione</option>
-                                <option value="Objected to">Objetado</option>
-                                <option value="paid">Pagado</option>
-                                <option value="in process">En proceso</option>
-                                <option value="Requested">Solicitado</option>
+                                <option value="Objetado">Objetado</option>
+                                <option value="Pagado">Pagado</option>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Solicitado">Solicitado</option>
+                                <option value="Cancelado">Cancelado</option>
                               </select>
                           </div>
                       </div>
+
+
+                      <div class="col-md-6">
+                        <label for=""><b>Fecha de estatus*</b></label>
+                          <div class="form-group valid-required">
+                          <input type="date" name="date_status" class="form-control form-control-user" id="date_status-edit" placeholder="" required>
+                          </div>
+                      </div>
+
+
 
                     </div>
 
@@ -292,6 +303,55 @@
 
 
 
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                <label for=""><b>Adjuntos *</b></label>
+                  <div class="kv-avatar">
+                    <div class="file-loading">
+                      <input id="input-file-edit" name="logo" type="file">
+                    </div>
+                  </div>
+
+                  <div class="kv-avatar-hintss">
+                    <small>Seleccione una foto</small>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+            <div class="row" id="comments_content_edit">
+                  <div class="col-md-12">
+                      <div class="row">
+                          
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label>Comentarios</label>
+                          <textarea id="comments-edit" class="form-control"></textarea>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="row">
+                  <div class="col-md-2">
+                      <button type="button" id="add-comments-edit"  class="btn btn-primary">
+                          Comentar
+                      </button>
+                  </div>
+              </div>
+
+
+
           </div>
           
         </div>
@@ -306,6 +366,30 @@
         </div>
 
         <!---END ROW-->
+
+
+
+
+        <div class="row" id="history-edit">
+         
+        </div>
+
+
+        <br><br>
+
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <h3>Comentarios</h3>
+            <div id="comments_content_edit-state"></div>
+          </div>
+          <div class="col-md-6">
+            <h3>Adjuntos</h3>
+            <div id="files_content_edit-state"></div>
+          </div>
+        </div>
 
         
 
